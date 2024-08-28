@@ -8,7 +8,7 @@
   include ('dist/conf/db.php');
   $pdo = Database::connect();
 
-  if(isSet($_POST["subimt"]))sasfasfs
+  if(isSet($_POST["subimt"]))
   { 
    
 
