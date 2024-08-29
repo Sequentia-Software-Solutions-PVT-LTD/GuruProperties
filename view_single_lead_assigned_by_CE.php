@@ -345,9 +345,7 @@
                                 </div>
                             </div>
                         </div>
-                        
                         <!--/ About User -->
-                        
                     </div>
                     <!--  -->
                     <div class="col-xl-12 col-lg-12 col-md-12">
@@ -548,7 +546,7 @@
                                               <div class="row">
                                                   <label class="col-sm-3 col-form-label text-sm-end mar-top">Property </label>
                                                   <div class="col-sm-9">
-                                                      <select id="propertyDropdown" name="property_name_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
+                                                      <select id="propertyDropdown" name="property_name_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true">
                                                           <option value="">Select Property Name</option>
                                                           <?php
                                                               $sql = "SELECT * FROM property_name";
@@ -565,7 +563,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-3 col-form-label text-sm-end mar-top"> Tower</label>
                                                     <div class="col-sm-9">
-                                                        <select id="towerDropdown" name="property_tower_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
+                                                        <select id="towerDropdown" name="property_tower_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true">
                                                             <option value="">Select Property Tower</option>
                                                             <!-- Towers will be loaded here based on the selected property -->
                                                         </select>
@@ -580,7 +578,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-3 col-form-label text-sm-end mar-top"> Variants</label>
                                                     <div class="col-sm-9">
-                                                        <select id="variantDropdown" name="property_variants[]" class="js-example-basic-singlec select2 form-select select2-hidden-accessiblee" multiple="multiple" data-allow-clear="true" required>
+                                                        <select id="variantDropdown" name="property_variants[]" class="js-example-basic-singlec select2 form-select select2-hidden-accessiblee" multiple="multiple" data-allow-clear="true">
                                                             <option value="">Select Variants</option>
                                                         </select>
                                                     </div>
@@ -591,7 +589,7 @@
                                               <div class="row">
                                               <label for="next_date" class="col-sm-3 col-form-label text-sm-end mar-top ">Visit Date Time</label>
                                                 <div class="col-sm-9" id="reasonBoxvisit">
-                                                    <input class="form-control" type="datetime-local" id="next_date_visit" name="next_date_visit" required>
+                                                    <input class="form-control" type="datetime-local" id="next_date_visit" name="next_date_visit">
                                                 </div>
                                               </div>
                                             </div>
@@ -1189,6 +1187,32 @@
 			clearphoto2();
 		}
 	}
+    
+    $("#roleDropdown").on('change', function() {
+        
+        const roleDropdown = this.value;
+
+        if (roleDropdown == 'Follow Up') {
+            $("#next_date_followup").prop('required', true);
+            $("#propertyDropdown").prop('required', false);
+            $("#towerDropdown").prop('required', false);
+            $("#variantDropdown").prop('required', false);
+            $("#next_date_visit").prop('required', false); 
+        
+        } else if(roleDropdown == "Another Property") {
+            $("#propertyDropdown").prop('required', true);
+            $("#towerDropdown").prop('required', true);
+            $("#variantDropdown").prop('required', true);
+            $("#next_date_visit").prop('required', true);    
+            $("#next_date_followup").prop('required', false);
+        } else {
+            $("#propertyDropdown").prop('required', true);
+            $("#towerDropdown").prop('required', true);
+            $("#variantDropdown").prop('required', true);
+            $("#next_date_visit").prop('required', true);    
+            $("#next_date_followup").prop('required', true);
+        }
+    });
 </script>
     
   </body>
