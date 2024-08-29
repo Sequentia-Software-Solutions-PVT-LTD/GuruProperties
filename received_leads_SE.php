@@ -6,7 +6,6 @@
   // }
 
   $admin_id = $_SESSION['login_user_id'];
-  
 //   echo "<pre>";
 //   print_r($_SESSION);
 //   print_r($admin_id);
@@ -41,7 +40,7 @@
     // print_r($sql);
     // exit();
     
-    header('location:assigned_leads');
+    header('location:view-properties');
      
   }
 
@@ -62,7 +61,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>View All Leads |  Guru Properties</title>
+    <title>View Recieved Leads |  Guru Properties</title>
 
     <meta name="description" content="" />
 
@@ -73,6 +72,7 @@
      <style>
         .mar-top {
             margin-top: -12px;
+
         }
      </style>
     
@@ -92,13 +92,12 @@
           <!-- Content wrapper -->
           <div class="content-wrapper">
             <!-- Content -->
-
             <div class="container-xxl flex-grow-1 container-p-y">
               <!-- *************** - main containt in page write here - **********************  -->
-              <h5 class="card-header mar-bot-10">Leads Management</h5>
+              <h5 class="card-header mar-bot-10">Property Management</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
-                    <h5 class="card-header"> All Leads are listed bellow</h5>
+                    <h5 class="card-header"> All Recieved leads from Customer Executive are listed bellow</h5>
                     <div class="table-responsive text-nowrap">
                         <table class="table">
                         <caption class="ms-6">List of Leads</caption>
@@ -111,22 +110,21 @@
                             <th>Contact</th>
                             <th>Email ID</th>
                             <th>Budget</th>
-                            <th>Status</th>
                             <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php 
                                 $i = 1;
-                                $today_date = date('Y-m-d');
-                                // $sql = "SELECT * FROM assign_leads_sr where admin_id= $admin_id and status='Active' and transfer_status='Available' ";
-                                $sql = "SELECT * FROM assign_leads_sr where admin_id = $admin_id  ";
+                                // $sql = "SELECT * FROM assign_leads_sr where admin_id = $admin_id and status = 'Transfered' and transfer_status='Available' and mark_dead='' ";
+                                $sql = "SELECT * FROM assign_leads_sr where admin_id = $admin_id and status = 'Active' and transfer_status='Available' and mark_dead='' ";
                                 $q = $pdo->query($sql);
                                 // print_r($sql);
                                 // exit();
                                 foreach ($pdo->query($sql) as $row1) 
                                 { 
-                                    // $assign_leads_id = $row1['assign_leads_id'];
+                                    $assign_leads_id = $row1['assign_leads_id'];
+                                    $assign_leads_sr_id = $row1['assign_leads_sr_id'];
                                     $leads_id = $row1['leads_id'];
                                     $admin_id = $row1['admin_id'];
 
@@ -137,7 +135,7 @@
 
                                     $sqlleads = "select * from leads where id = $leads_id ";
                                     $q = $pdo->prepare($sqlleads);
-                                    $q->execute(array());     
+                                    $q->execute(array());      
                                     $row_leads = $q->fetch(PDO::FETCH_ASSOC);
                             ?>
                             <tr>
@@ -148,9 +146,80 @@
                                     <td><?php echo $row_leads["phone_no"]; ?></td>
                                     <td><?php echo $row_leads["email_id"]; ?></td>
                                     <td><?php echo $row_leads["budget_range"]; ?></td>
-                                    <td><?php echo $row1["status"]; ?></td>
+                                    <td>
+                                      <!-- trasnfer_lead_by_SE.php -->
+                                        <a class="dropdown-item waves-effect" href="view_single_lead_assigned_by_CE.php?assign_leads_sr_id=<?php echo $row1["assign_leads_sr_id"]; ?>"><i class="ri-eye-line me-1"></i> </a>
+                                        <!-- <a class="dropdown-item waves-effect" href="view_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-eye-line me-1"></i> </a> -->
+                                    </td>
+                            </tr>
+                            <?php $i++; } ?>
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+               <!-- *************** - /main containt in page write here - **********************  -->
+            </div>
+            <!-- / Content -->
+
+            <!-- Content -->
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <!-- *************** - main containt in page write here - **********************  -->
+              <!-- <h5 class="card-header mar-bot-10">Property Management</h5> -->
+              <!-- <hr class="my-12"> -->
+                <div class="card">
+                    <h5 class="card-header"> All Recieved leads from Sales Executive are listed bellow</h5>
+                    <div class="table-responsive text-nowrap">
+                        <table class="table">
+                        <caption class="ms-6">List of Leads</caption>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Leads Name</th>
+                                <!-- <th>Employee Name</th> -->
+                                <th>Location</th>
+                                <th>Contact</th>
+                                <th>Email ID</th>
+                                <th>Budget</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php 
+                                $i = 1;
+                                $sql = "SELECT * FROM assign_leads_sr where admin_id = $admin_id and status = 'Transfered' and transfer_status='Available' and mark_dead=''";
+                                // $sql = "SELECT * FROM assign_leads where admin_id= $admin_id and status = 'Followup' and transfer_status='Available' and mark_dead=''";
+                                // $sql = "SELECT * FROM assign_leads where admin_id= $admin_id and status='Active' ";
+                                $q = $pdo->query($sql);
+                                // print_r($sql);
+                                // exit();
+                                foreach ($pdo->query($sql) as $row1) 
+                                { 
+                                    $assign_leads_id = $row1['assign_leads_id'];
+                                    $assign_leads_sr_id = $row1['assign_leads_sr_id'];
+                                    $leads_id = $row1['leads_id'];
+                                    $admin_id = $row1['admin_id'];
+
+                                    $sqlemp = "select * from employee where admin_id = $admin_id ";
+                                    $q = $pdo->prepare($sqlemp);
+                                    $q->execute(array());      
+                                    $row_emp = $q->fetch(PDO::FETCH_ASSOC);
+
+                                    $sqlleads = "select * from leads where id = $leads_id ";
+                                    $q = $pdo->prepare($sqlleads);
+                                    $q->execute(array());      
+                                    $row_leads = $q->fetch(PDO::FETCH_ASSOC);
+                            ?>
+                            <tr>
+                                    <td><i class="ri-building-2-line ri-22px text-primary me-4"></i><span class="fw-medium"><?php echo $i; ?></span></td>
+                                    <td><?php echo $row_leads["lead_name"]; ?></td>
+                                    <!-- <td><?php //echo $row_emp["employee_name"]; ?></td> -->
+                                    <td><?php echo $row_leads["location"]; ?></td>
+                                    <td><?php echo $row_leads["phone_no"]; ?></td>
+                                    <td><?php echo $row_leads["email_id"]; ?></td>
+                                    <td><?php echo $row_leads["budget_range"]; ?></td>
                                     <td>
                                         <a class="dropdown-item waves-effect" href="view_single_lead_assigned_by_CE.php?assign_leads_sr_id=<?php echo $row1["assign_leads_sr_id"]; ?>"><i class="ri-eye-line me-1"></i> </a>
+                                        <!-- <a class="dropdown-item waves-effect" href="view_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-eye-line me-1"></i> </a> -->
                                     </td>
                             </tr>
                             <?php $i++; } ?>

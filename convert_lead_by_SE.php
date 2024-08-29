@@ -235,7 +235,8 @@
                                                 <div class="row">
                                                     <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Variants</label>
                                                     <div class="col-sm-9">
-                                                        <select id="variantDropdown" name="property_variants[]" class="js-example-basic-single select2 form-select select2-hidden-accessiblee" multiple="multiple" data-allow-clear="true" required>
+                                                        <!-- <select id="variantDropdown" name="property_variants[]" class="js-example-basic-single select2 form-select select2-hidden-accessiblee" multiple="multiple" data-allow-clear="true" required> -->
+                                                        <select id="variantDropdown" name="property_variants[]" class="js-example-basic-single select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
                                                             <option value="">Select Variants</option>
                                                         </select>
                                                     </div>

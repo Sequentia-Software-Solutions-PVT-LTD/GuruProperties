@@ -38,6 +38,15 @@
         }
     </style>
     <!--  -->
+
+    <?php 
+        $admin_id = $_SESSION['login_user_id'];
+        $login_name = $_SESSION['login_name'];
+        $login_role = $_SESSION['login_role'];
+        // print_r($_SESSION);
+        // exit();
+
+    ?>
           <nav
             class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
             id="layout-navbar">
@@ -69,8 +78,8 @@
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <span class="fw-medium d-block small">John Doe</span>
-                            <small class="text-muted">Admin</small>
+                            <span class="fw-medium d-block small"><?php echo $login_name; ?></span>
+                            <small class="text-muted"><?php echo $login_role; ?></small>
                           </div>
                         </div>
                       </a>

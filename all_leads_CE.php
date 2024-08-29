@@ -112,7 +112,7 @@
                             <th>Email ID</th>
                             <th>Budget</th>
                             <th>Status</th>
-                            <th>Actions</th>
+                            <!-- <th>Actions</th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -120,7 +120,7 @@
                                 $i = 1;
                                 $today_date = date('Y-m-d');
                                 // $sql = "SELECT * FROM assign_leads_sr where admin_id= $admin_id and status='Active' and transfer_status='Available' ";
-                                $sql = "SELECT * FROM assign_leads_sr where admin_id = $admin_id  ";
+                                $sql = "SELECT * FROM assign_leads where admin_id = $admin_id  ";
                                 $q = $pdo->query($sql);
                                 // print_r($sql);
                                 // exit();
@@ -149,9 +149,9 @@
                                     <td><?php echo $row_leads["email_id"]; ?></td>
                                     <td><?php echo $row_leads["budget_range"]; ?></td>
                                     <td><?php echo $row1["status"]; ?></td>
-                                    <td>
-                                        <a class="dropdown-item waves-effect" href="view_single_lead_assigned_by_CE.php?assign_leads_sr_id=<?php echo $row1["assign_leads_sr_id"]; ?>"><i class="ri-eye-line me-1"></i> </a>
-                                    </td>
+                                    <!-- <td>
+                                        <a class="dropdown-item waves-effect" href="view_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-eye-line me-1"></i> </a>
+                                    </td> -->
                             </tr>
                             <?php $i++; } ?>
                         </tbody>

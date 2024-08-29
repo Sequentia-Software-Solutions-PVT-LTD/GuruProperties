@@ -8,27 +8,12 @@
                     <script>
                       document.write(new Date().getFullYear());
                     </script>
-                    , made with <span class="text-danger"><i class="tf-icons ri-heart-fill"></i></span> by
-                    <a href="https://pixinvent.com" target="_blank" class="footer-link">Pixinvent</a>
+                    , All Rights Reserved. <span class="text-danger"></span> 
+                    <!-- by
+                    <a href="https://www.sequentia.in" target="_blank" class="footer-link">Sequentia</a> -->
                   </div>
                   <div class="d-none d-lg-inline-block">
-                    <a href="https://themeforest.net/licenses/standard" class="footer-link me-4" target="_blank"
-                      >License</a
-                    >
-                    <a href="https://1.envato.market/pixinvent_portfolio" target="_blank" class="footer-link me-4"
-                      >More Themes</a
-                    >
-
-                    <a
-                      href="https://demos.pixinvent.com/materialize-html-admin-template/documentation/"
-                      target="_blank"
-                      class="footer-link me-4"
-                      >Documentation</a
-                    >
-
-                    <a href="https://pixinvent.ticksy.com/" target="_blank" class="footer-link d-none d-sm-inline-block"
-                      >Support</a
-                    >
+                    <span style="color:#676b7b !important;">Powered by</span> <a href="https://www.sequentia.in/" target="_blank" class="footer-link d-none d-sm-inline-block">Sequentia</a>
                   </div>
                 </div>
               </div>

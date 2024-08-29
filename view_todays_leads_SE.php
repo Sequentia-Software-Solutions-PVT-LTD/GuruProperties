@@ -62,7 +62,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>View Assigned Leads |  Guru Properties</title>
+    <title>View Today's Assigned Leads |  Guru Properties</title>
 
     <meta name="description" content="" />
 
@@ -95,10 +95,10 @@
 
             <div class="container-xxl flex-grow-1 container-p-y">
               <!-- *************** - main containt in page write here - **********************  -->
-              <h5 class="card-header mar-bot-10">Property Management</h5>
+              <h5 class="card-header mar-bot-10">Lead Management</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
-                    <h5 class="card-header"> All Assigned Leads are listed bellow</h5>
+                    <h5 class="card-header"> All Today's Assigned Leads are listed bellow</h5>
                     <div class="table-responsive text-nowrap">
                         <table class="table">
                         <caption class="ms-6">List of Leads</caption>
