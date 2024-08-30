@@ -11,6 +11,13 @@ if(isset($_SESSION['login_id']))
   header("Location: dashboard" );
 }
 
+$idAddress = $_SERVER['REMOTE_ADDR'];
+$allowedIps = array("223.185.41.36", "::1");
+
+if(!in_array($idAddress, $allowedIps)) {
+  exit();
+}
+
 // on login form submit 
 if(isset($_POST["submit"]))
 { 
@@ -51,13 +58,17 @@ if(isset($_POST["submit"]))
       {
           //if($data['login_role'] == 'ADMIN')
           //{
-              $_SESSION['login_user_id'] = $data['admin_id'];
-              $_SESSION['login_name'] = $data['login_name'];
-              $_SESSION['login_id'] = $data['login_id'];
-              $_SESSION['login_status'] = $data['status'];
-              $_SESSION['login_photo'] = $data['login_photo'];
-              $_SESSION['login_role'] = $data['login_role'];
-              $_SESSION['login_type'] = $data['type'];
+          
+          if(1) {
+
+            $_SESSION['login_user_id'] = $data['admin_id'];
+            $_SESSION['login_name'] = $data['login_name'];
+            $_SESSION['login_id'] = $data['login_id'];
+            $_SESSION['login_status'] = $data['status'];
+            $_SESSION['login_photo'] = $data['login_photo'];
+            $_SESSION['login_role'] = $data['login_role'];
+            $_SESSION['login_type'] = $data['type'];
+          }
               
           //}
           $_SESSION['login_time'] = time();
