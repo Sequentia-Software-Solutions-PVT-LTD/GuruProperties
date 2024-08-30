@@ -48,7 +48,6 @@
     $date_time_parts = explode('T', $next_date_time);
     $next_date = $date_time_parts[0];  // 2024-08-22
     $next_time = $date_time_parts[1];  // 02:26
-
     
     $added_on = date('Y-m-d H-i-s');
     // $status = "Active";
@@ -56,7 +55,6 @@
     $property_variants = $_POST['property_variants']; // This is the array of selected variant IDs
     // Convert the array to a comma-separated string
     $property_variants_string = implode(',', $property_variants);
-
 
     $sqlemp = "SELECT * FROM assign_leads where assign_leads_id= $assign_leads_id ";
     $q = $pdo->prepare($sqlemp);

@@ -98,18 +98,20 @@
               <h5 class="card-header mar-bot-10">Leads Management</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
-                    <h5 class="card-header"> All Tomorrow's Leads are listed bellow</h5>
+                    <h5 class="card-header"> All Tomorrow's Leads are listed below</h5>
                     <div class="table-responsive text-nowrap">
                         <table class="table">
                         <caption class="ms-6">List of Leads</caption>
                         <thead>
                             <tr>
                             <th>#</th>
-                            <th>Leads Name</th>
+                            <th>Lead Name</th>
+                            <th>Property Name</th>
                             <!-- <th>Employee Name</th> -->
                             <th>Location</th>
                             <th>Contact</th>
-                            <th>Email ID</th>
+                            <!-- <th>Time</th> -->
+                            <!-- <th>Email ID</th> -->
                             <th>Budget</th>
                             <!-- <th>Status</th> -->
                             <!-- <th>Actions</th> -->
@@ -130,6 +132,7 @@
                                     $assign_leads_id = $row1['assign_leads_id'];
                                     $leads_id = $row1['leads_id'];
                                     $admin_id = $row1['admin_id'];
+                                    $property_id = $row1['property_id'];
 
                                     $sqlemp = "select * from employee where admin_id = $admin_id ";
                                     $q = $pdo->prepare($sqlemp);
@@ -140,10 +143,18 @@
                                     $q = $pdo->prepare($sqlleads);
                                     $q->execute(array());      
                                     $row_leads = $q->fetch(PDO::FETCH_ASSOC);
+
+                                    $sqllprop = "select * from property_name where property_name_id = $property_id ";
+                                    $q = $pdo->prepare($sqllprop);
+                                    $q->execute(array());      
+                                    $row_pro = $q->fetch(PDO::FETCH_ASSOC);
+
+
                             ?>
                             <tr>
                                     <td><i class="ri-building-2-line ri-22px text-primary me-4"></i><span class="fw-medium"><?php echo $i; ?></span></td>
                                     <td><?php echo $row_leads["lead_name"]; ?></td>
+                                    <td><?php echo $row_pro["property_title"]; ?></td>
                                     <!-- <td><?php //echo $row_emp["employee_name"]; ?></td> -->
                                     <td><?php echo $row_leads["location"]; ?></td>
                                     <td><?php echo $row_leads["phone_no"]; ?></td>

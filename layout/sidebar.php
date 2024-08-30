@@ -20,9 +20,13 @@ elseif($_SESSION['login_role'] == 'SALES EXECUTIVE')
 {
   include('sales_executive.php');
 }
+elseif($_SESSION['login_role'] == 'LEAD GENERATOR') 
+{
+  include('sidebar_lead_generator.php');
+}
 else 
 {
-  // include('sidebar_assistant.php');
+  // include('sidebar_lead_generator.php');
 }
 
 ?>

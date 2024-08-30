@@ -62,7 +62,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>View Follow Up Leads |  Guru Properties</title>
+    <title>View Upcommimg Follow Up Leads |  Guru Properties</title>
 
     <meta name="description" content="" />
 
@@ -98,19 +98,20 @@
               <h5 class="card-header mar-bot-10">Leads Management</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
-                    <h5 class="card-header"> All Follow Up Leads are listed bellow</h5>
+                    <h5 class="card-header"> All Upcommimg Follow Up Leads are listed below</h5>
                     <div class="table-responsive text-nowrap">
                         <table class="table">
                         <caption class="ms-6">List of Leads</caption>
                         <thead>
                             <tr>
                             <th>#</th>
-                            <th>Leads Name</th>
+                            <th>Lead Name</th>
                             <!-- <th>Employee Name</th> -->
                             <th>Location</th>
                             <th>Contact</th>
                             <th>Email ID</th>
                             <th>Budget</th>
+                            <th>Next Date</th>
                             <!-- <th>Status</th> -->
                             <!-- <th>Actions</th> -->
                             </tr>
@@ -120,7 +121,7 @@
                                 $i = 1;
                                 $today_date = date('Y-m-d');
                                 // $sql = "SELECT * FROM assign_leads_sr where admin_id= $admin_id and status='Active' and transfer_status='Available' ";
-                                $sql = "SELECT * FROM assign_leads_sr where admin_id= $admin_id and status='Followup' and DATE(next_date) > '$today_date'";
+                                $sql = "SELECT * FROM assign_leads_sr where admin_id= $admin_id and status='Followup' and transfer_status='Available' and DATE(next_date) > '$today_date'";
                                 $q = $pdo->query($sql);
                                 // print_r($sql);
                                 // exit();
@@ -148,6 +149,7 @@
                                     <td><?php echo $row_leads["phone_no"]; ?></td>
                                     <td><?php echo $row_leads["email_id"]; ?></td>
                                     <td><?php echo $row_leads["budget_range"]; ?></td>
+                                    <td><?php echo date('d-M-Y', strtotime($row1["next_date"])); ?></td>
                                     <!-- <td><?php echo $row_leads["status"]; ?></td> -->
                                     <!-- <td>
                                         <a class="dropdown-item waves-effect" href="view_single_lead_assigned_by_CE.php?assign_leads_sr_id=<?php echo $row1["assign_leads_sr_id"]; ?>"><i class="ri-eye-line me-1"></i> </a>

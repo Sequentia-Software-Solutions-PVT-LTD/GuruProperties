@@ -86,13 +86,13 @@
 
             <div class="container-xxl flex-grow-1 container-p-y">
               <!-- *************** - main containt in page write here - **********************  -->
-              <h5 class="card-header mar-bot-10">Property Name Management</h5>
+              <h5 class="card-header mar-bot-10">Property Management</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
-                    <h5 class="card-header"> All property name are listed bellow</h5>
+                    <h5 class="card-header"> All property are listed below</h5>
                     <div class="table-responsive text-nowrap">
                         <table class="table">
-                        <caption class="ms-6">List of property names</caption>
+                        <caption class="ms-6">List of property</caption>
                         <thead>
                             <tr>
                             <th>#</th>
@@ -115,8 +115,8 @@
                                 <td><i class="ri-home-smile-line ri-22px text-primary me-4"></i><span class="fw-medium"><?php echo $i; ?></span></td>
                                     <!-- <td><?php echo $i; ?></td> -->
                                     <td><?php echo $row["property_title"]; ?></td>
-									<td><?php echo $row["location"]; ?></td>
-									<td><?php echo $row["builder_name"]; ?></td>
+                                    <td><?php echo $row["location"]; ?></td>
+                                    <td><?php echo $row["builder_name"]; ?></td>
                                     <!-- <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ri-more-2-line"></i></button>
@@ -140,7 +140,7 @@
                     <div class="modal-body p-0">
                       <div class="text-center mb-6">
                         <h4 class="mb-2">Suspend!..</h4>
-                        <p>Do you really want suspend this Property Name?</p>
+                        <p>Do you really want suspend this Property?</p>
                       </div>
                       <!-- <p class="mb-5">
                         Enter your mobile phone number with country code and we will send you a verification code.

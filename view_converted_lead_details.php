@@ -295,7 +295,7 @@
                                             ?>
                                            
                                                 <div style="display : flex; gap: 20px; margin-top:20px;">
-                                                    <li class="d-flex align-items-center mb-2" ><span class="fw-medium mx-2">Varients:</span> <span><?php echo htmlspecialchars($variant['varients']); ?></span></li>
+                                                    <li class="d-flex align-items-center mb-2" ><span class="fw-medium mx-2">Variants:</span> <span><?php echo htmlspecialchars($variant['varients']); ?></span></li>
                                                     <li class="d-flex align-items-center mb-2"><span class="fw-medium mx-2">Area:</span> <span><?php echo htmlspecialchars($variant['area']); ?></span></li>
                                                     <li class="d-flex align-items-center mb-2"><span class="fw-medium mx-2">Price:</span> <span><?php echo htmlspecialchars($variant['price']); ?></span></li>
                                                 </div>

@@ -45,11 +45,11 @@
             </li>
 
             <!--  -->
-            <li class="menu-item">
+            <!-- <li class="menu-item">
               <a href="add-leads.php" class="menu-link">
                 <div data-i18nn="List">Add Leads</div>
               </a>
-            </li>
+            </li> -->
             <!--  -->
 
             <!-- Apps & Pages -->

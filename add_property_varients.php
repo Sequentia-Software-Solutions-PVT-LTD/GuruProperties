@@ -66,7 +66,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>Add Property Varients |  Guru Properties</title>
+    <title>Add Property Variants |  Guru Properties</title>
 
     <meta name="description" content="" />
 
@@ -100,9 +100,9 @@
 
             <div class="container-xxl flex-grow-1 container-p-y">
               <!-- *************** - main containt in page write here - **********************  -->
-              <h5 class="card-header mar-bot-10">Property Varients Management</h5>
+              <h5 class="card-header mar-bot-10">Property Variants Management</h5>
                 <div class="card">
-                    <h5 class="card-header"> Add Property Varients </h5>
+                    <h5 class="card-header"> Add Property Variants </h5>
                     <div class="card-body">
                       <form action="#" method="post">
                         <div class="row g-4">
@@ -187,6 +187,7 @@
                               <select id="formtabs-country"  name="varients[]" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
                                 <option value="" data-select2-id="18">Select Variants</option>
                                 <option value="1BHK">1 BHK</option>
+                                <option value="1.5BHK">1.5 BHK</option>
                                 <option value="2BHK">2 BHK</option>
                                 <option value="2.5BHK">2.5 BHK</option>
                                 <option value="3BHK">3 BHK</option>

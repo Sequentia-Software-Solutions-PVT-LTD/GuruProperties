@@ -98,21 +98,21 @@
               <h5 class="card-header mar-bot-10">Leads Management</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
-                    <h5 class="card-header"> All Leads are listed bellow</h5>
+                    <h5 class="card-header"> All Leads are listed below</h5>
                     <div class="table-responsive text-nowrap">
                         <table class="table">
                         <caption class="ms-6">List of Leads</caption>
                         <thead>
                             <tr>
                             <th>#</th>
-                            <th>Leads Name</th>
+                            <th>Lead Name</th>
                             <!-- <th>Employee Name</th> -->
                             <th>Location</th>
                             <th>Contact</th>
                             <th>Email ID</th>
                             <th>Budget</th>
                             <th>Status</th>
-                            <!-- <th>Actions</th> -->
+                            <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -149,9 +149,9 @@
                                     <td><?php echo $row_leads["email_id"]; ?></td>
                                     <td><?php echo $row_leads["budget_range"]; ?></td>
                                     <td><?php echo $row1["status"]; ?></td>
-                                    <!-- <td>
+                                    <td>
                                         <a class="dropdown-item waves-effect" href="view_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-eye-line me-1"></i> </a>
-                                    </td> -->
+                                    </td>
                             </tr>
                             <?php $i++; } ?>
                         </tbody>

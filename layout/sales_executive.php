@@ -45,11 +45,11 @@
             </li>
 
             <!--  -->
-            <li class="menu-item">
+            <!-- <li class="menu-item">
               <a href="add-leads.php" class="menu-link">
                 <div data-i18nn="List">Add Leads</div>
               </a>
-            </li>
+            </li> -->
 
             <!--  -->
             <li class="menu-header mt-5">
@@ -146,7 +146,7 @@
             <li class="menu-item">
               <a href="upcomming_leads_SE.php" class="menu-link">
               <i class="menu-icon tf-icons ri-bill-line"></i>
-                <div data-i18nn="List">Upcomming Leads</div>
+                <div data-i18nn="List">Upcomming Visit</div>
               </a>
             </li>
             <li class="menu-item">

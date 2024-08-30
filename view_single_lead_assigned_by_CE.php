@@ -35,30 +35,99 @@
 
   if(isSet($_POST["submit1"]))
   { 
-    echo "<pre>";
-    print_r($_POST);
-    exit();
+    // echo "<pre>";
+    // print_r($_POST);
+    // exit();
+
+    $next_date_followup1 = "";
+    $next_time_followup1 = "";
+    $next_date_visit1 = "";
+    $next_time_visit1 = "";
 
     $connection_status = $_POST['connection_status'];
-    $notes = $_POST['notes'];
+    // $notes = $_POST['notes'];
     $lead_type = $_POST['lead_type'];
-
+    $today_visit_remark = $_POST['today_visit_remark'];
+    $followup_or_another_property = $_POST['followup_or_another_property'];
+    
     $added_on = date('Y-m-d H-i-s');
+
     $status = "Followup";
     $t_status_ce = "Not Available";
     $transfer_status = "Available";
 
-    $next_date_time = $_POST['next_date'];
-    // Split the datetime into date and time
-    $date_time_parts = explode('T', $next_date_time);
-    $next_date = $date_time_parts[0];  // 2024-08-22
-    $next_time = $date_time_parts[1];  // 02:26
+    $next_date_time = $_POST['next_date_visit'];
+    if ($next_date_time) {
+        // Split the datetime into date and time
+        $date_time_parts = explode('T', $next_date_time);
+        
+        // if (count($date_time_parts) === 2) {
+            $next_date_visit1 = $date_time_parts[0];  // e.g., 2024-08-22
+            $next_time_visit1 = $date_time_parts[1];  // e.g., 02:26
+        } else {
+            // Handle the case where the datetime is not in the expected format
+            $next_date_visit1 = '';
+            $next_time_visit1 = '';
+            // Optionally, log an error or handle it accordingly
+        // }
+    }
+
     
-    $assign_leads_id = $_POST['assign_leads_id'];
+
+    // $next_date_time_followup = $_POST['next_date_followup'];
+    // // Split the datetime into date and time
+    // $date_time_parts = explode('T', $next_date_time_followup);
+    // $next_date_followup = $date_time_parts[0];  // 2024-08-22
+    // $next_time_followup = $date_time_parts[1];  // 02:26
+
+    $next_date_time_followup = $_POST['next_date_followup'];
+    if ($next_date_time_followup) {
+        // Split the datetime into date and time
+        $date_time_parts = explode('T', $next_date_time_followup);
+        
+        // if (count($date_time_parts) === 2) {
+            $next_date_followup1 = $date_time_parts[0];  // e.g., 2024-08-22
+            $next_time_followup1 = $date_time_parts[1];  // e.g., 02:26
+        } else {
+            // Handle the case where the datetime is not in the expected format
+            $next_date_followup1 = '';
+            $next_time_followup1 = '';
+            
+            // Optionally, log an error or handle it accordingly
+        // }
+    }
+    
+    $assign_leads_sr_id = $_POST['assign_leads_sr_id'];
+
+    $followup_or_another_property = $_POST['followup_or_another_property'];
+
+    if($followup_or_another_property == 'Follow Up')
+    {
+        $sqlleads_sr = "select * from assign_leads_sr where assign_leads_sr_id = $assign_leads_sr_id ";
+        $q = $pdo->prepare($sqlleads_sr);
+        $q->execute(array());      
+        $row_leads_sr = $q->fetch(PDO::FETCH_ASSOC);
+
+        // echo "<pre>";
+        // print_r($row_leads_sr);
+        // exit();
+
+        $property_name_id = $row_leads_sr['property_id'];
+        $property_tower_id = $row_leads_sr['sub_property_id'];
+        $property_variants = $row_leads_sr['variant'];
+    }
+    else{
+        $property_name_id = $_POST['property_name_id'];
+        $property_tower_id = $_POST['property_tower_id'];
+
+        $property_variants_string = $_POST['property_variants']; // This is the array of selected variant IDs
+        // Convert the array to a comma-separated string
+        $property_variants = implode(',', $property_variants_string);
+    }
 
     // -----------upload photo script(by select pic)-----------
     $photo_capture1 = $_POST['photo_capture1'];
-	$photo_capture2 = $_POST['photo_capture2'];
+	// $photo_capture2 = $_POST['photo_capture2'];
 
 	$photo1 = NULL;
 	if ($_POST['photo_capture1'] != "") {
@@ -71,13 +140,22 @@
 	}
     // -----------/upload photo script(by select pic)-----------
 
+    // echo "<pre>";
+    // print_r($next_time_followup1);
+    // print_r($next_date_followup1);
+    // print_r($next_date_visit1);
+    // print_r($next_time_visit1);
+    // print_r($next_date_time);
+    // exit();
+
     // $sqlemp = "SELECT * FROM assign_leads where assign_leads_id= $assign_leads_id ";
-    $sqlemp = "SELECT * FROM assign_leads where assign_leads_id = $assign_leads_id ";
+    $sqlemp = "SELECT * FROM assign_leads_sr where assign_leads_sr_id = $assign_leads_sr_id ";
     $q = $pdo->prepare($sqlemp);
     $q->execute(array());      
     $row_assign = $q->fetch(PDO::FETCH_ASSOC);
 
     $leads_id = $row_assign['leads_id'];
+    $assign_leads_id = $row_assign['assign_leads_id'];
     $admin_id = $row_assign['admin_id'];
     $employee_id = $row_assign['employee_id'];
     $employee_name = $row_assign['employee_name'];
@@ -89,23 +167,25 @@
             `notes` = ?, 
             `next_date` = ?, 
             `next_time` = ?, 
+            `visit_date` = ?, 
+            `visit_time` = ?, 
             `lead_type` = ?, 
-            `added_on` = ?, 
+            `edited_on` = ?, 
             `status` = ?,
             `transfer_status` = ?
             WHERE `assign_leads_sr_id` = ?";
 
     $q = $pdo->prepare($sql);
-    $q->execute(array($connection_status, $notes, $next_date, $next_time, $lead_type, $added_on, $status, $t_status_ce, $assign_leads_id));
+    $q->execute(array($connection_status, $today_visit_remark, $next_date_followup1, $next_time_followup1, $next_date_visit1, $next_time_visit1, $lead_type, $added_on, $status, $t_status_ce, $assign_leads_sr_id));
 
     // ----------------------- Insert for new ffollowup ---------------------------------------------------------
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "INSERT INTO `assign_leads_sr`(`leads_id`, `admin_id`, `employee_id`,`employee_name`, `status`, `transfer_status`,`next_date`,`next_time`, `added_on`) VALUES (?,?,?,?,?,?,?,?,?)";
+    $sql = "INSERT INTO `assign_leads_sr`(`assign_leads_id`,`leads_id`, `admin_id`, `employee_id`,`employee_name`, `status`, `transfer_status`,`next_date`,`next_time`,`visit_date`,`visit_time`,`photo`,`followup_or_another_property`,`variant`, `property_id`, `sub_property_id`, `added_on`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     $q = $pdo->prepare($sql);
-    $q->execute(array($leads_id, $admin_id, $employee_id, $employee_name, $status, $transfer_status, $next_date, $next_time, $added_on));
+    $q->execute(array($assign_leads_id, $leads_id, $admin_id, $employee_id, $employee_name, $status, $transfer_status, $next_date_followup1, $next_time_followup1, $next_date_visit1, $next_time_visit1, $photo1, $followup_or_another_property, $property_variants, $property_name_id, $property_tower_id, $added_on)); 
     // $lastInsertedId = $pdo->lastInsertId();
     
-    header('location:assigned_leads.php');
+    header('location:view_todays_leads_SE.php');
     
   }
 
@@ -424,7 +504,7 @@
                                             ?>
                                            
                                             <div style="display : flex; gap: 20px; margin-top:20px;">
-                                                <li class="d-flex align-items-center mb-2" ><span class="fw-medium mx-2">Varients:</span> <span><?php echo htmlspecialchars($variant['varients']); ?></span></li>
+                                                <li class="d-flex align-items-center mb-2" ><span class="fw-medium mx-2">Variants:</span> <span><?php echo htmlspecialchars($variant['varients']); ?></span></li>
                                                 <li class="d-flex align-items-center mb-2"><span class="fw-medium mx-2">Area:</span> <span><?php echo htmlspecialchars($variant['area']); ?></span></li>
                                                 <li class="d-flex align-items-center mb-2"><span class="fw-medium mx-2">Price:</span> <span><?php echo htmlspecialchars($variant['price']); ?></span></li>
                                             </div>
@@ -520,7 +600,7 @@
 
                                     <div class="mb-4" id="selectBox1">
                                         <label for="next_date" class="form-label">Select One Option</label>
-                                        <select id="roleDropdown" name="login_role" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
+                                        <select id="roleDropdown" name="followup_or_another_property" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
                                             <option value="" data-select2-id="18">Select One</option>
                                             <option value="Follow Up">Follow Up</option>
                                             <option value="Another Property">Another Property</option>

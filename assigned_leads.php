@@ -95,17 +95,17 @@
 
             <div class="container-xxl flex-grow-1 container-p-y">
               <!-- *************** - main containt in page write here - **********************  -->
-              <h5 class="card-header mar-bot-10">Property Management</h5>
+              <h5 class="card-header mar-bot-10">Leads Management</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
-                    <h5 class="card-header"> All Today's New Leads are listed bellow</h5>
+                    <h5 class="card-header"> All Today's New Leads are listed below</h5>
                     <div class="table-responsive text-nowrap">
                         <table class="table">
                         <caption class="ms-6">List of Leads</caption>
                         <thead>
                             <tr>
                             <th>#</th>
-                            <th>Leads Name</th>
+                            <th>Lead Name</th>
                             <!-- <th>Employee Name</th> -->
                             <th>Location</th>
                             <th>Contact</th>

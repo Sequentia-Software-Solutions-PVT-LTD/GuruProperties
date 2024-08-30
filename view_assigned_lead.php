@@ -70,7 +70,7 @@
             `next_date` = ?, 
             `next_time` = ?, 
             `lead_type` = ?, 
-            `added_on` = ?, 
+            `edited_on` = ?, 
             `status` = ?,
             `transfer_status` = ?
             WHERE `assign_leads_id` = ?";
@@ -141,7 +141,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title> Add Employee  |  Guru Properties</title>
+    <title> View Assigned Leads  |  Guru Properties</title>
 
     <meta name="description" content="" />
     <style>

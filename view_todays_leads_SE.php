@@ -98,14 +98,14 @@
               <h5 class="card-header mar-bot-10">Lead Management</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
-                    <h5 class="card-header"> All Today's Assigned Leads are listed bellow</h5>
+                    <h5 class="card-header"> All Today's Assigned Leads are listed below</h5>
                     <div class="table-responsive text-nowrap">
                         <table class="table">
                         <caption class="ms-6">List of Leads</caption>
                         <thead>
                             <tr>
                             <th>#</th>
-                            <th>Leads Name</th>
+                            <th>Lead Name</th>
                             <!-- <th>Employee Name</th> -->
                             <th>Location</th>
                             <th>Contact</th>
@@ -119,9 +119,9 @@
                             <?php 
                                 $i = 1;
                                 $today_date = date('Y-m-d');
-                                // $sql = "SELECT * FROM assign_leads_sr where admin_id= $admin_id and status='Active' and transfer_status='Available' and DATE(visit_date) = '$today_date'  ";
+                                $sql = "SELECT * FROM assign_leads_sr where admin_id= $admin_id and status='Active' and transfer_status='Available' and DATE(visit_date) = '$today_date'  ";
                                 // $sql = "SELECT * FROM assign_leads_sr where admin_id= $admin_id and status='Active' and transfer_status='Available' and DATE(added_on) = '$today_date'  ";
-                                $sql = "SELECT * FROM assign_leads_sr where admin_id= $admin_id and status='Active' and transfer_status='Available' ";
+                                // $sql = "SELECT * FROM assign_leads_sr where admin_id= $admin_id and status='Active' and transfer_status='Available' ";
                                 $q = $pdo->query($sql);
                                 // print_r($sql);
                                 // exit();

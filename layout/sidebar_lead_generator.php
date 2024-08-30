@@ -47,16 +47,22 @@
 
             <!--  -->
 
+            <!-- <li class="menu-item">
+              <a href="add-leads.php" class="menu-link">
+                <div data-i18nn="List">Add Leads</div>
+              </a>
+            </li> -->
+
             <li class="menu-item">
               <a href="#" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons ri-bill-line"></i>
-                <div data-i18nn="Invoice">Reports</div>
+                <div data-i18nn="Invoice">Leads</div>
               </a>
               <ul class="menu-sub">
                 
                 <li class="menu-item">
-                  <a href="#" class="menu-link">
-                    <div data-i18nn="Preview">View Reports</div>
+                  <a href="add-leads.php" class="menu-link">
+                    <div data-i18nn="Preview">Add Leads</div>
                   </a>
                 </li>
               </ul>

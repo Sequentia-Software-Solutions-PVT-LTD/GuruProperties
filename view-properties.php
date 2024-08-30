@@ -81,7 +81,7 @@
               <h5 class="card-header mar-bot-10">Property Management</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
-                    <h5 class="card-header"> All properties are listed bellow</h5>
+                    <h5 class="card-header"> All properties are listed below</h5>
                     <div class="table-responsive text-nowrap">
                         <table class="table">
                         <caption class="ms-6">List of Properies</caption>

@@ -237,10 +237,10 @@
                                         <div class="row">
                                           <div class="col-md-6">
                                               <div class="row">
-                                                  <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Varients</label>
+                                                  <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Variants</label>
                                                   <div class="col-sm-9">
                                                       <select id="propertyDropdown" name="property_varients" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" required>
-                                                          <option value="">Select Varients</option>
+                                                          <option value="">Select Variants</option>
                                                           <?php
                                                               $sql = "SELECT * FROM property_varients";
                                                               foreach ($pdo->query($sql) as $row) { 

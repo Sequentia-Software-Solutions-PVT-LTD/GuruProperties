@@ -81,7 +81,7 @@
               <h5 class="card-header mar-bot-10">Property Management</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
-                    <h5 class="card-header"> All properties are listed bellow</h5>
+                    <h5 class="card-header"> All properties are listed below</h5>
                     <div class="table-responsive text-nowrap">
                         <table class="table">
                         <caption class="ms-6">List of Properies</caption>
@@ -97,7 +97,7 @@
                             <th>Location</th>
                             <th>Builder Possession</th>
                             <th>RERA Possession</th>
-                            <th>Status</th>
+                            <!-- <th>Status</th> -->
                             <!-- <th>Actions</th> -->
                             </tr>
                         </thead>
@@ -133,11 +133,11 @@
                                     <td><?php echo $row_p["location"]; ?></td>
                                     <td><?php echo $row_pt["builder_possession"]; ?></td>
                                     <td><?php echo $row_pt["rera_possession"]; ?></td>
-                                    <?php if ($row["status"] == 'Active'){ ?>
+                                    <!-- <?php if ($row["status"] == 'Active'){ ?>
                                         <td><span class="badge rounded-pill bg-label-primary me-1"><?php echo $row["status"]; ?></span></td>
                                     <?php } if ($row["status"] == 'Suspended'){?>
                                         <td><span class="badge rounded-pill bg-label-danger me-1"><?php echo $row["status"]; ?></span></td>
-                                    <?php } ?>  
+                                    <?php } ?>   -->
 
                                     <td style="display:none;">
                                     <?php if ($row["status"] == 'Active'){ ?>
