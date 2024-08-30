@@ -117,20 +117,43 @@
                                 { 
                             ?>
                             <tr>
-                                <td><i class="ri-user-line ri-22px text-primary me-4"></i><span class="fw-medium"><?php echo $i; ?></span></td>
+                                <td><span class="fw-medium"><?php echo $i; ?></span></td>
                                     <!-- <td><?php echo $i; ?></td> -->
-                                    <td><?php echo $row["employee_name"]; ?></td>
-									<td><?php echo $row["cell_no"]; ?></td>
-									<td><?php echo $row["email_id"]; ?></td>
-									<td><?php echo $row["user_id"]; ?></td>
-									<td><?php echo $row["login_role"]; ?></td>
-									<!-- <td>
-										<a type="button" class="btn btn-success btn-xs glyphicon glyphicon-eye-open" href="view_assistant?assistant_id=<?php //echo $row["assistant_id"]; ?>"></a>
-										<?php if ($row["status"] == 'Active'){ ?>
-										<a type="button" class="btn btn-xs btn-info glyphicon glyphicon-pencil" href="edit_employee.php?admin_id=<?php echo $row["admin_id"]; ?>"></a>
-										<a type="button" class="open-myModal btn btn-danger btn-xs glyphicon glyphicon-trash" data-toggle="modal" data-target=".bs-modal-sm" id="open" data-admin_id="<?php echo $row["admin_id"]; ?>"></a>
-										<?php } ?>
-									</td> -->
+                                <td>
+                                    <i class="ri-user-line ri-22px text-primary me-4"></i>
+                                    <?php echo $row["employee_name"]; ?>
+                                </td>
+                                <td><?php echo $row["cell_no"]; ?></td>
+                                <td><?php echo $row["email_id"]; ?></td>
+                                <td><?php echo $row["user_id"]; ?></td>
+                                <td>
+                                    <?php
+                                          if($row["login_role"] == "CUSTOMER EXECUTIVE"){
+                                            echo '<button type="button" class="btn btn-warning text-nowrap d-inline-flex position-relative me-4">';
+                                            echo $row["login_role"]; 
+                                            echo '<span class="position-absolute top-0 start-100 translate-middle badge badge-center bg-label-warning border border-warning"></span></button>';
+                                          } 
+                                          if($row["login_role"] == "SALES EXECUTIVE") {
+                                            echo '<button type="button" class="btn btn-label-primary text-nowrap d-inline-flex position-relative me-4">';
+                                            echo $row["login_role"]; 
+                                            echo '<span class="position-absolute top-0 start-100 translate-middle badge badge-center bg-label-warning border border-warning"></span></button>';
+                                          }
+                                          if($row["login_role"] == "LEAD GENERATOR") {
+                                            echo '<button type="button" class="btn btn-label-dark text-nowrap d-inline-flex position-relative me-4">';
+                                            echo $row["login_role"]; 
+                                            echo '<span class="position-absolute top-0 start-100 translate-middle badge badge-center bg-label-warning border border-warning"></span></button>';
+                                          }
+
+                                          
+                                    ?>
+                                </td>
+                                <!-- <td>
+                                  <a type="button" class="btn btn-success btn-xs glyphicon glyphicon-eye-open" href="view_assistant?assistant_id=<?php //echo $row["assistant_id"]; ?>"></a>
+                                  <?php if ($row["status"] == 'Active'){ ?>
+                                  <a type="button" class="btn btn-xs btn-info glyphicon glyphicon-pencil" href="edit_employee.php?admin_id=<?php echo $row["admin_id"]; ?>"></a>
+                                  <a type="button" class="open-myModal btn btn-danger btn-xs glyphicon glyphicon-trash" data-toggle="modal" data-target=".bs-modal-sm" id="open" data-admin_id="<?php echo $row["admin_id"]; ?>"></a>
+                                  <?php } ?>
+                                </td> -->
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ri-more-2-line"></i></button>

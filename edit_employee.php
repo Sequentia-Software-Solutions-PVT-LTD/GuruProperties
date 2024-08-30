@@ -194,13 +194,13 @@
                             </div>
                           </div>
                           <div class="row mt-12">
-                            <div class="col-md-12">
-                              <div class="row justify-content-end">
-                                <div class="col-sm-4">
-                                  <button type="submit" class="btn btn-primary me-4 waves-effect waves-light" name="subimt">Submit</button>
+                            <div class="col-md-12" style="justify-content: flex-end;display: flex;">
+                              <!-- <div class="row justify-content-end"> -->
+                                <!-- <div class="col-sm-4"> -->
+                                  <button type="submit" class="btn btn-success me-4 waves-effect waves-light" name="subimt">Submit</button>
                                   <button type="reset" class="btn btn-outline-secondary waves-effect">Cancel</button>
-                                </div>
-                              </div>
+                                <!-- </div> -->
+                              <!-- </div> -->
                             </div>
                           </div>
                         </form>

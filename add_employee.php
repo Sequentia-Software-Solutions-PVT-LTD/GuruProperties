@@ -111,81 +111,85 @@
                 <div class="card">
                     <h5 class="card-header">Add Employee</h5>
                     <div class="card-body">
-                        <div class="d-flex align-items-center1 justify-content-center h-px-300">
-                        <form action="#" method="post">
+                        <div class="d-flex align-items-center1 justify-content-center h-px-260">
+                        <form class="card-body demo-vertical-spacing demo-only-element" action="#" method="post">
                           <div class="row g-4">
                             
                             <div class="col-md-6">
-                                <div class="row">
-                                    <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-country">Role</label>
-                                    <div class="col-sm-9">
-                                        <div class="position-relative">
+                                <div class="row align-items-center justify-content-center">
+                                    <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-country">Role</label> -->
+                                    <div class="col-sm-12 form-floating form-floating-outline">
+                                        <!-- <div class="position-relative"> -->
                                             <select id="roleDropdown" name="login_role" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
                                                 <option value="" data-select2-id="18">Select Employee Role</option>
                                                 <option value="CUSTOMER EXECUTIVE">Customer Executive</option>
                                                 <option value="SALES EXECUTIVE">Sales Executive</option>
                                             </select>
-                                        </div>
+                                            <label for="roleDropdown">Role</label>
+                                        <!-- </div> -->
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                              <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Name</label>
-                                <div class="col-sm-9">
-                                  <input type="text" name="employee_name" id="formtabs-username" class="form-control" placeholder="john doe" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required>
+                              <div class="row align-items-center justify-content-center">
+                                <div class="col-sm-12 form-floating form-floating-outline">
+                                  <input type="text" name="employee_name" id="formtabs-username" class="form-control" placeholder="john doe" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required />
+                                  <label for="formtabs-username"> Name</label>
                                 </div>
                               </div>
                             </div>
                             <div class="col-md-6">
-                              <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-email">Email</label>
-                                <div class="col-sm-9">
-                                  <div class="input-group input-group-merge">
-                                    <input type="email"  name="email_id"  id="formtabs-email" class="form-control" placeholder="@example.com" aria-label="john.doe" aria-describedby="formtabs-email2">
-                                    <!-- <span class="input-group-text" id="formtabs-email2">@example.com</span> -->
-                                  </div>
+                              <div class="row align-items-center justify-content-center">
+                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-email">Email</label> -->
+                                <div class="col-sm-12 form-floating form-floating-outline">
+                                  <!-- <div class="input-group input-group-merge"> -->
+                                    <input type="email"  name="email_id"  id="formtabs-email" class="form-control" placeholder="@example.com">
+                                    <label for="formtabs-email"> Email</label>
+                                  <!-- </div> -->
                                 </div>
                               </div>
                             </div>
                             <div class="col-md-6">
-                              <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-phone">Phone No</label>
-                                <div class="col-sm-9">
+                              <div class="row align-items-center justify-content-center">
+                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-phone">Phone No</label> -->
+                                <div class="col-sm-12 form-floating form-floating-outline">
                                   <input type="text"  name="cell_no"  id="formtabs-phone" class="form-control phone-mask" placeholder="658 799 8941" aria-label="658 799 8941"  maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 10);">
+                                  <label for="formtabs-phone"> Phone No</label>
                                 </div>
                               </div>
                             </div>
                             <div class="col-md-6" >
-                              <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username">User ID</label>
+                              <div class="row align-items-center justify-content-center">
+                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username">User ID</label> -->
                               
-                                <div class="col-sm-9" style="display:flex;">
-                                  <input type="text" name="prefix" id="prefixInput" class="prefix-class form-control" readonly style="width: 42px; border-right: none; border-top-right-radius: 0;border-bottom-right-radius: 0;padding-right: 0;">
-                                  <input type="text"  name="user_id"  id="formtabs-username" class="user-id-class form-control" placeholder="" style=" border-top-left-radius: 0; border-bottom-left-radius: 0; border-left: 0;padding-left: 0;" required>
+                                <div class="col-sm-12 form-floating form-floating-outline" >
+                                  <!-- <input type="text" name="prefix" id="prefixInput" class="prefix-class form-control" readonly style="width: 42px; border-right: none; border-top-right-radius: 0;border-bottom-right-radius: 0;padding-right: 0;"> -->
+                                  <input type="text"  name="user_id"  id="formtabs-username" class="form-control" placeholder="" required>
+                                  <label for="formtabs-username">User ID</label>
                                 </div>
                               </div>
                             </div>
                             <div class="col-md-6">
-                              <div class="row form-password-toggle">
-                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-password">Password</label>
-                                <div class="col-sm-9">
-                                  <div class="input-group input-group-merge">
+                              <div class="row align-items-center justify-content-center form-password-toggle">
+                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-password">Password</label> -->
+                                <div class="col-sm-12 form-floating form-floating-outline">
+                                  <!-- <div class="input-group input-group-merge"> -->
                                     <input type="password"  name="password"  id="formtabs-password" class="form-control" placeholder="*********" aria-describedby="formtabs-password2" required>
-                                    <span class="input-group-text cursor-pointer" id="formtabs-password2"><i class="ri-eye-off-line"></i></span>
-                                  </div>
+                                    <!-- <span class="input-group-text cursor-pointer" id="formtabs-password2"><i class="ri-eye-off-line"></i></span> -->
+                                    <label for="formtabs-password">Password</label>
+                                  <!-- </div> -->
                                 </div>
                               </div>
                             </div>
                           </div>
                           <div class="row mt-12">
-                            <div class="col-md-12">
-                              <div class="row justify-content-end">
-                                <div class="col-sm-4">
+                            <div class="col-md-12 justify-content-end text-end">
+                              <!-- <div class="row justify-content-end"> -->
+                                <!-- <div class="col-sm-4"> -->
                                   <button type="submit" class="btn btn-primary me-4 waves-effect waves-light" name="subimt">Submit</button>
                                   <button type="reset" class="btn btn-outline-secondary waves-effect">Cancel</button>
-                                </div>
-                              </div>
+                                <!-- </div> -->
+                              <!-- </div> -->
                             </div>
                           </div>
                         </form>
