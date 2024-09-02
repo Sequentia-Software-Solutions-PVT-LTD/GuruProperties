@@ -21,3 +21,15 @@
 
     <!-- Page JS -->
     <script src="assets/js/dashboards-analytics.js"></script>
+
+    <!-- Vendors JS -->
+    <script src="assets/vendor/libs/select2/select2.js"></script>
+    <script src="assets/vendor/libs/tagify/tagify.js"></script>
+    <script src="assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+    <script src="assets/vendor/libs/typeahead-js/typeahead.js"></script>
+    <script src="assets/vendor/libs/bloodhound/bloodhound.js"></script>
+
+    <!-- Page JS -->
+    <script src="assets/js/forms-selects.js"></script>
+    <script src="assets/js/forms-tagify.js"></script>
+    <script src="assets/js/forms-typeahead.js"></script>
