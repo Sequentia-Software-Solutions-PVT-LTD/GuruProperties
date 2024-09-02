@@ -1,40 +1,4 @@
-<?php
-    $budget_Values = [
-      16000000,
-      15000000,
-      14000000,
-      13000000,
-      12000000,
-      11000000,
-      10000000,
-      9000000,
-      8000000,
-      7000000,
-      6000000,
-      5000000,
-      4000000,
-      3000000
-    ];
-    $location_Values = [
-      1 => "Koregaon Park",
-      2 => "Kalyani Nagar",
-      3 => "Hinjewadi",
-      4 => "Kharadi",
-      5 => "Hadapsar",
-      6 => "Aundh",
-      7 => "NIBM Road",
-      8 => "Shivaji Nagar",
-      9 => "Magarpatta City",
-      10 => "Bavdhan",
-      11 => "Model Colony",
-      12 => "Viman Nagar",
-      13 => "Baner",
-      14 => "Wakad",
-      15 => "Wagholi",
-      16 => "Pimple Saudagar",
-    ];
-    
-?>
+
 
                           <div class="row">
                             <div class="mb-6 col-lg-6 col-xl-2 col-12 mb-0">
@@ -51,16 +15,7 @@
                             </div>
                             <div class="mb-6 col-lg-6 col-xl-2 col-12 mb-0">
                               <div class="form-floating form-floating-outline">
-                                <!-- <input type="text" name="input3[]" id="form-repeater-3-7" class="form-control" placeholder=""> -->
-                                <select name="input3[]" id="form-repeater-1-3" required class="form-control" placeholder="Select Location">
-                                      <option selected disable value="">Select Location</option>
-                                      <?php
-                                          $sqlLocation = "SELECT * FROM location order by name";
-                                          foreach($pdo->query($sqlLocation) as $LocationList) {
-                                            echo "<option style='margin-bottom: 8px;' value='".$LocationList["id"]."'>".$LocationList["name"]."</option>";
-                                          }
-                                      ?>
-                                </select>
+                                <input type="text" name="input3[]" id="form-repeater-3-7" class="form-control" placeholder="">
                                 <label for="form-repeater-1-3">Location</label>
                               </div>
                             </div>
@@ -73,13 +28,7 @@
 
                             <div class="mb-6 col-lg-6 col-xl-2 col-12 mb-0">
                               <div class="form-floating form-floating-outline">
-                                <select name="input5[]" id="form-repeater-3-9" class="form-control" placeholder="">
-                                      <option selected disable value="">Select Budget</option>
-                                      <?php foreach($budget_Values as $budgetValue) { ?>  
-                                          <option><?php echo $budgetValue; ?></option>
-                                      <?php } ?>
-                                </select>
-                                <!-- <input type="text" name="input5[]" id="form-repeater-3-9" class="form-control" placeholder=""> -->
+                                <input type="text" name="input5[]" id="form-repeater-3-9" class="form-control" placeholder="">
                                 <label for="form-repeater-1-5">Budget</label>
                               </div>
                             </div>

@@ -183,53 +183,17 @@
                                 <div class="card-body" style="padding-top: 0px;">
                                     
                                     <div class="mb-4">
-                                      <?php
-                                          // $location = "1,2,3,4,9";
-                                          // var_dump(gettype($location));
-                                          // $locationArray = explode(",", $location);
-                                          // var_dump($locationArray);
-                                      ?>
-                                        <!-- <label for="notes" class="form-label">Select Customer Executive</label> -->
-                                        <!-- <select id="roleDropdown" name="transfer_employee_id" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
+                                        <label for="notes" class="form-label">Select Customer Executive</label>
+                                        <select id="roleDropdown" name="transfer_employee_id" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
                                           <option value="" data-select2-id="18">Select Customer Executive</option>
                                             <?php
-                                                // $sql = "SELECT * FROM  employee where status='Active' and login_role='CUSTOMER EXECUTIVE' ";
-                                                // foreach ($pdo->query($sql) as $row) 
-                                                // { 
-                                                ?>
-                                                  <option value="<?php //echo $row['employee_id']?>"><?php //echo $row['employee_name']?></option> 
-                                              <?php //} ?>
-                                          </select> -->
-                                          <div class="form-floating form-floating-outline">
-                                              <select
-                                                id="transfer_employee_id"
-                                                class="selectpicker w-100"
-                                                data-style="btn-default"
-                                                data-show-subtext="true">
-                                                <option disable hidden selected>Select Customer Executive</option>
-                                                <?php
                                                 $sql = "SELECT * FROM  employee where status='Active' and login_role='CUSTOMER EXECUTIVE' ";
                                                 foreach ($pdo->query($sql) as $row) 
                                                 { 
-                                                  $location = $row['location'];
-                                                  $locationArray = explode(",", $location);
-                                                  $locationName = array();
-                                                  foreach($locationArray as $locationSingle) {                                                    
-                                                    $locationid = $locationSingle;
-                                                    $sqlEmployeeDetail = "SELECT * FROM location WHERE id = '$locationid'";
-                                                    $q = $pdo->prepare($sqlEmployeeDetail);
-                                                    $q->execute(array());
-                                                    $result = $q->fetch(PDO::FETCH_ASSOC);
-                                                    array_push($locationName, $result['name']);
-                                                  }
-                                                  sort($locationName);
-                                                  $locationName = implode("-",$locationName);
                                                 ?>
-                                                  <option data-subtext="<?php echo $locationName; ?>" value="<?php echo $row['employee_id']; ?>"><?php echo $row['employee_name']; ?></option> 
+                                                  <option value="<?php echo $row['employee_id']?>"><?php echo $row['employee_name']?> (<?php echo $row['location']?>)</option> 
                                               <?php } ?>
-                                                <label for="transfer_employee_id">Select Customer Executive</label>
-                                              </select>
-                                          </div>
+                                          </select>
                                     </div>
 
 

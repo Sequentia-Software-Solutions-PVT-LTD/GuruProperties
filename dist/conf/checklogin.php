@@ -78,7 +78,10 @@
 					"view_assigned_lead",
 					"view_properties_name",
 					"view_properties_tower",
-					"view_property_varients"
+					"view_property_varients",
+					"view_leads_for_assigned_SE",
+					"add_location",
+					"view_locations"
 				);
 
 				$SEAllowedPages = array(
@@ -114,7 +117,9 @@
 					"view_single_lead_assigned_by_CE",
 					"view_todays_leads_SE",
 					"view_Today’s_follow_up_leads_SE",
-					"view_tomorrow_leads_SE"
+					"view_tomorrow_leads_SE",
+					"add_location",
+					"view_locations"
 				);
 
 				$LeadAllowedPages = array(

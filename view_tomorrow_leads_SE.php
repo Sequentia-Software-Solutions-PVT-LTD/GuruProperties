@@ -147,9 +147,7 @@
                                     $sqllprop = "select * from property_name where property_name_id = $property_id ";
                                     $q = $pdo->prepare($sqllprop);
                                     $q->execute(array());      
-                                    $row_pro = $q->fetch(PDO::FETCH_ASSOC);
-
-
+                                    $row_pro = $q->fetch(PDO::FETCH_ASSOC); 
                             ?>
                             <tr>
                                     <td><i class="ri-building-2-line ri-22px text-primary me-4"></i><span class="fw-medium"><?php echo $i; ?></span></td>
@@ -160,7 +158,7 @@
                                     <td><?php echo $row_leads["phone_no"]; ?></td>
                                     <td><?php echo $row_leads["email_id"]; ?></td>
                                     <td><?php echo $row_leads["budget_range"]; ?></td>
-                                    <!-- <td><?php echo $row_leads["status"]; ?></td> -->
+                                    <!-- <td><?php //echo $row_leads["status"]; ?></td> -->
                                     <!-- <td>
                                         <a class="dropdown-item waves-effect" href="view_single_lead_assigned_by_CE.php?assign_leads_sr_id=<?php echo $row1["assign_leads_sr_id"]; ?>"><i class="ri-eye-line me-1"></i> </a>
                                     </td> -->

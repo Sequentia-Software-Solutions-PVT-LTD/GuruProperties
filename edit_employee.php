@@ -37,6 +37,14 @@
 
     $employee_id = $_POST['employee_id'];
 
+    $_employeelocation_id = $_POST['_employeelocation'];
+
+    $sql = "select * from location where id = $_employeelocation_id ";
+    $q = $pdo->prepare($sql);
+    $q->execute(array());      
+    $row_loc = $q->fetch(PDO::FETCH_ASSOC);
+
+    $location_name = $row_loc['name'];
 
     $sql = "select * from employee where employee_id = $employee_id ";
     $q = $pdo->prepare($sql);
@@ -62,14 +70,14 @@
     }
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "UPDATE  admin set login_name=?, login_password=?, login_role=?, type=? WHERE admin_id =?";
+    $sql = "UPDATE  admin set login_name=?, login_password=?, login_role=?, type=?, location=? WHERE admin_id =?";
     $q = $pdo->prepare($sql);
-    $q->execute(array($employee_name, $password, $login_role, $login_role, $admin_id));
+    $q->execute(array($employee_name, $password, $login_role, $login_role, $location_name, $admin_id));
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "UPDATE employee set employee_name=?, password=?, login_role=?, cell_no=?, email_id=?, edited_on=? WHERE admin_id =?";
+    $sql = "UPDATE employee set employee_name=?, password=?, login_role=?, cell_no=?, email_id=?, location=?, location_id=?, edited_on=? WHERE admin_id =?";
     $q = $pdo->prepare($sql);
-    $q->execute(array($employee_name, $password, $login_role, $cell_no, $email_id, $added_on, $admin_id));
+    $q->execute(array($employee_name, $password, $login_role, $cell_no, $email_id, $location_name, $_employeelocation_id, $added_on, $admin_id));
     // echo "<pre>";
     // print_r($sql);
     // exit();
@@ -181,6 +189,7 @@
                                 </div>
                               </div>
                             </div>
+
                             <div class="col-md-6">
                               <div class="row form-password-toggle">
                                 <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-password">Password</label>
@@ -192,6 +201,31 @@
                                 </div>
                               </div>
                             </div>
+
+                            <div class="col-md-6">
+                                <div class="row form-password-toggle">
+                                    <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-password">Property Location</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group input-group-merge">
+                                            <select id="formtabs-location" name="_employeelocation" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
+                                                <option value="" data-select2-id="18">Select Property Location</option>
+                                                <?php
+                                                    $sqlLocation = "SELECT * FROM location ORDER BY name";
+                                                    foreach ($pdo->query($sqlLocation) as $row) {
+                                                        $selected = ($row['id'] == $row_d['location_id']) ? 'selected' : '';
+                                                        ?>
+                                                        <option value="<?php echo $row['id']; ?>" <?php echo $selected; ?>><?php echo $row['name']; ?></option>
+                                                        <?php
+                                                    }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                          
+
                           </div>
                           <div class="row mt-12">
                             <div class="col-md-12" style="justify-content: flex-end;display: flex;">

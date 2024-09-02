@@ -8,31 +8,83 @@
   include ('dist/conf/db.php');
   $pdo = Database::connect();
 
-  if(isSet($_POST["subimt"]))
-  { 
-   
 
-    $property_title = $_POST['property_title'];
-    $location = $_POST['location'];
-    $builder_name = $_POST['builder_name'];
-
-    $added_on = date('Y-m-d H-i-s');
-    // $status = "Active";
+if (isset($_POST["submit"])) { 
 
     // echo "<pre>";
     // print_r($_POST);
     // exit();
-    
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "INSERT INTO `property_name`(`property_title`, `location`, `builder_name`, `added_on`) VALUES (?,?,?,?)";
-    $q = $pdo->prepare($sql);
-    $q->execute(array($property_title, $location, $builder_name, $added_on));
-    $lastInsertedId = $pdo->lastInsertId();
 
-    
-    header('location:view_properties_name');
-     
-  }
+    // Collect other form data
+    $property_title = $_POST['property_title'];
+    $builder_name = $_POST['builder_name'];
+    $property_location_id = $_POST['property_location_id'];
+    $google_location_lat = $_POST['google_location_lat'];
+    $google_location_long = $_POST['google_location_long'];
+
+    // Get location name based on location_id
+    $sql = "SELECT * FROM location WHERE id = ?";
+    $q = $pdo->prepare($sql);
+    $q->execute(array($property_location_id));
+    $row_loc = $q->fetch(PDO::FETCH_ASSOC);
+    $location_name = $row_loc['name'];
+
+    $added_on = date('Y-m-d H:i:s');
+
+    // Initialize variables to store file paths
+    $pdf1 = $pdf2 = $pdf3 = $pdf4 = $pdf5 = $pdf6 = null;
+    $video1 = $video2 = $video3 = $video4 = null;
+
+    // Process PDF uploads
+    for ($i = 1; $i <= 6; $i++) {
+        if (isset($_FILES["property_pdf_$i"]) && $_FILES["property_pdf_$i"]['error'] == UPLOAD_ERR_OK) {
+            $tmp_name = $_FILES["property_pdf_$i"]["tmp_name"];
+            $name = basename($_FILES["property_pdf_$i"]["name"]);
+            $upload_dir = "uploads/pdfs/"; // Ensure this directory exists and is writable
+            $pdf_path = $upload_dir . $name;
+
+            if (move_uploaded_file($tmp_name, $pdf_path)) {
+                ${"pdf$i"} = $pdf_path; // Dynamically set the variable pdf1, pdf2, ..., pdf6
+            } else {
+                echo "Failed to upload Property PDF $i";
+            }
+        }
+    }
+
+    // Process video uploads
+    for ($i = 1; $i <= 4; $i++) {
+        if (isset($_FILES["property_video_$i"]) && $_FILES["property_video_$i"]['error'] == UPLOAD_ERR_OK) {
+            $tmp_name = $_FILES["property_video_$i"]["tmp_name"];
+            $name = basename($_FILES["property_video_$i"]["name"]);
+            $upload_dir = "uploads/videos/"; // Ensure this directory exists and is writable
+            $video_path = $upload_dir . $name;
+
+            if (move_uploaded_file($tmp_name, $video_path)) {
+                ${"video$i"} = $video_path; // Dynamically set the variable video1, video2, ..., video4
+            } else {
+                echo "Failed to upload Property Video $i";
+            }
+        }
+    }
+
+    // Insert into the database
+    try {
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sql = "INSERT INTO `property_name`(`property_title`, `location`, `builder_name`, `added_on`, `location_id`, `google_location_lat`, `google_location_long`, `pdf1`, `pdf2`, `pdf3`, `pdf4`, `pdf5`, `pdf6`, `video1`, `video2`, `video3`, `video4`) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $q = $pdo->prepare($sql);
+        $q->execute([
+            $property_title, $location_name, $builder_name, $added_on, $property_location_id, 
+            $google_location_lat, $google_location_long, $pdf1, $pdf2, $pdf3, $pdf4, $pdf5, $pdf6,
+            $video1, $video2, $video3, $video4
+        ]);
+
+        header('location:view_properties_name');
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+?>
 
 ?>
 <!doctype html>
@@ -91,8 +143,8 @@
                 <div class="card">
                     <h5 class="card-header">Add Property Name</h5>
                     <div class="card-body">
-                        <div class="d-flex align-items-center1 justify-content-center h-px-300">
-                        <form action="#" method="post">
+                        <div class="d-flex align-items-center1 justify-content-center h-px-900">
+                        <form action="#" method="post" enctype="multipart/form-data">
                           <div class="row g-4">
                             
                             <div class="col-md-6">
@@ -106,15 +158,6 @@
 
                             <div class="col-md-6">
                               <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Location</label>
-                                <div class="col-sm-9">
-                                  <input type="text" name="location" id="formtabs-username" class="form-control" placeholder="Location" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div class="col-md-6">
-                              <div class="row">
                                 <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Builder Name</label>
                                 <div class="col-sm-9">
                                   <input type="text" name="builder_name" id="formtabs-username" class="form-control" placeholder=" Builder Name" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required>
@@ -122,12 +165,100 @@
                               </div>
                             </div>
 
+                            <div class="col-md-6">
+                              <div class="row">
+                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Property Location</label>
+                                <div class="col-sm-9">
+                                    <!-- <input type="text" name="location" id="formtabs-username" class="form-control" placeholder="Location" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required> -->
+                                    <select id="formtabs-location" name="property_location_id" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
+                                        <option value="" data-select2-id="18">Select Property Location</option>
+                                        <?php
+                                            $sqlLocation = "SELECT * FROM location ORDER BY name";
+                                            foreach ($pdo->query($sqlLocation) as $row) {
+                                                $selected = ($row['id'] == $row_d['location_id']) ? 'selected' : '';
+                                                ?>
+                                                <option value="<?php echo $row['id']; ?>" <?php echo $selected; ?>><?php echo $row['name']; ?></option>
+                                                <?php
+                                            }
+                                        ?>
+                                    </select>
+                                </div>
+                              </div>
+                            </div>
+
+                            <!-- <div class="col-md-6">
+                                <div class="row">
+                                    <label class="col-sm-3 col-form-label text-sm-end" for="google-location-lat">Google Location</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" name="google_location_lat" id="google-location-lat" class="form-control" placeholder="Latitude">
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <input type="text" name="google_location_long" id="google-location-long" class="form-control" placeholder="Longitude">
+                                    </div>
+                                </div>
+                            </div> -->
+
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <label class="col-sm-3 col-form-label text-sm-end" for="google-location-lat">Google Location</label>
+                                    <div class="col-sm-4">
+                                        <!-- Latitude Input Field -->
+                                        <input type="text" name="google_location_lat" id="google-location-lat" class="form-control" placeholder="Latitude" 
+                                            pattern="^(\+|-)?(?:90(?:\.0+)?|\d{1,2}(?:\.\d+)?)$" 
+                                            title="Please enter a valid latitude (-90 to 90)" 
+                                            required>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <!-- Longitude Input Field -->
+                                        <input type="text" name="google_location_long" id="google-location-long" class="form-control" placeholder="Longitude" 
+                                            pattern="^(\+|-)?(?:180(?:\.0+)?|(?:1[0-7]\d|\d{1,2})(?:\.\d+)?)$" 
+                                            title="Please enter a valid longitude (-180 to 180)" 
+                                            required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Property form details -->
+
+                            <h5 class="card-header">Upload Property Details</h5>
+
+                            <h5 class="card-header">PDF Files </h5>
+                            
+                            <div class="row">
+                                  <!-- Property PDF 1 to 6 Fields -->
+                                  <?php for ($i = 1; $i <= 6; $i++): ?>
+                                      <div class="col-md-6">
+                                          <div class="row">
+                                              <label class="col-sm-3 col-form-label text-sm-end" for="property-pdf-<?php echo $i; ?>">Property PDF <?php echo $i; ?></label>
+                                              <div class="col-sm-9">
+                                                  <input type="file" name="property_pdf_<?php echo $i; ?>" id="property-pdf-<?php echo $i; ?>" class="form-control" accept="application/pdf" >
+                                              </div>
+                                          </div>
+                                      </div>
+                                  <?php endfor; ?>
+
+                                  <h5 class="card-header">Videos </h5>
+
+                                  <!-- Video 1 to 4 Fields -->
+                                  <?php for ($i = 1; $i <= 4; $i++): ?>
+                                      <div class="col-md-6">
+                                          <div class="row">
+                                              <label class="col-sm-3 col-form-label text-sm-end" for="property-video-<?php echo $i; ?>">Property Video <?php echo $i; ?></label>
+                                              <div class="col-sm-9">
+                                                  <input type="file" name="property_video_<?php echo $i; ?>" id="property-video-<?php echo $i; ?>" class="form-control" accept="video/*" >
+                                              </div>
+                                          </div>
+                                      </div>
+                                  <?php endfor; ?>
+                            </div>
+                            <!--  -->
+
                           </div>
                           <div class="row mt-12">
                             <div class="col-md-12">
                               <div class="row justify-content-end">
                                 <div class="col-sm-4">
-                                  <button type="submit" class="btn btn-primary me-4 waves-effect waves-light" name="subimt">Submit</button>
+                                  <button type="submit" class="btn btn-primary me-4 waves-effect waves-light" name="submit">Submit</button>
                                   <button type="reset" class="btn btn-outline-secondary waves-effect">Cancel</button>
                                 </div>
                               </div>
@@ -136,6 +267,8 @@
                         </form>
                         </div>
                     </div>
+
+                    
                 </div>
                <!-- *************** - /main containt in page write here - **********************  -->
             </div>

@@ -9,8 +9,8 @@ class Database {
   //  private static $cont  = null;
   //  ------------------------------------------------------------
   
-  // private static $dbName = 'guru_enterprises_gayatri'; 
-  private static $dbName = 'guru_enterprises'; 
+  private static $dbName = 'guru_enterprises_nr'; 
+  // private static $dbName = 'guru_enterprises'; 
   private static $dbHost = 'localhost';
   private static $dbUsername = 'root';
   private static $dbUserPassword = '';

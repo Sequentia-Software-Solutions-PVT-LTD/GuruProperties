@@ -18,7 +18,8 @@
     $_employeelocation = $_POST['_employeelocation'];
     $user_id = $prefix.$user_id1;
 
-    // print_r($user_id);
+    // echo "<pre>";
+    // print_r($_POST);
     // exit();
 
     $password_post = $_POST['password'];
@@ -29,23 +30,27 @@
     $login_role = $_POST['login_role'];
     $login_photo = "default.png";
     $email_id = $_POST['email_id'];
-
     $cell_no = $_POST['cell_no'];
 
-    // echo "<pre>";
-    // print_r($_POST);
-    // exit();
+    $_employeelocation_id = $_POST['_employeelocation'];
+
+    $sql = "select * from location where id = $_employeelocation_id ";
+    $q = $pdo->prepare($sql);
+    $q->execute(array());      
+    $row_loc = $q->fetch(PDO::FETCH_ASSOC);
+
+    $location_name = $row_loc['name'];
     
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "INSERT INTO `admin`(`login_name`, `login_password`, `login_role`, `login_id`, `status`,`type`, `login_photo`, `location`) VALUES (?,?,?,?,?,?,?)";
+    $sql = "INSERT INTO `admin`(`login_name`, `login_password`, `login_role`, `login_id`, `status`,`type`, `login_photo`, `location`) VALUES (?,?,?,?,?,?,?,?)";
     $q = $pdo->prepare($sql);
-    $q->execute(array($employee_name, $password, $login_role, $user_id, $status, $login_role, $login_photo, $_employeelocation));
+    $q->execute(array($employee_name, $password, $login_role, $user_id, $status, $login_role, $login_photo, $location_name));
     $lastInsertedId = $pdo->lastInsertId();
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "INSERT INTO employee(admin_id, employee_name, password, added_on, status, login_role,  cell_no, user_id,email_id,designation, `location`) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO employee(admin_id, employee_name, password, added_on, status, login_role,  cell_no, user_id, email_id, designation, `location`, location_id) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $q = $pdo->prepare($sql);
-    $q->execute(array($lastInsertedId, $employee_name, $password, $added_on, 'Active', $login_role,  $cell_no, $user_id,$email_id,'Employee', $_employeelocation));
+    $q->execute(array($lastInsertedId, $employee_name, $password, $added_on, 'Active', $login_role,  $cell_no, $user_id,$email_id,'Employee', $location_name, $_employeelocation_id));
 
     // echo "<pre>";
     // print_r($sql);
@@ -183,12 +188,11 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="col-md-6">
+
+                            <!-- <div class="col-md-6">
                                 <div class="row align-items-center justify-content-center">
-                                    <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-country">Role</label> -->
                                     <div class="col-sm-12 form-floating form-floating-outline">
-                                        <!-- <div class="position-relative"> -->
-                                            <select id="formtabs-location" name="_employeelocation[]" class="form-select" style="height: 400px;" data-allow-clear="true" data-select2-id="formtabs-location" tabindex="-1" aria-hidden="true" Multiple required>
+                                        <select id="formtabs-location" name="_employeelocation[]" class="form-select" style="height: 400px;" data-allow-clear="true" data-select2-id="formtabs-location" tabindex="-1" aria-hidden="true" Multiple required>
                                                 <option selected hidden disable>Select Location</option>
                                                 <?php
                                                     $sqlLocation = "SELECT * FROM location order by name";
@@ -199,10 +203,29 @@
                                                 
                                             </select>
                                             <label for="formtabs-location">Location</label>
-                                        <!-- </div> -->
+                                    </div>
+                                </div>
+                            </div> -->
+
+                            <div class="col-md-6">
+                                <div class="row align-items-center justify-content-center">
+                                    <div class="col-sm-12 form-floating form-floating-outline">
+                                        
+                                            <select id="formtabs-location" name="_employeelocation" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
+                                                <option value="" data-select2-id="18">Select Property Location Name</option>
+                                                <?php
+                                                    $sqlLocation = "SELECT * FROM  location order by name";
+                                                    foreach ($pdo->query($sqlLocation) as $row) 
+                                                    { 
+                                                    ?>
+                                                        <option value="<?php echo $row['id']?>"><?php echo $row['name']?></option> 
+                                                    <?php } ?>
+                                            </select>
+                                            <label for="formtabs-location">Location</label>
                                     </div>
                                 </div>
                             </div>
+
                           </div>
                           <div class="row mt-10">
                             <div class="col-md-12 justify-content-end text-end">

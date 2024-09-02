@@ -262,7 +262,10 @@
                                                 }
 
                                                 // Add the employee option
-                                                echo '<option value="' . htmlspecialchars($row['employee_id']) . '">' . htmlspecialchars($row['employee_name']) . '</option>';
+                                                echo '<option value="' . htmlspecialchars($row['employee_id']) . '">' 
+                                                . htmlspecialchars($row['employee_name']) . ' - ' 
+                                                . htmlspecialchars($row['location']) 
+                                                . '</option>';
                                             }
                                             ?>
                                         </select>

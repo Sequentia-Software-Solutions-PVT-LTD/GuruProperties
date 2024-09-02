@@ -98,6 +98,8 @@
                             <th>#</th>
                             <th>Property Name</th>
                             <th>Location</th>
+                            <th>Latitude</th>
+                            <th>Longitude</th>
                             <th>Builder Name</th>
                             <!-- <th>Actions</th> -->
                             </tr>
@@ -116,6 +118,8 @@
                                     <!-- <td><?php echo $i; ?></td> -->
                                     <td><?php echo $row["property_title"]; ?></td>
                                     <td><?php echo $row["location"]; ?></td>
+                                    <td><?php echo $row["google_location_lat"]; ?></td>
+                                    <td><?php echo $row["google_location_long"]; ?></td>
                                     <td><?php echo $row["builder_name"]; ?></td>
                                     <!-- <td>
                                         <div class="dropdown">

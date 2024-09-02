@@ -100,6 +100,7 @@
                             <tr>
                             <th>#</th>
                             <th>Employee Name</th>
+                            <th>Property Location</th>
                             <th>Cell No</th>
                             <th>Email ID</th>
                             <th>Login ID</th>
@@ -123,6 +124,7 @@
                                     <i class="ri-user-line ri-22px text-primary me-4"></i>
                                     <?php echo $row["employee_name"]; ?>
                                 </td>
+                                <td><?php echo $row["location"]; ?></td>
                                 <td><?php echo $row["cell_no"]; ?></td>
                                 <td><?php echo $row["email_id"]; ?></td>
                                 <td><?php echo $row["user_id"]; ?></td>

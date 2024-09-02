@@ -243,7 +243,7 @@
                                                                 foreach ($pdo->query($sql) as $row) 
                                                                 { 
                                                             ?>
-                                                                  <option value="<?php echo $row['employee_id']?>"><?php echo $row['employee_name']?></option> 
+                                                                  <option value="<?php echo $row['employee_id']?>"><?php echo $row['employee_name']?> (<?php echo $row['location']?>)</option> 
                                                               <?php } ?>
                                                       </select>
                                                   </div>
