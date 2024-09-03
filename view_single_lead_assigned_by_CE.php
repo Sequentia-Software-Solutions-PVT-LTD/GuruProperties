@@ -435,7 +435,7 @@
                                 <!-- <a class="btn btn-secondary" href="transfer_assigned_lead.php?assign_leads_id=<?php echo $row_assign["assign_leads_id"]; ?>">Transfer Lead </a> -->
                             </div>
 
-                            <form action="#" method="post" enctype="multipart/form-data">
+                            <form action="#" onsubmit="prepareForm()" id="myForm" method="post" enctype="multipart/form-data">
                                 <input type="hidden" value="<?php echo $_REQUEST['assign_leads_sr_id']; ?>" name="assign_leads_sr_id">
                                 <div class="card-body" style="padding-top: 0px;">
                                     <!--  -->
@@ -678,11 +678,12 @@
 
                                     </div>
                                     <!-- /new form -->
-
+                                    <INPUT TYPE="text" NAME="long" ID="long" VALUE="">
+                                    <INPUT TYPE="text" NAME="lat" ID="lat" VALUE="">
 
                                     <div class="d-flex justify-content-between">
                                         <!-- <a class="btn btn-outline-info" href="view_leads_for_assigned_SE.php?assign_leads_id=<?php echo $row_assign["assign_leads_id"]; ?>">Assign Lead To Sales Executive </a> -->
-                                        <button type="submit" name="submit1" class="btn btn-success logo-btn">Submit</button>
+                                        <button type="submit" name="submit1" id="submit1" class="btn btn-success logo-btn" disabled>Submit</button>
                                         <!-- <a class="btn btn-secondary" href="transfer_assigned_lead.php?assign_leads_id=<?php echo $row_assign["assign_leads_id"]; ?>">Transfer Lead </a> -->
                                         
                                     </div>
@@ -690,7 +691,36 @@
                             </form>
                         </div>
                     </div>
+                    <script type="text/javascript">
+                            initGeolocation();
+                            function prepareForm(event) {
+                                    event.preventDefault();
+                                    // Do something you need
+                                    initGeolocation();
+                                    document.getElementById("myForm").requestSubmit();
+                            }
+                            function initGeolocation()
+                            {
+                                navigator.geolocation.getCurrentPosition( success, fail );
+                            }
 
+                            function success(position)
+                            {   
+                                    document.getElementById('long').value = position.coords.longitude;
+                                    document.getElementById('lat').value = position.coords.latitude;
+                                    document.getElementById('submit1').disabled  = false;
+                            }
+
+                            function fail()
+                            {
+                                alert("Please enable your location to submit this form");
+                                // alert("Sorry, your browser does not support geolocation services.");
+                                document.getElementById('long').value = "00.0000000";
+                                document.getElementById('lat').value = "00.0000000";
+                                document.getElementById('submit1').disabled  = true;
+                            }
+
+                    </script>    
                     <!-- Timeline code -->
                     <div class="col-xl-12 col-lg-12 col-md-12">
                         <div class="card">
