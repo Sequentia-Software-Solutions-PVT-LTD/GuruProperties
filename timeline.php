@@ -309,31 +309,31 @@
                             }
                             
                             if($variant['table_name'] == "leads") {
-                                $sqlSE = "select * from leads where id = $id ";
-                                $qSE = $pdo->prepare($sqlSE);
-                                $qSE->execute(array());      
-                                $SEArray = $qSE->fetchAll(PDO::FETCH_ASSOC);
-                                $data = $SEArray;
+                                $sqlLE = "select * from leads where id = $id ";
+                                $qLE = $pdo->prepare($sqlLE);
+                                $qLE->execute(array());      
+                                $LEArray = $qLE->fetch(PDO::FETCH_ASSOC);
+                                $data = $LEArray;
                             }
                             if($variant['table_name'] == "assign_leads") {
-                                $sqlSE = "select * from assign_leads where assign_leads_id = $id ";
-                                $qSE = $pdo->prepare($sqlSE);
-                                $qSE->execute(array());      
-                                $SEArray = $qSE->fetchAll(PDO::FETCH_ASSOC);
-                                $data = $SEArray;
+                                $sqlCE = "select * from assign_leads where assign_leads_id = $id ";
+                                $qCE = $pdo->prepare($sqlCE);
+                                $qCE->execute(array());      
+                                $CEArray = $qCE->fetch(PDO::FETCH_ASSOC);
+                                $data = $CEArray;
                             }
                             if($variant['table_name'] == "assign_leads_sr") {
-                                $sqlSE = "select * from assign_leads_sr where assign_leads_sr_id = $id ";
-                                $qSE = $pdo->prepare($sqlSE);
-                                $qSE->execute(array());      
-                                $SEArray = $qSE->fetchAll(PDO::FETCH_ASSOC);
-                                $data = $SEArray;
+                                $sqlAL = "select * from assign_leads_sr where assign_leads_sr_id = $id ";
+                                $qAL = $pdo->prepare($sqlAL);
+                                $qAL->execute(array());      
+                                $ALArray = $qAL->fetch(PDO::FETCH_ASSOC);
+                                $data = $ALArray;
                             }
                             if($variant['table_name'] == "converted_leads") {
                                 $sqlCON = "select * from converted_leads where converted_leads_id = $id ";
                                 $qCON = $pdo->prepare($sqlCON);
                                 $qCON->execute(array());      
-                                $CONArray = $qCON->fetchAll(PDO::FETCH_ASSOC);
+                                $CONArray = $qCON->fetch(PDO::FETCH_ASSOC);
                                 $data = $CONArray;
                             }
                     ?>
@@ -350,6 +350,9 @@
                           <div class="meta">
                             <span class="badge rounded-pill bg-label-primary"><?php echo $variant['status']; ?></span>
                             <span class="badge rounded-pill bg-label-success"><?php echo $variant['transfer_status']; ?></span>
+                            <?php if(isset($data['transfer_employee_type'])) { ?>
+                            <span class="badge rounded-pill bg-label-info"><?php echo $data['transfer_employee_type']; ?></span>
+                            <?php } ?>
                           </div>
                         </div>
                         <div class="card-body">
