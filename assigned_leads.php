@@ -129,6 +129,12 @@
                                     $leads_id = $row1['leads_id'];
                                     $admin_id = $row1['admin_id'];
 
+                                    $sqllocation = "select * from location ";
+                                    $qlocation = $pdo->prepare($sqllocation);
+                                    $qlocation->execute(array());      
+                                    $row_location = $qlocation->fetchAll(PDO::FETCH_ASSOC);
+
+
                                     $sqlemp = "select * from employee where admin_id = $admin_id ";
                                     $q = $pdo->prepare($sqlemp);
                                     $q->execute(array());      
@@ -143,7 +149,14 @@
                                     <td><i class="ri-building-2-line ri-22px text-primary me-4"></i><span class="fw-medium"><?php echo $i; ?></span></td>
                                     <td><?php echo $row_leads["lead_name"]; ?></td>
                                     <!-- <td><?php //echo $row_emp["employee_name"]; ?></td> -->
-                                    <td><?php echo $row_leads["location"]; ?></td>
+                                    <td><?php 
+                                        $needle = $row_leads["location"];
+                                        $resultArray = array_filter($row_location, function ($v) use ($needle) {
+                                          return $needle == $v['id']; 
+                                        });
+                                        if(isset($resultArray[0]["name"]) && $resultArray[0]["name"] != "") echo $resultArray[0]["name"]; 
+                                        else echo "Not Found";
+                                        ?></td>
                                     <td><?php echo $row_leads["phone_no"]; ?></td>
                                     <td><?php echo $row_leads["email_id"]; ?></td>
                                     <td><?php echo $row_leads["budget_range"]; ?></td>

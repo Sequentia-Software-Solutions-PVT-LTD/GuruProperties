@@ -20,7 +20,6 @@
     $input5 = $_POST['input5'];
     $input6 = $_POST['input6'];
     $subCount= count($_POST['input1']);
-    
     // $input1 = ["1", "2123", "Tset"];
     // $input2 = ["2", "asd", "asdasd"];
     // $input3 = ["6", "6", "7"];
@@ -47,7 +46,6 @@
         $input4Single = $input4[$i];
         $input5Single = $input5[$i];
         $input6Single = $input6[$i];
-
         
         $sql = "INSERT INTO leads(lead_name, email_id, location, phone_no, budget_range, Source, status, added_on, lead_gen_date) values(?,?,?,?,?,?,?,?,?)";
         $q = $pdo->prepare($sql);
@@ -115,21 +113,22 @@
       $admin_id = $rowcearray['ADMINID'];
       $employee_id = $rowcearray['EMPLOYEEID'];
       $employee_name = $rowcearray['employee_name'];
-      $location = $rowcearray['location'];
+      $location = $rowcearray['location_id'];
+      $location = explode(",", $location);
       $employee_array = array("admin_id" => $admin_id, "employee_id" => $employee_id, "location_id" => $location);
       array_push($customerExecutiveArray,$employee_array);
     }
-
+    
     $allEmployeeLocationList = $customerExecutiveArray;
     
     // $allEmployeeLocationList = [
     //     ["admin_id" => 40, "employee_id" => 10, "location_id" => "1,2,3,4,9"],
     //     ["admin_id" => 45, "employee_id" => 15, "location_id" => "9,10,11,12"],
     // ];
-    $allEmployeeLocationList = [
-        ["admin_id" => 40, "employee_id" => 10, "location_id" => [1,2,3,4,9]],
-        ["admin_id" => 45, "employee_id" => 15, "location_id" => [9,10,11,12]],
-    ];
+    // $allEmployeeLocationList = [
+    //     ["admin_id" => 40, "employee_id" => 10, "location_id" => [1,2,3,4,9]],
+    //     ["admin_id" => 45, "employee_id" => 15, "location_id" => [9,10,11,12]],
+    // ];
 
     $LocationWiseEmployeeList = array();
     foreach($submitedLocationList as $submitedLocation) {
@@ -235,7 +234,6 @@
                 $foundEmployeeArray = array_shift($resultEmployee);
                 array_push($customerExecutiveArray, $foundEmployeeArray); 
             }
-
             if($totalCustomerExuctiveCount < $leadsCount) {
 
                 $employeewiseTotalLeadIds = array_chunk($insertedLeadIds, $leadForsingleCE); 
