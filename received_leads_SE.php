@@ -110,6 +110,7 @@
                             <th>Contact</th>
                             <!-- <th>Email ID</th> -->
                             <!-- <th>Budget</th> -->
+                            <th>Next Date</th>
                             <th>Assigned By</th>
                             <!-- <th>Actions</th> -->
                             </tr>
@@ -159,6 +160,7 @@
                                     <td><?php echo $row_leads["phone_no"]; ?></td>
                                     <!-- <td><?php echo $row_leads["email_id"]; ?></td> -->
                                      
+                                    <td><?php echo date('d-m-Y', strtotime($row1["next_date"])); ?></td>
                                     <td><?php echo $row_emp["employee_name"]; ?></td>
                                     <!-- <td><?php echo $row_leads["budget_range"]; ?></td> -->
                                     <td>
@@ -195,8 +197,9 @@
                                 <th>Contact</th>
                                 <!-- <th>Email ID</th> -->
                                 <!-- <th>Budget</th> -->
-                                <th>Transfer By</th>
-                                <!-- <th>Actions</th> -->
+                                <th>Next Date</th>
+                                <th>Transferred By</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -245,11 +248,12 @@
                                     <td><?php echo $row_leads["location"]; ?></td>
                                     <td><?php echo $row_leads["phone_no"]; ?></td>
                                     <!-- <td><?php echo $row_leads["email_id"]; ?></td> -->
+                                    <td><?php echo date('d-m-Y', strtotime($row1["next_date"])); ?></td>
                                     <td><?php echo $row_emp["employee_name"]; ?></td>
                                     <!-- <td><?php echo $row_leads["budget_range"]; ?></td> -->
-                                    <!-- <td>
+                                    <td>
                                         <a class="dropdown-item waves-effect" href="view_single_lead_assigned_by_CE.php?assign_leads_sr_id=<?php echo $row1["assign_leads_sr_id"]; ?>"><i class="ri-eye-line me-1"></i> </a>
-                                    </td> -->
+                                    </td>
                             </tr>
                             <?php $i++; } ?>
                         </tbody>

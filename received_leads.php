@@ -110,6 +110,7 @@
                             <th>Contact</th>
                             <th>Email ID</th>
                             <th>Budget</th>
+                            <th>Next Date</th>
                             <th>Actions</th>
                             </tr>
                         </thead>
@@ -146,6 +147,7 @@
                                     <td><?php echo $row_leads["phone_no"]; ?></td>
                                     <td><?php echo $row_leads["email_id"]; ?></td>
                                     <td><?php echo $row_leads["budget_range"]; ?></td>
+                                    <td><?php echo date('d-m-Y', strtotime($row1["next_date"])); ?></td>
                                     <td>
                                         <!-- <a class="dropdown-item waves-effect" href="transfer_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-eye-line me-1"></i> </a> -->
                                         <a class="dropdown-item waves-effect" href="view_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-eye-line me-1"></i> </a>
@@ -179,6 +181,7 @@
                                 <th>Contact</th>
                                 <th>Email ID</th>
                                 <th>Budget</th>
+                                <th>Next Date</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -215,6 +218,7 @@
                                     <td><?php echo $row_leads["phone_no"]; ?></td>
                                     <td><?php echo $row_leads["email_id"]; ?></td>
                                     <td><?php echo $row_leads["budget_range"]; ?></td>
+                                    <td><?php echo date('d-m-Y', strtotime($row1["next_date"])); ?></td>
                                     <td>
                                         <!-- <a class="dropdown-item waves-effect" href="transfer_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-eye-line me-1"></i> </a> -->
                                         <a class="dropdown-item waves-effect" href="view_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-eye-line me-1"></i> </a>

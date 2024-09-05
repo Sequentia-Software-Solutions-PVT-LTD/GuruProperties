@@ -42,9 +42,9 @@
     $location_name = $row_loc['name'];
     
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "INSERT INTO `admin`(`login_name`, `login_password`, `login_role`, `login_id`, `status`,`type`, `login_photo`, `location`) VALUES (?,?,?,?,?,?,?,?)";
+    $sql = "INSERT INTO `admin`(`login_name`, `login_password`, `login_role`, `login_id`, `status`,`type`, `login_photo`, `location`, location_id) VALUES (?,?,?,?,?,?,?,?,?)";
     $q = $pdo->prepare($sql);
-    $q->execute(array($employee_name, $password, $login_role, $user_id, $status, $login_role, $login_photo, $location_name));
+    $q->execute(array($employee_name, $password, $login_role, $user_id, $status, $login_role, $login_photo, $location_name, $_employeelocation_id));
     $lastInsertedId = $pdo->lastInsertId();
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

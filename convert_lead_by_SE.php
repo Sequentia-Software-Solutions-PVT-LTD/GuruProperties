@@ -251,7 +251,7 @@
                                               <div class="row">
                                                   <label class="col-sm-4 col-form-label text-sm-end mar-top1" style="margin-top: -10px;"> Agreement Value</label>
                                                   <div class="col-sm-8">
-                                                    <input class="form-control" type="agreement_value" placeholder="Agreement Value" id="stamp_duty" name="agreement_value">
+                                                    <input class="form-control" type="number" placeholder="Agreement Value" id="stamp_duty" name="agreement_value">
                                                   </div>
                                               </div>
                                           </div>
@@ -260,7 +260,7 @@
                                               <div class="row">
                                                   <label class="col-sm-4 col-form-label text-sm-end mar-top"> Registration </label>
                                                   <div class="col-sm-8">
-                                                    <input class="form-control" type="registrantion" placeholder="Registration" id="Registration" name="registrantion">
+                                                    <input class="form-control" type="number" placeholder="Registration" id="Registration" name="registrantion">
                                                   </div>
                                               </div>
                                           </div>
@@ -268,7 +268,7 @@
                                               <div class="row">
                                                   <label class="col-sm-4 col-form-label text-sm-end mar-top"> GST </label>
                                                   <div class="col-sm-8">
-                                                    <input class="form-control" type="gst" placeholder="GST" id="gst" name="gst">
+                                                    <input class="form-control" type="number" placeholder="GST Amount" id="gst" name="gst">
                                                   </div>
                                               </div>
                                           </div>
@@ -276,7 +276,7 @@
                                               <div class="row">
                                                   <label class="col-sm-4 col-form-label text-sm-end mar-top"> Stamp Duty</label>
                                                   <div class="col-sm-8">
-                                                    <input class="form-control" type="stamp_duty" placeholder="Stamp Duty" id="stamp_duty" name="stamp_duty">
+                                                    <input class="form-control" type="number" placeholder="Stamp Duty" id="stamp_duty" name="stamp_duty">
                                                   </div>
                                               </div>
                                           </div>
@@ -284,7 +284,7 @@
                                               <div class="row">
                                                   <label class="col-sm-4 col-form-label text-sm-end mar-top"> Commission </label>
                                                   <div class="col-sm-8">
-                                                    <input class="form-control" type="commission" placeholder="Commission To Guru Properties" id="commission" name="commission">
+                                                    <input class="form-control" type="number" placeholder="Commission To Guru Properties" id="commission" name="commission">
                                                   </div>
                                               </div>
                                           </div>
@@ -292,7 +292,7 @@
                                               <div class="row">
                                                   <label class="col-sm-4 col-form-label text-sm-end mar-top"> Quoted Price </label>
                                                   <div class="col-sm-8">
-                                                    <input class="form-control" type="quoted_price" placeholder="Quoted Price " id="quoted_price" name="quoted_price">
+                                                    <input class="form-control" type="number" placeholder="Quoted Price " id="quoted_price" name="quoted_price">
                                                   </div>
                                               </div>
                                           </div>
@@ -300,7 +300,7 @@
                                               <div class="row">
                                                   <label class="col-sm-4 col-form-label text-sm-end mar-top"> Sale Price </label>
                                                   <div class="col-sm-8">
-                                                    <input class="form-control" type="sale_price" placeholder="Sale Price" id="sale_price" name="sale_price">
+                                                    <input class="form-control" type="number" placeholder="Sale Price" id="sale_price" name="sale_price">
                                                   </div>
                                               </div>
                                           </div>

@@ -70,9 +70,9 @@
     }
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "UPDATE  admin set login_name=?, login_password=?, login_role=?, type=?, location=? WHERE admin_id =?";
+    $sql = "UPDATE  admin set login_name=?, login_password=?, login_role=?, type=?, location=?, location_id=? WHERE admin_id =?";
     $q = $pdo->prepare($sql);
-    $q->execute(array($employee_name, $password, $login_role, $login_role, $location_name, $admin_id));
+    $q->execute(array($employee_name, $password, $login_role, $login_role, $location_name, $_employeelocation_id, $admin_id));
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "UPDATE employee set employee_name=?, password=?, login_role=?, cell_no=?, email_id=?, location=?, location_id=?, edited_on=? WHERE admin_id =?";

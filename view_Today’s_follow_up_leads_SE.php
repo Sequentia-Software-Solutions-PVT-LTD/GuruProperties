@@ -120,7 +120,7 @@
                                 $i = 1;
                                 $today_date = date('Y-m-d');
                                 // $sql = "SELECT * FROM assign_leads_sr where admin_id= $admin_id and status='Active' and transfer_status='Available' ";
-                                $sql = "SELECT * FROM assign_leads_sr where admin_id= $admin_id and status='Followup' and DATE(next_date) = '$today_date'";
+                                $sql = "SELECT * FROM assign_leads_sr where admin_id= $admin_id and status='Followup' and transfer_status='Available'  and DATE(next_date) = '$today_date'";
                                 $q = $pdo->query($sql);
                                 // print_r($sql);
                                 // exit();

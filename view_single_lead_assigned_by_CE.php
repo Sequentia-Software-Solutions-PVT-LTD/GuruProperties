@@ -538,6 +538,15 @@
                                                 </label>
 
                                                 <label class="switch">
+                                                    <input type="radio" class="switch-input" name="lead_type" value="warm">
+                                                    <span class="switch-toggle-slider">
+                                                        <span class="switch-on"></span>
+                                                        <span class="switch-off"></span>
+                                                    </span>
+                                                    <span class="switch-label">Warm</span>
+                                                </label>
+
+                                                <label class="switch">
                                                     <input type="radio" class="switch-input" name="lead_type" value="cold">
                                                     <span class="switch-toggle-slider">
                                                         <span class="switch-on"></span>
@@ -546,14 +555,7 @@
                                                     <span class="switch-label">Cold</span>
                                                 </label>
 
-                                                <label class="switch">
-                                                    <input type="radio" class="switch-input" name="lead_type" value="warm">
-                                                    <span class="switch-toggle-slider">
-                                                        <span class="switch-on"></span>
-                                                        <span class="switch-off"></span>
-                                                    </span>
-                                                    <span class="switch-label">Warm</span>
-                                                </label>
+                                                
                                             </div>
                                         </div>
                                     </div>
