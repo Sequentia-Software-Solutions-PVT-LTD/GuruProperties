@@ -171,8 +171,8 @@
                               
                                 <div class="col-sm-12 form-floating form-floating-outline" >
                                   <!-- <input type="text" name="prefix" id="prefixInput" class="prefix-class form-control" readonly style="width: 42px; border-right: none; border-top-right-radius: 0;border-bottom-right-radius: 0;padding-right: 0;"> -->
-                                  <input type="text"  name="user_id"  id="formtabs-username" class="form-control" placeholder="" required>
-                                  <label for="formtabs-username">User ID</label>
+                                  <input type="text"  name="user_id"  id="prefixInput" class="form-control" placeholder="" required>
+                                  <label for="prefixInput">User ID</label>
                                 </div>
                               </div>
                             <!-- </div>
@@ -273,20 +273,20 @@
 
       <script>
         $(document).ready(function() {
-    $('#roleDropdown').change(function() {
-        var selectedRole = $(this).val();
-        var prefix = '';
+              $('#roleDropdown').change(function() {
+                var selectedRole = $(this).val();
+                var prefix = '';
 
-        if (selectedRole === 'CUSTOMER EXECUTIVE') {
-            prefix = 'CE';
-        } else if (selectedRole === 'SALES EXECUTIVE') {
-            prefix = 'SE';
-        }
+                if (selectedRole === 'CUSTOMER EXECUTIVE') {
+                    prefix = 'CE';
+                } else if (selectedRole === 'SALES EXECUTIVE') {
+                    prefix = 'SE';
+                }
 
-        // Set the prefix in the input field
-        $('#prefixInput').val(prefix + '-');
-    });
-});
+                // Set the prefix in the input field
+                $('#prefixInput').val(prefix + '-');
+            });
+        });
       </script>
     
   </body>
