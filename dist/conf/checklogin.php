@@ -45,7 +45,10 @@
 					"dashboard",
 					"edit_employee",
 					"login",
-					"view-employees"
+					"view-employees",
+					"admin_request_leads_by_CE",
+					"admin_request_leads_by_SE",
+					"transfer_lead_by_SE_to_SE"
 				);
 
 				$CEAllowedPages = array(
@@ -81,7 +84,8 @@
 					"view_property_varients",
 					"view_leads_for_assigned_SE",
 					"add_location",
-					"view_locations"
+					"view_locations",
+					"export_pdf_property_details"
 				);
 
 				$SEAllowedPages = array(
@@ -119,7 +123,8 @@
 					"view_Today’s_follow_up_leads_SE",
 					"view_tomorrow_leads_SE",
 					"add_location",
-					"view_locations"
+					"view_locations",
+					"export_pdf_property_details"
 				);
 
 				$LeadAllowedPages = array(

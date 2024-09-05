@@ -62,7 +62,7 @@
 
             <li class="menu-item">
               <a href="#" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons ri-bill-line"></i>
+                <i class="menu-icon tf-icons ri-user-line"></i>
                 <div data-i18nn="Invoice">Employee</div>
               </a>
               <ul class="menu-sub">
@@ -83,7 +83,47 @@
 
             <li class="menu-item">
               <a href="#" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons ri-bill-line"></i>
+                <i class="menu-icon tf-icons ri-checkbox-line"></i>
+                <div data-i18nn="Invoice">Permissions For CE</div>
+              </a>
+              <ul class="menu-sub">
+                
+                <li class="menu-item">
+                  <a href="admin_request_leads_by_CE" class="menu-link">
+                    <div data-i18nn="Preview">Customer Executive Transfer Leads</div>
+                  </a>
+                </li>
+                
+
+              </ul>
+            </li>
+
+            <li class="menu-item">
+              <a href="#" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons ri-checkbox-line"></i>
+                <div data-i18nn="Invoice">Permissions For SE</div>
+              </a>
+              <ul class="menu-sub">
+                
+                <li class="menu-item">
+                  <a href="admin_request_leads_by_SE" class="menu-link">
+                    <div data-i18nn="Preview">Transfer SE - CE</div>
+                  </a>
+                </li>
+
+                <li class="menu-item">
+                  <a href="transfer_lead_by_SE_to_SE" class="menu-link">
+                    <div data-i18nn="Preview">Transfer SE - SE</div>
+                  </a>
+                </li>
+                <!-- transfer_lead_by_SE_to_SE -->
+
+              </ul>
+            </li>
+
+            <li class="menu-item">
+              <a href="#" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons ri-file-chart-line"></i>
                 <div data-i18nn="Invoice">Reports</div>
               </a>
               <ul class="menu-sub">

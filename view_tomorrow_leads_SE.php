@@ -110,7 +110,7 @@
                             <!-- <th>Employee Name</th> -->
                             <th>Location</th>
                             <th>Contact</th>
-                            <!-- <th>Time</th> -->
+                            <th>Visit Time</th>
                             <!-- <th>Email ID</th> -->
                             <th>Budget</th>
                             <!-- <th>Status</th> -->
@@ -132,7 +132,7 @@
                                     $assign_leads_id = $row1['assign_leads_id'];
                                     $leads_id = $row1['leads_id'];
                                     $admin_id = $row1['admin_id'];
-                                    $property_id = $row1['property_id'];
+                                    // $property_id = $row1['property_id'];
 
                                     $sqlemp = "select * from employee where admin_id = $admin_id ";
                                     $q = $pdo->prepare($sqlemp);
@@ -144,6 +144,7 @@
                                     $q->execute(array());      
                                     $row_leads = $q->fetch(PDO::FETCH_ASSOC);
 
+                                    $property_id = $row1['property_id'];
                                     $sqllprop = "select * from property_name where property_name_id = $property_id ";
                                     $q = $pdo->prepare($sqllprop);
                                     $q->execute(array());      
@@ -157,6 +158,7 @@
                                     <td><?php echo $row_leads["location"]; ?></td>
                                     <td><?php echo $row_leads["phone_no"]; ?></td>
                                     <td><?php echo $row_leads["email_id"]; ?></td>
+                                    <td><?php echo $row1["visit_time"]; ?></td>
                                     <td><?php echo $row_leads["budget_range"]; ?></td>
                                     <!-- <td><?php //echo $row_leads["status"]; ?></td> -->
                                     <!-- <td>

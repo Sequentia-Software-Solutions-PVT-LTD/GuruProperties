@@ -31,7 +31,7 @@
 
   if(isSet($_POST["submit"]))
   { 
-    // echo "<pre>";
+    echo "<pre>";
     // print_r($_POST);
     // exit();
 
@@ -43,23 +43,38 @@
     // $transfer_employee_type = 'CUSTOMER EXECUTIVE';
     $transfer_employee_id = $_POST['transfer_employee_id'];
     $transfer_reason = $_POST['transfer_reason'];
-    
 
-    $sqlassign_sr = "SELECT * FROM assign_leads_sr where assign_leads_sr_id= $assign_leads_sr_id ";
+    $next_date_time = $_POST['next_date'];
+    // Split the datetime into date and time
+    $date_time_parts = explode('T', $next_date_time);
+    $next_date = $date_time_parts[0];  // 2024-08-22
+    $next_time = $date_time_parts[1];  // 02:26 
+
+    $sqlassign_sr = "SELECT * FROM assign_leads_sr where assign_leads_sr_id = $assign_leads_sr_id ";
     $q = $pdo->prepare($sqlassign_sr);
     $q->execute(array());      
     $row_assign_sr = $q->fetch(PDO::FETCH_ASSOC);
+
+    // echo "<pre>";
+    // print_r($row_assign_sr);
+    // exit();
 
     $assign_leads_id = $row_assign_sr['assign_leads_id'];    
     $assign_by_emp_id = $row_assign_sr['employee_id'];    
     $assign_by_admin_id = $row_assign_sr['admin_id'];    
     $assign_by_emp_name = $row_assign_sr['employee_name'];    
-    $assign_by_emp_type = $row_assign_sr['employee_type'];    
+    $assign_by_emp_type = $row_assign_sr['employee_type'];
+
+    $property_id = $row_assign_sr['property_id'];
+    $sub_property_id = $row_assign_sr['sub_property_id'];
+    $variant = $row_assign_sr['variant'];
+    $location1 = $row_assign_sr['location1'];
 
     $from_SE = 'From SE';       
     $Active = 'Active';
     $Transfered = 'Transfered';
     $Available = 'Available';
+    $Admin_Pending = 'Admin Pending';
 
     $sqlemp = "SELECT * FROM employee where employee_id = $transfer_employee_id ";
     $q = $pdo->prepare($sqlemp);
@@ -91,9 +106,9 @@
         // ---------------------- transfer lead to SE-SE (insert new row)-------------------------------------------------------------------------------------------
         
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "INSERT INTO `assign_leads_sr`(`leads_id`, `admin_id`, `employee_id`,`employee_name`, `status`, `transfer_status`, `added_on`) VALUES (?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO `assign_leads_sr`(`leads_id`,`assign_leads_id`, `admin_id`, `employee_id`,`employee_name`,`employee_type`, `status`, `transfer_status`, `next_date`, `next_time`, `added_on`, `admin_request_date`,`request_for_admin`,`property_id`, `sub_property_id`,`variant`,`location1`,`assign_employee_id`,`assign_employee_type`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         $q = $pdo->prepare($sql);
-        $q->execute(array($leads_id, $admin_id, $transfer_employee_id, $employee_name, $Transfered, $Available, $added_on));
+        $q->execute(array($leads_id, $assign_leads_id, $admin_id, $transfer_employee_id, $employee_name, 'SALES EXECUTIVE', $Transfered, $Admin_Pending, $next_date, $next_time, $added_on, $added_on, 'Yes', $property_id, $sub_property_id, $variant, $location1 , $assign_by_emp_id, 'SALES EXECUTIVE'));
         
         // $lastInsertedId = $pdo->lastInsertId();
     }
@@ -116,9 +131,9 @@
          // ---------------------- transfer lead to SE-SE (insert new row) -------------------------------------------------------------------------------------------
          
          $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-         $sql = "INSERT INTO `assign_leads`(`leads_id`, `admin_id`, `employee_id`,`employee_name`, `status`, `transfer_status`,`transfer_employee_id`,`transfer_employee_type`, `transfer_reason`, `added_on`) VALUES (?,?,?,?,?,?,?,?,?,?)";
+         $sql = "INSERT INTO `assign_leads`(`leads_id`,`assign_leads_id`, `admin_id`, `employee_id`,`employee_name`,`employee_type`, `status`, `transfer_status`,`transfer_employee_id`,`transfer_employee_type`, `transfer_reason`, `next_date`, `next_time`, `added_on`, `admin_request_date`, `request_for_admin`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
          $q = $pdo->prepare($sql);
-         $q->execute(array($leads_id, $admin_id, $transfer_employee_id, $employee_name, $from_SE, $Available, $assign_by_emp_id, $assign_by_emp_type, $transfer_reason, $added_on));
+         $q->execute(array($leads_id,$assign_leads_id, $admin_id, $transfer_employee_id, $employee_name,'Customer EXECUTIVE', $from_SE, $Admin_Pending, $assign_by_emp_id, $assign_by_emp_type, $transfer_reason, $next_date, $next_time, $added_on, $added_on, 'Yes'));
          
     }
 
@@ -146,7 +161,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title> Transfer Leads By SE  |  Guru Properties</title>
+    <title> Transfer Lead By SE  |  Guru Properties</title>
 
     <meta name="description" content="" />
     <style>
@@ -289,6 +304,10 @@
                                         </div>
                                     </div> -->
 
+                                    <div class="mb-4">
+                                        <label for="next_date" class="form-label">Next Follow Up Date Time</label>
+                                        <input class="form-control" type="datetime-local" id="next_date" name="next_date" required>
+                                    </div>
 
                                     <div class="mb-4">
                                         <label for="notes" class="form-label">Reason For Transfer</label>

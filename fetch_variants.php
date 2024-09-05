@@ -8,7 +8,7 @@
         // print_r($towerId);
         // exit();
 
-        $sql = "SELECT * FROM property_varients WHERE property_tower_id = :tower_id";
+        $sql = "SELECT * FROM property_varients WHERE property_tower_id = :tower_id and status = 'Active'";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([':tower_id' => $towerId]);
 

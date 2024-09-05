@@ -21,6 +21,14 @@ if (isset($_POST["submit"])) {
     $property_location_id = $_POST['property_location_id'];
     $google_location_lat = $_POST['google_location_lat'];
     $google_location_long = $_POST['google_location_long'];
+    
+    $car_parking = $_POST['car_parking'];
+    $furnishing = $_POST['furnishing'];
+    $amenities = $_POST['amenities'];
+    $USP = $_POST['USP'];
+
+    // `car_parking` , `furnishing` ,  `amenities` , `USP`
+    // $car_parking , $furnishing ,  $amenities , $USP
 
     // Get location name based on location_id
     $sql = "SELECT * FROM location WHERE id = ?";
@@ -70,13 +78,13 @@ if (isset($_POST["submit"])) {
     // Insert into the database
     try {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "INSERT INTO `property_name`(`property_title`, `location`, `builder_name`, `added_on`, `location_id`, `google_location_lat`, `google_location_long`, `pdf1`, `pdf2`, `pdf3`, `pdf4`, `pdf5`, `pdf6`, `video1`, `video2`, `video3`, `video4`) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO `property_name`(`property_title`, `location`, `builder_name`,`status`, `added_on`, `location_id`, `google_location_lat`, `google_location_long`, `pdf1`, `pdf2`, `pdf3`, `pdf4`, `pdf5`, `pdf6`, `video1`, `video2`, `video3`, `video4`,`car_parking` , `furnishing` ,  `amenities` , `USP`) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $q = $pdo->prepare($sql);
         $q->execute([
-            $property_title, $location_name, $builder_name, $added_on, $property_location_id, 
+            $property_title, $location_name, $builder_name, 'Active', $added_on, $property_location_id, 
             $google_location_lat, $google_location_long, $pdf1, $pdf2, $pdf3, $pdf4, $pdf5, $pdf6,
-            $video1, $video2, $video3, $video4
+            $video1, $video2, $video3, $video4, $car_parking , $furnishing ,  $amenities , $USP
         ]);
 
         header('location:view_properties_name');
@@ -186,18 +194,6 @@ if (isset($_POST["submit"])) {
                               </div>
                             </div>
 
-                            <!-- <div class="col-md-6">
-                                <div class="row">
-                                    <label class="col-sm-3 col-form-label text-sm-end" for="google-location-lat">Google Location</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="google_location_lat" id="google-location-lat" class="form-control" placeholder="Latitude">
-                                    </div>
-                                    <div class="col-sm-5">
-                                        <input type="text" name="google_location_long" id="google-location-long" class="form-control" placeholder="Longitude">
-                                    </div>
-                                </div>
-                            </div> -->
-
                             <div class="col-md-6">
                                 <div class="row">
                                     <label class="col-sm-3 col-form-label text-sm-end" for="google-location-lat">Google Location</label>
@@ -220,7 +216,54 @@ if (isset($_POST["submit"])) {
 
                             <!-- Property form details -->
 
-                            <h5 class="card-header">Upload Property Details</h5>
+                            <h5 class="card-header" style="padding-bottom: 0;">Upload Property Details</h5>
+                            <h5 class="card-header" style="padding-top:0;"> Other Details </h5>
+
+                            <div class="col-md-6">
+                              <div class="row">
+                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Car Parking</label>
+                                <div class="col-sm-9">
+                                    <select id="defaultSelect" class="form-select" name="car_parking">
+                                      <option>Select Parking Type</option>
+                                      <option value="Open">Open</option>
+                                      <option value="Covered">Covered</option>
+                                      <option value="Semi-covered">Semi-covered</option>
+                                    </select>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-6">
+                              <div class="row">
+                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Furnishing </label>
+                                <div class="col-sm-9">
+                                    <select id="defaultSelect" class="form-select" name="furnishing">
+                                      <option>Select Furnishing Type</option>
+                                      <option value="Furnished">Furnished</option>
+                                      <option value="Semi-Furnished">Semi-Furnished</option>
+                                      <option value="Non-Furnished">Non-Furnished</option>
+                                    </select>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-6">
+                              <div class="row">
+                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Amenities  </label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control h-px-100" name="amenities" id="exampleFormControlTextarea1" placeholder="Write amenities here..."></textarea>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-6">
+                              <div class="row">
+                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> USP  </label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control h-px-100" name="USP" id="exampleFormControlTextarea1" placeholder="Write USP here..."></textarea>
+                                </div>
+                              </div>
+                            </div>
 
                             <h5 class="card-header">PDF Files </h5>
                             
