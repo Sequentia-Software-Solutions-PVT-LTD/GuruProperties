@@ -93,12 +93,15 @@
                             <tr>
                             <th>#</th>
                             <th>Lead Name</th>
+                            <th>Property Name</th>
                             <!-- <th>Employee Name</th> -->
                             <th>Location</th>
                             <th>Contact</th>
-                            <th>Email ID</th>
-                            <th>Budget</th>
-                            <th>Actions</th>
+                            <!-- <th>Email ID</th> -->
+                            <!-- <th>Budget</th> -->
+                            <th>Visit Date</th>
+                            <th>Visit Time</th>
+                            <!-- <th>Actions</th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -126,19 +129,27 @@
                                     $q = $pdo->prepare($sqlleads);
                                     $q->execute(array());      
                                     $row_leads = $q->fetch(PDO::FETCH_ASSOC);
+
+                                    $property_id = $row1['property_id'];
+                                    $sqllprop = "select * from property_name where property_name_id = $property_id ";
+                                    $q = $pdo->prepare($sqllprop);
+                                    $q->execute(array());      
+                                    $row_pro = $q->fetch(PDO::FETCH_ASSOC); 
                             ?>
                             <tr>
                                     <td><i class="ri-building-2-line ri-22px text-primary me-4"></i><span class="fw-medium"><?php echo $i; ?></span></td>
                                     <td><?php echo $row_leads["lead_name"]; ?></td>
+                                    <td><?php echo $row_pro["property_title"]; ?></td>
                                     <!-- <td><?php //echo $row_emp["employee_name"]; ?></td> -->
                                     <td><?php echo $row_leads["location"]; ?></td>
                                     <td><?php echo $row_leads["phone_no"]; ?></td>
-                                    <td><?php echo $row_leads["email_id"]; ?></td>
-                                    <td><?php echo $row_leads["budget_range"]; ?></td>
-                                    <td>
+                                    <!-- <td><?php echo $row_leads["email_id"]; ?></td> -->
+                                    <!-- <td><?php echo $row_leads["budget_range"]; ?></td> -->
+                                    <td><?php echo date('d-M-Y', strtotime($row1["visit_date"])); ?></td>
+                                    <td><?php echo $row1["visit_time"]; ?></td>
+                                    <!-- <td>
                                         <a class="dropdown-item waves-effect" href="view_single_lead_assigned_by_CE.php?assign_leads_sr_id=<?php echo $row1["assign_leads_sr_id"]; ?>"><i class="ri-eye-line me-1"></i> </a>
-                                        <!-- <a class="dropdown-item waves-effect" href="transfer_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-eye-line me-1"></i> </a> -->
-                                    </td>
+                                    </td> -->
                             </tr>
                             <?php $i++; } ?>
                         </tbody>

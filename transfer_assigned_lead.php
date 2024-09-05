@@ -43,6 +43,12 @@
     $transfer_employee_type = 'CUSTOMER EXECUTIVE';
     $transfer_employee_id = $_POST['transfer_employee_id'];
     $transfer_reason = $_POST['transfer_reason'];
+
+    $next_date_time = $_POST['next_date'];
+    // Split the datetime into date and time
+    $date_time_parts = explode('T', $next_date_time);
+    $next_date = $date_time_parts[0];  // 2024-08-22
+    $next_time = $date_time_parts[1];  // 02:26
     
 
     $sqlemp = "SELECT * FROM employee where employee_id= $transfer_employee_id ";
@@ -56,6 +62,7 @@
     $Active = 'Active';
     $Transfered = 'Transfered';
     $Available = 'Available';
+    $Admin_Pending = 'Admin Pending';
 
     //------------------------- Update query for last assigned employee lead changes ----------------------------------------- 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -75,9 +82,9 @@
     // ---------------------- Insert query for trasfered employee-------------------------------------------------------------------------------------------
     
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "INSERT INTO `assign_leads`(`leads_id`, `admin_id`, `employee_id`,`employee_name`, `status`, `transfer_status`, `added_on`) VALUES (?,?,?,?,?,?,?)";
+    $sql = "INSERT INTO `assign_leads`(`leads_id`, `admin_id`, `employee_id`,`employee_name`, `status`, `transfer_status`,`next_date`,`next_time`, `added_on`,`admin_request_date`,`request_for_admin`) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
     $q = $pdo->prepare($sql);
-    $q->execute(array($leads_id, $admin_id, $transfer_employee_id, $employee_name, $Transfered, $Available, $added_on));
+    $q->execute(array($leads_id, $admin_id, $transfer_employee_id, $employee_name, $Transfered, $Admin_Pending, $next_date, $next_time, $added_on, $added_on, 'Yes'));
      
     // $lastInsertedId = $pdo->lastInsertId();
 
@@ -196,11 +203,16 @@
                                           </select>
                                     </div>
 
+                                    <div class="mb-4">
+                                        <label for="next_date" class="form-label">Next Follow Up Date Time</label>
+                                        <input class="form-control" type="datetime-local" id="next_date" name="next_date" required>
+                                    </div>
 
                                     <div class="mb-4">
                                         <label for="notes" class="form-label">Reason For Transfer</label>
                                         <textarea class="form-control" id="transfer_reason" placeholder="Write Reason here..." name="transfer_reason"></textarea>
                                     </div>
+                                    
 
                                     <div class="d-flex justify-content-between">
                                         <button type="submit" name="submit" class="btn btn-success logo-btn">

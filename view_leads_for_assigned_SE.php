@@ -264,7 +264,7 @@
                                                       <select id="propertyDropdown" name="property_name_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
                                                           <option value="">Select Property Name</option>
                                                           <?php
-                                                              $sql = "SELECT * FROM property_name";
+                                                              $sql = "SELECT * FROM property_name where status = 'Active'";
                                                               foreach ($pdo->query($sql) as $row) { 
                                                                   echo '<option value="'.$row['property_name_id'].'">'.$row['property_title'].'</option>';
                                                               }

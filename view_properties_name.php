@@ -8,31 +8,69 @@
   include ('dist/conf/db.php');
   $pdo = Database::connect();
 
-  if(isSet($_POST["subimt"]))
-  { 
-    $property_title = $_POST['property_title'];
-    $builder_name = $_POST['builder_name'];
-    $added_on = date('Y-m-d H-i-s');
-    $status = "Active";
-    $varients = $_POST['varients'];
-    $area = $_POST['area'];
-    $price = $_POST['price'];
-    $location = $_POST['location'];
+    $from_date_submit = "";
+    $to_date_submit = "";
+    $sr_id_submit = "";
 
+		$sql_query = "SELECT * from property_name WHERE status='abc'";
+    // $sql_query = "SELECT * FROM property_name ";
+    $pdata = $pdo->prepare($sql_query);
+    $pdata->execute();
+    $results = $pdata->fetchAll(PDO::FETCH_ASSOC);
+
+		if(isSet($_POST["submit"])) 
+		{
+        // echo "<pre>";
+        // print_r($_POST);
+        // exit();
+
+		    $varients = $_POST["varients"];
+        $location = $_POST["location"];
+        $builder_possession = $_POST['builder_possession'];
+
+	    	// $sql_query = "SELECT * from property_name pn, property_tower pt, property_varient pv WHERE pv.varients = $varients and  pt.builder_possession = $builder_possession and pn.location = $location order by pn.property_title where pn.property_name_id = pt.property_name_id =pv.property_name_id is same";
+        
+        // Prepare the SQL query using placeholders
+        $sql_query = "SELECT * 
+                  FROM property_name pn
+                  JOIN property_tower pt ON pn.property_name_id = pt.property_name_id
+                  JOIN property_varients pv ON pn.property_name_id = pv.property_name_id
+                  WHERE pv.varients = :varients 
+                  AND pt.builder_possession = :builder_possession 
+                  AND pn.location = :location 
+                  ORDER BY pn.property_title";
+
+          // Prepare and execute the query
+          $stmt = $pdo->prepare($sql_query);
+          $stmt->execute([
+              ':varients' => $varients,
+              ':builder_possession' => $builder_possession,
+              ':location' => $location
+          ]);
+
+          // Fetch the results (if needed)
+          $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // -------------------------------------------------
+
+		}
+
+  if(isSet($_POST["suspend"]))
+  { 
     // echo "<pre>";
     // print_r($_POST);
     // exit();
 
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "INSERT INTO property(property_title, builder_name, varients, area, price, status,location, added_on) values(?,?,?,?,?, ?, ?, ?)";
-    $q = $pdo->prepare($sql);
-    $q->execute(array($property_title, $builder_name, $varients,  $area,  $price, 'Active',$location, $added_on));
+    $property_name_id = $_POST['employee_id'];
+    $client_name = $_POST['client_name'];
+    $added_on = date('Y-m-d H-i-s');
+    // $status = "Suspended";
 
-    // echo "<pre>";
-    // print_r($sql);
-    // exit();
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sql1 = "UPDATE property_name set status = 'Suspended', edited_on = '$added_on' WHERE property_name_id = ?";  
+    $q = $pdo->prepare($sql1);
+    $q->execute(array($property_name_id));
     
-    header('location:add_property');
+    header('location:view_properties_name');
      
   }
 
@@ -89,6 +127,77 @@
               <h5 class="card-header mar-bot-10">Property Management</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
+                  <div class="d-flex align-items-center1 justify-content-center h-px-200">
+                    <form action="#" method="post" enctype="multipart/form-data">
+                        <div class="row g-4" style="margin-top:30px;">
+                            
+                            <div class="col-md-6">
+                              <div class="row">
+                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Varient</label>
+                                <div class="col-sm-9">
+                                    <select id="formtabs-country"  name="varients" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
+                                      <option value="" data-select2-id="18">Select Variants</option>
+                                      <option value="1BHK">1 BHK</option>
+                                      <option value="1.5BHK">1.5 BHK</option>
+                                      <option value="2BHK">2 BHK</option>
+                                      <option value="2.5BHK">2.5 BHK</option>
+                                      <option value="3BHK">3 BHK</option>
+                                      <option value="3.5BHK">3.5 BHK</option>
+                                      <option value="4BHK">4 BHK</option>
+                                      <option value="4.5BHK">4.5 BHK</option>
+                                      <option value="5BHK">5 BHK</option>
+                                    </select>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-6">
+                              <div class="row">
+                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Location </label>
+                                <div class="col-sm-9">
+                                    <select id="roleDropdown" name="location" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
+                                        <option value="" data-select2-id="18">Select Location</option>
+                                        <?php
+                                            $sql = "SELECT * FROM  property_name where status = 'Active'";
+                                            foreach ($pdo->query($sql) as $row) 
+                                            { 
+                                            ?>
+                                                <option value="<?php echo $row['location']?>"><?php echo $row['location']?></option> 
+                                            <?php } ?>
+                                    </select>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-6">
+                              <div class="row">
+                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Builder Possession</label>
+                                <div class="col-sm-9">
+                                    <select id="roleDropdown" name="builder_possession" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
+                                        <option value="" data-select2-id="18">Select Builder Possession</option>
+                                        <?php
+                                            $sql = "SELECT * FROM  property_tower where status = 'Active'";
+                                            foreach ($pdo->query($sql) as $row) 
+                                            { 
+                                            ?>
+                                                <option value="<?php echo $row['builder_possession']?>"><?php echo $row['builder_possession']?></option> 
+                                            <?php } ?>
+                                    </select>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-4">
+                              <button type="submit" name="submit" class="btn btn-info">Search</button>
+                              <?php if(isSet($_POST["submit"])) { ?>
+                                <!-- <button target="_blank" class="btn btn-danger" name="pdf" onclick="javascript: form.action='pdf_export_fromto_report';"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button>
+                                <button type="" name="xlsx" class="btn btn-warning" onclick="javascript: form.action='xlsx_export_fromto_report';"><i class="fa fa-file-excel-o" aria-hidden="true"></i></button> -->
+                              <?php } ?>
+                            </div>
+                          
+                        </div>
+                    </form>
+                    </div>
                     <h5 class="card-header"> All property are listed below</h5>
                     <div class="table-responsive text-nowrap">
                         <table class="table">
@@ -98,40 +207,58 @@
                             <th>#</th>
                             <th>Property Name</th>
                             <th>Location</th>
-                            <th>Latitude</th>
-                            <th>Longitude</th>
+                            <th>Variant</th>
+                            <!-- <th>Latitude</th>
+                            <th>Longitude</th> -->
+                            <th>Builder Possession</th>
                             <th>Builder Name</th>
-                            <!-- <th>Actions</th> -->
+                            <!-- <th>Status</th> -->
+                            <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php 
                                 $i = 1;
-                                $sql = "SELECT * FROM property_name ";
-                                // $sql = "SELECT * FROM admin where login_role = 'ASSISTANT' OR login_role = 'RECEPTIONIST' OR login_role = 'TECHNICIAN' ";
-                                $q = $pdo->query($sql);
-                                foreach ($pdo->query($sql) as $row) 
-                                { 
+                                // $sql = "SELECT * FROM property_name ";
+                                // $q = $pdo->query($sql);
+                                // foreach ($pdo->query($sql) as $row) 
+                                // { 
+
+                                // $sql_query = "SELECT * FROM property_name ";
+                                // $pdata = $pdo->prepare($sql_query);
+                                // $pdata->execute();
+                                // $results = $pdata->fetchAll(PDO::FETCH_ASSOC);
+                              	// echo "<pre>";
+                                // print_r($sql_query);
+                                // exit();
+                                foreach($results as $row)
+                                {
+                                  // echo "<pre>";
+                                  // print_r($row);
+                                  // exit();
                             ?>
                             <tr>
                                 <td><i class="ri-home-smile-line ri-22px text-primary me-4"></i><span class="fw-medium"><?php echo $i; ?></span></td>
                                     <!-- <td><?php echo $i; ?></td> -->
                                     <td><?php echo $row["property_title"]; ?></td>
                                     <td><?php echo $row["location"]; ?></td>
-                                    <td><?php echo $row["google_location_lat"]; ?></td>
-                                    <td><?php echo $row["google_location_long"]; ?></td>
+                                    <td><?php echo $row["varients"]; ?></td>
+                                    <!-- <td><?php echo $row["google_location_lat"]; ?></td>
+                                    <td><?php echo $row["google_location_long"]; ?></td> -->
                                     <td><?php echo $row["builder_name"]; ?></td>
-                                    <!-- <td>
-                                        <div class="dropdown">
+                                    <td><?php echo $row["builder_possession"]; ?></td>
+                                    <!-- <td><?php //echo $row["status"]; ?></td> -->
+                                    <td>
+                                        <!-- <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ri-more-2-line"></i></button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item waves-effect" href="edit_employee?employee_id=<?php echo $row["employee_id"]; ?>"><i class="ri-pencil-line me-1"></i> Edit</a>
-                                                <a class="dropdown-item waves-effect open-myModal" data-bs-toggle="modal" data-bs-target="#enableOTP" data-employee_id="<?php echo $row["id"]; ?>"><i class="ri-delete-bin-7-line me-1"></i> Delete</a>
-                                            </div>
-                                        </div>
-                                    </td> -->
+                                            <div class="dropdown-menu"> -->
+                                                <!-- <a class="dropdown-item waves-effect open-myModal" data-bs-toggle="modal" data-bs-target="#enableOTP" data-employee_id="<?php echo $row["property_name_id"]; ?>"><i class="ri-delete-bin-7-line me-1"></i> </a> -->
+                                                <a class="dropdown-item waves-effect open-myModal" data-bs-toggle="modal" data-bs-target="#enableOTP" data-employee_id="<?php echo $row["property_name_id"]; ?>"><i class="ri-file-pdf-2-line me-1"></i> </a>
+                                            <!-- </div>
+                                        </div> -->
+                                    </td>
                             </tr>
-                            <?php $i++; } ?>
+                            <?php $i++; } ?> 
                         </tbody>
                         </table>
                     </div>
@@ -143,14 +270,19 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     <div class="modal-body p-0">
                       <div class="text-center mb-6">
-                        <h4 class="mb-2">Suspend!..</h4>
-                        <p>Do you really want suspend this Property?</p>
+                        <h4 class="mb-2">Export!..</h4>
+                        <p>Add Client Name</p>
                       </div>
                       <!-- <p class="mb-5">
                         Enter your mobile phone number with country code and we will send you a verification code.
                       </p> -->
-                      <form id="enableOTPForm" class="row g-5"  action="suspend_employee.php" method="POST">
+                      <form id="enableOTPForm" class="row g-5"  action="export_pdf_property_details.php" method="POST">
                         <input type="hidden" name="employee_id" id="employee_id"  value=""/>
+
+                          <div id="reasonBox" class="mb-4" style="">
+                              <label for="client_name" class="form-label">Client Name</label>
+                              <input type="text" name="client_name" id="formtabs-username" class="form-control" placeholder=" Client Name" required>
+                          </div>
                       
                         <div class="col-12 d-flex flex-wrap justify-content-center gap-4 row-gap-4">
                           <button
@@ -161,7 +293,7 @@
                             Cancel
                           </button>
 
-                          <button type="submit" name ="suspend" class="btn btn-danger">Suspend</button>
+                          <button type="submit" name ="suspend" class="btn btn-success">Export</button>
                         </div>
                       </form>
                     </div>

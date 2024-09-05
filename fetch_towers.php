@@ -5,7 +5,7 @@ $pdo = Database::connect();
 if (isset($_POST['property_id'])) {
     $propertyId = $_POST['property_id'];
 
-    $sql = "SELECT * FROM property_tower WHERE property_name_id = :property_id";
+    $sql = "SELECT * FROM property_tower WHERE property_name_id = :property_id and status = 'Active'";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([':property_id' => $propertyId]);
 

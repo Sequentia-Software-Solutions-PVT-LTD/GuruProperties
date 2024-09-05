@@ -73,6 +73,25 @@ if(isset($_POST["submit"]))
           //}
           $_SESSION['login_time'] = time();
 
+           // ------------- add atendence ----------------------
+            $login_name = $_SESSION['login_name'];
+            $login_role = $_SESSION['login_role'];
+            $login_user_id = $_SESSION['login_user_id'];
+            $date = date('Y-m-d');
+            $time = date('H:i:s');
+            $added_on = date('Y-m-d H-i-s'); 
+            // $status = "Logged OUT";
+            $status="Logged In";
+
+            //  print_r($_SESSION);
+            //  exit();
+
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql = "INSERT INTO `attendance`(`login_id`,`login_name`,`date`,`time`,`status`, `added_on`) VALUES (?,?,?,?,?,?)";
+            $q = $pdo->prepare($sql);
+            $q->execute(array($login_user_id, $login_name, $date, $time, $status, $added_on));
+         // ------------- add atendence ----------------------
+
           // echo "<pre>";
           // print_r($_SESSION);
           // exit();

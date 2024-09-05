@@ -72,8 +72,6 @@
         // }
     }
 
-    
-
     // $next_date_time_followup = $_POST['next_date_followup'];
     // // Split the datetime into date and time
     // $date_time_parts = explode('T', $next_date_time_followup);
@@ -139,14 +137,6 @@
 		file_put_contents($photo1, $data1);
 	}
     // -----------/upload photo script(by select pic)-----------
-
-    // echo "<pre>";
-    // print_r($next_time_followup1);
-    // print_r($next_date_followup1);
-    // print_r($next_date_visit1);
-    // print_r($next_time_visit1);
-    // print_r($next_date_time);
-    // exit();
 
     // $sqlemp = "SELECT * FROM assign_leads where assign_leads_id= $assign_leads_id ";
     $sqlemp = "SELECT * FROM assign_leads_sr where assign_leads_sr_id = $assign_leads_sr_id ";
@@ -289,6 +279,11 @@
 		align-items: center;
 		height:400px;
 	}
+
+    /* multi select dropdown */
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__display {
+        color: #fff;
+    }
   </style>
  <style>
 	/* CSS comes here */
@@ -435,7 +430,7 @@
                                 <!-- <a class="btn btn-secondary" href="transfer_assigned_lead.php?assign_leads_id=<?php echo $row_assign["assign_leads_id"]; ?>">Transfer Lead </a> -->
                             </div>
 
-                            <form action="#" onsubmit="prepareForm()" id="myForm" method="post" enctype="multipart/form-data">
+                            <form action="#" method="post" enctype="multipart/form-data">
                                 <input type="hidden" value="<?php echo $_REQUEST['assign_leads_sr_id']; ?>" name="assign_leads_sr_id">
                                 <div class="card-body" style="padding-top: 0px;">
                                     <!--  -->
@@ -466,6 +461,7 @@
                                             ?>
                                             <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Property Name:</span> <span><?php echo $row_property['property_title']; ?></span></li>
                                             <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span><?php echo $row_property['location']; ?></span></li>
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Google Location:</span>Latitude: <span><?php echo $row_property['google_location_lat']; ?> & Longitude: <?php echo $row_property['google_location_long']; ?> </span></li>
                                             <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Builder Name:</span> <span><?php echo $row_property['builder_name']; ?></span></li>
                                             <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Tower Name:</span> <span><?php echo $row_tower['property_tower_name']; ?></span></li>
                                             <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Builder Possession:</span> <span><?php echo $row_tower['builder_possession']; ?></span></li>
@@ -629,7 +625,7 @@
                                                       <select id="propertyDropdown" name="property_name_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true">
                                                           <option value="">Select Property Name</option>
                                                           <?php
-                                                              $sql = "SELECT * FROM property_name";
+                                                              $sql = "SELECT * FROM property_name where status = 'Active'";
                                                               foreach ($pdo->query($sql) as $row) { 
                                                                   echo '<option value="'.$row['property_name_id'].'">'.$row['property_title'].'</option>';
                                                               }
@@ -641,9 +637,9 @@
 
                                             <div class="col-md-6">
                                                 <div class="row">
-                                                    <label class="col-sm-3 col-form-label text-sm-end mar-top"> Tower</label>
+                                                    <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Tower</label>
                                                     <div class="col-sm-9">
-                                                        <select id="towerDropdown" name="property_tower_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true">
+                                                        <select id="towerDropdown" name="property_tower_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
                                                             <option value="">Select Property Tower</option>
                                                             <!-- Towers will be loaded here based on the selected property -->
                                                         </select>
@@ -658,7 +654,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-3 col-form-label text-sm-end mar-top"> Variants</label>
                                                     <div class="col-sm-9">
-                                                        <select id="variantDropdown" name="property_variants[]" class="js-example-basic-singlec select2 form-select select2-hidden-accessiblee" multiple="multiple" data-allow-clear="true">
+                                                        <select id="variantDropdown" name="property_variants[]" class="js-example-basic-single select2 form-select select2-hidden-accessiblee select2-hidden-accessible" multiple="multiple" data-allow-clear="true">
                                                             <option value="">Select Variants</option>
                                                         </select>
                                                     </div>
@@ -678,12 +674,11 @@
 
                                     </div>
                                     <!-- /new form -->
-                                    <INPUT TYPE="text" NAME="long" ID="long" VALUE="">
-                                    <INPUT TYPE="text" NAME="lat" ID="lat" VALUE="">
+
 
                                     <div class="d-flex justify-content-between">
                                         <!-- <a class="btn btn-outline-info" href="view_leads_for_assigned_SE.php?assign_leads_id=<?php echo $row_assign["assign_leads_id"]; ?>">Assign Lead To Sales Executive </a> -->
-                                        <button type="submit" name="submit1" id="submit1" class="btn btn-success logo-btn" disabled>Submit</button>
+                                        <button type="submit" name="submit1" class="btn btn-success logo-btn">Submit</button>
                                         <!-- <a class="btn btn-secondary" href="transfer_assigned_lead.php?assign_leads_id=<?php echo $row_assign["assign_leads_id"]; ?>">Transfer Lead </a> -->
                                         
                                     </div>
@@ -691,36 +686,7 @@
                             </form>
                         </div>
                     </div>
-                    <script type="text/javascript">
-                            initGeolocation();
-                            function prepareForm(event) {
-                                    event.preventDefault();
-                                    // Do something you need
-                                    initGeolocation();
-                                    document.getElementById("myForm").requestSubmit();
-                            }
-                            function initGeolocation()
-                            {
-                                navigator.geolocation.getCurrentPosition( success, fail );
-                            }
 
-                            function success(position)
-                            {   
-                                    document.getElementById('long').value = position.coords.longitude;
-                                    document.getElementById('lat').value = position.coords.latitude;
-                                    document.getElementById('submit1').disabled  = false;
-                            }
-
-                            function fail()
-                            {
-                                alert("Please enable your location to submit this form");
-                                // alert("Sorry, your browser does not support geolocation services.");
-                                document.getElementById('long').value = "00.0000000";
-                                document.getElementById('lat').value = "00.0000000";
-                                document.getElementById('submit1').disabled  = true;
-                            }
-
-                    </script>    
                     <!-- Timeline code -->
                     <div class="col-xl-12 col-lg-12 col-md-12">
                         <div class="card">
@@ -733,6 +699,8 @@
                                     <th>#</th>
                                     <th>Time Line Date</th>
                                     <th>Status</th>
+                                    <th>Latitude </th>
+                                    <th>Longitude </th>
                                     <!-- <th>Leads Information</th> -->
                                     <th>Follow Up Details</th>
                                     <th>Transfer Details</th>

@@ -8,31 +8,22 @@
   include ('dist/conf/db.php');
   $pdo = Database::connect();
 
-  if(isSet($_POST["subimt"]))
+  if(isSet($_POST["suspend"]))
   { 
-    $property_title = $_POST['property_title'];
-    $builder_name = $_POST['builder_name'];
-    $added_on = date('Y-m-d H-i-s');
-    $status = "Active";
-    $varients = $_POST['varients'];
-    $area = $_POST['area'];
-    $price = $_POST['price'];
-    $location = $_POST['location'];
-
     // echo "<pre>";
     // print_r($_POST);
     // exit();
 
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "INSERT INTO property(property_title, builder_name, varients, area, price, status,location, added_on) values(?,?,?,?,?, ?, ?, ?)";
-    $q = $pdo->prepare($sql);
-    $q->execute(array($property_title, $builder_name, $varients,  $area,  $price, 'Active',$location, $added_on));
+    $property_tower_id = $_POST['employee_id'];
+    $added_on = date('Y-m-d H-i-s');
+    $status = "Suspended";
 
-    // echo "<pre>";
-    // print_r($sql);
-    // exit();
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sql1 = "UPDATE property_tower set status = 'Suspended', edited_on = '$added_on' WHERE property_tower_id = ?";  
+    $q = $pdo->prepare($sql1);
+    $q->execute(array($property_tower_id));
     
-    header('location:add_property');
+    header('location:view_properties_tower');
      
   }
 
@@ -100,7 +91,8 @@
                             <th>Property Tower</th>
                             <th>Builder Possession</th>
                             <th>RERA Possession</th>
-                            <!-- <th>Actions</th> -->
+                            <th>Status</th>
+                            <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -122,17 +114,18 @@
                                     <!-- <td><?php echo $i; ?></td> -->
                                     <td><?php echo $row_p["property_title"]; ?></td>
                                     <td><?php echo $row["property_tower_name"]; ?></td>
-									<td><?php echo $row["builder_possession"]; ?></td>
-									<td><?php echo $row["rera_possession"]; ?></td>
-                                    <!-- <td>
-                                        <div class="dropdown">
+                                    <td><?php echo $row["builder_possession"]; ?></td>
+                                    <td><?php echo $row["rera_possession"]; ?></td>
+                                    <td><?php echo $row["status"]; ?></td>
+                                    <td>
+                                        <!-- <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ri-more-2-line"></i></button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item waves-effect" href="edit_employee?employee_id=<?php echo $row["employee_id"]; ?>"><i class="ri-pencil-line me-1"></i> Edit</a>
-                                                <a class="dropdown-item waves-effect open-myModal" data-bs-toggle="modal" data-bs-target="#enableOTP" data-employee_id="<?php echo $row["id"]; ?>"><i class="ri-delete-bin-7-line me-1"></i> Delete</a>
-                                            </div>
-                                        </div>
-                                    </td> -->
+                                            <div class="dropdown-menu"> -->
+                                                <!-- <a class="dropdown-item waves-effect" href="edit_employee?employee_id=<?php echo $row["employee_id"]; ?>"><i class="ri-pencil-line me-1"></i> Edit</a> -->
+                                                <a class="dropdown-item waves-effect open-myModal" data-bs-toggle="modal" data-bs-target="#enableOTP" data-employee_id="<?php echo $row["property_tower_id"]; ?>"><i class="ri-delete-bin-7-line me-1"></i> </a>
+                                            <!-- </div>
+                                        </div> -->
+                                    </td>
                             </tr>
                             <?php $i++; } ?>
                         </tbody>
@@ -152,8 +145,8 @@
                       <!-- <p class="mb-5">
                         Enter your mobile phone number with country code and we will send you a verification code.
                       </p> -->
-                      <form id="enableOTPForm" class="row g-5"  action="suspend_employee.php" method="POST">
-                        <input type="hidden" name="employee_id" id="employee_id"  value=""/>
+                      <form id="enableOTPForm" class="row g-5"  action="#" method="POST">
+                        <input type="text" name="employee_id" id="employee_id"  value=""/>
                       
                         <div class="col-12 d-flex flex-wrap justify-content-center gap-4 row-gap-4">
                           <button

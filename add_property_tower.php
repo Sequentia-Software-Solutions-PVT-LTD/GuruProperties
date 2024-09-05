@@ -26,9 +26,9 @@
     // exit();
     
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "INSERT INTO `property_tower`(`property_name_id`, `property_tower_name`, `builder_possession`,`rera_possession`, `added_on`) VALUES (?,?,?,?,?)";
+    $sql = "INSERT INTO `property_tower`(`property_name_id`, `property_tower_name`, `builder_possession`,`rera_possession`, `added_on`, `status`) VALUES (?,?,?,?,?,?)";
     $q = $pdo->prepare($sql);
-    $q->execute(array($property_name_id, $property_tower, $builder_possession, $rera_possession, $added_on));
+    $q->execute(array($property_name_id, $property_tower, $builder_possession, $rera_possession, $added_on, 'Active'));
     // $lastInsertedId = $pdo->lastInsertId();
     
     header('location:view_properties_tower');
@@ -103,7 +103,7 @@
                                 <select id="roleDropdown" name="property_name_id" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
                                     <option value="" data-select2-id="18">Select Property Name</option>
                                     <?php
-                                        $sql = "SELECT * FROM  property_name ";
+                                        $sql = "SELECT * FROM  property_name where status = 'Active'";
                                         foreach ($pdo->query($sql) as $row) 
                                         { 
                                         ?>

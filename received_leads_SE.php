@@ -105,11 +105,12 @@
                             <tr>
                             <th>#</th>
                             <th>Leads Name</th>
-                            <!-- <th>Employee Name</th> -->
+                            <th>Property Name</th>
                             <th>Location</th>
                             <th>Contact</th>
                             <!-- <th>Email ID</th> -->
-                            <th>Budget</th>
+                            <!-- <th>Budget</th> -->
+                            <th>Assigned By</th>
                             <!-- <th>Actions</th> -->
                             </tr>
                         </thead>
@@ -123,12 +124,18 @@
                                 // exit();
                                 foreach ($pdo->query($sql) as $row1) 
                                 { 
+                                    // echo "<pre>";
+                                    // print_r($row1);
+                                    // exit();
+
                                     $assign_leads_id = $row1['assign_leads_id'];
                                     $assign_leads_sr_id = $row1['assign_leads_sr_id'];
                                     $leads_id = $row1['leads_id'];
                                     $admin_id = $row1['admin_id'];
+                                    $assign_employee_id = $row1['assign_employee_id'];
 
-                                    $sqlemp = "select * from employee where admin_id = $admin_id ";
+                                    // $sqlemp = "select * from employee where admin_id = $admin_id ";
+                                    $sqlemp = "select * from employee where employee_id = $assign_employee_id ";
                                     $q = $pdo->prepare($sqlemp);
                                     $q->execute(array());      
                                     $row_emp = $q->fetch(PDO::FETCH_ASSOC);
@@ -137,15 +144,23 @@
                                     $q = $pdo->prepare($sqlleads);
                                     $q->execute(array());      
                                     $row_leads = $q->fetch(PDO::FETCH_ASSOC);
+
+                                    $property_id = $row1['property_id'];
+                                    $sqllprop = "select * from property_name where property_name_id = $property_id ";
+                                    $q = $pdo->prepare($sqllprop);
+                                    $q->execute(array());      
+                                    $row_pro = $q->fetch(PDO::FETCH_ASSOC);
                             ?>
                             <tr>
                                     <td><i class="ri-building-2-line ri-22px text-primary me-4"></i><span class="fw-medium"><?php echo $i; ?></span></td>
                                     <td><?php echo $row_leads["lead_name"]; ?></td>
-                                    <!-- <td><?php //echo $row_emp["employee_name"]; ?></td> -->
+                                    <td><?php echo $row_pro["property_title"]; ?></td>
                                     <td><?php echo $row_leads["location"]; ?></td>
                                     <td><?php echo $row_leads["phone_no"]; ?></td>
                                     <!-- <td><?php echo $row_leads["email_id"]; ?></td> -->
-                                    <td><?php echo $row_leads["budget_range"]; ?></td>
+                                     
+                                    <td><?php echo $row_emp["employee_name"]; ?></td>
+                                    <!-- <td><?php echo $row_leads["budget_range"]; ?></td> -->
                                     <td>
                                       <!-- trasnfer_lead_by_SE.php -->
                                         <!-- <a class="dropdown-item waves-effect" href="view_single_lead_assigned_by_CE.php?assign_leads_sr_id=<?php echo $row1["assign_leads_sr_id"]; ?>"><i class="ri-eye-line me-1"></i> </a> -->
@@ -175,12 +190,13 @@
                             <tr>
                                 <th>#</th>
                                 <th>Lead Name</th>
-                                <!-- <th>Employee Name</th> -->
+                                <th>Property Name</th>
                                 <th>Location</th>
                                 <th>Contact</th>
                                 <!-- <th>Email ID</th> -->
-                                <th>Budget</th>
-                                <th>Actions</th>
+                                <!-- <th>Budget</th> -->
+                                <th>Transfer By</th>
+                                <!-- <th>Actions</th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -194,12 +210,18 @@
                                 // exit();
                                 foreach ($pdo->query($sql) as $row1) 
                                 { 
+                                    // echo "<pre>";
+                                    // print_r($row1);
+                                    // exit();
+
                                     $assign_leads_id = $row1['assign_leads_id'];
                                     $assign_leads_sr_id = $row1['assign_leads_sr_id'];
                                     $leads_id = $row1['leads_id'];
                                     $admin_id = $row1['admin_id'];
+                                    $assign_employee_id = $row1['assign_employee_id'];
 
-                                    $sqlemp = "select * from employee where admin_id = $admin_id ";
+                                    // $sqlemp = "select * from employee where admin_id = $admin_id ";
+                                    $sqlemp = "select * from employee where employee_id = $assign_employee_id ";
                                     $q = $pdo->prepare($sqlemp);
                                     $q->execute(array());      
                                     $row_emp = $q->fetch(PDO::FETCH_ASSOC);
@@ -208,19 +230,26 @@
                                     $q = $pdo->prepare($sqlleads);
                                     $q->execute(array());      
                                     $row_leads = $q->fetch(PDO::FETCH_ASSOC);
+
+                                    $property_id = $row1['property_id'];
+                                    $sqllprop = "select * from property_name where property_name_id = $property_id ";
+                                    $q = $pdo->prepare($sqllprop);
+                                    $q->execute(array());      
+                                    $row_pro = $q->fetch(PDO::FETCH_ASSOC);
                             ?>
                             <tr>
                                     <td><i class="ri-building-2-line ri-22px text-primary me-4"></i><span class="fw-medium"><?php echo $i; ?></span></td>
                                     <td><?php echo $row_leads["lead_name"]; ?></td>
-                                    <!-- <td><?php //echo $row_emp["employee_name"]; ?></td> -->
+                                    <td><?php echo $row_pro["property_title"]; ?></td>
+                                   
                                     <td><?php echo $row_leads["location"]; ?></td>
                                     <td><?php echo $row_leads["phone_no"]; ?></td>
                                     <!-- <td><?php echo $row_leads["email_id"]; ?></td> -->
-                                    <td><?php echo $row_leads["budget_range"]; ?></td>
-                                    <td>
+                                    <td><?php echo $row_emp["employee_name"]; ?></td>
+                                    <!-- <td><?php echo $row_leads["budget_range"]; ?></td> -->
+                                    <!-- <td>
                                         <a class="dropdown-item waves-effect" href="view_single_lead_assigned_by_CE.php?assign_leads_sr_id=<?php echo $row1["assign_leads_sr_id"]; ?>"><i class="ri-eye-line me-1"></i> </a>
-                                        <!-- <a class="dropdown-item waves-effect" href="view_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-eye-line me-1"></i> </a> -->
-                                    </td>
+                                    </td> -->
                             </tr>
                             <?php $i++; } ?>
                         </tbody>
