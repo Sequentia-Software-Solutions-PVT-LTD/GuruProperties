@@ -8,29 +8,61 @@
   include ('dist/conf/db.php');
   $pdo = Database::connect();
 
-  if(isSet($_POST["subimt"]))
+  if(isSet($_POST["submit"]))
   { 
-   
+    // $property_name_id = $_POST['property_name_id'];
+    // $property_tower = $_POST['property_tower'];
+    // $builder_possession = $_POST['builder_possession'];
+    // $rera_possession = $_POST['rera_possession'];
 
-    $property_name_id = $_POST['property_name_id'];
-    $property_tower = $_POST['property_tower'];
-    $builder_possession = $_POST['builder_possession'];
-    $rera_possession = $_POST['rera_possession'];
-
-    $added_on = date('Y-m-d H-i-s');
-    // $status = "Active";
-
-
+    // $added_on = date('Y-m-d H-i-s');
+    // // $status = "Active";
+    
+    // $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // $sql = "INSERT INTO `property_tower`(`property_name_id`, `property_tower_name`, `builder_possession`,`rera_possession`, `added_on`, `status`) VALUES (?,?,?,?,?,?)";
+    // $q = $pdo->prepare($sql);
+    // $q->execute(array($property_name_id, $property_tower, $builder_possession, $rera_possession, $added_on, 'Active'));
+  
     // echo "<pre>";
     // print_r($_POST);
     // exit();
+
+    $input1 = $_POST['property_name_id'];
+    $input2 = $_POST['property_tower'];
+    $input3 = $_POST['builder_possession'];
+    $input4 = $_POST['rera_possession'];
+    // $input5 = $_POST['input5'];
+    // $input6 = $_POST['input6'];
+    $subCount= count($_POST['property_name_id']);
     
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "INSERT INTO `property_tower`(`property_name_id`, `property_tower_name`, `builder_possession`,`rera_possession`, `added_on`, `status`) VALUES (?,?,?,?,?,?)";
-    $q = $pdo->prepare($sql);
-    $q->execute(array($property_name_id, $property_tower, $builder_possession, $rera_possession, $added_on, 'Active'));
-    // $lastInsertedId = $pdo->lastInsertId();
-    
+    $lead_date = date('Y-m-d');
+
+    $submitedLocationList = array();
+    $SubmittedLeadIdsList = array();
+    // $id = 61;
+    for($i=0; $i<$subCount; $i++) 
+    {        
+        $added_on = date('Y-m-d H-i-s');
+        $status = "Active";
+        // $transfer_status = "Available";
+        // $todays_date = date('Y-m-d');
+
+        $input1Single = $input1[$i];
+        $input2Single = $input2[$i];
+        $input3Single = $input3[$i];
+        $input4Single = $input4[$i];
+        // $input5Single = $input5[$i];
+        // $input6Single = $input6[$i];
+        
+        $sql = "INSERT INTO property_tower(property_name_id, property_tower_name, builder_possession, rera_possession, status, added_on) values(?,?,?,?,?,?)";
+        $q = $pdo->prepare($sql);
+        $q->execute(array($input1Single, $input2Single, $input3Single,  $input4Single, $status, $added_on));
+        
+        // array_push($submitedLocationList, $input3Single);
+        // array_push($SubmittedLeadIdsList, ["lead_id" => $pdo->lastInsertId(), "location_id" => $input3Single]);
+        
+    }
+
     header('location:view_properties_tower');
      
   }
@@ -92,68 +124,25 @@
                 <div class="card">
                     <h5 class="card-header">Add Property Tower</h5>
                     <div class="card-body">
-                        <div class="d-flex align-items-center1 justify-content-center h-px-300">
-                        <form action="#" method="post">
-                          <div class="row g-4">
-
-                            <div class="col-md-6">
-                              <div class="row">
-                              <label for="notes" class="col-sm-3 col-form-label text-sm-end">Property Name</label>
-                              <div class="col-sm-9">
-                                <select id="roleDropdown" name="property_name_id" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
-                                    <option value="" data-select2-id="18">Select Property Name</option>
-                                    <?php
-                                        $sql = "SELECT * FROM  property_name where status = 'Active'";
-                                        foreach ($pdo->query($sql) as $row) 
-                                        { 
-                                        ?>
-                                            <option value="<?php echo $row['property_name_id']?>"><?php echo $row['property_title']?></option> 
-                                        <?php } ?>
-                                </select>
-                              </div>
-                              </div>
+                      <form action="#" class="form-repeater" method="POST" enctype="multipart/form-data">
+                        <div data-repeater-list="group-a">
+                        <div data-repeater-item="" style=""  class="items" data-group="test">
+                            <div class="box-body" id="lead_addmore_div1">
+                              <?php require_once('property_tower_addmore.php'); ?>
                             </div>
-                            
-                            <div class="col-md-6">
-                              <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Property Tower</label>
-                                <div class="col-sm-9">
-                                  <input type="text" name="property_tower" id="formtabs-username" class="form-control" placeholder="Property Tower"  required>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div class="col-md-6">
-                              <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username">Builder Possession</label>
-                                <div class="col-sm-9">
-                                  <input type="text" name="builder_possession" id="formtabs-username" class="form-control" placeholder="Builder Possession" required>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div class="col-md-6">
-                              <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> RERA Possession</label>
-                                <div class="col-sm-9">
-                                  <input type="text" name="rera_possession" id="formtabs-username" class="form-control" placeholder=" RERA Possession" required>
-                                </div>
-                              </div>
-                            </div>
-
-                          </div>
-                          <div class="row mt-12">
-                            <div class="col-md-12">
-                              <div class="row justify-content-end">
-                                <div class="col-sm-4">
-                                  <button type="submit" class="btn btn-primary me-4 waves-effect waves-light" name="subimt">Submit</button>
-                                  <button type="reset" class="btn btn-outline-secondary waves-effect">Cancel</button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </form>
                         </div>
+
+                        <div class="mb-0">
+                          <button type="button" onClick="addMore();"  class="btn btn-primary waves-effect waves-light repeater-add-btn">
+                            <i class="ri-add-line me-1"></i>
+                            <span class="align-middle">Add</span>
+                          </button>
+                          <button type="submit" name="submit" class="btn btn-success waves-effect waves-light" style="float: right;">
+                            <!-- <i class="ri-add-line me-1"></i> -->
+                            <span class="align-middle">Submit</span>
+                          </button>
+                        </div>
+                      </form>
                     </div>
                 </div>
                <!-- *************** - /main containt in page write here - **********************  -->
@@ -186,22 +175,19 @@
         <?php include 'layout/footer_js.php'; ?>
       <!-- / Footer -->
 
+      <script src="js/repeater.js"></script>
       <script>
-        $(document).ready(function() {
-    $('#roleDropdown').change(function() {
-        var selectedRole = $(this).val();
-        var prefix = '';
+        $(function(){ 
+          $("#repeater").createRepeater();
 
-        if (selectedRole === 'CUSTOMER EXECUTIVE') {
-            prefix = 'CE';
-        } else if (selectedRole === 'SALES EXECUTIVE') {
-            prefix = 'SE';
-        }
-
-        // Set the prefix in the input field
-        $('#prefixInput').val(prefix + '-');
-    });
-});
+        });
+      </script>
+      <script>
+          function addMore() {
+            $("<DIV>").load("property_tower_addmore.php", function() {
+                $("#lead_addmore_div1").append($(this).html());
+            }); 
+          }
       </script>
     
   </body>

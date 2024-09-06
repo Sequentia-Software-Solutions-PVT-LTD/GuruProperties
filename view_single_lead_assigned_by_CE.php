@@ -566,7 +566,7 @@
                                     </div>
 
                                     <!-- photo Options -->
-                                        <div class="row">
+                                        <!-- <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group" id="take_photo_div" style="">
                                                     <div class="row">
@@ -576,13 +576,39 @@
                                                                 <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addNewCCModal" onclick="startup();"> Take Photo </button>
                                                             </div>
                                                             <div class="col-sm-4"style="padding: 0px;" >
-                                                                <input type="hidden" class="form-control" name="photo_capture1" id="photo_capture1" readonly />
+                                                                <input type="hiddden" class="form-control" name="photo_capture1" id="photo_capture1" readonly />
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>	
                                             </div>
-                                        </div>
+                                        </div> -->
+                                        <!-- /photo options -->
+
+                                        <!-- Photo Options -->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group" id="take_photo_div" style="">
+                                                        <div class="row">
+                                                            <div class="col-sm-11" style="display:flex;gap:20px;">
+                                                                <label for="patientDate" class="col-sm-2 control-label" style="margin-top: 10px;">Today's Visit Photo</label>
+                                                                <div class="col-sm-3" style="padding-right: 0px;">
+                                                                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addNewCCModal" onclick="startup();"> Take Photo </button>
+                                                                </div>
+                                                                <!-- Image display section -->
+                                                                <div class="col-sm-4" style="padding: 0px;">
+                                                                    <!-- <img id="captured_photo_preview" src="" alt="Captured Photo" style="max-width: 150px; display: none;" /> -->
+                                                                    <img id="captured_photo_preview" src="" alt="Captured Photo" style="max-width: 150px; display: none;" />
+                                                                </div>
+                                                                <div class="col-sm-4" style="padding: 0px;">
+                                                                    <input type="hidden" class="form-control" name="photo_capture1" id="photo_capture1" readonly />
+                                                                </div>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>  
+                                                </div>
+                                            </div>
                                         <!-- /photo options -->
 
                                         <hr>
@@ -1153,6 +1179,8 @@
 
 		function vidOff() {
 			localstream.getTracks()[0].stop();
+            const photoData = document.getElementById('photo_capture1').value;
+            updateCapturedPhoto(photoData);
 		}
 
 
@@ -1177,7 +1205,7 @@
 				photo.setAttribute('src', data);
 				photo_capture1.value = data;
 				
-
+                
 				//alert(data);
 			} else {
 				clearphoto();
@@ -1293,6 +1321,27 @@
             $("#next_date_followup").prop('required', true);
         }
     });
+</script>
+
+<!--  -->
+
+<script>
+    function updateCapturedPhoto(data) {
+        // Get the hidden input field's value (base64 image data)
+        //const photoData = document.getElementById('photo_capture1').value;
+        //alert('fhjadsf');
+
+        // If there is any data in the hidden field
+        if (data) {
+
+       
+            // Find the image tag and update the src with the base64 data
+            const imgTag = document.getElementById('captured_photo_preview');
+            imgTag.src = data;  // Assuming the base64 data is a JPEG image
+            imgTag.style.display = 'block';  // Make the image visible
+        }
+    }
+
 </script>
     
   </body>

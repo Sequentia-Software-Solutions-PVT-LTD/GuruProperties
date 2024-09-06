@@ -16,6 +16,7 @@
         // exit();
 
         if ($stmt->rowCount() > 0) {
+            echo '<option value="">Select Property Variants</option>';
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo '<option value="'.$row['property_varients_id'].'">'.$row['varients'].'</option>';
             }

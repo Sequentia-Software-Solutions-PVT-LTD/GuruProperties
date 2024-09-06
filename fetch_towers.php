@@ -9,6 +9,7 @@ if (isset($_POST['property_id'])) {
     $stmt = $pdo->prepare($sql);
     $stmt->execute([':property_id' => $propertyId]);
 
+    echo '<option value="">Select Property Tower</option>';
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         // echo '<option value="">'.'Select Tower'.'</option>';
         echo '<option value="'.$row['property_tower_id'].'">'.$row['property_tower_name'].'</option>';

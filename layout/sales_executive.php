@@ -133,7 +133,7 @@
             <li class="menu-item">
               <a href="view_tomorrow_leads_SE.php" class="menu-link">
               <i class="menu-icon tf-icons ri-bill-line"></i>
-                <div data-i18nn ="Preview">Tomorrow's Leads</div>
+                <div data-i18nn ="Preview">Tomorrow's Visit</div>
               </a>
             </li>
 

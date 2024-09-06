@@ -109,6 +109,7 @@
                             <th>Location</th>
                             <th>Contact</th>
                             <!-- <th>Email ID</th> -->
+                            <th>Lead Type</th>
                             <th>Budget</th>
                             <th>Actions</th>
                             </tr>
@@ -124,9 +125,24 @@
                                 // exit();
                                 foreach ($pdo->query($sql) as $row1) 
                                 { 
+                                    // echo "<pre>";
+                                    // print_r($row1);
+                                    // exit();
+
                                     $assign_leads_id = $row1['assign_leads_id'];
                                     $leads_id = $row1['leads_id'];
                                     $admin_id = $row1['admin_id'];
+                                    $employee_id = $row1['employee_id'];
+                                    $next_date = $row1['next_date'];
+
+                                    $sqlasnl = "select * from assign_leads where employee_id = $employee_id and status = 'Followup' and transfer_status = 'Not Available' and next_date = '$next_date' ";
+                                    $q = $pdo->prepare($sqlasnl);
+                                    $q->execute(array());      
+                                    $row_asn_leads = $q->fetch(PDO::FETCH_ASSOC);
+
+                                    // echo "<pre>";
+                                    // print_r($row_asn_leads);
+                                    // exit();
 
                                     $sqlemp = "select * from employee where admin_id = $admin_id ";
                                     $q = $pdo->prepare($sqlemp);
@@ -145,6 +161,7 @@
                                     <td><?php echo $row_leads["location"]; ?></td>
                                     <td><?php echo $row_leads["phone_no"]; ?></td>
                                     <!-- <td><?php echo $row_leads["email_id"]; ?></td> -->
+                                    <td><?php echo $row_asn_leads["lead_type"]; ?></td>
                                     <td><?php echo $row_leads["budget_range"]; ?></td>
                                     <td>
                                         <a class="dropdown-item waves-effect" href="view_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-eye-line me-1"></i> </a>
