@@ -33,6 +33,12 @@
     $q->execute(array());      
     $row_leads = $q->fetch(PDO::FETCH_ASSOC);
 
+    $today_date = date('Y-m-d');
+    $sqllocation = "select * from location ";
+    $qlocation = $pdo->prepare($sqllocation);
+    $qlocation->execute(array());      
+    $row_location = $qlocation->fetchAll(PDO::FETCH_ASSOC);
+
   if(isSet($_POST["submit1"]))
   { 
     // echo "<pre>";
@@ -162,17 +168,18 @@
             `lead_type` = ?, 
             `edited_on` = ?, 
             `status` = ?,
+            `photo` = ?,
             `transfer_status` = ?
             WHERE `assign_leads_sr_id` = ?";
 
     $q = $pdo->prepare($sql);
-    $q->execute(array($connection_status, $today_visit_remark, $next_date_followup1, $next_time_followup1, $next_date_visit1, $next_time_visit1, $lead_type, $added_on, $status, $t_status_ce, $assign_leads_sr_id));
+    $q->execute(array($connection_status, $today_visit_remark, $next_date_followup1, $next_time_followup1, $next_date_visit1, $next_time_visit1, $lead_type, $added_on, $status, $photo1, $t_status_ce, $assign_leads_sr_id));
 
     // ----------------------- Insert for new ffollowup ---------------------------------------------------------
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "INSERT INTO `assign_leads_sr`(`assign_leads_id`,`leads_id`, `admin_id`, `employee_id`,`employee_name`, `status`, `transfer_status`,`next_date`,`next_time`,`visit_date`,`visit_time`,`photo`,`followup_or_another_property`,`variant`, `property_id`, `sub_property_id`, `added_on`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    $sql = "INSERT INTO `assign_leads_sr`(`assign_leads_id`,`leads_id`, `admin_id`, `employee_id`,`employee_name`, `status`, `transfer_status`,`next_date`,`next_time`,`visit_date`,`visit_time`,`followup_or_another_property`,`variant`, `property_id`, `sub_property_id`, `added_on`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     $q = $pdo->prepare($sql);
-    $q->execute(array($assign_leads_id, $leads_id, $admin_id, $employee_id, $employee_name, $status, $transfer_status, $next_date_followup1, $next_time_followup1, $next_date_visit1, $next_time_visit1, $photo1, $followup_or_another_property, $property_variants, $property_name_id, $property_tower_id, $added_on)); 
+    $q->execute(array($assign_leads_id, $leads_id, $admin_id, $employee_id, $employee_name, $status, $transfer_status, $next_date_followup1, $next_time_followup1, $next_date_visit1, $next_time_visit1, $followup_or_another_property, $property_variants, $property_name_id, $property_tower_id, $added_on)); 
     // $lastInsertedId = $pdo->lastInsertId();
     
     header('location:view_todays_leads_SE.php');
@@ -389,7 +396,16 @@
                                 <small class="card-text text-uppercase text-muted small">About</small>
                                 <ul class="list-unstyled my-3 py-1" style="">
                                     <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Lead Name:</span> <span><?php echo $row_leads['lead_name']; ?></span></li>
-                                    <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span><?php echo $row_leads['location']; ?></span></li>
+                                    <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span><?php 
+                                        $needle = $row_leads["location"];
+                                        $resultArray = array_filter($row_location, function ($v) use ($needle) {
+                                          return $needle == $v['id']; 
+                                        });
+                                        if($needle == 1) $needle = 1;
+                                        else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                        if(isset($resultArray[$needle]["name"]) && $resultArray[$needle]["name"] != "") echo $resultArray[$needle]["name"]; 
+                                        else echo "Not Found";
+                                      ?>  </span></li>
                                     <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li>
                                     <!-- <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li> -->
                                 </ul>
@@ -410,7 +426,23 @@
                                 <ul class="list-unstyled my-3 py-1" style="">
                                     <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Employee Name:</span> <span><?php echo $row_assign['employee_name']; ?></span></li>
                                     <!-- <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Employee Type:</span> <span><?php echo $row_assign['employee_type']; ?></span></li> -->
-                                    <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Visit Date Time:</span> <span><?php echo date("d-M-Y" , strtotime($row_assign['visit_date'])); ?></span> &nbsp;&nbsp; <span><?php echo date("H:i A" , strtotime($row_assign['visit_time'])); ?></span></li>
+                                    <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Visit Date Time:</span> <span>
+                                        <?php
+                                            if($row_assign['visit_date'] == "0000-00-00") {
+                                                echo date("d-M-Y" , strtotime($row_assign['next_date'])); 
+                                            } else {
+                                                echo date("d-M-Y" , strtotime($row_assign['visit_date'])); 
+                                            }
+                                        ?>
+                                        </span> &nbsp;&nbsp; <span>
+                                        <?php 
+                                            if($row_assign['visit_time'] == "00:00:00") {
+                                                echo date("H:i A" , strtotime($row_assign['next_time'])); 
+                                            } else {
+                                                echo date("H:i A" , strtotime($row_assign['visit_time'])); 
+                                            }
+                                        ?>
+                                        </span></li>
                                 </ul>
 
                                 <div class="col-md-12" style="text-align: right;">

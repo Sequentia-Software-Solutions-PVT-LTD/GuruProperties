@@ -123,7 +123,10 @@
     header('location:assigned_leads.php');
     
   }
-
+  $sqllocation = "select * from location ";
+  $qlocation = $pdo->prepare($sqllocation);
+  $qlocation->execute(array());      
+  $row_location = $qlocation->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!doctype html>
 
@@ -188,7 +191,16 @@
                             <small class="card-text text-uppercase text-muted small">About</small>
                             <ul class="list-unstyled my-3 py-1" style="">
                                 <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Lead Name:</span> <span><?php echo $row_leads['lead_name']; ?></span></li>
-                                <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span><?php echo $row_leads['location']; ?></span></li>
+                                <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span><?php 
+                                    $needle = $row_leads["location"];
+                                    $resultArray = array_filter($row_location, function ($v) use ($needle) {
+                                        return $needle == $v['id']; 
+                                    });
+                                    if($needle == 1) $needle = 1;
+                                    else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                    if(isset($resultArray[$needle]["name"]) && $resultArray[$needle]["name"] != "") echo $resultArray[$needle]["name"]; 
+                                    else echo "Not Found";
+                                ?></span></li>
                                 <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li>
                                 <!-- <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li> -->
                             </ul>

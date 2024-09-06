@@ -3,6 +3,10 @@ if(!class_exists('Database')){
   include ('dist/conf/db.php');
 } 
 $pdo = Database::connect();
+
+// $range = ["min" => "3000000", "max" => "15000000"]
+// $highest_weight = max(array_column($details, 'Weight'));
+// var_dump($highest_weight);
 $budget_Values = [
   16000000,
   15000000,

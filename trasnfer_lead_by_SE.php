@@ -72,7 +72,7 @@
 
     $from_SE = 'From SE';       
     $Active = 'Active';
-    $Transfered = 'Transfered';
+    $Transferred = 'Transferred';
     $Available = 'Available';
     $Admin_Pending = 'Admin Pending';
 
@@ -101,14 +101,14 @@
             WHERE `assign_leads_sr_id` = ?";
 
         $q = $pdo->prepare($sql);
-        $q->execute(array($added_on, $Transfered, $transfer_reason, $transfer_employee_id, $transfer_employee_type, $Active, $assign_leads_sr_id));
+        $q->execute(array($added_on, $Transferred, $transfer_reason, $transfer_employee_id, $transfer_employee_type, $Active, $assign_leads_sr_id));
 
         // ---------------------- transfer lead to SE-SE (insert new row)-------------------------------------------------------------------------------------------
         
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "INSERT INTO `assign_leads_sr`(`leads_id`,`assign_leads_id`, `admin_id`, `employee_id`,`employee_name`,`employee_type`, `status`, `transfer_status`, `next_date`, `next_time`, `added_on`, `admin_request_date`,`request_for_admin`,`property_id`, `sub_property_id`,`variant`,`location1`,`assign_employee_id`,`assign_employee_type`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         $q = $pdo->prepare($sql);
-        $q->execute(array($leads_id, $assign_leads_id, $admin_id, $transfer_employee_id, $employee_name, 'SALES EXECUTIVE', $Transfered, $Admin_Pending, $next_date, $next_time, $added_on, $added_on, 'Yes', $property_id, $sub_property_id, $variant, $location1 , $assign_by_emp_id, 'SALES EXECUTIVE'));
+        $q->execute(array($leads_id, $assign_leads_id, $admin_id, $transfer_employee_id, $employee_name, 'SALES EXECUTIVE', $Transferred, $Admin_Pending, $next_date, $next_time, $added_on, $added_on, 'no', $property_id, $sub_property_id, $variant, $location1 , $assign_by_emp_id, 'SALES EXECUTIVE'));
         
         // $lastInsertedId = $pdo->lastInsertId();
     }
@@ -126,14 +126,14 @@
              WHERE `assign_leads_sr_id` = ?";
  
          $q = $pdo->prepare($sql);
-         $q->execute(array($added_on, $Transfered, $transfer_reason, $transfer_employee_id, $transfer_employee_type, $Active, $assign_leads_sr_id));
+         $q->execute(array($added_on, $Transferred, $transfer_reason, $transfer_employee_id, $transfer_employee_type, $Active, $assign_leads_sr_id));
  
          // ---------------------- transfer lead to SE-SE (insert new row) -------------------------------------------------------------------------------------------
          
          $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
          $sql = "INSERT INTO `assign_leads`(`leads_id`, `admin_id`, `employee_id`,`employee_name`,`assign_employee_type`, `status`, `transfer_status`,`transfer_employee_id`,`transfer_employee_type`, `transfer_reason`, `next_date`, `next_time`, `added_on`, `admin_request_date`, `request_for_admin`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
          $q = $pdo->prepare($sql);
-         $q->execute(array($leads_id, $admin_id, $transfer_employee_id, $employee_name,'Customer EXECUTIVE', $from_SE, $Admin_Pending, $assign_by_emp_id, $assign_by_emp_type, $transfer_reason, $next_date, $next_time, $added_on, $added_on, 'Yes'));
+         $q->execute(array($leads_id, $admin_id, $transfer_employee_id, $employee_name,'Customer EXECUTIVE', $from_SE, $Admin_Pending, $assign_by_emp_id, $assign_by_emp_type, $transfer_reason, $next_date, $next_time, $added_on, $added_on, 'no'));
          
     }
 

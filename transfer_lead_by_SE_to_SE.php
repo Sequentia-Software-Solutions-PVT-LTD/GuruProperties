@@ -27,7 +27,8 @@
     $sql = "UPDATE `assign_leads_sr` SET  
           `edited_on` = ?, 
           `transfer_status` = ?,
-          `admin_aproved_date` = ?
+          `admin_aproved_date` = ?,
+          `request_for_admin` = 'yes'
           WHERE `assign_leads_sr_id` = ?";
 
     $q = $pdo->prepare($sql);
@@ -106,7 +107,7 @@
               <!-- <hr class="my-12"> -->
                 <!-- SE- to CE -->
                 <div class="card">
-                    <h5 class="card-header"> All leads transfered from Sales Executive to Customer Executive are listed below</h5>
+                    <h5 class="card-header"> All leads transferred from Sales Executive to Customer Executive are listed below</h5>
                     <div class="table-responsive text-nowrap">
                         <table class="table">
                         <caption class="ms-6">List of Transfer Permission</caption>
@@ -126,7 +127,7 @@
                                 $i = 1;
                                 // $sql = "SELECT * FROM location ";
                                 // $sql = "SELECT * FROM assign_leads where transfer_status = 'Admin Pending' and request_for_admin ='Yes' ";
-                                $sql = "SELECT * FROM assign_leads_sr where status = 'Transfered' and transfer_status = 'Admin Pending' and request_for_admin ='Yes' ";
+                                $sql = "SELECT * FROM assign_leads_sr where status = 'Transferred' and transfer_status = 'Admin Pending' and request_for_admin ='no' ";
                                 // print_r($sql);
                                 // exit();
 

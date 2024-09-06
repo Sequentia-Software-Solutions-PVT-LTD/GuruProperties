@@ -10,7 +10,7 @@
 
     $i = 1;
     // $leads_id = $_REQUEST['leads_id'];
-    $leads_id = 3;
+    $leads_id = 24;
     
     
     $sqlleads = "select * from leads where id = $leads_id ";
@@ -34,14 +34,15 @@
     $Converted_Leads_Array = $qconv->fetchAll(PDO::FETCH_ASSOC);
 
     $admin_id = 0;
-    if($CE_Leads_Array != null) {
-        $admin_id = $CE_Leads_Array['admin_id'];
-    }
+    // if($CE_Leads_Array != null) {
+    //   var_dump($CE_Leads_Array);
+    //     $admin_id = $CE_Leads_Array['admin_id'];
+    // }
 
-    $sqlemp = "select * from employee where admin_id = ? ";
-    $q = $pdo->prepare($sqlemp);
-    $q->execute(array( $admin_id));      
-    $Emp_Array = $q->fetch(PDO::FETCH_ASSOC);
+    // $sqlemp = "select * from employee where admin_id = ? ";
+    // $q = $pdo->prepare($sqlemp);
+    // $q->execute(array( $admin_id));      
+    // $Emp_Array = $q->fetch(PDO::FETCH_ASSOC);
 
     // echo "<pre>";
     // var_dump($leadsArray);
@@ -75,8 +76,8 @@
             array_push($AllData, array(
                 "table_name" => 'leads',
                 "id" => $leadsSingle['id'],
-                "status" => $leadsSingle['status'],
-                "transfer_status" => $leadsSingle['status'],
+                "status" => "Fresh Lead",
+                "transfer_status" => "Fresh Lead",
                 "timlinedate" => $timeline_date,
                 "added_on" => $leadsSingle['added_on'],
                 "edited_on" => $leadsSingle['edited_on'],
@@ -94,13 +95,13 @@
         // if($CE_Leads_Single['status'] == "Active" && $CE_Leads_Single['transfer_status']== "Available"){
         //     $timeline_date = date("Y-m-d H:i:s", strtotime($leadsSingle['added_on']));
         // }
-        // if($CE_Leads_Single['status'] == "Active" && $CE_Leads_Single['transfer_status']== "Transfered"){
+        // if($CE_Leads_Single['status'] == "Active" && $CE_Leads_Single['transfer_status']== "Transferred"){
         //     $timeline_date = date("Y-m-d H:i:s", strtotime($leadsSingle['edited_on']));
         // }
-        // if($CE_Leads_Single['status'] == "Transfered" && $CE_Leads_Single['transfer_status']== "Available"){
+        // if($CE_Leads_Single['status'] == "Transferred" && $CE_Leads_Single['transfer_status']== "Available"){
         //     $timeline_date = date("Y-m-d H:i:s", strtotime($leadsSingle['added_on']));
         // }
-        // if($CE_Leads_Single['status'] == "Assigned" && $CE_Leads_Single['transfer_status']== "Transfered"){
+        // if($CE_Leads_Single['status'] == "Assigned" && $CE_Leads_Single['transfer_status']== "Transferred"){
         //     $timeline_date = date("Y-m-d H:i:s", strtotime($leadsSingle['edited_on']));
         // }
         // if($CE_Leads_Single['status'] == "From SE" && $CE_Leads_Single['transfer_status']== "Available"){
@@ -119,19 +120,19 @@
         if($CE_Leads_Single['status'] == "Active" && $CE_Leads_Single['transfer_status']== "Transferred"){
             $timeline_date_ce = date("Y-m-d H:i:s", strtotime($CE_Leads_Single['edited_on']));
         }
-        if($CE_Leads_Single['status'] == "Transferred" && $CE_Leads_Single['transfer_status']== "Admin pending" && $CE_Leads_Single['request_for_admin']== "Admin pending" ){
+        if($CE_Leads_Single['status'] == "Transferred" && $CE_Leads_Single['transfer_status']== "Admin Pending" && strtolower($CE_Leads_Single['request_for_admin']) == "no" ){
             $timeline_date_ce = date("Y-m-d H:i:s", strtotime($CE_Leads_Single['admin_request_date']));
         }
         if($CE_Leads_Single['status'] == "Transferred" && $CE_Leads_Single['transfer_status']== "Available" && strtolower($CE_Leads_Single['request_for_admin']) == "yes" ){
           $timeline_date_ce = date("Y-m-d H:i:s", strtotime($CE_Leads_Single['admin_aproved_date']));
         }
-        if($CE_Leads_Single['status'] == "From SE" && $CE_Leads_Single['transfer_status']== "Admin pending" && $CE_Leads_Single['request_for_admin']== "Admin pending" ){
+        if($CE_Leads_Single['status'] == "From SE" && $CE_Leads_Single['transfer_status']== "Admin Pending" && $CE_Leads_Single['request_for_admin']== "no" ){
             $timeline_date_ce = date("Y-m-d H:i:s", strtotime($CE_Leads_Single['admin_request_date']));
         }
-        if($CE_Leads_Single['status'] == "From SE" && $CE_Leads_Single['transfer_status']== "Available" && $CE_Leads_Single['request_for_admin']== "" ){
+        if($CE_Leads_Single['status'] == "From SE" && $CE_Leads_Single['transfer_status']== "Available" && $CE_Leads_Single['request_for_admin']== "yes" ){
             $timeline_date_ce = date("Y-m-d H:i:s", strtotime($CE_Leads_Single['admin_aproved_date']));
         }
-        if($CE_Leads_Single['status'] == "Assigned" && $CE_Leads_Single['transfer_status']== "Transfered"){
+        if($CE_Leads_Single['status'] == "Assigned" && $CE_Leads_Single['transfer_status']== "Transferred"){
           $timeline_date_ce = date("Y-m-d H:i:s", strtotime($CE_Leads_Single['edited_on']));
         }
         if($CE_Leads_Single['status'] == "Dead"){
@@ -158,23 +159,37 @@
         if($SE_Leads_Single['status'] == "Followup" && $SE_Leads_Single['transfer_status']== "Not Available"){
             $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['edited_on']));
         }
-        if($SE_Leads_Single['status'] == "Followup" && $SE_Leads_Single['transfer_status']== "Available"){
+        if($SE_Leads_Single['status'] == "Followup" && $SE_Leads_Single['transfer_status']== "Available" && $SE_Leads_Single['followup_or_another_property']=="Follow Up"){
+            $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['edited_on']));
+        }
+        if($SE_Leads_Single['status'] == "Followup" && $SE_Leads_Single['transfer_status']== "Available" && $SE_Leads_Single['followup_or_another_property']=="Another Property"){
+            $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['added_on']));
+        }
+        if($SE_Leads_Single['status'] == "Followup" && $SE_Leads_Single['transfer_status']== "Available" && $SE_Leads_Single['followup_or_another_property']==""){
             $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['edited_on']));
         }
         // if($SE_Leads_Single['status'] == "Active" && $SE_Leads_Single['transfer_status']== "Transferred" && strtoupper($SE_Leads_Single['transfer_employee_type']) == "SALES EXECUTIVE"){
         //   $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['edited_on']));
         // }
-        if($SE_Leads_Single['status'] == "Active" && $SE_Leads_Single['transfer_status']== "Transferred" && strtoupper($SE_Leads_Single['transfer_employee_type']) == "SALES EXECUTIVE" && strtolower($SE_Leads_Single['request_for_admin']) == ""){
-            $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['admin_request_date']));
+        if($SE_Leads_Single['status'] == "Active" && $SE_Leads_Single['transfer_status']== "Transferred" && strtoupper($SE_Leads_Single['transfer_employee_type']) == "SALES EXECUTIVE" && strtolower($SE_Leads_Single['request_for_admin']) == "yes"){
+            $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['edited_on']));
         }
+        if($SE_Leads_Single['status'] == "Active" && $SE_Leads_Single['transfer_status']== "Transferred" && strtoupper($SE_Leads_Single['transfer_employee_type']) == "SALES EXECUTIVE" && strtolower($SE_Leads_Single['request_for_admin']) == ""){
+          $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['edited_on']));
+        }
+        
         if($SE_Leads_Single['status'] == "Active" && $SE_Leads_Single['transfer_status'] == "Transferred" && strtoupper($SE_Leads_Single['transfer_employee_type']) == "CUSTOMER EXECUTIVE" && strtolower($SE_Leads_Single['request_for_admin']) == ""){
-            $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['admin_request_date']));
+            $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['edited_on']));
         }     
 
-        if($SE_Leads_Single['status'] == "Transferred" && $SE_Leads_Single['transfer_status']== "Admin pending" && strtoupper($SE_Leads_Single['transfer_employee_type']) == "SALES EXECUTIVE" && strtolower($SE_Leads_Single['request_for_admin']) == ""){
+        if($SE_Leads_Single['status'] == "Transferred" && $SE_Leads_Single['transfer_status']== "Admin Pending" && strtoupper($SE_Leads_Single['assign_employee_type']) == "SALES EXECUTIVE" && strtolower($SE_Leads_Single['request_for_admin']) == "no"){
             $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['admin_request_date']));
         }
-        if($SE_Leads_Single['status'] == "Transferred" && $SE_Leads_Single['transfer_status']== "Available" && strtoupper($SE_Leads_Single['transfer_employee_type']) == "SALES EXECUTIVE" && strtolower($SE_Leads_Single['request_for_admin']) == "yes"){
+        if($SE_Leads_Single['status'] == "Transferred" && $SE_Leads_Single['transfer_status']== "Admin Pending" && strtoupper($SE_Leads_Single['assign_employee_type']) == "SALES EXECUTIVE" && strtolower($SE_Leads_Single['request_for_admin']) == "yes"){
+            $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['admin_aproved_date']));
+        }
+        
+        if($SE_Leads_Single['status'] == "Transferred" && $SE_Leads_Single['transfer_status']== "Available" && strtoupper($SE_Leads_Single['assign_employee_type']) == "SALES EXECUTIVE" && strtolower($SE_Leads_Single['request_for_admin']) == "yes"){
             $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['admin_aproved_date']));
         }
 
@@ -213,8 +228,8 @@
             array_push($AllData, array(
                 "table_name" => 'converted_leads',
                 "id" => $Converted_Leads_Single['converted_leads_id'],
-                "status" => $Converted_Leads_Single['status'],
-                "transfer_status" => $Converted_Leads_Single['status'],
+                "status" => "Converted",
+                "transfer_status" => "Converted",
                 "timlinedate" => $timeline_date_con,
                 "added_on" => $Converted_Leads_Single['added_on'],
                 "edited_on" => $Converted_Leads_Single['edited_on'],
@@ -348,16 +363,19 @@
                             if($variant['table_name'] == "assign_leads_sr" || $variant['table_name'] == "converted_leads") {
                               $showside = "fade-right";
                               $roleName = "SALES EXECUTIVE";
-                            } else if($variant['table_name'] == "assign_leads" || $variant['table_name'] == "leads") {
+                            } else if($variant['table_name'] == "assign_leads") {
                                 $roleName = "CUSTOMER EXECUTIVE";
                                 $showside = "fade-left";
+                            } else if($variant['table_name'] == "leads") {
+                              $roleName = "LEADS GENERATOR";
+                              $showside = "fade-left";
                             } 
 
                             if($variant['table_name'] == "assign_leads") {
 
                               if($variant['status'] == "Active" && $variant['transfer_status']== "Available"){
                                   $dateShowcase = date("Y-m-d H:i:s", strtotime($CEArray['added_on']));
-                                  $message = "Fresh Lead";
+                                  $message = "Waiting for CUSTOMER EXECUTIVE to take action.";
                                   $leadType = "";
                                   $reason = "";
                                   $noteRemark = "";
@@ -368,10 +386,14 @@
                               if($variant['status'] == "Followup" && $variant['transfer_status']== "Not Available"){
                                 // why sales executive in the "transfer_employee_type"
                                   $dateShowcase = date("Y-m-d", strtotime($CEArray['next_date']))." ".date("H:i:s", strtotime($CEArray['next_time']));
-                                  $message = $CEArray["notes"];
-                                  $leadType = $CEArray["lead_type"];
+                                  $message = "Call Status - ".strtoupper(str_replace("_", " ", $CEArray["connection_status"]));
+                                  if(($CEArray["connection_status"]) != 'not_connected' ) {
+                                    $leadType = $CEArray["lead_type"];
+                                  } else {
+                                    $leadType = "";
+                                  }
                                   $reason = "";
-                                  $noteRemark = $CEArray["notes"];
+                                  $noteRemark = strtoupper($CEArray["notes"]);
                                   $connectionStatus = $CEArray["connection_status"];
                                   $employeeName = $CEArray["employee_id"];
                                   
@@ -389,32 +411,32 @@
                               }
                               if($variant['status'] == "Active" && $variant['transfer_status']== "Transferred") {
                                   // What is the status of "request_for_admin"
-                                  $message = $CEArray["transfer_employee_id"];
+                                  $dateShowcase = date("Y-m-d H:i:s", strtotime($CEArray['edited_on']));
+                                  $message = "The lead is transfer to ".$CEArray["transfer_employee_type"]." - ".$CEArray["transfer_employee_id"];
                                   $leadType = $CEArray["lead_type"];
                                   $reason = $CEArray["transfer_reason"];
-                                  if($CEArray['request_for_admin'] == "") {
-                                    $noteRemark = "Waiting For Admin Approval.";
-                                    $dateShowcase = date("Y-m-d H:i:s", strtotime($CEArray['admin_request_date']));
-                                  } else if(strtolower($CEArray['request_for_admin']) == "yes") {
-                                    $noteRemark = "Admin Approved.";
-                                    $dateShowcase = date("Y-m-d H:i:s", strtotime($CEArray['admin_aproved_date']));
-                                  }
+                                  // if($CEArray['request_for_admin'] == "") {
+                                  //   $noteRemark = "Waiting For Admin Approval.";
+                                  // } else if(strtolower($CEArray['request_for_admin']) == "yes") {
+                                  //   $noteRemark = "Admin Approved.";
+                                  // }
+                                  $noteRemark = "";
                                   $connectionStatus = $CEArray["connection_status"];
-                                  $employeeName = $CEArray["transfer_employee_id"];
+                                  $employeeName = $CEArray["employee_id"];
                                   
                               }
 
-                              if($variant['status'] == "Assigned" && $variant['transfer_status']== "Transfered"){
-                                  $dateShowcase = date("Y-m-d H:i:s", strtotime($CEArray['admin_request_date']));
-                                  $message = "This lead is assigned to the SALES EXECUTIVE ".$CEArray['transfer_employee_id']." on ".date("Y-m-d H:i:s", strtotime($CEArray['edited_on']));
+                              if($variant['status'] == "Assigned" && $variant['transfer_status']== "Transferred"){
+                                  $dateShowcase = date("Y-m-d H:i:s", strtotime($CEArray['edited_on']));
+                                  $message = "This lead is assigned to the ". $CEArray['assign_employee_type'] ." - ".$CEArray['transfer_employee_id'];
                                   $leadType = "";
-                                  $reason = "";
+                                  $reason = $CEArray['transfer_reason'];
                                   $noteRemark = "";
                                   $connectionStatus = "";
-                                  $employeeName = "";
+                                  $employeeName = $CEArray['employee_id'];
                                   
                               }
-                              if($variant['status'] == "Transferred" && $variant['transfer_status']== "Admin pending" && $CEArray['request_for_admin']== "" ){
+                              if($variant['status'] == "Transferred" && $variant['transfer_status']== "Admin Pending" && strtolower($CEArray['request_for_admin']) == "no" ){
                                 // What is the status of "request_for_admin"
                                   $dateShowcase = date("Y-m-d H:i:s", strtotime($CEArray['admin_request_date']));
                                   $message = "Waiting For Admin Approval.";
@@ -427,24 +449,24 @@
                               }
                               if($variant['status'] == "Transferred" && $variant['transfer_status']== "Available" && strtolower($CEArray['request_for_admin']) == "yes" ){
                                 $dateShowcase = date("Y-m-d H:i:s", strtotime($CEArray['admin_aproved_date']));
-                                $message = "Lead is transferred from ".$CEArray['transfer_employee_id'];
+                                $message = "Waiting for action";
                                 $leadType = "";
                                 $reason = $CEArray["transfer_reason"];
-                                $noteRemark = "Next follow up on ".date("Y-m-d H:i:s", strtotime($CEArray['next_date']))." ".date("Y-m-d H:i:s", strtotime($CEArray['next_time']));
+                                $noteRemark = "Next follow up on ".date("Y-m-d", strtotime($CEArray['next_date']))." ".date("H:i:s", strtotime($CEArray['next_time']));
                                 $connectionStatus = "";
-                                $employeeName = $CEArray["transfer_employee_id"];
+                                $employeeName = $CEArray["employee_id"];
                                 
                               }
-                              if($variant['status'] == "From SE" && $variant['transfer_status'] == "Admin pending" && $CEArray['request_for_admin'] == "" ){
+                              if($variant['status'] == "From SE" && $variant['transfer_status'] == "Admin Pending" && $CEArray['request_for_admin'] == "no" ){
                                   // What is the status of "request_for_admin"
                                   // if all the related information is getting copied to related columns
                                   $dateShowcase = date("Y-m-d H:i:s", strtotime($CEArray['admin_request_date']));
-                                  $message = "The lead is trasnferred from SALES EXECUTIVE ".$CEArray['transfer_employee_id']. " on ".$CEArray['admin_request_date']." to ".$CEArray["employee_id"].". Waiting for admin approval.";
+                                  $message = "The lead is trasnferred from SALES EXECUTIVE ".$CEArray['transfer_employee_id']." to CUSTOMER EXECUTIVE ".$CEArray["employee_id"].". Waiting for admin approval.";
                                   $leadType = "";
                                   $reason = $CEArray["transfer_reason"];
                                   $noteRemark = "";
                                   $connectionStatus = "";
-                                  $employeeName = $CEArray["transfer_employee_id"];
+                                  $employeeName = $CEArray["employee_id"];
                               }
                               if($variant['status'] == "From SE" && $variant['transfer_status']== "Available" && $CEArray['request_for_admin'] == "yes" ){
                                   // What is the status of "request_for_admin"
@@ -469,6 +491,7 @@
                             } 
 
                             if($variant['table_name'] == "assign_leads_sr") {
+                              
                                   if($variant['status'] == "Active" && $variant['transfer_status']== "Available"){
                                       $dateShowcase = date("Y-m-d", strtotime($ALArray['visit_date']))." ".date("H:i:s", strtotime($ALArray['visit_time']));
                                       $message = "Property Details ".
@@ -484,26 +507,131 @@
                                       $connectionStatus = "";
                                       $employeeName = $ALArray["employee_id"];
                                   }
-                                  if($variant['status'] == "Followup" && $variant['transfer_status']== "Not Available"){
+                                  if($variant['status'] == "Followup" && $variant['transfer_status']== "Not Available" && $ALArray['followup_or_another_property']=="Follow Up"){
+                                    if($ALArray['visit_date'] == '0000-00-00') {
                                       $dateShowcase = date("Y-m-d", strtotime($ALArray['next_date']))." ".date("H:i:s", strtotime($ALArray['next_time']));
-                                      $message = $ALArray['photo'];
+                                    } else {
+                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['visit_date']))." ".date("H:i:s", strtotime($ALArray['visit_time']));
+                                    }
+                                      $message = "<img src='".$ALArray['photo']."' alt='SE Photo' style='height: 64px; width: 64px;'>";
+                                      $propertyDetails = [
+                                        'property_id' => $ALArray['property_id'],
+                                        'sub_property_id' => $ALArray['sub_property_id'],
+                                        'variant' => $ALArray['variant'],
+                                        'property_id' => $ALArray['property_id'],
+                                      ];
+                                      $message .= implode("*", $propertyDetails);
                                       $leadType = $ALArray['lead_type'];
                                       $reason = "";
-                                      $noteRemark = $ALArray['remark'];
-                                      $connectionStatus = $ALArray['visit_done'];
+                                      $noteRemark = $ALArray['notes'];
+                                      $connectionStatus = $ALArray['connection_status'];
                                       $employeeName = $ALArray["employee_id"];
                                   }
-                                  if($variant['status'] == "Followup" && $variant['transfer_status']== "Available"){
+                                  if($variant['status'] == "Followup" && $variant['transfer_status']== "Not Available" && $ALArray['followup_or_another_property']=="Another Property"){
+                                    if($ALArray['visit_date'] == '0000-00-00') {
+                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['next_date']))." ".date("H:i:s", strtotime($ALArray['next_time']));
+                                    } else {
+                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['visit_date']))." ".date("H:i:s", strtotime($ALArray['visit_time']));
+                                    }
+                                      $message = "<img src='".$ALArray['photo']."' alt='SE Photo' style='height: 64px; width: 64px;'>";
+                                      $leadType = $ALArray['lead_type'];
+                                      $reason = "";
+                                      $noteRemark = $ALArray['notes'];
+                                      $connectionStatus = $ALArray['connection_status'];
+                                      $employeeName = $ALArray["employee_id"];
+                                  }
+
+                                  if($variant['status'] == "Followup" && $variant['transfer_status']== "Not Available" && $ALArray['followup_or_another_property']==""){
+                                    if($ALArray['visit_date'] == '0000-00-00') {
+                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['next_date']))." ".date("H:i:s", strtotime($ALArray['next_time']));
+                                    } else {
+                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['visit_date']))." ".date("H:i:s", strtotime($ALArray['visit_time']));
+                                    }
+                                      $message = "<img src='".$ALArray['photo']."' alt='SE Photo' style='height: 64px; width: 64px;'>";
+                                      $leadType = $ALArray['lead_type'];
+                                      $reason = "";
+                                      $noteRemark = $ALArray['notes'];
+                                      $connectionStatus = $ALArray['connection_status'];
+                                      $employeeName = $ALArray["employee_id"];
+                                  }
+                                  
+                                  if($variant['status'] == "Followup" && $variant['transfer_status']== "Available" && $ALArray['followup_or_another_property']=="Follow Up"){
                                       
+                                    if($ALArray['visit_date'] == '0000-00-00') {
                                       $dateShowcase = date("Y-m-d", strtotime($ALArray['next_date']))." ".date("H:i:s", strtotime($ALArray['next_time']));
-                                      $message = "";
+                                    } else {
+                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['visit_date']))." ".date("H:i:s", strtotime($ALArray['visit_time']));
+                                    }
+                                      $message = "<img src='".$ALArray['photo']."' alt='SE Photo' style='height: 64px; width: 64px;'>";
                                       $leadType = $ALArray['lead_type'];
                                       $reason = "";
-                                      $noteRemark = $ALArray['remark'];
-                                      $connectionStatus = $ALArray['visit_done'];
+                                      $noteRemark = $ALArray['notes'];
+                                      $connectionStatus = $ALArray['connection_status'];
                                       $employeeName = $ALArray["employee_id"];
                                   }
-                                  if($variant['status'] == "Active" && $variant['transfer_status']== "Transferred" && strtoupper($ALArray['transfer_employee_type']) == "SALES EXECUTIVE" && strtolower($variant['request_for_admin']) == ""){
+                                  if($variant['status'] == "Followup" && $variant['transfer_status']== "Available" && $ALArray['followup_or_another_property']=="Another Property"){
+                                      
+                                    if($ALArray['visit_date'] == '0000-00-00') {
+                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['next_date']))." ".date("H:i:s", strtotime($ALArray['next_time']));
+                                    } else {
+                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['visit_date']))." ".date("H:i:s", strtotime($ALArray['visit_time']));
+                                    }
+                                      $message = "";
+                                      if($ALArray['photo'] != "") {
+                                        $photo = "<img src='".$ALArray['photo']."' alt='SE Photo' style='height: 64px; width: 64px;'>";
+                                      } else {
+                                        $photo = "";
+                                      }
+                                      $message .= $photo;
+                                      $propertyDetails = [
+                                        'property_id' => $ALArray['property_id'],
+                                        'sub_property_id' => $ALArray['sub_property_id'],
+                                        'variant' => $ALArray['variant'],
+                                        'property_id' => $ALArray['property_id'],
+                                      ];
+                                      $message .= implode("*", $propertyDetails);
+                                      $leadType = $ALArray['lead_type'];
+                                      $reason = "";
+                                      $noteRemark = $ALArray['notes'];
+                                      $connectionStatus = $ALArray['connection_status'];
+                                      $employeeName = $ALArray["employee_id"];
+                                  }
+                                  if($SE_Leads_Single['status'] == "Followup" && $SE_Leads_Single['transfer_status']== "Available" && $SE_Leads_Single['followup_or_another_property']==""){
+                                    if($ALArray['visit_date'] == '0000-00-00') {
+                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['next_date']))." ".date("H:i:s", strtotime($ALArray['next_time']));
+                                    } else {
+                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['visit_date']))." ".date("H:i:s", strtotime($ALArray['visit_time']));
+                                    }
+                                      $message = "";
+                                      if($ALArray['photo'] != "") {
+                                        $photo = "<img src='".$ALArray['photo']."' alt='SE Photo' style='height: 64px; width: 64px;'>";
+                                      } else {
+                                        $photo = "";
+                                      }
+                                      $message .= $photo;
+                                      $propertyDetails = [
+                                        'property_id' => $ALArray['property_id'],
+                                        'sub_property_id' => $ALArray['sub_property_id'],
+                                        'variant' => $ALArray['variant'],
+                                        'property_id' => $ALArray['property_id'],
+                                      ];
+                                      $message .= implode("*", $propertyDetails);
+                                      $leadType = $ALArray['lead_type'];
+                                      $reason = "";
+                                      $noteRemark = $ALArray['notes'];
+                                      $connectionStatus = $ALArray['connection_status'];
+                                      $employeeName = $ALArray["employee_id"];
+                                  }
+                                  if($variant['status'] == "Active" && $variant['transfer_status']== "Transferred" && strtoupper($ALArray['transfer_employee_type']) == "SALES EXECUTIVE" ){
+                                      $dateShowcase = date("Y-m-d H:i:s", strtotime($ALArray['edited_on']));
+                                      $message = "Lead is transferred to SALES EXECUTIVE ".$ALArray['transfer_employee_id']." by ".$ALArray['employee_id'];
+                                      $leadType = "";
+                                      $reason = $ALArray["transfer_reason"];
+                                      $noteRemark = "";
+                                      $connectionStatus = "";
+                                      $employeeName = $ALArray['employee_id'];
+                                  }
+                                  if($variant['status'] == "Active" && $variant['transfer_status']== "Transferred" && strtoupper($ALArray['transfer_employee_type']) == "SALES EXECUTIVE" && strtolower($ALArray['request_for_admin']) == "no"){
                                       $dateShowcase = date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date']));
                                       $message = "Lead is transferred to SALES EXECUTIVE ".$ALArray['transfer_employee_id']." by ".$ALArray['employee_id']." on ".date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date']));
                                       $leadType = "";
@@ -512,9 +640,9 @@
                                       $connectionStatus = "";
                                       $employeeName = $ALArray['employee_id'];
                                   }
-                                  if($variant['status'] == "Active" && $variant['transfer_status'] == "Transferred" && strtoupper($variant['transfer_employee_type']) == "CUSTOMER EXECUTIVE" && strtolower($variant['request_for_admin']) == ""){
-                                    $dateShowcase = date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date']));
-                                    $message = "Lead is transferred to CUSTOMER EXECUTIVE ".$ALArray['transfer_employee_id']." by ".$ALArray['employee_id']." on ".date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date']));
+                                  if($variant['status'] == "Active" && $variant['transfer_status'] == "Transferred" && strtoupper($ALArray['transfer_employee_type']) == "CUSTOMER EXECUTIVE" && strtolower($ALArray['request_for_admin']) == ""){
+                                    $dateShowcase = date("Y-m-d H:i:s", strtotime($ALArray['edited_on']));
+                                    $message = "Lead is transferred to CUSTOMER EXECUTIVE ".$ALArray['transfer_employee_id']." by ".$ALArray['employee_id'];
                                     $leadType = "";
                                     $reason = $ALArray["transfer_reason"];
                                     $noteRemark = "";
@@ -522,7 +650,17 @@
                                     $employeeName = $ALArray['employee_id'];
                                   }     
                           
-                                  if($variant['status'] == "Transferred" && $variant['transfer_status'] == "Admin pending" && strtoupper($variant['transfer_employee_type']) == "SALES EXECUTIVE" && strtolower($variant['request_for_admin']) == ""){
+                                  if($variant['status'] == "Transferred" && $variant['transfer_status']== "Admin Pending" && strtoupper($ALArray['assign_employee_type']) == "SALES EXECUTIVE" && strtolower($ALArray['request_for_admin']) == "no"){
+                                    $dateShowcase = date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date']));
+                                    $message = "Lead is transferred to SALES EXECUTIVE by ".$ALArray['assign_employee_id'].". Waiting for admin approval.";
+                                    $leadType = "";
+                                    $reason = $ALArray["transfer_reason"];
+                                    $noteRemark = "";
+                                    $connectionStatus = "";
+                                    $employeeName = $ALArray['employee_id'];
+                                  }
+                                  
+                                  if($variant['status'] == "Transferred" && $variant['transfer_status']== "Admin Pending" && strtoupper($ALArray['assign_employee_type']) == "SALES EXECUTIVE" && strtolower($ALArray['request_for_admin']) == "yes"){
                                     $dateShowcase = date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date']));
                                     $message = "Lead is transferred to SALES EXECUTIVE ".$ALArray['transfer_employee_id']." by ".$ALArray['employee_id']." on ".date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date'])).". Waiting for admin approval.";
                                     $leadType = "";
@@ -531,9 +669,20 @@
                                     $connectionStatus = "";
                                     $employeeName = $ALArray['employee_id'];
                                   }
-                                  if($variant['status'] == "Transferred" && $variant['transfer_status']== "Available" && strtoupper($variant['transfer_employee_type']) == "SALES EXECUTIVE" && strtolower($variant['request_for_admin']) == "yes"){
+
+
+                                  // if($variant['status'] == "Transferred" && $variant['transfer_status'] == "Admin pending" && strtoupper($ALArray['transfer_employee_type']) == "SALES EXECUTIVE" && strtolower($ALArray['request_for_admin']) == "no"){
+                                  //   $dateShowcase = date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date']));
+                                  //   $message = "Lead is transferred to SALES EXECUTIVE ".$ALArray['transfer_employee_id']." by ".$ALArray['employee_id']." on ".date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date'])).". Waiting for admin approval.";
+                                  //   $leadType = "";
+                                  //   $reason = $ALArray["transfer_reason"];
+                                  //   $noteRemark = "";
+                                  //   $connectionStatus = "";
+                                  //   $employeeName = $ALArray['employee_id'];
+                                  // }
+                                  if($variant['status'] == "Transferred" && $variant['transfer_status']== "Available" && strtoupper($ALArray['assign_employee_type']) == "SALES EXECUTIVE" && strtolower($ALArray['request_for_admin']) == "yes"){
                                     $dateShowcase = date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date']));
-                                    $message = "Lead is transferred to SALES EXECUTIVE ".$ALArray['transfer_employee_id']." by ".$ALArray['employee_id']." on ".date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date'])).". Admin approved.";
+                                    $message = "Lead is transferred to SALES EXECUTIVE by ".$ALArray['assign_employee_id'].". Admin approved.";
                                     $leadType = "";
                                     $reason = $ALArray["transfer_reason"];
                                     $noteRemark = "";
@@ -570,6 +719,7 @@
                                       $message = "This lead in converted with following details ".
                                       "<br> property_name_id:- ".$CONArray['property_name_id'].
                                       "<br> property_variants:- ".$CONArray['property_variants'].
+                                      "<br> property_tower_id:- ".$CONArray['property_tower_id'].
                                       "<br> agreement_value:- ".$CONArray['agreement_value'].
                                       "<br> registrantion:- ".$CONArray['registrantion'].
                                       "<br> gst:- ".$CONArray['gst'].
@@ -586,30 +736,25 @@
                             }
 
                             if($variant['table_name'] == "leads") {
-                              $dateShowcase = date("Y-m-d H:i:s", strtotime($LEArray['lead_gen_date']));
-                              $message = "This lead in added with following details ".
-                              "<br> budget_range:- ".$LEArray['budget_range'].
-                              "<br> flat_size:- ".$LEArray['flat_size'].
-                              "<br> location:- ".$LEArray['location'].
-                              "<br> lead_name:- ".$LEArray['lead_name'].
-                              "<br> source:- ".$LEArray['source'].
-                              "<br> phone_no:- ".$LEArray['phone_no'].
-                              "<br> email_id:- ".$LEArray['email_id'];
-                              $idleads_assignedLeads = $LEArray['assign_lead_id'];
+                              // $dateShowcase = date("Y-m-d H:i:s", strtotime($LEArray['lead_gen_date']));
+                              $dateShowcase = "";
+                              $message = "This lead in added and assigned to CUSTOMER EXECUTIVE ";
                               
+                              $idleads_assignedLeads = $LEArray['assign_lead_id'];
                               if($id != 0) {
                                 $sqlleads_assignedLeads = "select * from assign_leads where assign_leads_id = $idleads_assignedLeads ";
                                 $qleads_assignedLeads = $pdo->prepare($sqlleads_assignedLeads);
                                 $qleads_assignedLeads->execute(array());      
                                 $leads_assignedLeadsArray = $qleads_assignedLeads->fetch(PDO::FETCH_ASSOC);
                                 $employee_id = $leads_assignedLeadsArray['employee_id'];
-                                $employeeName = $employee_id;
+                                $message .= $employee_id;
                               }
-
+                              
                               $leadType = "";
                               $reason = "";
                               $noteRemark = "";
                               $connectionStatus = "";
+                              $employeeName = "";
                               
                     }
                     ?>
@@ -622,7 +767,7 @@
                       </span>
                       <div class="timeline-event card p-0" data-aos="<?php echo $showside; ?>">
                         <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
-                          <h6 class="card-title mb-0"><?php echo $roleName; ?></h6>
+                          <h6 class="card-title mb-0"><?php if($employeeName != "" ) echo $roleName." - ".$employeeName; else echo $roleName; ?></h6>
                           <div class="meta">
                             <span class="badge rounded-pill bg-label-primary"><?php echo $variant['status']; ?></span>
                             <span class="badge rounded-pill bg-label-success"><?php echo $variant['transfer_status']; ?></span>
@@ -638,13 +783,13 @@
                           <div class="d-flex justify-content-between align-items-center flex-wrap">
                             <div>
                                 <?php
-                                    echo "dateShowcase:- <br>".$dateShowcase."<br>";
-                                    echo "message:- <br>".$message."<br>";
-                                    echo "leadType:- <br>".$leadType."<br>";
-                                    echo "reason:- <br>".$reason."<br>";
-                                    echo "noteRemark:- <br>".$noteRemark."<br>";
-                                    echo "connectionStatus:- <br>".$connectionStatus."<br>";
-                                    echo "employeeName:- <br>".$employeeName."<br>";
+                                    echo "dateShowcase:- ".$dateShowcase."<br><br>";
+                                    echo "message:- ".$message."<br><br>";
+                                    echo "leadType:- ".$leadType."<br><br>";
+                                    echo "reason:- ".$reason."<br><br>";
+                                    echo "noteRemark:- ".$noteRemark."<br><br>";
+                                    echo "connectionStatus:- ".$connectionStatus."<br><br>";
+                                    echo "employeeName:- ".$employeeName."<br><br>";
                                 ?>
                             </div>
                           </div>

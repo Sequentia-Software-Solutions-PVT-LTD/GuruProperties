@@ -60,7 +60,7 @@
     $employee_name = $row_assign1['employee_name'];
 
     $Active = 'Active';
-    $Transfered = 'Transfered';
+    $Transferred = 'Transferred';
     $Available = 'Available';
     $Admin_Pending = 'Admin Pending';
 
@@ -77,14 +77,14 @@
           WHERE `assign_leads_id` = ?";
 
     $q = $pdo->prepare($sql);
-    $q->execute(array($added_on, $Transfered, $transfer_reason, $transfer_employee_id, $transfer_employee_type, $Active, $assign_leads_id));
+    $q->execute(array($added_on, $Transferred, $transfer_reason, $transfer_employee_id, $transfer_employee_type, $Active, $assign_leads_id));
 
     // ---------------------- Insert query for trasfered employee-------------------------------------------------------------------------------------------
     
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "INSERT INTO `assign_leads`(`leads_id`, `admin_id`, `employee_id`,`employee_name`, `status`, `transfer_status`,`next_date`,`next_time`, `added_on`,`admin_request_date`,`request_for_admin`) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
     $q = $pdo->prepare($sql);
-    $q->execute(array($leads_id, $admin_id, $transfer_employee_id, $employee_name, $Transfered, $Admin_Pending, $next_date, $next_time, $added_on, $added_on, 'Yes'));
+    $q->execute(array($leads_id, $admin_id, $transfer_employee_id, $employee_name, $Transferred, $Admin_Pending, $next_date, $next_time, $added_on, $added_on, 'no'));
      
     // $lastInsertedId = $pdo->lastInsertId();
 

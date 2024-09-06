@@ -94,7 +94,7 @@
     // $price = $row_emp['price'];
 
     $ce_status = 'Assigned';
-    $ce_transfer_status = 'Transfered';
+    $ce_transfer_status = 'Transferred';
 
     $se_status = 'Active';
     $se_transfer_status = 'Available';

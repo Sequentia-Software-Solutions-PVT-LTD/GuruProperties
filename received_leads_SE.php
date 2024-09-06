@@ -110,7 +110,7 @@
                             <th>Contact</th>
                             <!-- <th>Email ID</th> -->
                             <!-- <th>Budget</th> -->
-                            <th>Next Date</th>
+                            <th>Visit Date</th>
                             <th>Assigned By</th>
                             <!-- <th>Actions</th> -->
                             </tr>
@@ -118,7 +118,7 @@
                         <tbody>
                             <?php 
                                 $i = 1;
-                                // $sql = "SELECT * FROM assign_leads_sr where admin_id = $admin_id and status = 'Transfered' and transfer_status='Available' and mark_dead='' ";
+                                // $sql = "SELECT * FROM assign_leads_sr where admin_id = $admin_id and status = 'Transferred' and transfer_status='Available' and mark_dead='' ";
                                 $sql = "SELECT * FROM assign_leads_sr where admin_id = $admin_id and status = 'Active' and transfer_status='Available' and mark_dead='' ";
                                 $q = $pdo->query($sql);
                                 // print_r($sql);
@@ -160,7 +160,7 @@
                                     <td><?php echo $row_leads["phone_no"]; ?></td>
                                     <!-- <td><?php echo $row_leads["email_id"]; ?></td> -->
                                      
-                                    <td><?php echo date('d-m-Y', strtotime($row1["next_date"])); ?></td>
+                                    <td><?php echo date('d-m-Y', strtotime($row1["visit_date"])); ?></td>
                                     <td><?php echo $row_emp["employee_name"]; ?></td>
                                     <!-- <td><?php echo $row_leads["budget_range"]; ?></td> -->
                                     <td>
@@ -205,7 +205,7 @@
                         <tbody>
                             <?php 
                                 $i = 1;
-                                $sql = "SELECT * FROM assign_leads_sr where admin_id = $admin_id and status = 'Transfered' and transfer_status='Available' and mark_dead=''";
+                                $sql = "SELECT * FROM assign_leads_sr where admin_id = $admin_id and status = 'Transferred' and transfer_status='Available' and mark_dead=''";
                                 // $sql = "SELECT * FROM assign_leads where admin_id= $admin_id and status = 'Followup' and transfer_status='Available' and mark_dead=''";
                                 // $sql = "SELECT * FROM assign_leads where admin_id= $admin_id and status='Active' ";
                                 $q = $pdo->query($sql);

@@ -154,7 +154,9 @@
                                         $resultArray = array_filter($row_location, function ($v) use ($needle) {
                                           return $needle == $v['id']; 
                                         });
-                                        if(isset($resultArray[0]["name"]) && $resultArray[0]["name"] != "") echo $resultArray[0]["name"]; 
+                                        if($needle == 1) $needle = 1;
+                                        else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                        if(isset($resultArray[$needle]["name"]) && $resultArray[$needle]["name"] != "") echo $resultArray[$needle]["name"]; 
                                         else echo "Not Found";
                                         ?></td>
                                     <td><?php echo $row_leads["phone_no"]; ?></td>

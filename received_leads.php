@@ -117,7 +117,7 @@
                         <tbody>
                             <?php 
                                 $i = 1;
-                                $sql = "SELECT * FROM assign_leads where admin_id= $admin_id and status = 'Transfered' and transfer_status='Available' and mark_dead='' ";
+                                $sql = "SELECT * FROM assign_leads where admin_id= $admin_id and status = 'Transferred' and transfer_status='Available' and mark_dead='' ";
                                 // $sql = "SELECT * FROM assign_leads where admin_id= $admin_id and status = 'Followup' and transfer_status='Available' and mark_dead=''";
                                 // $sql = "SELECT * FROM assign_leads where admin_id= $admin_id and status='Active' ";
                                 $q = $pdo->query($sql);

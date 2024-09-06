@@ -190,7 +190,7 @@
                 </li> -->
                 <!-- <li class="menu-item">
                   <a href="transfer_leads.php" class="menu-link">
-                    <div data-i18nn   ="Preview">Transfered Leads</div>
+                    <div data-i18nn   ="Preview">Transferred Leads</div>
                   </a>
                 </li> -->
                 <!-- <li class="menu-item">
@@ -223,7 +223,7 @@
                 </li>
                 <!-- <li class="menu-item">
                   <a href="trasnfered_leads_CE.php" class="menu-link">
-                    <div data-i18nn="List">Transfered Leads</div>
+                    <div data-i18nn="List">Transferred Leads</div>
                   </a>
                 </li> -->
                 <!-- <li class="menu-item">

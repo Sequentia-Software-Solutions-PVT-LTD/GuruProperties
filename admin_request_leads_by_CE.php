@@ -15,6 +15,7 @@
     // exit();
 
     $assign_leads_id = $_POST['id'];
+    $old_assign_leads_id = $_POST['oldid'];
 
     $added_on = date('Y-m-d H-i-s');
     $t_status = "Available";
@@ -25,11 +26,13 @@
     $sql = "UPDATE `assign_leads` SET  
           `edited_on` = ?, 
           `transfer_status` = ?,
-          `admin_aproved_date` = ?
+          `admin_aproved_date` = ?,
+          `request_for_admin` = 'yes'
           WHERE `assign_leads_id` = ?";
 
     $q = $pdo->prepare($sql);
     $q->execute(array($added_on, $t_status, $added_on, $assign_leads_id));
+
 
     // echo "<pre>";
     // print_r($sql);
@@ -112,7 +115,7 @@
                                 $i = 1;
                                 // $sql = "SELECT * FROM location ";
                                 // $sql = "SELECT * FROM assign_leads where transfer_status = 'Admin Pending' and request_for_admin ='Yes' ";
-                                $sql = "SELECT * FROM assign_leads where status = 'Transfered' and transfer_status = 'Admin Pending' and request_for_admin ='Yes' ";
+                                $sql = "SELECT * FROM assign_leads where status = 'Transferred' and transfer_status = 'Admin Pending' and request_for_admin ='no' ";
                                 $q = $pdo->query($sql);
                                 foreach ($pdo->query($sql) as $row1) 
                                 { 
@@ -154,7 +157,10 @@
                                             <!-- <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ri-more-2-line"></i></button>
                                             <div class="dropdown-menu"> -->
                                                 <!-- <a class="dropdown-item waves-effect" href="edit_location?id=<?php echo $row["id"]; ?>"><i class="ri-pencil-line me-1"></i> Edit</a> -->
-                                                <a class="dropdown-item waves-effect open-myModal" data-bs-toggle="modal" data-bs-target="#enableOTP" data-id="<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-check-line me-1"></i> </a>
+                                                <a class="dropdown-item waves-effect open-myModal" data-bs-toggle="modal" data-bs-target="#enableOTP" 
+                                                data-id="<?php echo $row1["assign_leads_id"]; ?>"
+                                                data-oldid="<?php echo $row_ex["assign_leads_id"]; ?>"
+                                                ><i class="ri-check-line me-1"></i> </a>
                                             <!-- </div> -->
                                         </div>
                                     </td>
@@ -179,6 +185,7 @@
                       </p> -->
                       <form id="enableOTPForm" class="row g-5"  action="#" method="POST">
                         <input type="hidden" name="id" id="id"  value=""/>
+                        <input type="hidden" name="oldid" id="oldid"  value=""/>
                       
                         <div class="col-12 d-flex flex-wrap justify-content-center gap-4 row-gap-4">
                           <button
@@ -233,7 +240,9 @@
                 e.preventDefault();
                 var _self = $(this);
                 var id = _self.data('id');
+                var oldid = _self.data('oldid');
                 $("#id").val(id);
+                $("#oldid").val(oldid);
                 $(_self.attr('href')).modal('show');
             }); 
         </script>

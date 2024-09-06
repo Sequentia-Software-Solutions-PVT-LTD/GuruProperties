@@ -91,7 +91,7 @@
     // $price = $row_emp['price'];
 
     $ce_status = 'Assigned';
-    $ce_transfer_status = 'Transfered';
+    $ce_transfer_status = 'Transferred';
 
     $se_status = 'Active';
     $se_transfer_status = 'Available';
@@ -109,7 +109,7 @@
             WHERE `assign_leads_id` = ?";
 
     $q = $pdo->prepare($sql);
-    $q->execute(array($ce_transfer_status, $added_on, $ce_status, $se_assign_employee_type, $employee_id, $assign_leads_id));
+    $q->execute(array($ce_transfer_status, $added_on, $ce_status, $se_assign_employee_type, $t_employee_id, $assign_leads_id));
        
     // ------------------ add lead for Sales Executive -----------------------------------
 
@@ -266,7 +266,23 @@
                                                           <?php
                                                               $sql = "SELECT * FROM property_name where status = 'Active'";
                                                               foreach ($pdo->query($sql) as $row) { 
-                                                                  echo '<option value="'.$row['property_name_id'].'">'.$row['property_title'].'</option>';
+                                                                $sqllocation = "select * from location ";
+                                                                $qlocation = $pdo->prepare($sqllocation);
+                                                                $qlocation->execute(array());      
+                                                                $row_location = $qlocation->fetchAll(PDO::FETCH_ASSOC);
+
+                                                                $needle = $row['location_id'];
+                                                                $resultArray = array_filter($row_location, function ($v) use ($needle) {
+                                                                return $needle == $v['id']; 
+                                                                });
+                                                                if($needle == 1) $needle = 1;
+                                                                else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                                                if(isset($resultArray[$needle]["name"]) && $resultArray[$needle]["name"] != "") $location_name = $resultArray[$needle]["name"];
+                                                                else 
+                                                                $location_name = "Not Found";
+
+                                                                
+                                                                  echo '<option value="'.$row['property_name_id'].'">'.$row['property_title']." (".$location_name.")".'</option>';
                                                               }
                                                           ?>
                                                       </select>
