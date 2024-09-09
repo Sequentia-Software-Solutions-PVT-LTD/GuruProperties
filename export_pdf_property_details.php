@@ -5,6 +5,7 @@
   //   header('location:dashboard');
   // }
 
+
   include ('dist/conf/db.php');
   $pdo = Database::connect();
 
@@ -55,11 +56,65 @@
     <?php include 'layout/header_js.php'; ?>
      <!-- *********** /header******************  -->
 
-     <style>
-        .mar-top {
-            margin-top: -12px;
+    <!-- Include your CSS here -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
         }
-     </style>
+
+        /* Header Image */
+        .header-img {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header-img img {
+            width: 100%; /* Adjust as needed */
+        }
+
+        /* Table for property details */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+          
+        }
+
+        table, th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Footer section */
+        .footer-img {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .footer-img img {
+            width: 100%; /* Adjust as needed */
+            height:20px;
+        }
+
+        /* Footer with executive details */
+        .footer-details {
+            margin-top: 20px;
+        }
+
+        .footer-details p {
+            margin: 5px 0;
+        }
+
+        .client-info, .executive-info {
+            margin-bottom: 20px;
+        }
+    </style>
+        
     
   </head>
 
@@ -80,41 +135,120 @@
 
             <div class="container-xxl flex-grow-1 container-p-y">
               <!-- *************** - main containt in page write here - **********************  -->
-              <h5 class="card-header mar-bot-10">Property Management</h5>
+              <h5 class="card-header mar-bot-10">Property Details</h5>
               <!-- <hr class="my-12"> -->
-              <h5 class="card-header mar-bot-10">Leads Details </h5>
                 <div class="row">
                     <?php 
                         $pdata = $pdo->prepare($sql_query);
                         $pdata->execute();
                         $row_leads = $pdata->fetch(PDO::FETCH_ASSOC);
+
+                        $admin_id = $_SESSION['login_user_id'];
+                        $sql_admin = "SELECT * from employee WHERE admin_id = $admin_id";
+                        $pdata = $pdo->prepare($sql_admin);
+                        $pdata->execute();
+                        $results_admin = $pdata->fetch(PDO::FETCH_ASSOC);
+
+                        $contact = $results_admin['cell_no'];
+
+                        
+                        // echo "<pre>";
+                        // print_R($row_leads);
+                        // print_R($_SESSION);
+                        // exit();
                     ?>
                     <div class="col-xl-12 col-lg-12 col-md-12 ">
                         <!-- About User -->
                         <div class="card mb-6">
-                            <div class="card-body" style="display:flex; justify-content: space-around;">
+                            <div class="card-body" style="">
                                 <!-- <small class="card-text text-uppercase text-muted small">About</small> -->
-                                <ul class="list-unstyled my-3 py-1" style="">
-                                <small class="card-text text-uppercase text-muted small">About</small>
-                                    <li class="d-flex align-items-center mb-4" style="margin-top: 20px;"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Property Name:</span> <span><?php echo $row_leads['property_title']; ?></span></li>
-                                    <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span><?php echo $row_leads['location']; ?></span></li>
-                                    <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li>
-                                    <!-- <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li> -->
-                                </ul>
-                                
-                                <ul class="list-unstyled my-3 py-1" style="">
-                                <small class="card-text text-uppercase text-muted small" >Contacts</small>
-                                    <li class="d-flex align-items-center mb-4" style="margin-top: 20px;"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Contact:</span> <span><?php echo $row_leads['phone_no']; ?></span></li>
-                                    <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Email ID:</span> <span><?php echo $row_leads['email_id']; ?></span></li>
-                                </ul>
-                                
-                                <ul class="list-unstyled my-3 py-1" style="">
-                                <small class="card-text text-uppercase text-muted small" style="margin-bottom:20px;">Other</small>
-                                    <li class="d-flex align-items-center mb-4"  style="margin-top: 20px;"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Source:</span> <span><?php echo $row_leads['source']; ?></span></li>
-                                    <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_leads['added_on'])); ?></span></li>
-                                </ul>
-                            </div>
-                        </div>
+                                <div class="header-img">
+                                    <img src="header-img.jpg" alt="Header Image">
+                                </div>
+
+                                <!-- Client Information -->
+                                <div class="client-info">
+                                    <h6>To, <br> <?php echo $client_name; ?></h6>
+                                </div>
+                                <br>
+
+                                <!-- Property Details Table -->
+                                <table>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Details</th>
+                                        
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>Property Name</td>
+                                        <td><?php echo $row_leads['property_title']; ?></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Location</td>
+                                        <td><?php echo $row_leads['location']; ?></td>
+                                        
+                                    </tr>
+
+                                    <tr>
+                                        <td>Google Location Lat</td>
+                                        <td><?php echo $row_leads['google_location_lat']; ?></td>
+                                        
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>Google Location Long</td>
+                                        <td><?php echo $row_leads['google_location_long']; ?></td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>Buildeer Name</td>
+                                        <td><?php echo $row_leads['builder_name']; ?></td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>Car Parking</td>
+                                        <td><?php echo $row_leads['car_parking']; ?></td>
+                                        
+                                    </tr>
+
+                                    <tr>
+                                        <td>Furnishing</td>
+                                        <td><?php echo $row_leads['furnishing']; ?></td>
+                                        
+                                    </tr>
+                                    <tr>
+                                       
+                                        <td>Amenities</td>
+                                        <td><?php echo $row_leads['amenities']; ?></td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>USP</td>
+                                        <td colspan="1"><?php echo $row_leads['USP']; ?></td>
+                                    </tr>
+                                </table>
+
+                                <!-- Footer with Customer Executive Details -->
+                                <div class="footer-details">
+                                  <br>
+                                    <h6>From,</h6>
+                                    <p> <?php echo $_SESSION['login_name'] ?></p>
+                                    <p>401, Koyna, Mohan Nagar,</p>
+                                    <p>Baner, Pune, Maharashtra - 411045.</p>
+                                    <p>Contact No: <?php echo $contact; ?></p>
+                                </div>
+
+                                <!-- Footer Image -->
+                                <div class="footer-img">
+                                    <img src="footer-img.jpg" alt="Footer Image">
+                                </div>
+
+                                    </div>
+                                </div>
+
+                        
                         <!--/ About User -->
                         
                     </div>
@@ -123,6 +257,8 @@
                <!-- *************** - /main containt in page write here - **********************  -->
             </div>
             <!-- / Content -->
+
+            
 
             <!-- Footer -->
             <?php //include_once('layout/footer.php'); ?>
@@ -149,16 +285,12 @@
       <!-- Footer -->
         <?php include 'layout/footer_js.php'; ?>
       <!-- / Footer -->
-    
       <script>
-            $(document).on("click", ".open-myModal", function (e) 
-            {
-                e.preventDefault();
-                var _self = $(this);
-                var employee_id = _self.data('employee_id');
-                $("#employee_id").val(employee_id);
-                $(_self.attr('href')).modal('show');
-            }); 
-        </script>
+        // For print functionality
+        window.onload = function () {
+            window.print();
+        };
+    </script>
+
   </body>
 </html>

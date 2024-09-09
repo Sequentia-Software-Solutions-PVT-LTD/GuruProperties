@@ -146,7 +146,7 @@
                         Enter your mobile phone number with country code and we will send you a verification code.
                       </p> -->
                       <form id="enableOTPForm" class="row g-5"  action="#" method="POST">
-                        <input type="text" name="employee_id" id="employee_id"  value=""/>
+                        <input type="hidden" name="employee_id" id="employee_id"  value=""/>
                       
                         <div class="col-12 d-flex flex-wrap justify-content-center gap-4 row-gap-4">
                           <button

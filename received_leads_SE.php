@@ -135,6 +135,8 @@
                                     $admin_id = $row1['admin_id'];
                                     $assign_employee_id = $row1['assign_employee_id'];
 
+                                    
+
                                     // $sqlemp = "select * from employee where admin_id = $admin_id ";
                                     $sqlemp = "select * from employee where employee_id = $assign_employee_id ";
                                     $q = $pdo->prepare($sqlemp);
@@ -222,6 +224,20 @@
                                     $leads_id = $row1['leads_id'];
                                     $admin_id = $row1['admin_id'];
                                     $assign_employee_id = $row1['assign_employee_id'];
+
+                                    $employee_id = $row1['employee_id'];
+                                    $next_date = $row1['next_date'];
+
+                                    // $sqlasnl = "select * from assign_leads_sr where employee_id = $assign_employee_id and status = 'Active' and transfer_status = 'Transferred'  ";
+                                    // // $sqlasnl = "select * from assign_leads_sr where employee_id = $assign_employee_id  ";
+                                    // $q = $pdo->prepare($sqlasnl);
+                                    // $q->execute(array());      
+                                    // $row_asn_leads = $q->fetchAll(PDO::FETCH_ASSOC);
+
+                                    // echo "<pre>";
+                                    // // print_r($row_asn_leads);
+                                    // print_r($row_asn_leads);
+                                    // exit();
 
                                     // $sqlemp = "select * from employee where admin_id = $admin_id ";
                                     $sqlemp = "select * from employee where employee_id = $assign_employee_id ";

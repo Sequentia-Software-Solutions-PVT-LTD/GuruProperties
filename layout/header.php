@@ -97,20 +97,41 @@
                     <li>
                       <div class="dropdown-divider"></div>
                     </li>
-                    <li>
+                    <!-- <li>
                       <div class="d-grid px-4 pt-2 pb-1">
                         <a class="btn btn-sm btn-danger d-flex" href="dist/conf/signout.php" >
                           <small class="align-middle">Logout</small>
                           <i class="ri-logout-box-r-line ms-2 ri-16px"></i>
                         </a>
                       </div>
+                    </li> -->
+                    <li>
+                        <div class="d-grid px-4 pt-2 pb-1">
+                            <?php if($login_role == 'CUSTOMER EXECUTIVE' || $login_role == 'SALES EXECUTIVE') { ?>
+                                <!-- Button to trigger the modal -->
+                                <a class="btn btn-sm btn-danger d-flex open-myModal" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                    <small class="align-middle">Logout</small>
+                                    <i class="ri-logout-box-r-line ms-2 ri-16px"></i>
+                                </a>
+                            <?php } else { ?>
+                                <!-- Regular logout button -->
+                                <a class="btn btn-sm btn-danger d-flex" href="dist/conf/signout.php">
+                                    <small class="align-middle">Logout</small>
+                                    <i class="ri-logout-box-r-line ms-2 ri-16px"></i>
+                                </a>
+                            <?php } ?>
+                        </div>
                     </li>
                     
                   </ul>
                 </li>
                 <!--/ User -->
+
               </ul>
+              
             </div>
+
+            
 
             <!-- Search Small Screens -->
             <div class="navbar-search-wrapper search-input-wrapper d-none">
@@ -122,5 +143,36 @@
               <i class="ri-close-fill search-toggler cursor-pointer"></i>
             </div>
           </nav>
+
+          <!-- Logout Confirmation Modal -->
+          <div class="modal fade" id="logoutModal" tabindex="-1" aria-hidden="true">
+                  <div class="modal-dialog modal-simple modal-dialog-centered">
+                      <div class="modal-content">
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          <div class="modal-body text-center">
+                              <h4 class="mb-2">Logout Confirmation</h4>
+                              <p>Do you really want to log out now?</p>
+                              <div class="d-flex justify-content-center gap-3">
+                                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                                  <!-- Button to redirect to logout -->
+                                  <a href="dist/conf/signout.php" class="btn btn-danger">Logout</a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <!-- /Logout Confirmation Modal -->
+
+          <!-- <script>
+            $(document).on("click", ".open-myModal", function (e) {
+                e.preventDefault();  // Prevent the default action
+
+                var employee_id = $(this).data('employee_id');
+                $("#employee_id").val(employee_id);  // Pass employee ID to the hidden input in the modal
+
+                // Show the modal
+                $("#enableOTP").modal('show');
+            });
+          </script> -->
 
           <!-- / Navbar -->

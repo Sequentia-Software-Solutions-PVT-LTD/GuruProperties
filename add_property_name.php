@@ -265,14 +265,14 @@ if (isset($_POST["submit"])) {
                               </div>
                             </div>
 
-                            <h5 class="card-header">PDF Files </h5>
+                            <h5 class="card-header">Property PDF Files </h5>
                             
                             <div class="row">
                                   <!-- Property PDF 1 to 6 Fields -->
                                   <?php for ($i = 1; $i <= 6; $i++): ?>
                                       <div class="col-md-6">
                                           <div class="row">
-                                              <label class="col-sm-3 col-form-label text-sm-end" for="property-pdf-<?php echo $i; ?>">Property PDF <?php echo $i; ?></label>
+                                              <label class="col-sm-3 col-form-label text-sm-end" for="property-pdf-<?php echo $i; ?>"> PDF <?php echo $i; ?></label>
                                               <div class="col-sm-9">
                                                   <input type="file" name="property_pdf_<?php echo $i; ?>" id="property-pdf-<?php echo $i; ?>" class="form-control" accept="application/pdf" >
                                               </div>
@@ -280,13 +280,13 @@ if (isset($_POST["submit"])) {
                                       </div>
                                   <?php endfor; ?>
 
-                                  <h5 class="card-header">Videos </h5>
+                                  <h5 class="card-header">Property Videos </h5>
 
                                   <!-- Video 1 to 4 Fields -->
                                   <?php for ($i = 1; $i <= 4; $i++): ?>
                                       <div class="col-md-6">
                                           <div class="row">
-                                              <label class="col-sm-3 col-form-label text-sm-end" for="property-video-<?php echo $i; ?>">Property Video <?php echo $i; ?></label>
+                                              <label class="col-sm-3 col-form-label text-sm-end" for="property-video-<?php echo $i; ?>"> Video <?php echo $i; ?></label>
                                               <div class="col-sm-9">
                                                   <input type="file" name="property_video_<?php echo $i; ?>" id="property-video-<?php echo $i; ?>" class="form-control" accept="video/*" >
                                               </div>
