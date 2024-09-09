@@ -156,6 +156,9 @@
     $employee_id = $row_assign['employee_id'];
     $employee_name = $row_assign['employee_name'];
 
+    $latitude = $_POST['latitude'];
+    $longitude = $_POST['longitude'];
+
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $sql = "UPDATE `assign_leads_sr` SET 
@@ -169,17 +172,20 @@
             `edited_on` = ?, 
             `status` = ?,
             `photo` = ?,
-            `transfer_status` = ?
+            `transfer_status` = ?,
+            `latitude` = ?, 
+            `longitude` = ?
             WHERE `assign_leads_sr_id` = ?";
 
     $q = $pdo->prepare($sql);
-    $q->execute(array($connection_status, $today_visit_remark, $next_date_followup1, $next_time_followup1, $next_date_visit1, $next_time_visit1, $lead_type, $added_on, $status, $photo1, $t_status_ce, $assign_leads_sr_id));
+    $q->execute(array($connection_status, $today_visit_remark, $next_date_followup1, $next_time_followup1, $next_date_visit1, $next_time_visit1, $lead_type, $added_on, $status, $photo1, $t_status_ce, $assign_leads_sr_id,$latitude, $longitude));
+
 
     // ----------------------- Insert for new ffollowup ---------------------------------------------------------
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "INSERT INTO `assign_leads_sr`(`assign_leads_id`,`leads_id`, `admin_id`, `employee_id`,`employee_name`, `status`, `transfer_status`,`next_date`,`next_time`,`visit_date`,`visit_time`,`followup_or_another_property`,`variant`, `property_id`, `sub_property_id`, `added_on`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    $sql = "INSERT INTO `assign_leads_sr`(`assign_leads_id`,`leads_id`, `admin_id`, `employee_id`,`employee_name`, `status`, `transfer_status`,`next_date`,`next_time`,`visit_date`,`visit_time`,`followup_or_another_property`,`variant`, `property_id`, `sub_property_id`, `added_on`, `latitude`, `longitude`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     $q = $pdo->prepare($sql);
-    $q->execute(array($assign_leads_id, $leads_id, $admin_id, $employee_id, $employee_name, $status, $transfer_status, $next_date_followup1, $next_time_followup1, $next_date_visit1, $next_time_visit1, $followup_or_another_property, $property_variants, $property_name_id, $property_tower_id, $added_on)); 
+    $q->execute(array($assign_leads_id, $leads_id, $admin_id, $employee_id, $employee_name, $status, $transfer_status, $next_date_followup1, $next_time_followup1, $next_date_visit1, $next_time_visit1, $followup_or_another_property, $property_variants, $property_name_id, $property_tower_id, $added_on, $latitude, $longitude));
     // $lastInsertedId = $pdo->lastInsertId();
     
     header('location:view_todays_leads_SE.php');
@@ -622,8 +628,34 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="form-group" id="take_photo_div" style="">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-sm-12 text-center">
+                                                                <div class="form-floating form-floating-outline">
+                                                                    <input class="form-control" type="hidden" id="lat" readonly name="latitude">
+                                                                    <span>Current Latitude:- </span>
+                                                                    <span class="text-danger" id="latitude"></span> 
+                                                                    
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                    <!-- <label for="latitude">Latitude</label> -->
+                                                                <!-- </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-floating form-floating-outline"> -->
+                                                                    <input class="form-control" type="hidden" id="long" readonly name="longitude">
+                                                                    <span>Current Longitude:- </span>
+                                                                    <span class="text-danger" id="longitude"></span>
+                                                                    <!-- <label for="longitude">Longitude</label> -->
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                                                    <span>Accuracy:- </span>
+                                                                    <span class="text-danger" id="accuracy"></span>
+                                                                    
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         <div class="row">
-                                                            <div class="col-sm-11" style="display:flex;gap:20px;">
+                                                            <div class="col-sm-11 mt-6" style="display:flex;gap:20px;">
                                                                 <label for="patientDate" class="col-sm-2 control-label" style="margin-top: 10px;">Today's Visit Photo</label>
                                                                 <div class="col-sm-3" style="padding-right: 0px;">
                                                                     <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addNewCCModal" onclick="startup();"> Take Photo </button>
@@ -632,11 +664,8 @@
                                                                 <div class="col-sm-4" style="padding: 0px;">
                                                                     <!-- <img id="captured_photo_preview" src="" alt="Captured Photo" style="max-width: 150px; display: none;" /> -->
                                                                     <img id="captured_photo_preview" src="" alt="Captured Photo" style="max-width: 150px; display: none;" />
-                                                                </div>
-                                                                <div class="col-sm-4" style="padding: 0px;">
                                                                     <input type="hidden" class="form-control" name="photo_capture1" id="photo_capture1" readonly />
-                                                                </div>
-                                                                
+                                                                </div>                                                                
                                                             </div>
                                                         </div>
                                                     </div>  
@@ -746,7 +775,7 @@
 
                                     <div class="d-flex justify-content-between">
                                         <!-- <a class="btn btn-outline-info" href="view_leads_for_assigned_SE.php?assign_leads_id=<?php echo $row_assign["assign_leads_id"]; ?>">Assign Lead To Sales Executive </a> -->
-                                        <button type="submit" name="submit1" class="btn btn-success logo-btn">Submit</button>
+                                        <button type="submit" name="submit1" id="submit1" class="btn btn-success logo-btn">Submit</button>
                                         <!-- <a class="btn btn-secondary" href="transfer_assigned_lead.php?assign_leads_id=<?php echo $row_assign["assign_leads_id"]; ?>">Transfer Lead </a> -->
                                         
                                     </div>
@@ -1381,8 +1410,45 @@
             imgTag.style.display = 'block';  // Make the image visible
         }
     }
-
+    
 </script>
+<script type="text/javascript">
+        initGeolocation();
+        function prepareForm(event) {
+                event.preventDefault();
+                // Do something you need
+                initGeolocation();
+                document.getElementById("myForm").requestSubmit();
+        }
+        function initGeolocation()
+        {
+            window.setInterval(function(){
+                navigator.geolocation.getCurrentPosition( success, fail );
+            }, 1000);
+        }
+
+        function success(position)
+        {   
+                document.getElementById('long').value = position.coords.longitude;
+                document.getElementById('longitude').innerHTML = position.coords.longitude;
+                document.getElementById('lat').value = position.coords.latitude;
+                document.getElementById('latitude').innerHTML = position.coords.latitude;
+                document.getElementById('accuracy').innerHTML = position.coords.accuracy;
+                document.getElementById('submit1').disabled  = false;
+        }
+
+        function fail()
+        {
+            alert("Please enable your location and refresh the page, to submit this form.");
+            // alert("Sorry, your browser does not support geolocation services.");
+            document.getElementById('long').value = "00.0000000";
+            document.getElementById('lat').value = "00.0000000";
+            document.getElementById('submit1').disabled  = true;
+        }
+        
+
+</script>    
+
     
   </body>
 </html>

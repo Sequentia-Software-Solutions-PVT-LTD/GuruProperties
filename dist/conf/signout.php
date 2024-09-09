@@ -11,8 +11,8 @@ date_default_timezone_set('Asia/Kolkata'); // Set to your timezone
     // exit();
 
  // ------------- add atendence ----------------------
-//  if(isset($_SESSION['sales_representative_id']))
-//  {
+ if(isset($_POST['logout']))
+ {
     $login_id = $_SESSION['login_id'];
     $login_name = $_SESSION['login_name'];
     $login_role = $_SESSION['login_role'];
@@ -25,11 +25,15 @@ date_default_timezone_set('Asia/Kolkata'); // Set to your timezone
 
     //  print_r($_SESSION);
     //  exit();
+    
+    $latitude = $_POST['latitude_signout'];
+    $longitude = $_POST['longitude_signout'];
+    $accuracy = $_POST['accuracy_signout'];
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "INSERT INTO `attendance`(`login_id`,`login_name`,`date`,`time`,`status`, `added_on`) VALUES (?,?,?,?,?,?)";
+    $sql = "INSERT INTO `attendance`(`login_id`,`login_name`,`date`,`time`,`status`, `added_on`, `latitude`, `longitude`, `accuracy`) VALUES (?,?,?,?,?,?,?,?,?)";
     $q = $pdo->prepare($sql);
-    $q->execute(array($login_user_id, $login_name, $date, $time, $status, $added_on));
+    $q->execute(array($login_user_id, $login_name, $date, $time, $status, $added_on, $latitude, $longitude, $accuracy));
  //}
    
 // ------------- add atendence ----------------------
@@ -48,9 +52,15 @@ if (ini_get("session.use_cookies")) {
         $params["secure"], $params["httponly"]
     );
 }
-
 // Finally, destroy the session.
 session_destroy();
 
 header("location: ../../login" );
+
+}
+
 ?>
+
+<input type="hidden" id="long_footer" name="longitude_footer" />
+<input type="hidden" id="lat_footer" name="latitude_footer" />
+<input type="hidden" id="accuracy_footer" name="accuracy_footer" />

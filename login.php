@@ -25,6 +25,9 @@ if(isset($_POST["submit"]))
   $password = $_POST['password'];
   $valid = true;
 
+  $latitude = $_POST['latitude'];
+  $longitude = $_POST['longitude'];
+  $accuracy = $_POST['accuracy'];
   // print_r($_POST);
   // exit();
 
@@ -87,9 +90,9 @@ if(isset($_POST["submit"]))
             //  exit();
 
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sql = "INSERT INTO `attendance`(`login_id`,`login_name`,`date`,`time`,`status`, `added_on`) VALUES (?,?,?,?,?,?)";
+            $sql = "INSERT INTO `attendance`(`login_id`,`login_name`,`date`,`time`,`status`, `added_on`, `latitude`, `longitude`, `accuracy`) VALUES (?,?,?,?,?,?,?,?,?)";
             $q = $pdo->prepare($sql);
-            $q->execute(array($login_user_id, $login_name, $date, $time, $status, $added_on));
+            $q->execute(array($login_user_id, $login_name, $date, $time, $status, $added_on, $latitude, $longitude, $accuracy));
          // ------------- add atendence ----------------------
 
           // echo "<pre>";
@@ -233,6 +236,9 @@ if(isset($_POST["submit"]))
                       <label for="password">Password</label>
                     </div>
                     <span class="input-group-text cursor-pointer"><i class="ri-eye-off-line"></i></span>
+                    <input type="hidden" id="long" name="longitude" />
+                    <input type="hidden" id="lat" name="latitude" />
+                    <input type="hidden" id="accuracy" name="accuracy" />
                   </div>
                 </div>
               </div>
@@ -272,5 +278,33 @@ if(isset($_POST["submit"]))
 
     <!-- Page JS -->
     <script src="assets/js/pages-auth.js"></script>
+    <script type="text/javascript">
+        initGeolocation();
+        function initGeolocation()
+        {
+            window.setInterval(function(){
+                navigator.geolocation.getCurrentPosition( success, fail );
+            }, 1000);
+        }
+
+        function success(position)
+        {   
+                document.getElementById('long').value = position.coords.longitude;
+                document.getElementById('lat').value = position.coords.latitude;
+                document.getElementById('accuracy').value = position.coords.accuracy;
+                document.getElementById('submit1').disabled  = false;
+        }
+
+        function fail()
+        {
+            alert("Please enable your location and refresh the page, to login.");
+            // alert("Sorry, your browser does not support geolocation services.");
+            document.getElementById('long').value = "00.0000000";
+            document.getElementById('lat').value = "00.0000000";
+            document.getElementById('submit1').disabled  = true;
+        }
+        
+
+</script>  
   </body>
 </html>

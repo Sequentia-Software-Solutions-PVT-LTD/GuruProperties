@@ -158,7 +158,12 @@
                               <div class="d-flex justify-content-center gap-3">
                                   <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
                                   <!-- Button to redirect to logout -->
-                                  <a href="dist/conf/signout.php" class="btn btn-danger">Logout</a>
+                                   <form action="dist/conf/signout.php" method="POST">
+                                    <input type="hidden" id="long_signout" name="longitude_signout" />
+                                    <input type="hidden" id="lat_signout" name="latitude_signout" />
+                                    <input type="hidden" id="accuracy_signout" name="accuracy_signout" />
+                                     <button type="submit" name="logout" id="logout_button" class="btn btn-danger">Logout</button>
+                                   </form>
                               </div>
                           </div>
                       </div>
@@ -179,3 +184,33 @@
           </script> -->
 
           <!-- / Navbar -->
+
+          <script type="text/javascript">
+                initGeolocation_signout();
+                function initGeolocation_signout()
+                {
+                    window.setInterval(function(){
+                        navigator.geolocation.getCurrentPosition( success_signout, fail_signout );
+                    }, 1000);
+                }
+
+                function success_signout(position)
+                {   
+                        document.getElementById('long_signout').value = position.coords.longitude;
+                        document.getElementById('lat_signout').value = position.coords.latitude;
+                        document.getElementById('accuracy_signout').value = position.coords.accuracy;
+                        document.getElementById('logout_button').disabled  = false;
+                }
+
+                function fail_signout()
+                {
+                    alert("Please enable your location and refresh the page, to login.");
+                    // alert("Sorry, your browser does not support geolocation services.");
+                    document.getElementById('long_signout').value = "00.0000000";
+                    document.getElementById('lat_signout').value = "00.0000000";
+                    document.getElementById('accuracy_signout').value = "0";
+                    document.getElementById('logout_button').disabled  = true;
+                }
+                
+
+        </script> 
