@@ -151,7 +151,7 @@
                     <div class="col-xl-6 col-lg-5 col-md-5 ">
                         <!-- About User -->
                         <div class="card mb-6">
-                            <div class="card-body">
+                            <div class="card-body demo-vertical-spacing demo-only-element">
                                 <small class="card-text text-uppercase text-muted small">About</small>
                                 <ul class="list-unstyled my-3 py-1" style="">
                                     <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Lead Name:</span> <span><?php echo $row_leads['lead_name']; ?></span></li>
@@ -193,17 +193,16 @@
 
                             <form action="#" method="post">
                                 <input type="hidden" value="<?php echo $_REQUEST['assign_leads_sr_id']; ?>" name="assign_leads_sr_id">
-                                <div class="card-body" style="padding-top: 0px;">
+                                <div class="card-body demo-vertical-spacing demo-only-element" style="padding-top: 0px;">
 
                                     <!--  -->
                                     <div class="row g-4">
                                         <div class="row">
                                           <h5 class="card-header mt-4" style="padding-left: 0px;"> Property Details </h5>
-                                          <div class="col-md-12">
-                                              
-                                              <div class="row">
+                                          <div class="col-md-12">                                              
+                                              <div class="row mt-4">
                                                   <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Title</label>
-                                                  <div class="col-sm-9">
+                                                  <div class="col-sm-9 form-floating form-floating-outline">
                                                       <select id="propertyDropdown" name="property_name_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
                                                           <option value="">Select Property Name</option>
                                                           <?php
@@ -213,18 +212,20 @@
                                                               }
                                                           ?>
                                                       </select>
+                                                      <label for="propertyDropdown">Select Property Name</label>
                                                   </div>
                                               </div>
                                           </div>
 
                                             <div class="col-md-12">
-                                                <div class="row">
+                                                <div class="row mt-4">
                                                     <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Tower</label>
-                                                    <div class="col-sm-9">
+                                                    <div class="col-sm-9 form-floating form-floating-outline">
                                                         <select id="towerDropdown" name="property_tower_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
                                                             <option value="">Select Property Tower</option>
                                                             <!-- Towers will be loaded here based on the selected property -->
                                                         </select>
+                                                        <label for="towerDropdown">Select Property Tower</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -232,13 +233,14 @@
 
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div class="row">
+                                                <div class="row mt-4">
                                                     <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Variants</label>
-                                                    <div class="col-sm-9">
+                                                    <div class="col-sm-9  form-floating form-floating-outline">
                                                         <!-- <select id="variantDropdown" name="property_variants[]" class="js-example-basic-single select2 form-select select2-hidden-accessiblee" multiple="multiple" data-allow-clear="true" required> -->
-                                                        <select id="variantDropdown" name="property_variants[]" class="js-example-basic-single select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
+                                                        <select id="variantDropdown" name="property_variants[]" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
                                                             <option value="">Select Variants</option>
                                                         </select>
+                                                        <label for="variantDropdown">Select Variants</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -247,69 +249,71 @@
                                         <div class="row">
                                           <h5 class="card-header mt-4" style="padding-left: 0px;"> Other Details </h5>
                                           
-                                          <div class="col-md-12">
+                                          <div class="col-md-12 mt-4">
                                               <div class="row">
                                                   <label class="col-sm-4 col-form-label text-sm-end mar-top1" style="margin-top: -10px;"> Agreement Value</label>
-                                                  <div class="col-sm-8">
+                                                  <div class="col-sm-8 form-floating form-floating-outline">
                                                     <input class="form-control" type="number" placeholder="Agreement Value" id="stamp_duty" name="agreement_value">
+                                                    <label for="stamp_duty"> Agreement Value</label>
                                                   </div>
                                               </div>
                                           </div>
 
-                                          <div class="col-md-12">
+                                          <div class="col-md-12 mt-4">
                                               <div class="row">
                                                   <label class="col-sm-4 col-form-label text-sm-end mar-top"> Registration </label>
-                                                  <div class="col-sm-8">
+                                                  <div class="col-sm-8 form-floating form-floating-outline">
                                                     <input class="form-control" type="number" placeholder="Registration" id="Registration" name="registrantion">
+                                                    <label for="Registration">Registration</label>
                                                   </div>
                                               </div>
                                           </div>
-                                          <div class="col-md-12">
+                                          <div class="col-md-12 mt-4">
                                               <div class="row">
                                                   <label class="col-sm-4 col-form-label text-sm-end mar-top"> GST </label>
-                                                  <div class="col-sm-8">
-                                                    <input class="form-control" type="number" placeholder="GST Amount" id="gst" name="gst">
+                                                  <div class="col-sm-8 form-floating form-floating-outline">
+                                                    <input class="form-control" type="number" placeholder="GST Amount" id="gst" name="gst"><label for="gst">GST Amount</label>
                                                   </div>
                                               </div>
                                           </div>
-                                          <div class="col-md-12">
+                                          <div class="col-md-12 mt-4">
                                               <div class="row">
                                                   <label class="col-sm-4 col-form-label text-sm-end mar-top"> Stamp Duty</label>
-                                                  <div class="col-sm-8">
-                                                    <input class="form-control" type="number" placeholder="Stamp Duty" id="stamp_duty" name="stamp_duty">
+                                                  <div class="col-sm-8 form-floating form-floating-outline">
+                                                    <input class="form-control" type="number" placeholder="Stamp Duty" id="stamp_duty" name="stamp_duty"><label for="stamp_duty">Stamp Duty Amount</label>
                                                   </div>
                                               </div>
                                           </div>
-                                          <div class="col-md-12">
+                                          <div class="col-md-12 mt-4">
                                               <div class="row">
                                                   <label class="col-sm-4 col-form-label text-sm-end mar-top"> Commission </label>
-                                                  <div class="col-sm-8">
-                                                    <input class="form-control" type="number" placeholder="Commission To Guru Properties" id="commission" name="commission">
+                                                  <div class="col-sm-8 form-floating form-floating-outline">
+                                                    <input class="form-control" type="number" placeholder="Commission To Guru Properties" id="commission" name="commission"><label for="commission">Commission To Guru Properties</label>
                                                   </div>
                                               </div>
                                           </div>
-                                          <div class="col-md-12">
+                                          <div class="col-md-12 mt-4">
                                               <div class="row">
                                                   <label class="col-sm-4 col-form-label text-sm-end mar-top"> Quoted Price </label>
-                                                  <div class="col-sm-8">
-                                                    <input class="form-control" type="number" placeholder="Quoted Price " id="quoted_price" name="quoted_price">
+                                                  <div class="col-sm-8 form-floating form-floating-outline">
+                                                    <input class="form-control" type="number" placeholder="Quoted Price " id="quoted_price" name="quoted_price"><label for="commission">Commission To Guru Properties</label>
                                                   </div>
                                               </div>
                                           </div>
-                                          <div class="col-md-12">
+                                          <div class="col-md-12 mt-4">
                                               <div class="row">
                                                   <label class="col-sm-4 col-form-label text-sm-end mar-top"> Sale Price </label>
-                                                  <div class="col-sm-8">
-                                                    <input class="form-control" type="number" placeholder="Sale Price" id="sale_price" name="sale_price">
+                                                  <div class="col-sm-8 form-floating form-floating-outline">
+                                                    <input class="form-control" type="number" placeholder="Sale Price" id="sale_price" name="sale_price"><label for="sale_price">Sale Price</label>
                                                   </div>
                                               </div>
                                           </div>
                                           
-                                          <div class="col-md-12">
+                                          <div class="col-md-12 mt-4">
                                               <div class="row">
                                                   <label class="col-sm-4 col-form-label text-sm-end mar-top">Notes</label>
-                                                  <div class="col-sm-8">
-                                                    <input class="form-control" type="text" placeholder="Enter your notes" id="notes" name="notes">
+                                                  <div class="col-sm-8 form-floating form-floating-outline">
+                                                    <input class="form-control" type="text" placeholder="Enter your notes" id="notes" name="notes"><label for="notes">Enter your notes</label>
                                                   </div>
                                               </div>
                                           </div>

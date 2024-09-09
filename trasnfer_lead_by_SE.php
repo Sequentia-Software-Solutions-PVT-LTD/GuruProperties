@@ -205,7 +205,7 @@
                     <div class="col-xl-6 col-lg-5 col-md-5 ">
                         <!-- About User -->
                         <div class="card mb-6">
-                        <div class="card-body">
+                        <div class="card-body demo-vertical-spacing demo-only-element">
                             <small class="card-text text-uppercase text-muted small">About</small>
                             <ul class="list-unstyled my-3 py-1" style="">
                                 <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Lead Name:</span> <span><?php echo $row_leads['lead_name']; ?></span></li>
@@ -238,24 +238,24 @@
                             <form action="#" method="post">
                               <input type="hidden" value="<?php echo $_REQUEST['assign_leads_sr_id']; ?>" name="assign_leads_sr_id">
                               <input type="hidden" value="<?php echo $row_assign['leads_id']; ?>" name="leads_id">
-                                <div class="card-body" style="padding-top: 0px;">
+                                <div class="card-body demo-vertical-spacing demo-only-element" style="padding-top: 0px;">
                                     
                                     <!-- <div class="mb-4">
                                         <label for="notes" class="form-label">Select Employee</label>
                                         <select id="roleDropdown" name="transfer_employee_id" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
                                           <option value="" data-select2-id="18">Select Employee</option>
                                             <?php
-                                                $sql = "SELECT * FROM  employee where status='Active' and login_role='CUSTOMER EXECUTIVE'  and login_role='SALES EXECUTIVE'";
-                                                foreach ($pdo->query($sql) as $row) 
-                                                { 
+                                                // $sql = "SELECT * FROM  employee where status='Active' and login_role='CUSTOMER EXECUTIVE'  and login_role='SALES EXECUTIVE'";
+                                                // foreach ($pdo->query($sql) as $row) 
+                                                // { 
                                                 ?>
-                                                  <option value="<?php echo $row['employee_id']?>"><?php echo $row['employee_name']?></option> 
-                                              <?php } ?>
+                                                  <option value="<?php //echo $row['employee_id']?>"><?php //echo $row['employee_name']?></option> 
+                                              <?php //} ?>
                                           </select>
                                     </div> -->
 
-                                    <div class="mb-4">
-                                        <label for="roleDropdown" class="form-label">Select Employee</label>
+                                    <label for="roleDropdown" class="form-label w-100 text-center">Select Employee</label>
+                                    <div class="mb-4 form-floating form-floating-outline">
                                         <select id="roleDropdown" name="transfer_employee_id" class="form-select" required>
                                             <option value="">Select Employee</option>
                                             <!-- PHP to generate grouped options -->
@@ -283,7 +283,8 @@
                                                 . '</option>';
                                             }
                                             ?>
-                                        </select>
+                                        </select>                                        
+                                        <label for="roleDropdown">Customer Executive</label>
                                     </div>
 
                                     <!-- <div class="col-md-6 mb-6">
@@ -304,14 +305,16 @@
                                         </div>
                                     </div> -->
 
-                                    <div class="mb-4">
-                                        <label for="next_date" class="form-label">Next Follow Up Date Time</label>
+                                    <label for="next_date" class="form-label w-100 text-center">Next Follow Up Date Time</label>
+                                    <div class="mb-4 form-floating form-floating-outline">
                                         <input class="form-control" type="datetime-local" id="next_date" name="next_date" required>
+                                        <label for="next_date">Next Follow Up Date Time</label>
                                     </div>
 
-                                    <div class="mb-4">
-                                        <label for="notes" class="form-label">Reason For Transfer</label>
-                                        <textarea class="form-control" id="transfer_reason" placeholder="Write Reason here..." name="transfer_reason"></textarea>
+                                    <label for="notes" class="form-label w-100 text-center">Reason For Transfer</label>
+                                    <div class="mb-4 form-floating form-floating-outline">
+                                        <textarea class="form-control" id="transfer_reason" placeholder="Write Reason here..." name="transfer_reason" style="height: 100px;"></textarea>
+                                        <label for="transfer_reason">Reason For Transfer</label>
                                     </div>
 
                                     <div class="d-flex justify-content-between">

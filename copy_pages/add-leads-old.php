@@ -117,7 +117,7 @@
               <div class="col-12">
                 <div class="card">
                   <h5 class="card-header">Add Leads</h5>
-                  <div class="card-body">
+                  <div class="card-body demo-vertical-spacing demo-only-element">
                     <form action="#" class="form-repeater" method="POST" enctype="multipart/form-data">
                       <div data-repeater-list="group-a">
                       <div data-repeater-item="" style=""  class="items" data-group="test">

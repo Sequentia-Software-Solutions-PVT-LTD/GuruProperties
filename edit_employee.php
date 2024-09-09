@@ -133,7 +133,7 @@
               <h5 class="card-header mar-bot-10">Employee Details Form</h5>
                 <div class="card">
                     <h5 class="card-header">Edit Employee</h5>
-                    <div class="card-body">
+                    <div class="card-body demo-vertical-spacing demo-only-element">
                         <div class="d-flex align-items-center1 justify-content-center h-px-300">
                         <form action="#" method="post">
                           <input type="hidden" value="<?php echo $row_d['employee_id']; ?>" name="employee_id">
@@ -141,51 +141,60 @@
                           <div class="col-md-6">
                               <div class="row">
                                 <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-country">Role</label>
-                                <div class="col-sm-9">
-                                  <div class="position-relative">
+                                <div class="col-sm-9 form-floating form-floating-outline">
+                                  <!-- <div class="position-relative"> -->
                                     <select id="formtabs-country"  name="login_role" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true">
                                       <option value="" data-select2-id="18">Select Employee Role</option>
                                       <option value="CUSTOMER EXECUTIVE" <?php if($row_d['login_role']=="CUSTOMER EXECUTIVE"){echo"Selected = 'selected'";}?>>Customer Executive</option>
                                       <option value="SALES EXECUTIVE" <?php if($row_d['login_role']=="SALES EXECUTIVE"){echo"Selected = 'selected'";}?>>Sales Executive</option>
                                       <option value="LEADS GENERATOR" <?php if($row_d['login_role']=="LEADS GENERATOR"){echo"Selected = 'selected'";}?>>Leads Generator</option>
                                     </select>
+                                    <label for="formtabs-country">Role</label>
                                   <!-- <span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="17" style="width: 383.9px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-formtabs-country-container"><span class="select2-selection__rendered" id="select2-formtabs-country-container" role="textbox" aria-readonly="true"><span class="select2-selection__placeholder">Select value</span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span> -->
-                                </div>
+                                <!-- </div> -->
                                 </div>
                               </div>
                             </div>
                             <div class="col-md-6">
                               <div class="row">
                                 <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Name</label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-9 form-floating form-floating-outline">
                                   <input type="text" name="employee_name" id="formtabs-username" class="form-control" value="<?php echo $row_d['employee_name']; ?>">
+                                  
+                                  <label for="formtabs-username">Name</label>
                                 </div>
                               </div>
                             </div>
                             <div class="col-md-6">
                               <div class="row">
                                 <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-email">Email</label>
-                                <div class="col-sm-9">
-                                  <div class="input-group input-group-merge">
+                                <div class="col-sm-9 form-floating form-floating-outline">
+                                  <!-- <div class="input-group input-group-merge"> -->
                                     <input type="text"  name="email_id"  id="formtabs-email" class="form-control" value="<?php echo $row_d['email_id']; ?>" aria-label="john.doe" aria-describedby="formtabs-email2">
                                     <!-- <span class="input-group-text" id="formtabs-email2">@example.com</span> -->
-                                  </div>
+                                     
+                                  <label for="formtabs-email">Email</label>
+                                  <!-- </div> -->
                                 </div>
                               </div>
                             </div>
                             <div class="col-md-6">
                               <div class="row">
                                 <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-phone">Phone No</label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-9 form-floating form-floating-outline">
                                   <input type="text" name="cell_no"  id="formtabs-phone" class="form-control phone-mask" value="<?php echo $row_d['cell_no']; ?>" aria-label="658 799 8941">
+                                  
+                                  <label for="formtabs-phone">Phone No</label>
                                 </div>
                               </div>
                             </div>
                             <div class="col-md-6" style="display:none;">
                               <div class="row">
                                 <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username">User ID</label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-9 form-floating form-floating-outline">
                                   <input type="text" name="user_id"  id="formtabs-username" class="form-control" value="<?php echo $row_d['user_id']; ?>">
+                                  
+                                  <label for="formtabs-username">User ID</label>
                                 </div>
                               </div>
                             </div>
@@ -193,11 +202,13 @@
                             <div class="col-md-6">
                               <div class="row form-password-toggle">
                                 <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-password">Password</label>
-                                <div class="col-sm-9">
-                                  <div class="input-group input-group-merge">
+                                <div class="col-sm-9 form-floating form-floating-outline">
+                                  <!-- <div class="input-group input-group-merge"> -->
                                     <input type="password" name="password"  id="formtabs-password" class="form-control" placeholder="*********" aria-describedby="formtabs-password2">
-                                    <span class="input-group-text cursor-pointer" id="formtabs-password2"><i class="ri-eye-off-line"></i></span>
-                                  </div>
+                                    <!-- <span class="input-group-text cursor-pointer" id="formtabs-password2"><i class="ri-eye-off-line"></i></span> -->
+                                    
+                                  <label for="formtabs-password">Password</label>
+                                  <!-- </div> -->
                                 </div>
                               </div>
                             </div>
@@ -205,8 +216,8 @@
                             <div class="col-md-6">
                                 <div class="row form-password-toggle">
                                     <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-password">Property Location</label>
-                                    <div class="col-sm-9">
-                                        <div class="input-group input-group-merge">
+                                    <div class="col-sm-9 form-floating form-floating-outline">
+                                        <!-- <div class="input-group input-group-merge"> -->
                                             <select id="formtabs-location" name="_employeelocation" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
                                                 <option value="" data-select2-id="18">Select Property Location</option>
                                                 <?php
@@ -219,7 +230,9 @@
                                                     }
                                                 ?>
                                             </select>
-                                        </div>
+                                            
+                                            <label for="formtabs-location">Property Location</label>
+                                        <!-- </div> -->
                                     </div>
                                 </div>
                             </div>

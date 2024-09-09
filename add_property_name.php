@@ -150,16 +150,17 @@ if (isset($_POST["submit"])) {
               <h5 class="card-header mar-bot-10">Property Name Details Form</h5>
                 <div class="card">
                     <h5 class="card-header">Add Property Name</h5>
-                    <div class="card-body">
-                        <div class="d-flex align-items-center1 justify-content-center h-px-900">
+                    <div class="card-body demo-vertical-spacing demo-only-element">
+                        <div class="d-flexz align-items-center1 justify-content-center h-px-900">
                         <form action="#" method="post" enctype="multipart/form-data">
                           <div class="row g-4">
                             
                             <div class="col-md-6">
                               <div class="row">
                                 <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Property Title</label>
-                                <div class="col-sm-9">
-                                  <input type="text" name="property_title" id="formtabs-username" class="form-control" placeholder="Property Title" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required>
+                                <div class="col-sm-9 form-floating form-floating-outline">
+                                    <input type="text" name="property_title" id="formtabs-username" class="form-control" placeholder="Property Title" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required>
+                                    <label for="formtabs-username"> Property Title</label>
                                 </div>
                               </div>
                             </div>
@@ -167,8 +168,9 @@ if (isset($_POST["submit"])) {
                             <div class="col-md-6">
                               <div class="row">
                                 <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Builder Name</label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-9 form-floating form-floating-outline">
                                   <input type="text" name="builder_name" id="formtabs-username" class="form-control" placeholder=" Builder Name" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required>
+                                  <label for="formtabs-username"> Builder Name</label>
                                 </div>
                               </div>
                             </div>
@@ -176,7 +178,7 @@ if (isset($_POST["submit"])) {
                             <div class="col-md-6">
                               <div class="row">
                                 <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Property Location</label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-9 form-floating form-floating-outline">
                                     <!-- <input type="text" name="location" id="formtabs-username" class="form-control" placeholder="Location" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required> -->
                                     <select id="formtabs-location" name="property_location_id" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
                                         <option value="" data-select2-id="18">Select Property Location</option>
@@ -190,6 +192,7 @@ if (isset($_POST["submit"])) {
                                             }
                                         ?>
                                     </select>
+                                    <label class="" for="formtabs-username"> Property Location</label>
                                 </div>
                               </div>
                             </div>
@@ -197,19 +200,21 @@ if (isset($_POST["submit"])) {
                             <div class="col-md-6">
                                 <div class="row">
                                     <label class="col-sm-3 col-form-label text-sm-end" for="google-location-lat">Google Location</label>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-4 form-floating form-floating-outline">
                                         <!-- Latitude Input Field -->
                                         <input type="text" name="google_location_lat" id="google-location-lat" class="form-control" placeholder="Latitude" 
                                             pattern="^(\+|-)?(?:90(?:\.0+)?|\d{1,2}(?:\.\d+)?)$" 
                                             title="Please enter a valid latitude (-90 to 90)" 
                                             required>
+                                            <label for="google-location-lat">Latitude</label>
                                     </div>
-                                    <div class="col-sm-5">
+                                    <div class="col-sm-5 form-floating form-floating-outline">
                                         <!-- Longitude Input Field -->
                                         <input type="text" name="google_location_long" id="google-location-long" class="form-control" placeholder="Longitude" 
                                             pattern="^(\+|-)?(?:180(?:\.0+)?|(?:1[0-7]\d|\d{1,2})(?:\.\d+)?)$" 
                                             title="Please enter a valid longitude (-180 to 180)" 
                                             required>
+                                        <label for="google-location-long">Longitude</label>
                                     </div>
                                 </div>
                             </div>
@@ -222,13 +227,14 @@ if (isset($_POST["submit"])) {
                             <div class="col-md-6">
                               <div class="row">
                                 <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Car Parking</label>
-                                <div class="col-sm-9">
-                                    <select id="defaultSelect" class="form-select" name="car_parking">
-                                      <option>Select Parking Type</option>
-                                      <option value="Open">Open</option>
-                                      <option value="Covered">Covered</option>
-                                      <option value="Semi-covered">Semi-covered</option>
-                                    </select>
+                                <div class="col-sm-9 form-floating form-floating-outline">
+                                  <select id="defaultSelect" class="form-select" name="car_parking">
+                                    <option>Select Parking Type</option>
+                                    <option value="Open">Open</option>
+                                    <option value="Covered">Covered</option>
+                                    <option value="Semi-covered">Semi-covered</option>
+                                  </select>
+                                  <label for="formtabs-username"> Car Parking</label>
                                 </div>
                               </div>
                             </div>
@@ -236,13 +242,14 @@ if (isset($_POST["submit"])) {
                             <div class="col-md-6">
                               <div class="row">
                                 <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Furnishing </label>
-                                <div class="col-sm-9">
-                                    <select id="defaultSelect" class="form-select" name="furnishing">
-                                      <option>Select Furnishing Type</option>
-                                      <option value="Furnished">Furnished</option>
-                                      <option value="Semi-Furnished">Semi-Furnished</option>
-                                      <option value="Non-Furnished">Non-Furnished</option>
-                                    </select>
+                                <div class="col-sm-9 form-floating form-floating-outline">
+                                  <select id="defaultSelect" class="form-select" name="furnishing">
+                                    <option>Select Furnishing Type</option>
+                                    <option value="Furnished">Furnished</option>
+                                    <option value="Semi-Furnished">Semi-Furnished</option>
+                                    <option value="Non-Furnished">Non-Furnished</option>
+                                  </select>
+                                  <label for="formtabs-username"> Furnishing </label>
                                 </div>
                               </div>
                             </div>
@@ -250,8 +257,9 @@ if (isset($_POST["submit"])) {
                             <div class="col-md-6">
                               <div class="row">
                                 <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Amenities  </label>
-                                <div class="col-sm-9">
-                                    <textarea class="form-control h-px-100" name="amenities" id="exampleFormControlTextarea1" placeholder="Write amenities here..."></textarea>
+                                <div class="col-sm-9 form-floating form-floating-outline">
+                                  <textarea class="form-control h-px-100" name="amenities" id="exampleFormControlTextarea1" placeholder="Write amenities here..."></textarea>
+                                  <label for="formtabs-username"> Amenities  </label>
                                 </div>
                               </div>
                             </div>
@@ -259,8 +267,9 @@ if (isset($_POST["submit"])) {
                             <div class="col-md-6">
                               <div class="row">
                                 <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> USP  </label>
-                                <div class="col-sm-9">
-                                    <textarea class="form-control h-px-100" name="USP" id="exampleFormControlTextarea1" placeholder="Write USP here..."></textarea>
+                                <div class="col-sm-9 form-floating form-floating-outline">
+                                  <textarea class="form-control h-px-100" name="USP" id="exampleFormControlTextarea1" placeholder="Write USP here..."></textarea>
+                                  <label for="formtabs-username"> USP  </label>
                                 </div>
                               </div>
                             </div>
@@ -274,6 +283,7 @@ if (isset($_POST["submit"])) {
                                           <div class="row">
                                               <label class="col-sm-3 col-form-label text-sm-end" for="property-pdf-<?php echo $i; ?>"> PDF <?php echo $i; ?></label>
                                               <div class="col-sm-9">
+                                                  <label for="property-pdf-<?php echo $i; ?>" class="form-label">Property PDF <?php echo $i; ?></label>
                                                   <input type="file" name="property_pdf_<?php echo $i; ?>" id="property-pdf-<?php echo $i; ?>" class="form-control" accept="application/pdf" >
                                               </div>
                                           </div>
@@ -288,6 +298,7 @@ if (isset($_POST["submit"])) {
                                           <div class="row">
                                               <label class="col-sm-3 col-form-label text-sm-end" for="property-video-<?php echo $i; ?>"> Video <?php echo $i; ?></label>
                                               <div class="col-sm-9">
+                                              <label for="property-video-<?php echo $i; ?>" class="form-label">Property Video <?php echo $i; ?></label>
                                                   <input type="file" name="property_video_<?php echo $i; ?>" id="property-video-<?php echo $i; ?>" class="form-control" accept="video/*" >
                                               </div>
                                           </div>

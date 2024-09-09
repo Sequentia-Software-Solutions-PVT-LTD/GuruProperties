@@ -191,7 +191,7 @@
                     <div class="col-xl-12 col-lg-12 col-md-12 ">
                         <!-- About User -->
                         <div class="card mb-6">
-                        <div class="card-body" style="display:flex; justify-content: space-around;">
+                        <div class="card-body demo-vertical-spacing demo-only-element" style="display:flex; justify-content: space-around;">
                             <!-- <small class="card-text text-uppercase text-muted small">About</small> -->
                             <ul class="list-unstyled my-3 py-1" style="">
                               <small class="card-text text-uppercase text-muted small">About</small>
@@ -225,7 +225,7 @@
                             </div>
                             <form action="#" method="post">
                                 <input type="hidden" value="<?php echo $_REQUEST['assign_leads_id']; ?>" name="assign_leads_id">
-                                <div class="card-body" style="padding-top: 0px;">
+                                <div class="card-body demo-vertical-spacing demo-only-element" style="padding-top: 0px;">
 
                                     <!-- new form -->
                                     <div class="row g-4">
@@ -235,7 +235,7 @@
                                           <div class="col-md-12">
                                               <div class="row">
                                                   <label class="col-sm-3 col-form-label text-sm-end mar-top">Select Sales Executive</label>
-                                                  <div class="col-sm-5">
+                                                  <div class="col-sm-5 form-floating form-floating-outline">
                                                       <select id="roleDropdown" name="transfer_employee_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
                                                           <option value="" data-select2-id="18">Select Sales Executive</option>
                                                             <?php
@@ -246,6 +246,7 @@
                                                                   <option value="<?php echo $row['employee_id']?>"><?php echo $row['employee_name']?> (<?php echo $row['location']?>)</option> 
                                                               <?php } ?>
                                                       </select>
+                                                      <label for="roleDropdown">Sales Executive</label>
                                                   </div>
                                               </div>
                                           </div>
@@ -260,7 +261,7 @@
                                               
                                               <div class="row">
                                                   <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Title</label>
-                                                  <div class="col-sm-9">
+                                                  <div class="col-sm-9 form-floating form-floating-outline">
                                                       <select id="propertyDropdown" name="property_name_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
                                                           <option value="">Select Property Name</option>
                                                           <?php
@@ -286,6 +287,7 @@
                                                               }
                                                           ?>
                                                       </select>
+                                                      <label for="propertyDropdown">Property Title</label>
                                                   </div>
                                               </div>
                                           </div>
@@ -293,11 +295,12 @@
                                             <div class="col-md-6">
                                                 <div class="row">
                                                     <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Tower</label>
-                                                    <div class="col-sm-9">
+                                                    <div class="col-sm-9 form-floating form-floating-outline">
                                                         <select id="towerDropdown" name="property_tower_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
                                                             <option value="">Select Property Tower</option>
                                                             <!-- Towers will be loaded here based on the selected property -->
                                                         </select>
+                                                        <label for="towerDropdown">Property Tower</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -305,12 +308,14 @@
                                         <!--  -->
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div class="row">
+                                                <div class="row mt-5">
                                                     <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Variants</label>
-                                                    <div class="col-sm-9">
-                                                        <select id="variantDropdown" name="property_variants[]" class="js-example-basic-single select2 form-select select2-hidden-accessiblee" multiple="multiple" data-allow-clear="true" required>
+                                                    <div class="col-sm-9 form-floating form-floating-outline">
+                                                        <select id="variantDropdown" name="property_variants[]" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
+                                                        <!-- <select id="variantDropdown" name="property_variants[]" class="js-example-basic-single select2 form-select select2-hidden-accessiblee" multiple="multiple" data-allow-clear="true" required> -->
                                                             <option value="">Select Variants</option>
                                                         </select>
+                                                        <label for="variantDropdown">Property Variants</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -342,16 +347,18 @@
                                           <div class="col-md-6">
                                               <div class="row">
                                                   <label class="col-sm-3 col-form-label text-sm-end mar-top"> Visit Date</label>
-                                                  <div class="col-sm-9">
+                                                  <div class="col-sm-9 form-floating form-floating-outline">
                                                     <input class="form-control" type="datetime-local" id="next_date" name="next_date">
+                                                    <label for="next_date">Visit Date</label>
                                                   </div>
                                               </div>
                                           </div>
                                           <div class="col-md-6">
                                               <div class="row">
                                                   <label class="col-sm-3 col-form-label text-sm-end mar-top">Notes</label>
-                                                  <div class="col-sm-9">
+                                                  <div class="col-sm-9 form-floating form-floating-outline">
                                                     <input class="form-control" type="text" placeholder="Enter your notes" id="notes" name="notes">
+                                                    <label for="notes">Notes</label>
                                                   </div>
                                               </div>
                                           </div>

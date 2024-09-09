@@ -36,6 +36,9 @@
             background-color: #008d4c !important;
             border-color: #008d4c !important;
         }
+        .form-floating > label {
+          left: 15px;
+        }
     </style>
     <!--  -->
 

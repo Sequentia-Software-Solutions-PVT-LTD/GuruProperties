@@ -89,7 +89,7 @@
               <h5 class="card-header mar-bot-10">Property Management</h5>
                 <div class="card">
                     <h5 class="card-header"> Add Property </h5>
-                    <div class="card-body">
+                    <div class="card-body demo-vertical-spacing demo-only-element">
               <form action="#" method="post">
                 <div class="row g-4">
                   <div class="col-md-6">

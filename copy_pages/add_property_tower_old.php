@@ -91,7 +91,7 @@
               <h5 class="card-header mar-bot-10">Property Tower Details Form</h5>
                 <div class="card">
                     <h5 class="card-header">Add Property Tower</h5>
-                    <div class="card-body">
+                    <div class="card-body demo-vertical-spacing demo-only-element">
                         <div class="d-flex align-items-center1 justify-content-center h-px-300">
                         <form action="#" method="post">
                           <div class="row g-4">

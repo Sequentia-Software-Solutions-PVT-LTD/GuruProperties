@@ -103,9 +103,9 @@
               <h5 class="card-header mar-bot-10">Property Variants Management</h5>
                 <div class="card">
                     <h5 class="card-header"> Add Property Variants </h5>
-                    <div class="card-body">
+                    <div class="card-body demo-vertical-spacing demo-only-element">
                       <form action="#" method="post">
-                        <div class="row g-4">
+                        <div class="row">
 
                           <!-- <div class="col-md-6">
                             <div class="row">
@@ -146,9 +146,10 @@
                           <!--  -->
 
                           <div class="col-md-6">
-                              <div class="row">
+                              <div class="row align-items-center justify-content-center">
                                   <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Title</label>
-                                  <div class="col-sm-9">
+                                  <!-- <label class="text-sm-end">Property Title</label> -->
+                                  <div class="col-sm-9 form-floating form-floating-outline">
                                       <select id="propertyDropdown" name="property_name_id" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" required>
                                           <option value="">Select Property Name</option>
                                           <?php
@@ -158,18 +159,20 @@
                                               }
                                           ?>
                                       </select>
+                                      <label for="propertyDropdown"> Property Title</label>
                                   </div>
                               </div>
                           </div>
 
                           <div class="col-md-6">
-                              <div class="row">
+                              <div class="row align-items-center justify-content-center">
                                   <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Tower</label>
-                                  <div class="col-sm-9">
+                                  <div class="col-sm-9 form-floating form-floating-outline">
                                       <select id="towerDropdown" name="property_tower_id" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" required>
                                           <option value="">Select Property Tower</option>
                                           <!-- Towers will be loaded here based on the selected property -->
                                       </select>
+                                      <label for="towerDropdown"> Property Title</label>
                                   </div>
                               </div>
                           </div>
@@ -180,9 +183,9 @@
 
                         <h5 class="card-header mt-4">Available Variants</h5>
                         <div id="variants-container" >
-                          <div class="row g-4 variant-item" style="margin-top:10px;">
-                            <div class="col-md-4">
-                              <label>Variants</label>
+                          <div class="row align-items-center justify-content-center g-4 variant-item" style="margin-top:10px;">
+                            <div class="col-md-4 form-floating form-floating-outline">
+                              <!-- <label>Variants</label> -->
                               <!-- <input type="text" name="varients[]" class="form-control" placeholder="Variant" required> -->
                               <select id="formtabs-country"  name="varients[]" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
                                 <option value="" data-select2-id="18">Select Variants</option>
@@ -196,15 +199,21 @@
                                 <option value="4.5BHK">4.5 BHK</option>
                                 <option value="5BHK">5 BHK</option>
                               </select>
+                              
+                              <label for="formtabs-country">Select Variants</label>
                             </div>
 
-                            <div class="col-md-4">
-                              <label>Area in sq ft</label>
-                              <input type="text" name="area[]" class="form-control" placeholder="Area in sq ft" required>
+                            <div class="col-md-4 form-floating form-floating-outline">
+                              <!-- <label>Area in sq ft</label> -->
+                              <input type="text" name="area[]" id="area" class="form-control" placeholder="Area in sq ft" required>
+                              
+                              <label for="area">Area in sq ft</label>
                             </div>
-                            <div class="col-md-4">
-                              <label>Price quoted by builder</label>
-                              <input type="text" name="price[]" class="form-control" placeholder="Price" required>
+                            <div class="col-md-4 form-floating form-floating-outline">
+                              <!-- <label>Price quoted by builder</label> -->
+                              <input type="text" name="price[]" id="price" class="form-control" placeholder="Price" required>
+                              
+                              <label for="price">Price quoted by builder</label>
                             </div>
                             
                           </div>

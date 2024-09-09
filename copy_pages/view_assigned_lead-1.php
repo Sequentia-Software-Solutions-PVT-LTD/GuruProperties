@@ -156,7 +156,7 @@
                     <div class="col-xl-6 col-lg-5 col-md-5 ">
                         <!-- About User -->
                         <div class="card mb-6">
-                        <div class="card-body">
+                        <div class="card-body demo-vertical-spacing demo-only-element">
                             <small class="card-text text-uppercase text-muted small">About</small>
                             <ul class="list-unstyled my-3 py-1" style="">
                                 <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Lead Name:</span> <span><?php echo $row_leads['lead_name']; ?></span></li>
@@ -198,7 +198,7 @@
                                 
                             </div>
                             <form action="#" method="post">
-                                <div class="card-body pt-5x" style="padding-top: 0rem !important;">
+                                <div class="card-body demo-vertical-spacing demo-only-element pt-5x" style="padding-top: 0rem !important;">
                                     <!-- card -->
 
                                     <!-- <label class="form-check-label">Address Type</label> -->

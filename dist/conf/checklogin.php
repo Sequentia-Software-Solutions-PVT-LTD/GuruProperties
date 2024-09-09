@@ -48,7 +48,8 @@
 					"view-employees",
 					"admin_request_leads_by_CE",
 					"admin_request_leads_by_SE",
-					"transfer_lead_by_SE_to_SE"
+					"transfer_lead_by_SE_to_SE",
+					"timeline"
 				);
 
 				$CEAllowedPages = array(

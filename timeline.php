@@ -10,7 +10,7 @@
 
     $i = 1;
     // $leads_id = $_REQUEST['leads_id'];
-    $leads_id = 24;
+    $leads_id = 26;
     
     
     $sqlleads = "select * from leads where id = $leads_id ";
@@ -776,7 +776,7 @@
                             <?php } ?>
                           </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body demo-vertical-spacing demo-only-element">
                           <p class="mb-2">
                             <?php //var_dump($data); ?>
                           </p>
@@ -811,7 +811,7 @@
                       </span>
                       <div class="timeline-event card p-0" data-aos="fade-left">
                         <h6 class="card-header">Survey Report</h6>
-                        <div class="card-body">
+                        <div class="card-body demo-vertical-spacing demo-only-element">
                           <div class="d-flex flex-wrap mb-6">
                             <div>
                               <div class="avatar avatar-xs me-4">

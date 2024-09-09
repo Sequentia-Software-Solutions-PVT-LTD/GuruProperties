@@ -96,7 +96,7 @@
                     <h5 class="card-action-title mb-0"><i class="ri-survey-line ri-24px text-body me-4"></i>Add Property</h5>
                   </div>
                   <form action="#" method="post">
-                    <div class="card-body pt-5x" style="padding-top: 0rem !important;">
+                    <div class="card-body demo-vertical-spacing demo-only-element pt-5x" style="padding-top: 0rem !important;">
                       <div class="row g-4">
                         <!-- Existing fields here -->
                         

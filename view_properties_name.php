@@ -134,7 +134,7 @@
                             <div class="col-md-6">
                               <div class="row">
                                 <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Varient</label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-9 form-floating form-floating-outline">
                                     <select id="formtabs-country"  name="varients" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
                                       <option value="" data-select2-id="18">Select Variants</option>
                                       <option value="1BHK">1 BHK</option>
@@ -147,6 +147,7 @@
                                       <option value="4.5BHK">4.5 BHK</option>
                                       <option value="5BHK">5 BHK</option>
                                     </select>
+                                    <label for="formtabs-country">Variant</label>
                                 </div>
                               </div>
                             </div>
@@ -154,7 +155,7 @@
                             <div class="col-md-6">
                               <div class="row">
                                 <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Location </label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-9 form-floating form-floating-outline">
                                     <select id="roleDropdown" name="location" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
                                         <option value="" data-select2-id="18">Select Location</option>
                                         <?php
@@ -165,6 +166,7 @@
                                                 <option value="<?php echo $row['location']?>"><?php echo $row['location']?></option> 
                                             <?php } ?>
                                     </select>
+                                    <label for="roleDropdown">Location</label>
                                 </div>
                               </div>
                             </div>
@@ -172,7 +174,7 @@
                             <div class="col-md-6">
                               <div class="row">
                                 <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Builder Possession</label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-9 form-floating form-floating-outline">
                                     <select id="roleDropdown" name="builder_possession" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
                                         <option value="" data-select2-id="18">Select Builder Possession</option>
                                         <?php
@@ -183,6 +185,7 @@
                                                 <option value="<?php echo $row['builder_possession']?>"><?php echo $row['builder_possession']?></option> 
                                             <?php } ?>
                                     </select>
+                                    <label for="roleDropdown">Builder Possession</label>
                                 </div>
                               </div>
                             </div>

@@ -101,7 +101,7 @@
               <div class="col-12">
                 <div class="card">
                   <h5 class="card-header">Add Leads</h5>
-                  <div class="card-body">
+                  <div class="card-body demo-vertical-spacing demo-only-element">
                     <form class="form-repeater">
                       <div data-repeater-list="group-a">
                         

@@ -104,7 +104,7 @@
               <h5 class="card-header mar-bot-10">Property Management</h5>
                 <div class="card">
                     <h5 class="card-header"> Edit Property </h5>
-                    <div class="card-body">
+                    <div class="card-body demo-vertical-spacing demo-only-element">
                         <div class="d-flex align-items-center1 justify-content-center h-px-500">
                         <form action="#" method="post">
                         <input type="hidden" value="<?php echo $row_d['id']; ?>" name="id">
@@ -113,8 +113,9 @@
                             <div class="col-md-6">
                               <div class="row">
                                 <label class="col-sm-3 col-form-label text-sm-end mar-top" for="formtabs-username"> Property Title</label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-9 form-floating form-floating-outline">
                                   <input type="text" name="property_title" id="formtabs-username" class="form-control" placeholder="Property Title" value="<?php echo $row_d['property_title']; ?>">
+                                  <label for="formtabs-username">Property Title</label>
                                 </div>
                               </div>
                             </div>
@@ -122,8 +123,9 @@
                             <div class="col-md-6">
                               <div class="row">
                                 <label class="col-sm-3 col-form-label text-sm-end mar-top" for="formtabs-username">Builder Name</label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-9 form-floating form-floating-outline">
                                   <input type="text" name="builder_name" id="formtabs-username" class="form-control" placeholder="Builder Name"  value="<?php echo $row_d['property_title']; ?>">
+                                  <label for="formtabs-username">Builder Name</label>
                                 </div>
                               </div>
                             </div>
@@ -131,16 +133,18 @@
                             <div class="col-md-6">
                               <div class="row">
                                 <label class="col-sm-3 col-form-label text-sm-end mar-top">Possession By Builder</label>
-                                <div class="col-sm-9">
-                                  <input type="text" name="builder_possession" class="form-control" placeholder="Possession By Builder" value="<?php echo $row_d['builder_possession']; ?>">
+                                <div class="col-sm-9 form-floating form-floating-outline">
+                                  <input type="text" id="builder_possession" name="builder_possession" class="form-control" placeholder="Possession By Builder" value="<?php echo $row_d['builder_possession']; ?>">
+                                  <label for="builder_possession">Possession By Builder</label>
                                 </div>
                               </div>
                             </div>
                             <div class="col-md-6">
                               <div class="row">
                                 <label class="col-sm-3 col-form-label text-sm-end mar-top">Possession By RERA </label>
-                                <div class="col-sm-9">
-                                  <input type="text" name="rera_possession" class="form-control" placeholder="Possession By RERA" value="<?php echo $row_d['rera_possession']; ?>">
+                                <div class="col-sm-9 form-floating form-floating-outline">
+                                  <input type="text" id="rera_possession1" name="rera_possession" class="form-control" placeholder="Possession By RERA" value="<?php echo $row_d['rera_possession']; ?>">
+                                  <label for="rera_possession1">Possession By RERA</label>
                                 </div>
                               </div>
                             </div>
@@ -150,8 +154,8 @@
                             <div class="col-md-6">
                               <div class="row">
                                 <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-country">Variants</label>
-                                <div class="col-sm-9">
-                                  <div class="position-relative">
+                                <div class="col-sm-9 form-floating form-floating-outline">
+                                  <!-- <div class="position-relative"> -->
                                     <select id="formtabs-country"  name="varients" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true">
                                       <option value="" data-select2-id="18">Select Variants</option>
                                       <option value="1BHK" <?php if($row_d['varients']=="1BHK"){echo"Selected = 'selected'";}?> >1 BHK</option>
@@ -163,17 +167,19 @@
                                       <option value="4.5BHK" <?php if($row_d['varients']=="4.5BHK"){echo"Selected = 'selected'";}?>>4.5 BHK</option>
                                       <option value="5BHK" <?php if($row_d['varients']=="5BHK"){echo"Selected = 'selected'";}?>>5 BHK</option>
                                     </select>
+                                    <label for="formtabs-country">Variants</label>
                                   <!-- <span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="17" style="width: 383.9px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-formtabs-country-container"><span class="select2-selection__rendered" id="select2-formtabs-country-container" role="textbox" aria-readonly="true"><span class="select2-selection__placeholder">Select value</span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span> -->
-                                </div>
+                                <!-- </div> -->
                                 </div>
                               </div>
                             </div>
                             
                             <div class="col-md-6">
                               <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username">Location</label>
-                                <div class="col-sm-9">
+                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username">country</label>
+                                <div class="col-sm-9 form-floating form-floating-outline">
                                   <input type="text"  name="location"  id="formtabs-username" class="form-control" placeholder="Location"  value="<?php echo $row_d['location']; ?>">
+                                  <label for="formtabs-username">Location</label>
                                 </div>
                               </div>
                             </div>
@@ -181,8 +187,9 @@
                             <div class="col-md-6">
                               <div class="row">
                                 <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username">Area in sq ft</label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-9 form-floating form-floating-outline">
                                   <input type="text"  name="area" id="formtabs-username" class="form-control" placeholder="Ex. 650 sq.ft" value="<?php echo $row_d['area']; ?>">
+                                  <label for="formtabs-username">Area in sq ft</label>
                                 </div>
                               </div>
                             </div>
@@ -191,8 +198,9 @@
                             <div class="col-md-6">
                               <div class="row">
                                 <label class="col-sm-3 col-form-label text-sm-end mar-top" for="formtabs-username">Price quoted by builder</label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-9 form-floating form-floating-outline">
                                   <input type="text"  name="price" id="formtabs-username" class="form-control" placeholder="Price quoted by builder"  value="<?php echo $row_d['price']; ?>">
+                                  <label for="formtabs-username">Price quoted by builder</label>
                                 </div>
                               </div>
                             </div>

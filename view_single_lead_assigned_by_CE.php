@@ -391,7 +391,7 @@
                     <div class="col-xl-12 col-lg-12 col-md-12 ">
                         <!-- About User -->
                         <div class="card mb-6">
-                            <div class="card-body">
+                            <div class="card-body demo-vertical-spacing demo-only-element">
                                 <div style="">
                                 <small class="card-text text-uppercase text-muted small">About</small>
                                 <ul class="list-unstyled my-3 py-1" style="">
@@ -464,7 +464,7 @@
 
                             <form action="#" method="post" enctype="multipart/form-data">
                                 <input type="hidden" value="<?php echo $_REQUEST['assign_leads_sr_id']; ?>" name="assign_leads_sr_id">
-                                <div class="card-body" style="padding-top: 0px;">
+                                <div class="card-body demo-vertical-spacing demo-only-element" style="padding-top: 0px;">
                                     <!--  -->
                                     <div style="display: flex; justify-content: space-between;">
                                     <div style="">
@@ -592,9 +592,10 @@
                                         </div>
                                     </div>
 
-                                    <div class="mb-4">
-                                        <label for="notes" class="form-label">Remark For Today's Visit</label>
+                                    <label for="notes" class="form-label w-100 text-left">Remark For Today's Visit</label>
+                                    <div class="mb-4 form-floating form-floating-outline">
                                         <input class="form-control" type="text" placeholder="Enter your remark here.." id="today_visit_remark" name="today_visit_remark">
+                                        <label for="today_visit_remark">Remark For Today's Visit</label>
                                     </div>
 
                                     <!-- photo Options -->
@@ -654,18 +655,20 @@
                                             </div>
                                         </div> -->
 
-                                    <div class="mb-4" id="selectBox1">
                                         <label for="next_date" class="form-label">Select One Option</label>
+                                    <div class="mb-4 form-floating form-floating-outline" id="selectBox1">
                                         <select id="roleDropdown" name="followup_or_another_property" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
                                             <option value="" data-select2-id="18">Select One</option>
                                             <option value="Follow Up">Follow Up</option>
                                             <option value="Another Property">Another Property</option>
                                         </select>
+                                        <label for="roleDropdown">Select One Option</label>
                                     </div>
                                     
-                                    <div class="mb-4" id="reasonBoxfollowup" style="display:none;">
-                                        <label for="next_date" class="form-label">Next Follow Up Date Time</label>
+                                    <!-- <label for="next_date" class="form-label">Next Follow Up Date Time</label> -->
+                                    <div class="mb-4  form-floating form-floating-outline" id="reasonBoxfollowup" style="display:none;">
                                         <input class="form-control" type="datetime-local" id="next_date_followup" name="next_date_followup" required>
+                                        <label for="next_date_followup">Next Follow Up Date Time</label>
                                     </div>
 
                                     <!-- <div class="mb-4" id="reasonBoxvisit" style="display:none;">
@@ -681,7 +684,7 @@
                                               
                                               <div class="row">
                                                   <label class="col-sm-3 col-form-label text-sm-end mar-top">Property </label>
-                                                  <div class="col-sm-9">
+                                                  <div class="col-sm-9  form-floating form-floating-outline">
                                                       <select id="propertyDropdown" name="property_name_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true">
                                                           <option value="">Select Property Name</option>
                                                           <?php
@@ -691,6 +694,7 @@
                                                               }
                                                           ?>
                                                       </select>
+                                                      <label for="propertyDropdown">Property</label>
                                                   </div>
                                               </div>
                                           </div>
@@ -698,11 +702,12 @@
                                             <div class="col-md-6">
                                                 <div class="row">
                                                     <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Tower</label>
-                                                    <div class="col-sm-9">
+                                                    <div class="col-sm-9 form-floating form-floating-outline">
                                                         <select id="towerDropdown" name="property_tower_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
                                                             <option value="">Select Property Tower</option>
                                                             <!-- Towers will be loaded here based on the selected property -->
                                                         </select>
+                                                        <label for="towerDropdown">Property Tower</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -713,10 +718,12 @@
                                             <div class="col-md-6">
                                                 <div class="row">
                                                     <label class="col-sm-3 col-form-label text-sm-end mar-top"> Variants</label>
-                                                    <div class="col-sm-9">
-                                                        <select id="variantDropdown" name="property_variants[]" class="js-example-basic-single select2 form-select select2-hidden-accessiblee select2-hidden-accessible" multiple="multiple" data-allow-clear="true">
+                                                    <div class="col-sm-9 form-floating form-floating-outline">
+                                                        <!-- <select id="variantDropdown" name="property_variants[]" class="js-example-basic-single select2 form-select select2-hidden-accessiblee select2-hidden-accessible" multiple="multiple" data-allow-clear="true"> -->
+                                                        <select id="variantDropdown" name="property_variants[]" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true">
                                                             <option value="">Select Variants</option>
                                                         </select>
+                                                        <label for="variantDropdown">Variants</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -724,8 +731,9 @@
                                             <div class="col-md-6">
                                               <div class="row">
                                               <label for="next_date" class="col-sm-3 col-form-label text-sm-end mar-top ">Visit Date Time</label>
-                                                <div class="col-sm-9" id="reasonBoxvisit">
+                                                <div class="col-sm-9 form-floating form-floating-outline" id="reasonBoxvisit">
                                                     <input class="form-control" type="datetime-local" id="next_date_visit" name="next_date_visit">
+                                                    <label for="next_date_visit">Variants</label>
                                                 </div>
                                               </div>
                                             </div>

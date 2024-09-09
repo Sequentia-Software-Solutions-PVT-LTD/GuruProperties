@@ -116,116 +116,242 @@
               <h5 class="card-header mar-bot-10">Employee Details Form</h5>
                 <div class="card">
                     <h5 class="card-header">Add Employee</h5>
-                    <div class="card-body">
-                        <div class="d-flex align-items-center1 justify-content-center h-px-260">
-                        <form class="card-body demo-vertical-spacing demo-only-element" action="#" method="post">
+                    <div class="card-body demo-vertical-spacing demo-only-element">
+                        <div class="align-items-center1 justify-content-center h-px-260">
+                        <form class="card-body" action="#" method="post">
                           <div class="row g-4">
                             
                             <div class="col-md-6">
-                                <div class="row align-items-center justify-content-center mb-6">
+                                <!-- <div class="row align-items-center justify-content-center mb-6"> -->
                                     <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-country">Role</label> -->
-                                    <div class="col-sm-12 form-floating form-floating-outline">
+                                    <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
                                         <!-- <div class="position-relative"> -->
+                                        <div class="form-floating form-floating-outline mb-6">
                                             <select id="roleDropdown" name="login_role" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
                                                 <option selected hidden disable>Select Employee Role</option>
                                                 <option value="CUSTOMER EXECUTIVE">Customer Executive</option>
                                                 <option value="SALES EXECUTIVE">Sales Executive</option>
                                             </select>
                                             <label for="roleDropdown">Role</label>
+                                        </div>
                                         <!-- </div> -->
-                                    </div>
-                                </div>
-                            <!-- </div>
+                                    <!-- </div> -->
+                                <!-- </div> -->
+                                <!-- </div>
                            
-                            <div class="col-md-6"> -->
-                              <div class="row align-items-center justify-content-center mb-6">
-                                <div class="col-sm-12 form-floating form-floating-outline">
-                                  <input type="text" name="employee_name" id="formtabs-username" class="form-control" placeholder="john doe" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required />
-                                  <label for="formtabs-username"> Name</label>
-                                </div>
-                              </div>
-                            <!-- </div>
-                            <div class="col-md-6"> -->
-                              <div class="row align-items-center justify-content-center mb-6">
-                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-email">Email</label> -->
-                                <div class="col-sm-12 form-floating form-floating-outline">
-                                  <!-- <div class="input-group input-group-merge"> -->
-                                    <input type="email"  name="email_id"  id="formtabs-email" class="form-control" placeholder="@example.com">
-                                    <label for="formtabs-email"> Email</label>
-                                  <!-- </div> -->
-                                </div>
-                              </div>
-                            <!-- </div>
-                            <div class="col-md-6"> -->
-                              <div class="row align-items-center justify-content-center mb-6">
-                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-phone">Phone No</label> -->
-                                <div class="col-sm-12 form-floating form-floating-outline">
-                                  <input type="text"  name="cell_no"  id="formtabs-phone" class="form-control phone-mask" placeholder="658 799 8941" aria-label="658 799 8941"  maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 10);">
-                                  <label for="formtabs-phone"> Phone No</label>
-                                </div>
-                              </div>
-                            <!-- </div>
-                            <div class="col-md-6" > -->
-                              <div class="row align-items-center justify-content-center mb-6">
-                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username">User ID</label> -->
-                              
-                                <div class="col-sm-12 form-floating form-floating-outline" >
-                                  <!-- <input type="text" name="prefix" id="prefixInput" class="prefix-class form-control" readonly style="width: 42px; border-right: none; border-top-right-radius: 0;border-bottom-right-radius: 0;padding-right: 0;"> -->
-                                  <input type="text"  name="user_id"  id="prefixInput" class="form-control" placeholder="" required>
-                                  <label for="prefixInput">User ID</label>
-                                </div>
-                              </div>
-                            <!-- </div>
-                            <div class="col-md-6"> -->
-                              <div class="row align-items-center justify-content-center  mb-6 form-password-toggle">
-                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-password">Password</label> -->
-                                <div class="col-sm-12 form-floating form-floating-outline">
-                                  <!-- <div class="input-group input-group-merge"> -->
-                                    <input type="password"  name="password"  id="formtabs-password" class="form-control" placeholder="*********" aria-describedby="formtabs-password2" required>
-                                    <!-- <span class="input-group-text cursor-pointer" id="formtabs-password2"><i class="ri-eye-off-line"></i></span> -->
-                                    <label for="formtabs-password">Password</label>
-                                  <!-- </div> -->
-                                </div>
-                              </div>
-                            </div>
-
-                            <!-- <div class="col-md-6">
-                                <div class="row align-items-center justify-content-center">
-                                    <div class="col-sm-12 form-floating form-floating-outline">
-                                        <select id="formtabs-location" name="_employeelocation[]" class="form-select" style="height: 400px;" data-allow-clear="true" data-select2-id="formtabs-location" tabindex="-1" aria-hidden="true" Multiple required>
-                                                <option selected hidden disable>Select Location</option>
-                                                <?php
-                                                    $sqlLocation = "SELECT * FROM location order by name";
-                                                    foreach($pdo->query($sqlLocation) as $LocationList) {
-                                                      echo "<option style='margin-bottom: 8px;' value='".$LocationList["id"]."'>".$LocationList["name"]."</option>";
-                                                    }
-                                                ?>
-                                                
-                                            </select>
-                                            <label for="formtabs-location">Location</label>
+                                <div class="col-md-6"> -->
+                                  <!-- <div class="row align-items-center justify-content-center mb-6"> -->
+                                    <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
+                                    <div class="form-floating form-floating-outline mb-6">
+                                      <input type="text" name="employee_name" id="formtabs-username" class="form-control" placeholder="john doe" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required />
+                                      <label for="formtabs-username"> Name</label>
                                     </div>
-                                </div>
-                            </div> -->
+                                    <!-- </div> -->
+                                  <!-- </div> -->
+                                <!-- </div>
+                                <div class="col-md-6"> -->
+                                  <!-- <div class="row align-items-center justify-content-center mb-6"> -->
+                                    <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-email">Email</label> -->
+                                    <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
+                                      <!-- <div class="input-group input-group-merge"> -->
+                                      <!-- <div class="form-floating form-floating-outline mb-6">
+                                        <input type="email"  name="email_id"  id="formtabs-email" class="form-control" placeholder="@example.com">
+                                        <label for="formtabs-email"> Email</label></div> -->
+                                      <!-- </div> -->
+                                    <!-- </div> -->
+                                  <!-- </div> -->
+                                <!-- </div>
+                                <div class="col-md-6"> -->
+                                  <!-- <div class="row align-items-center justify-content-center mb-6"> -->
+                                    <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-phone">Phone No</label> -->
+                                    <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
+                                    <!-- <div class="form-floating form-floating-outline mb-6">
+                                      <input type="text"  name="cell_no"  id="formtabs-phone" class="form-control phone-mask" placeholder="658 799 8941" aria-label="658 799 8941"  maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 10);">
+                                      <label for="formtabs-phone"> Phone No</label></div> -->
+                                    <!-- </div> -->
+                                  <!-- </div> -->
+                                <!-- </div>
+                                <div class="col-md-6" > -->
+                                  <!-- <div class="row align-items-center justify-content-center mb-6"> -->
+                                    <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username">User ID</label> -->
+                                  
+                                    <!-- <div class="col-sm-12 form-floating form-floating-outline" > -->
+                                      <!-- <input type="text" name="prefix" id="prefixInput" class="prefix-class form-control" readonly style="width: 42px; border-right: none; border-top-right-radius: 0;border-bottom-right-radius: 0;padding-right: 0;"> -->
+                                      <div class="form-floating form-floating-outline mb-6">
+                                      <input type="text"  name="user_id"  id="prefixInput" class="form-control" placeholder="" required>
+                                      <label for="prefixInput">User ID</label></div>
+                                    <!-- </div> -->
+                                  <!-- </div> -->
+                                <!-- </div>
+                                <div class="col-md-6"> -->
+                                  <!-- <div class="row align-items-center justify-content-center  mb-6 form-password-toggle"> -->
+                                    <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-password">Password</label> -->
+                                    <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
+                                      <!-- <div class="input-group input-group-merge"> -->
+                                      <div class="form-floating form-floating-outline mb-6">
+                                        <input type="password"  name="password"  id="formtabs-password" class="form-control" placeholder="*********" aria-describedby="formtabs-password2" required>
+                                        <label for="formtabs-password">Password</label></div>
+                                      <!-- </div> -->
+                                    <!-- </div> -->
+                                  <!-- </div> -->
+                                <!-- </div> -->
+
+                                <!-- <div class="col-md-6">
+                                    <div class="row align-items-center justify-content-center">
+                                        <div class="col-sm-12 form-floating form-floating-outline">
+                                            <select id="formtabs-location" name="_employeelocation[]" class="form-select" style="height: 400px;" data-allow-clear="true" data-select2-id="formtabs-location" tabindex="-1" aria-hidden="true" Multiple required>
+                                                    <option selected hidden disable>Select Location</option>
+                                                    <?php
+                                                        // $sqlLocation = "SELECT * FROM location order by name";
+                                                        // foreach($pdo->query($sqlLocation) as $LocationList) {
+                                                        //   echo "<option style='margin-bottom: 8px;' value='".$LocationList["id"]."'>".$LocationList["name"]."</option>";
+                                                        // }
+                                                    ?>
+                                                    
+                                                </select>
+                                                <label for="formtabs-location">Location</label>
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                                <!-- <div class="col-md-6"> -->
+                                    <!-- <div class="row align-items-center justify-content-center"> -->
+                                        <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
+                                        <!-- <div class="form-floating form-floating-outline mb-6">
+                                                <select id="formtabs-location" name="_employeelocation" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
+                                                    <option value="" data-select2-id="18">Select Property Location Name</option>
+                                                    <?php
+                                                        // $sqlLocation = "SELECT * FROM  location order by name";
+                                                        // foreach ($pdo->query($sqlLocation) as $row) 
+                                                        // { 
+                                                        ?>
+                                                            <option value="<?php //echo $row['id']?>"><?php //echo $row['name']?></option> 
+                                                        <?php //} ?>
+                                                </select>
+                                                <label for="formtabs-location">Location</label>
+                                        </div> -->
+                                        <!-- </div> -->
+                                    <!-- </div> -->
+                                <!-- </div> -->
+
+                            </div>
 
                             <div class="col-md-6">
-                                <div class="row align-items-center justify-content-center">
-                                    <div class="col-sm-12 form-floating form-floating-outline">
-                                        
-                                            <select id="formtabs-location" name="_employeelocation" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
-                                                <option value="" data-select2-id="18">Select Property Location Name</option>
-                                                <?php
-                                                    $sqlLocation = "SELECT * FROM  location order by name";
-                                                    foreach ($pdo->query($sqlLocation) as $row) 
-                                                    { 
-                                                    ?>
-                                                        <option value="<?php echo $row['id']?>"><?php echo $row['name']?></option> 
-                                                    <?php } ?>
+                                <!-- <div class="row align-items-center justify-content-center mb-6"> -->
+                                    <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-country">Role</label> -->
+                                    <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
+                                        <!-- <div class="position-relative"> -->
+                                        <!-- <div class="form-floating form-floating-outline mb-6">
+                                            <select id="roleDropdown" name="login_role" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
+                                                <option selected hidden disable>Select Employee Role</option>
+                                                <option value="CUSTOMER EXECUTIVE">Customer Executive</option>
+                                                <option value="SALES EXECUTIVE">Sales Executive</option>
                                             </select>
-                                            <label for="formtabs-location">Location</label>
+                                            <label for="roleDropdown">Role</label>
+                                        </div> -->
+                                        <!-- </div> -->
+                                    <!-- </div> -->
+                                <!-- </div> -->
+                                <!-- </div>
+                           
+                                <div class="col-md-6"> -->
+                                  <!-- <div class="row align-items-center justify-content-center mb-6"> -->
+                                    <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
+                                    <!-- <div class="form-floating form-floating-outline mb-6">
+                                      <input type="text" name="employee_name" id="formtabs-username" class="form-control" placeholder="john doe" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required />
+                                      <label for="formtabs-username"> Name</label>
+                                    </div> -->
+                                    <!-- </div> -->
+                                  <!-- </div> -->
+                                <!-- </div>
+                                <div class="col-md-6"> -->
+                                  <!-- <div class="row align-items-center justify-content-center mb-6"> -->
+                                    <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-email">Email</label> -->
+                                    <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
+                                      <!-- <div class="input-group input-group-merge"> -->
+                                      <div class="form-floating form-floating-outline mb-6">
+                                        <input type="email"  name="email_id"  id="formtabs-email" class="form-control" placeholder="@example.com">
+                                        <label for="formtabs-email"> Email</label></div>
+                                      <!-- </div> -->
+                                    <!-- </div> -->
+                                  <!-- </div> -->
+                                <!-- </div>
+                                <div class="col-md-6"> -->
+                                  <!-- <div class="row align-items-center justify-content-center mb-6"> -->
+                                    <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-phone">Phone No</label> -->
+                                    <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
+                                    <div class="form-floating form-floating-outline mb-6">
+                                      <input type="text"  name="cell_no"  id="formtabs-phone" class="form-control phone-mask" placeholder="658 799 8941" aria-label="658 799 8941"  maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 10);">
+                                      <label for="formtabs-phone"> Phone No</label></div>
+                                    <!-- </div> -->
+                                  <!-- </div> -->
+                                <!-- </div>
+                                <div class="col-md-6" > -->
+                                  <!-- <div class="row align-items-center justify-content-center mb-6"> -->
+                                    <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username">User ID</label> -->
+                                  
+                                    <!-- <div class="col-sm-12 form-floating form-floating-outline" > -->
+                                      <!-- <input type="text" name="prefix" id="prefixInput" class="prefix-class form-control" readonly style="width: 42px; border-right: none; border-top-right-radius: 0;border-bottom-right-radius: 0;padding-right: 0;"> -->
+                                      <!-- <div class="form-floating form-floating-outline mb-6">
+                                      <input type="text"  name="user_id"  id="prefixInput" class="form-control" placeholder="" required>
+                                      <label for="prefixInput">User ID</label></div> -->
+                                    <!-- </div> -->
+                                  <!-- </div> -->
+                                <!-- </div>
+                                <div class="col-md-6"> -->
+                                  <!-- <div class="row align-items-center justify-content-center  mb-6 form-password-toggle"> -->
+                                    <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-password">Password</label> -->
+                                    <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
+                                      <!-- <div class="input-group input-group-merge"> -->
+                                      <!-- <div class="form-floating form-floating-outline mb-6">
+                                        <input type="password"  name="password"  id="formtabs-password" class="form-control" placeholder="*********" aria-describedby="formtabs-password2" required>
+                                        <label for="formtabs-password">Password</label></div> -->
+                                      <!-- </div> -->
+                                    <!-- </div> -->
+                                  <!-- </div> -->
+                                <!-- </div> -->
+
+                                <!-- <div class="col-md-6">
+                                    <div class="row align-items-center justify-content-center">
+                                        <div class="col-sm-12 form-floating form-floating-outline">
+                                            <select id="formtabs-location" name="_employeelocation[]" class="form-select" style="height: 400px;" data-allow-clear="true" data-select2-id="formtabs-location" tabindex="-1" aria-hidden="true" Multiple required>
+                                                    <option selected hidden disable>Select Location</option>
+                                                    <?php
+                                                        // $sqlLocation = "SELECT * FROM location order by name";
+                                                        // foreach($pdo->query($sqlLocation) as $LocationList) {
+                                                        //   echo "<option style='margin-bottom: 8px;' value='".$LocationList["id"]."'>".$LocationList["name"]."</option>";
+                                                        // }
+                                                    ?>
+                                                    
+                                                </select>
+                                                <label for="formtabs-location">Location</label>
+                                        </div>
                                     </div>
-                                </div>
+                                </div> -->
+
+                                <!-- <div class="col-md-6"> -->
+                                    <!-- <div class="row align-items-center justify-content-center"> -->
+                                        <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
+                                        <div class="form-floating form-floating-outline mb-6">
+                                                <select id="formtabs-location" name="_employeelocation" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
+                                                    <option value="" data-select2-id="18">Select Property Location Name</option>
+                                                    <?php
+                                                        $sqlLocation = "SELECT * FROM  location order by name";
+                                                        foreach ($pdo->query($sqlLocation) as $row) 
+                                                        { 
+                                                        ?>
+                                                            <option value="<?php echo $row['id']?>"><?php echo $row['name']?></option> 
+                                                        <?php } ?>
+                                                </select>
+                                                <label for="formtabs-location">Location</label>
+                                        </div>
+                                        <!-- </div> -->
+                                    <!-- </div> -->
+                                <!-- </div> -->
+
                             </div>
 
+                            
                           </div>
                           <div class="row mt-10">
                             <div class="col-md-12 justify-content-end text-end">
@@ -237,6 +363,7 @@
                               <!-- </div> -->
                             </div>
                           </div>
+
                         </form>
                         </div>
                     </div>

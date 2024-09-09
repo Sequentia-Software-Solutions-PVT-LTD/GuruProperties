@@ -142,7 +142,7 @@ if (isset($_POST["submit"])) {
               <h5 class="card-header mar-bot-10">Property Name Details Form</h5>
                 <div class="card">
                     <h5 class="card-header">Add Property Name</h5>
-                    <div class="card-body">
+                    <div class="card-body demo-vertical-spacing demo-only-element">
                         <div class="d-flex align-items-center1 justify-content-center h-px-900">
                         <form action="#" method="post" enctype="multipart/form-data">
                           <div class="row g-4">

@@ -86,22 +86,25 @@
               <h5 class="card-header mar-bot-10">Add Property Location Form</h5>
                 <div class="card">
                     <h5 class="card-header">Add Property Location </h5>
-                    <div class="card-body">
+                    <div class="card-body demo-vertical-spacing demo-only-element">
                         <div class="d-flexz align-items-center1 justify-content-center1 h-px-200">
                         <form action="#" method="post">
                           <div class="row mt-12">
-                            
-
                             <div class="col-md-12">
-                              <div class="row">
+                            <!-- <div class="row">
                                 <label class="col-sm-2 col-form-label text-sm-end" for="formtabs-username">Property Location</label>
                                 <div class="col-sm-6">
                                   <input type="text" name="location" id="formtabs-username" class="form-control" placeholder="Property Location" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required>
                                 </div>
                               </div>
+                            </div> -->
+                            <div class="form-floating form-floating-outline mb-6">
+                              <input type="text" name="location" id="formtabs-username" class="form-control" placeholder="Property Location" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required />
+                              <label for="formtabs-username"> Property Location</label>
                             </div>
-
                           </div>
+                          </div>
+
                           <div class="row mt-12">
                             <div class="col-md-11">
                               <div class="row justify-content-end" style="float: right;">

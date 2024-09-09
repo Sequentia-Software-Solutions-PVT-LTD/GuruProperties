@@ -160,7 +160,7 @@
                     <div class="col-xl-12 col-lg-12 col-md-12 ">
                         <!-- About User -->
                         <div class="card mb-6">
-                            <div class="card-body" style="">
+                            <div class="card-body demo-vertical-spacing demo-only-element" style="display:flex; justify-content: space-around;">
                                 <!-- <small class="card-text text-uppercase text-muted small">About</small> -->
                                 <div class="header-img">
                                     <img src="header-img.jpg" alt="Header Image">

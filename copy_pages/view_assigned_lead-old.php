@@ -29,12 +29,6 @@
     $q->execute(array());      
     $row_leads = $q->fetch(PDO::FETCH_ASSOC);
 
-    // echo "<pre>";
-    // // print_r($row_emp);
-    // print_r($row_leads);
-    // print_r($row_assign);
-    // exit();
-
   if(isSet($_POST["submit"]))
   { 
     // echo "<pre>";
@@ -43,25 +37,29 @@
 
     $connection_status = $_POST['connection_status'];
     $notes = $_POST['notes'];
-    // $next_date = $_POST['next_date'];
     $lead_type = $_POST['lead_type'];
-    $mark_dead = $_POST['mark_dead'];
-    $dead_reason = $_POST['dead_reason'];
 
     $added_on = date('Y-m-d H-i-s');
-    $status = "Active";
-
-    $assign_leads_id = $_POST['assign_leads_id'];
+    $status = "Followup";
+    $transfer_status = "Available";
 
     $next_date_time = $_POST['next_date'];
     // Split the datetime into date and time
     $date_time_parts = explode('T', $next_date_time);
     $next_date = $date_time_parts[0];  // 2024-08-22
     $next_time = $date_time_parts[1];  // 02:26
+    
+    $assign_leads_id = $_POST['assign_leads_id'];
 
-    // echo "<pre>";
-    // print_r($_POST);
-    // exit();
+    $sqlemp = "SELECT * FROM assign_leads where assign_leads_id= $assign_leads_id ";
+    $q = $pdo->prepare($sqlemp);
+    $q->execute(array());      
+    $row_assign = $q->fetch(PDO::FETCH_ASSOC);
+
+    $leads_id = $row_assign['leads_id'];
+    $admin_id = $row_assign['admin_id'];
+    $employee_id = $row_assign['employee_id'];
+    $employee_name = $row_assign['employee_name'];
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -71,37 +69,57 @@
             `next_date` = ?, 
             `next_time` = ?, 
             `lead_type` = ?, 
-            `mark_dead` = ?, 
-            `dead_reason` = ?, 
             `added_on` = ?, 
             `status` = ? 
             WHERE `assign_leads_id` = ?";
 
     $q = $pdo->prepare($sql);
-    $q->execute(array($connection_status, $notes, $next_date, $next_time, $lead_type, $mark_dead, $dead_reason, $added_on, $status, $assign_leads_id));
-        
-    // $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    // $sql = "INSERT INTO `admin`(`connection_status`, `notes`, `next_date`,`next_time`, `lead_type`, `mark_dead`,`dead_reason`, `added_on`, `status`) VALUES (?,?,?,?,?,?,?,?,?)";
-    // $q = $pdo->prepare($sql);
-    // $q->execute(array($connection_status, $notes, $next_date, $next_time, $lead_type, $mark_dead, $dead_reason, $added_on, $status));
-    
-    // $lastInsertedId = $pdo->lastInsertId();
+    $q->execute(array($connection_status, $notes, $next_date, $next_time, $lead_type, $added_on, $status, $assign_leads_id));
 
-    // echo "<pre>";
-    // print_r($sql);
+    // ----------------------- Insert for new ffollowup ---------------------------------------------------------
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sql = "INSERT INTO `assign_leads`(`leads_id`, `admin_id`, `employee_id`,`employee_name`, `status`, `transfer_status`,`next_date`, `added_on`) VALUES (?,?,?,?,?,?,?,?)";
+    $q = $pdo->prepare($sql);
+    $q->execute(array($leads_id, $admin_id, $employee_id, $employee_name, $status, $transfer_status, $next_date, $added_on));
+     // $lastInsertedId = $pdo->lastInsertId();
+    
+    header('location:assigned_leads.php');
+    
+  }
+
+    //   mark dead button
+  if(isSet($_POST["submit_dead"]))
+  { 
+    $mark_dead = $_POST['mark_dead'];
+    $dead_reason = $_POST['dead_reason'];
+
+    $added_on = date('Y-m-d H-i-s');
+    $status = "Dead";
+    // $transfer_status = "Available";
+    $assign_leads_id = $_POST['assign_leads_id'];
+
+    // print_r($_POST);
     // exit();
 
-    // $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    // $sql = "INSERT INTO employee(admin_id, employee_name, password, added_on, status, login_role,  cell_no, user_id,email_id,designation) values(?,?,?,?, ?, ?, ?, ?, ?,?)";
-    // $q = $pdo->prepare($sql);
-    // $q->execute(array($lastInsertedId, $employee_name, $password, $added_on, 'Active', $login_role,  $cell_no, $user_id,$email_id,'Employee'));
+    // Split the datetime into date and time
+    $date_time_parts = explode('T', $next_date_time);
+    $next_date = $date_time_parts[0];  // 2024-08-22
+    $next_time = $date_time_parts[1];  // 02:26
 
-    // echo "<pre>";
-    // print_r($sql);
-    // exit();
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $sql = "UPDATE `assign_leads` SET 
+            `mark_dead` = ?, 
+            `dead_reason` = ?, 
+            `edited_on` = ?, 
+            `status` = ? 
+            WHERE `assign_leads_id` = ?";
+
+    $q = $pdo->prepare($sql);
+    $q->execute(array($mark_dead, $dead_reason, $added_on, $status, $assign_leads_id));
+
+    header('location:assigned_leads.php');
     
-    header('location:assigned_leads');
-     
   }
 
 ?>
@@ -164,7 +182,7 @@
                     <div class="col-xl-6 col-lg-5 col-md-5 ">
                         <!-- About User -->
                         <div class="card mb-6">
-                        <div class="card-body">
+                        <div class="card-body demo-vertical-spacing demo-only-element">
                             <small class="card-text text-uppercase text-muted small">About</small>
                             <ul class="list-unstyled my-3 py-1" style="">
                                 <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Lead Name:</span> <span><?php echo $row_leads['lead_name']; ?></span></li>
@@ -202,11 +220,15 @@
                         <div class="card mb-6" >
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <h5 class="card-title mb-0"><i class="ri-survey-line ri-24px text-body me-2"></i>Add Follow Up Details</h5>
-                                <!-- <a class="btn btn-secondary" href="transfer_assigned_lead.php?assign_leads_id=<?php echo $row_assign["assign_leads_id"]; ?>">Transfer Lead </a> -->
+                                <a class="btn btn-secondary" href="transfer_assigned_lead.php?assign_leads_id=<?php echo $row_assign["assign_leads_id"]; ?>">Transfer Lead </a>
                             </div>
+                            <div class="col-md-12" style="text-align: right;margin-left: -22px;">
+                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addNewCCModal"> Mark Dead </button>
+                            </div>
+
                             <form action="#" method="post">
-                            <input type="hidden" value="<?php echo $_REQUEST['assign_leads_id']; ?>" name="assign_leads_id">
-                                <div class="card-body" style="padding-top: 0px;">
+                                <input type="hidden" value="<?php echo $_REQUEST['assign_leads_id']; ?>" name="assign_leads_id">
+                                <div class="card-body demo-vertical-spacing demo-only-element" style="padding-top: 0px;">
                                     <div class="mb-4">
                                         <label class="form-label">Connection Status</label>
                                         <div class="d-flex gap-4">
@@ -228,7 +250,7 @@
 
                                     <div class="mb-4">
                                         <label for="next_date" class="form-label">Next Follow Up Date Time</label>
-                                        <input class="form-control" type="datetime-local" id="next_date" name="next_date">
+                                        <input class="form-control" type="datetime-local" id="next_date" name="next_date" required>
                                     </div>
 
                                     <div class="mb-4">
@@ -261,11 +283,11 @@
                                                 <span class="switch-label">Cold</span>
                                             </label>
 
-                                            
+                                           
                                         </div>
                                     </div>
 
-                                    <div class="mb-4">
+                                    <!-- <div class="mb-4">
                                         <div class="form-check form-check-danger">
                                             <input class="form-check-input" type="checkbox" value="yes" id="customCheckDanger" name="mark_dead" onchange="toggleReasonBox()">
                                             <label class="form-check-label" for="customCheckDanger">Mark Dead</label>
@@ -275,20 +297,169 @@
                                     <div id="reasonBox" class="mb-4" style="display:none;">
                                         <label for="dead_reason" class="form-label">Remark For Mark Dead</label>
                                         <textarea class="form-control" id="dead_reason" placeholder="Write comment here..." name="dead_reason"></textarea>
-                                    </div>
+                                    </div> -->
 
                                     <div class="d-flex justify-content-between">
-                                        <button type="submit" name="submit" class="btn btn-success logo-btn">
-                                            Submit
-                                        </button>
-                                        <a class="btn btn-secondary" href="transfer_assigned_lead.php?assign_leads_id=<?php echo $row_assign["assign_leads_id"]; ?>">Transfer Lead </a>
+                                        <a class="btn btn-outline-info" href="view_leads_for_assigned_SE.php?assign_leads_id=<?php echo $row_assign["assign_leads_id"]; ?>">Assign Lead To Sales Executive </a>
+                                        <button type="submit" name="submit" class="btn btn-success logo-btn">Submit</button>
+                                        <!-- <a class="btn btn-secondary" href="transfer_assigned_lead.php?assign_leads_id=<?php echo $row_assign["assign_leads_id"]; ?>">Transfer Lead </a> -->
+                                        
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </div>
+
+                    <!-- Timeline code -->
+                    <div class="col-xl-12 col-lg-12 col-md-12">
+                        <div class="card">
+                            <h5 class="card-header">Timeline For &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info"><?php echo $row_leads['lead_name']; ?></span></h5>
+                            <div class="table-responsive text-nowrap">
+                                <table class="table">
+                                <caption class="ms-6">Timeline For Lead</caption>
+                                <thead>
+                                    <tr>
+                                    <th>#</th>
+                                    <th>Time Line Date</th>
+                                    <th>Status</th>
+                                    <th>Leads Information</th>
+                                    <th>Follow Up Details</th>
+                                    <th>Transfer Details</th>
+                                    <th>Lead Dead</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php 
+                                        if(isset($_REQUEST['assign_leads_id'])) {
+                                            $assign_leads_id = $_REQUEST['assign_leads_id'];
+                                        } else {
+                                            $assign_leads_id = 0;
+                                        }
+
+                                        $i = 1;
+                                        $sql = "SELECT * FROM assign_leads where assign_leads_id=$assign_leads_id";
+                                        $q = $pdo->query($sql);
+                                        foreach ($pdo->query($sql) as $row1) 
+                                        { 
+                                            $assign_leads_id = $row1['assign_leads_id'];
+                                            $leads_id = $row1['leads_id'];
+                                            $admin_id = $row1['admin_id'];
+
+                                            $sqlemp = "select * from employee where admin_id = $admin_id ";
+                                            $q = $pdo->prepare($sqlemp);
+                                            $q->execute(array());      
+                                            $row_emp = $q->fetch(PDO::FETCH_ASSOC);
+
+                                           
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <?php echo $i; ?> 
+                                        </td>
+                                            <td>
+                                                <?php echo date("d-m-Y", strtotime($row1['added_on'])); ?>
+                                            </td>
+                                            <td>
+                                                <?php 
+                                                    if($row1["transfer_status"] == 'Trasnfered') {
+                                                        echo "Trasnfered";
+                                                    }
+                                                    else if(strtolower($row1["mark_dead"]) != 'yes')
+                                                    {
+                                                        echo "Dead";
+                                                    } else {
+                                                        echo "Active";
+                                                    }
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <?php
+                                                    $sqlleads = "select * from leads where id = $leads_id ";
+                                                    $q = $pdo->prepare($sqlleads);
+                                                    $q->execute(array());      
+                                                    $row_leads = $q->fetch(PDO::FETCH_ASSOC);
+                                                ?>
+                                                <?php echo $row_leads["lead_name"]; ?><br>
+                                                <?php echo '- '. $row_leads["phone_no"]; ?><br>
+                                                <?php echo '- '. $row_leads["email_id"]; ?><br>
+                                                <?php echo '-- '. $row_leads["location"]; ?><br>
+                                                <?php echo '-- '. $row_leads["budget_range"]; ?><br>
+                                                <?php echo '-- '. $row_leads["source"]; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $row1["connection_status"]; ?><br>
+                                                <?php echo $row1["notes"]; ?><br>
+                                                <?php echo $row1["lead_type"]; ?><br>
+                                                <?php //echo $row1["remark"]; ?><br>
+                                                
+                                                <?php echo date("d-m-Y", strtotime($row1["next_date"])); ?><br>
+                                                <?php if($row1["next_time"] != "") echo date("H:i", strtotime($row1["next_time"])); ?><br>
+                                            </td>
+                                            <td>
+                                                <?php 
+                                                    if($row1["transfer_status"] != 'Available'); 
+                                                    {
+                                                        echo $row1["transfer_employee_id"].'<br>'.$row1["transfer_reason"]; 
+                                                    }
+                                                ?>
+                                            </td>                                            
+                                            <td>
+                                                <?php 
+                                                    if(strtolower($row1["mark_dead"]) == 'yes'); 
+                                                    {
+                                                        echo $row1["dead_reason"]; 
+                                                    }
+                                                ?>
+                                            </td>
+                                    </tr>
+                                    <?php $i++; } ?>
+                                </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /timeline code -->
                 </div>
                <!-- *************** - /main containt in page write here - **********************  -->
+
+               <script src="assets//js/pages-pricing.js"></script>
+
+              <!-- Add New Credit Card Modal -->
+              <div class="modal fade" id="addNewCCModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+                  <div class="modal-content">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-body p-0">
+                      <div class="text-center mb-6">
+                        <h4 class="mb-2">Mark As Dead</h4>
+                        <p>Do you want to mark a lead as dead? </p>
+                      </div>
+                      <form id="addNewCCForm" class="row g-5"  method="POST" action="#">
+                        <input type="hidden" value="<?php echo $_REQUEST['assign_leads_id']; ?>" name="assign_leads_id">
+                        <div class="col-12">
+                            <div class="mb-4">
+                                <div class="form-check form-check-danger">
+                                    <input class="form-check-input" type="checkbox" value="yes" id="customCheckDanger" name="mark_dead" onchange="toggleReasonBox()">
+                                    <label class="form-check-label" for="customCheckDanger">Mark Dead</label>
+                                </div>
+                            </div>
+
+                            <div id="reasonBox" class="mb-4" style="display:none;">
+                                <label for="dead_reason" class="form-label">Remark For Mark Dead</label>
+                                <textarea class="form-control" id="dead_reason" placeholder="Write a remark here..." name="dead_reason"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-12 d-flex flex-wrap justify-content-center gap-4 row-gap-4">
+                          <button type="submit" name="submit_dead" class="btn btn-primary">Submit</button>
+                          <button type="reset"  class="btn btn-outline-secondary btn-reset" data-bs-dismiss="modal" aria-label="Close"> Cancel </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--/ Add New Credit Card Modal -->
             </div>
             <!-- / Content -->
 

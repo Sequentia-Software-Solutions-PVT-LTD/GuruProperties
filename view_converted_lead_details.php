@@ -194,7 +194,7 @@
                     <div class="col-xl-12 col-lg-12 col-md-12 ">
                         <!-- About User -->
                         <div class="card mb-6">
-                        <div class="card-body" style="display:flex; justify-content: space-around;">
+                        <div class="card-body demo-vertical-spacing demo-only-element" style="display:flex; justify-content: space-around;">
                             <!-- <small class="card-text text-uppercase text-muted small">About</small> -->
                             <ul class="list-unstyled my-3 py-1" style="">
                               <small class="card-text text-uppercase text-muted small">About</small>
@@ -232,7 +232,7 @@
 
                             <!-- <form action="#" method="post" enctype="multipart/form-data"> -->
                                 <input type="hidden" value="<?php echo $_REQUEST['assign_leads_sr_id']; ?>" name="assign_leads_sr_id">
-                                <div class="card-body" style="padding-top: 0px;">
+                                <div class="card-body demo-vertical-spacing demo-only-element" style="padding-top: 0px;">
                                     <!--  -->
                                     <div style="display: flex; justify-content: space-between;">
                                     <div style="">
@@ -313,7 +313,7 @@
                                             <!-- About User -->
                                             <div class="card1 mb-61">
                                                  <small class="card-text text-uppercase text-muted small">Other Details</small>
-                                                <div class="card-body" style="display:flex; justify-content: space-around;">
+                                                <div class="card-body demo-vertical-spacing demo-only-element" style="display:flex; justify-content: space-around;">
                                                     <!-- <small class="card-text text-uppercase text-muted small">Other Details</small> -->
                                                     <ul class="list-unstyled my-3 py-1" style="">
                                                         <!-- <small class="card-text text-uppercase text-muted small">Values</small> -->

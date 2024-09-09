@@ -187,7 +187,7 @@
                     <div class="col-xl-6 col-lg-5 col-md-5 ">
                         <!-- About User -->
                         <div class="card mb-6">
-                        <div class="card-body">
+                        <div class="card-body demo-vertical-spacing demo-only-element">
                             <small class="card-text text-uppercase text-muted small">About</small>
                             <ul class="list-unstyled my-3 py-1" style="">
                                 <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Lead Name:</span> <span><?php echo $row_leads['lead_name']; ?></span></li>
@@ -242,7 +242,7 @@
 
                             <form action="#" method="post">
                                 <input type="hidden" value="<?php echo $_REQUEST['assign_leads_id']; ?>" name="assign_leads_id">
-                                <div class="card-body" style="padding-top: 0px;">
+                                <div class="card-body demo-vertical-spacing demo-only-element" style="padding-top: 0px;">
                                     <div class="mb-4">
                                         <label class="form-label">Connection Status</label>
                                         <div class="d-flex gap-4">
@@ -257,14 +257,16 @@
                                         </div>
                                     </div>
 
-                                    <div class="mb-4">
-                                        <label for="notes" class="form-label">Notes</label>
+                                    <label for="notes" class="form-label w-100 text-center">Notes</label>
+                                    <div class="mb-4  mt-2 form-floating form-floating-outline">
                                         <input class="form-control" type="text" placeholder="Enter your notes" id="notes" name="notes">
+                                        <label for="notes">Notes</label>
                                     </div>
 
-                                    <div class="mb-4">
-                                        <label for="next_date" class="form-label">Next Follow Up Date Time</label>
+                                    <label for="next_date" class="form-label w-100 text-center">Next Follow Up Date Time</label>
+                                    <div class="mb-4 form-floating form-floating-outline">
                                         <input class="form-control" type="datetime-local" id="next_date" name="next_date" required>
+                                        <label for="next_date">Next Follow Up Date Time</label>
                                     </div>
 
                                     <div class="mb-4">

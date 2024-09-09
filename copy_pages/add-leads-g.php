@@ -98,7 +98,7 @@
               <h5 class="card-header mar-bot-10">Leads Management</h5>
                 <div class="card">
                     <h5 class="card-header"> Add Leads </h5>
-                    <div class="card-body">
+                    <div class="card-body demo-vertical-spacing demo-only-element">
                         <div class="d-flex align-items-center1 justify-content-center h-px-500">
                         <form action="#" method="post">
                           <div class="row g-4">
