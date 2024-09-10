@@ -64,6 +64,8 @@
     $Available = 'Available';
     $Admin_Pending = 'Admin Pending';
 
+    $latitude = $_POST['latitude'];
+    $longitude = $_POST['longitude'];
     //------------------------- Update query for last assigned employee lead changes ----------------------------------------- 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -73,11 +75,13 @@
           `transfer_reason` = ?,
           `transfer_employee_id` = ?,
           `transfer_employee_type` = ?,
-          `status` = ?
+          `status` = ?,
+          `latitude` = ?, 
+          `longitude` = ?
           WHERE `assign_leads_id` = ?";
 
     $q = $pdo->prepare($sql);
-    $q->execute(array($added_on, $Transferred, $transfer_reason, $transfer_employee_id, $transfer_employee_type, $Active, $assign_leads_id));
+    $q->execute(array($added_on, $Transferred, $transfer_reason, $transfer_employee_id, $transfer_employee_type, $Active, $assign_leads_id, $latitude, $longitude));
 
     // ---------------------- Insert query for trasfered employee-------------------------------------------------------------------------------------------
     
@@ -215,7 +219,31 @@
                                         <textarea class="form-control" id="transfer_reason" placeholder="Write Reason here..." name="transfer_reason" style="height: 100px;"></textarea>
                                         <label for="transfer_reason">Reason For Transfer</label>
                                     </div>
-                                    
+                                    <div class="row justify-content-center">
+                                      <div class="col-sm-12 text-center">
+                                          <div class="form-floating form-floating-outline">
+                                              <input class="form-control" type="hidden" id="lat" readonly name="latitude">
+                                              <span>Current Latitude:- </span>
+                                              <span class="text-danger" id="latitude"></span> <br>
+                                              
+                                              <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                              <!-- <label for="latitude">Latitude</label> -->
+                                          <!-- </div>
+                                      </div>
+                                      <div class="col-sm-3">
+                                          <div class="form-floating form-floating-outline"> -->
+                                              <input class="form-control" type="hidden" id="long" readonly name="longitude">
+                                              <span>Current Longitude:- </span>
+                                              <span class="text-danger" id="longitude"></span><br>
+                                              <!-- <label for="longitude">Longitude</label> -->
+                                              <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+
+                                              <span>Accuracy:- </span>
+                                              <span class="text-danger" id="accuracy"></span>
+                                              
+
+                                          </div>
+                                      </div>
 
                                     <div class="d-flex justify-content-between">
                                         <button type="submit" name="submit" class="btn btn-success logo-btn">
@@ -294,5 +322,42 @@ function toggleReasonBox() {
 toggleReasonBox();
 </script>
     
+<script type="text/javascript">
+        initGeolocation();
+        function prepareForm(event) {
+                event.preventDefault();
+                // Do something you need
+                initGeolocation();
+                document.getElementById("myForm").requestSubmit();
+        }
+        function initGeolocation()
+        {
+            window.setInterval(function(){
+                navigator.geolocation.getCurrentPosition( success, fail );
+            }, 1000);
+        }
+
+        function success(position)
+        {   
+                document.getElementById('long').value = position.coords.longitude;
+                document.getElementById('longitude').innerHTML = position.coords.longitude;
+                document.getElementById('lat').value = position.coords.latitude;
+                document.getElementById('latitude').innerHTML = position.coords.latitude;
+                document.getElementById('accuracy').innerHTML = position.coords.accuracy;
+                document.getElementById('submit1').disabled  = false;
+        }
+
+        function fail()
+        {
+            alert("Please enable your location and refresh the page, to submit this form.");
+            // alert("Sorry, your browser does not support geolocation services.");
+            document.getElementById('long').value = "00.0000000";
+            document.getElementById('lat').value = "00.0000000";
+            document.getElementById('submit1').disabled  = true;
+        }
+        
+
+</script>    
+
   </body>
 </html>
