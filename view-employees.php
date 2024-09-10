@@ -101,17 +101,18 @@
                             <th>#</th>
                             <th>Employee Name</th>
                             <th>Property Location</th>
-                            <th>Cell No</th>
+                            <th>Phone No</th>
                             <th>Email ID</th>
-                            <th>Login ID</th>
+                            <!-- <th>Login ID</th> -->
                             <th>Role</th>
+                            <th>Status</th>
                             <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php 
                                 $i = 1;
-                                $sql = "SELECT * FROM employee where status='Active'";
+                                $sql = "SELECT * FROM employee ";
                                 // $sql = "SELECT * FROM admin where login_role = 'ASSISTANT' OR login_role = 'RECEPTIONIST' OR login_role = 'TECHNICIAN' ";
                                 $q = $pdo->query($sql);
                                 foreach ($pdo->query($sql) as $row) 
@@ -119,36 +120,71 @@
                             ?>
                             <tr>
                                 <td><span class="fw-medium"><?php echo $i; ?></span></td>
-                                    <!-- <td><?php echo $i; ?></td> -->
+
                                 <td>
+                                      <div class="d-flex justify-content-start align-items-center user-name">
+                                        <div class="avatar-wrapper">
+                                          <div class="avatar avatar-sm me-3">
+                                            <!-- <img src="assets/img/avatars/2.png" alt="Avatar" class="rounded-circle"> -->
+                                            <img src="user-img1.jpg" alt="Avatar" class="rounded-circle">
+                                          </div>
+                                        </div>
+                                        <div class="d-flex flex-column">
+                                          <span class="name text-truncate h6 mb-0"><?php echo $row["employee_name"]; ?></span>
+                                          <small class="user_name text-truncate"><?php echo $row["user_id"]; ?></small>
+                                        </div>
+                                      </div>
+                                    </td>
+                                <!-- <td>
                                     <i class="ri-user-line ri-22px text-primary me-4"></i>
-                                    <?php echo $row["employee_name"]; ?>
-                                </td>
+                                    <?php //echo $row["employee_name"]; ?>
+                                </td> -->
                                 <td><?php echo $row["location"]; ?></td>
                                 <td><?php echo $row["cell_no"]; ?></td>
                                 <td><?php echo $row["email_id"]; ?></td>
-                                <td><?php echo $row["user_id"]; ?></td>
-                                <td>
+                                <!-- <td><?php echo $row["user_id"]; ?></td> -->
+                                <!-- <td>
                                     <?php
                                           if($row["login_role"] == "CUSTOMER EXECUTIVE"){
-                                            echo '<button type="button" class="btn btn-warning text-nowrap d-inline-flex position-relative me-4">';
+                                            echo '<button type="button" class="badge rounded-pill bg-label-primary me-1" style="font-size: 12px;border: none !important;">';
                                             echo $row["login_role"]; 
                                             echo '<span class="position-absolute top-0 start-100 translate-middle badge badge-center bg-label-warning border border-warning"></span></button>';
                                           } 
                                           if($row["login_role"] == "SALES EXECUTIVE") {
-                                            echo '<button type="button" class="btn btn-label-primary text-nowrap d-inline-flex position-relative me-4">';
+                                            echo '<button type="button" class="badge rounded-pill bg-label-info me-1" style="font-size: 12px;border: none !important;;">';
                                             echo $row["login_role"]; 
                                             echo '<span class="position-absolute top-0 start-100 translate-middle badge badge-center bg-label-warning border border-warning"></span></button>';
-                                          }
-                                          if($row["login_role"] == "LEAD GENERATOR") {
-                                            echo '<button type="button" class="btn btn-label-dark text-nowrap d-inline-flex position-relative me-4">';
-                                            echo $row["login_role"]; 
-                                            echo '<span class="position-absolute top-0 start-100 translate-middle badge badge-center bg-label-warning border border-warning"></span></button>';
-                                          }
+                                          }?>
+                                </td> -->
 
-                                          
+                                <td>
+                                  <?php if($row["login_role"] == "CUSTOMER EXECUTIVE"){ ?>
+                                      <span class="d-flex align-items-center gap-2 text-heading" style=""><i class="ri-user-voice-line ri-22px text-primary"></i><?php echo $row["login_role"] ?></span>
+                                  <?php } 
+                                  if($row["login_role"] == "SALES EXECUTIVE") { ?>
+                                    <span class="d-flex align-items-center gap-2 text-heading" style=""><i class="ri-map-pin-user-line ri-22px text-success" style="color:#26c6f9  !important;"></i><?php echo $row["login_role"] ?></span>
+                                   <?php }?>
+                                </td>
+
+                                <td>
+                                    <?php
+                                          if($row["status"] == "Active"){
+                                            echo '<button type="button" class="badge rounded-pill bg-label-success me-1" style="font-size: 12px;border: none !important;">';
+                                            echo $row["status"]; 
+                                            echo '<span class="position-absolute top-0 start-100 translate-middle badge badge-center bg-label-warning border border-warning"></span></button>';
+                                          } 
+                                          if($row["status"] == "Suspended") {
+                                            echo '<button type="button" class="badge rounded-pill bg-label-danger me-1" style="font-size: 12px;border: none !important;;">';
+                                            echo $row["status"]; 
+                                            echo '<span class="position-absolute top-0 start-100 translate-middle badge badge-center bg-label-warning border border-warning"></span></button>';
+                                          }
                                     ?>
                                 </td>
+
+
+                                <!-- <td style="color: <?php echo ($row["status"] == 'Active') ? 'green' : (($row["status"] == 'Suspended') ? 'red' : 'black'); ?>">
+                                    <?php echo $row["status"]; ?>
+                                </td> -->
                                 <!-- <td>
                                   <a type="button" class="btn btn-success btn-xs glyphicon glyphicon-eye-open" href="view_assistant?assistant_id=<?php //echo $row["assistant_id"]; ?>"></a>
                                   <?php if ($row["status"] == 'Active'){ ?>
@@ -156,17 +192,28 @@
                                   <a type="button" class="open-myModal btn btn-danger btn-xs glyphicon glyphicon-trash" data-toggle="modal" data-target=".bs-modal-sm" id="open" data-admin_id="<?php echo $row["admin_id"]; ?>"></a>
                                   <?php } ?>
                                 </td> -->
-                                    <td>
-                                        <div class="dropdown">
+                                <?php if ($row["status"] == 'Active'){ ?>
+                                    <td style="display:flex; padding:23px;">
+                                       
+                                        <!-- <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ri-more-2-line"></i></button>
-                                            <div class="dropdown-menu">
+                                            <div class="dropdown-menu"> -->
                                                 <!-- <a class="dropdown-item waves-effect" href="javascript:void(0);"><i class="ri-eye-line me-1"></i> View</a> -->
-                                                <a class="dropdown-item waves-effect" href="edit_employee?employee_id=<?php echo $row["employee_id"]; ?>"><i class="ri-pencil-line me-1"></i> Edit</a>
+                                                <a class="dropdown-item waves-effect" href="edit_employee?employee_id=<?php echo $row["employee_id"]; ?>"><i class="ri-pencil-line me-1" style="color:orange;"></i> </a>
                                                 <!-- <a class="dropdown-item waves-effect" href="javascript:void(0);"><i class="ri-delete-bin-7-line me-1"></i> Delete</a> -->
-                                                <a class="dropdown-item waves-effect open-myModal" data-bs-toggle="modal" data-bs-target="#enableOTP" data-employee_id="<?php echo $row["employee_id"]; ?>"><i class="ri-delete-bin-7-line me-1"></i> Delete</a>
-                                            </div>
-                                        </div>
+                                                <a class="dropdown-item waves-effect open-myModal" data-bs-toggle="modal" data-bs-target="#enableOTP" data-employee_id="<?php echo $row["employee_id"]; ?>"><i class="ri-delete-bin-7-line me-1" style="color:red;"></i> </a>
+                                            <!-- </div>
+                                        </div> -->
+                                       
                                     </td>
+                                    <?php } else { ?>
+                                      <td style="display:flex; padding:23px;">
+                                      <a href="javascript:void(0);" class="dropdown-item waves-effect"><i class="ri-pencil-line me-1" style="color:gray;cursor:not-allowed;"></i> </a>
+                                                <!-- <a class="dropdown-item waves-effect" href="javascript:void(0);"><i class="ri-delete-bin-7-line me-1"></i> Delete</a> -->
+                                                <a href="javascript:void(0);" class="dropdown-item waves-effect open-myModal"><i class="ri-delete-bin-7-line me-1" style="color:gray;cursor:not-allowed;"></i> </a>
+                                      </td>
+
+                                    <?php } ?>
                             </tr>
                             <?php $i++; } ?>
                         </tbody>

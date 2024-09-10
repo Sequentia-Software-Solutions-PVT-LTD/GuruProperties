@@ -94,14 +94,14 @@
               </ul>
             </li>
             <!--  -->
-            <li class="menu-header mt-5">
+            <!-- <li class="menu-header mt-5">
               <span class="menu-header-text" data-i18nn="Apps & Pages">Variants</span>
-            </li>
+            </li> -->
 
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons ri-bill-line"></i>
-                <div data-i18nn="#">Property Variants</div>
+                <div data-i18nn="#"> Variants</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">

@@ -11,8 +11,8 @@ date_default_timezone_set('Asia/Kolkata'); // Set to your timezone
     // exit();
 
  // ------------- add atendence ----------------------
- if(isset($_POST['logout']))
- {
+//  if(isset($_POST['logout']))
+//  {
     $login_id = $_SESSION['login_id'];
     $login_name = $_SESSION['login_name'];
     $login_role = $_SESSION['login_role'];
@@ -20,20 +20,27 @@ date_default_timezone_set('Asia/Kolkata'); // Set to your timezone
     $date = date('Y-m-d');
     $time = date('H:i:s');
     $added_on = date('Y-m-d H-i-s'); 
-    $status = "Logged OUT";
+    $status = "Logged Out";
     // $status="Logged In";
 
     //  print_r($_SESSION);
     //  exit();
-    
-    $latitude = $_POST['latitude_signout'];
-    $longitude = $_POST['longitude_signout'];
-    $accuracy = $_POST['accuracy_signout'];
 
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "INSERT INTO `attendance`(`login_id`,`login_name`,`date`,`time`,`status`, `added_on`, `latitude`, `longitude`, `accuracy`) VALUES (?,?,?,?,?,?,?,?,?)";
-    $q = $pdo->prepare($sql);
-    $q->execute(array($login_user_id, $login_name, $date, $time, $status, $added_on, $latitude, $longitude, $accuracy));
+    if($login_role == 'CUSTOMER EXECUTIVE' || $login_role == 'SALES EXECUTIVE')
+    {
+    
+        $latitude = $_POST['latitude_signout'];
+        $longitude = $_POST['longitude_signout'];
+        $accuracy = $_POST['accuracy_signout'];
+
+    
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sql = "INSERT INTO `attendance`(`login_id`,`login_name`,`date`,`time`,`status`, `added_on`, `latitude`, `longitude`, `accuracy`) VALUES (?,?,?,?,?,?,?,?,?)";
+        $q = $pdo->prepare($sql);
+        $q->execute(array($login_user_id, $login_name, $date, $time, $status, $added_on, $latitude, $longitude, $accuracy));
+    }
+
+    
  //}
    
 // ------------- add atendence ----------------------
@@ -57,7 +64,7 @@ session_destroy();
 
 header("location: ../../login" );
 
-}
+// }
 
 ?>
 

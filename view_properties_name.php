@@ -11,6 +11,9 @@
     $from_date_submit = "";
     $to_date_submit = "";
     $sr_id_submit = "";
+    $varients = "";
+    $location = "";
+    $builder_possession = "";
 
 		$sql_query = "SELECT * from property_name WHERE status='abc'";
     // $sql_query = "SELECT * FROM property_name ";
@@ -18,6 +21,7 @@
     $pdata->execute();
     $results = $pdata->fetchAll(PDO::FETCH_ASSOC);
 
+    
 		if(isSet($_POST["submit"])) 
 		{
         // echo "<pre>";
@@ -25,6 +29,8 @@
         // exit();
 
 		    $varients = $_POST["varients"];
+  
+
         $location = $_POST["location"];
         $builder_possession = $_POST['builder_possession'];
 
@@ -281,6 +287,9 @@
                       </p> -->
                       <form id="enableOTPForm" class="row g-5"  action="export_pdf_property_details.php" method="POST">
                         <input type="hidden" name="employee_id" id="employee_id"  value=""/>
+                        <input type="text" name="hidden_variants" id="hidden_variants"  value="<?php echo $varients; ?>"/>
+                        <input type="text" name="hidden_location" id="hidden_location"  value="<?php echo $location; ?>"/>
+                        <input type="text" name="hidden_builder_possession" id="hidden_builder_possession"  value="<?php echo $builder_possession; ?>"/>
 
                           <div id="reasonBox" class="mb-4" style="">
                               <label for="client_name" class="form-label">Client Name</label>

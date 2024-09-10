@@ -46,48 +46,8 @@
         $admin_id = $_SESSION['login_user_id'];
         $login_name = $_SESSION['login_name'];
         $login_role = $_SESSION['login_role'];
-        $added_on = date('Y-m-d');
-        
-        // ------------------------- Performance Calulation ---------------------------------
-        // Correct query with placeholders
-        $sqlsr = "SELECT COUNT(assign_leads_id) as total_count 
-                  FROM assign_leads 
-                  WHERE admin_id = $admin_id 
-                  AND next_date = '$added_on' 
-                  AND connection_status = 'connected'";
-        $q = $pdo->prepare($sqlsr);
-        $q->execute(array());
-        $row_assign1 = $q->fetch(PDO::FETCH_ASSOC);
-
-        $count_assign_leads = $row_assign1['total_count'];
-        // --------------------------------------------------------
-        if($count_assign_leads > 50) {
-          $percentage = "100%";
-          $performance = "Excellent";
-          $img = "alertsuccess.png";
-      } 
-      elseif($count_assign_leads >= 37 && $count_assign_leads <= 50) {
-          $percentage = "75%";
-          $performance = "Good";
-          $img = "alertinfo.png";
-      } 
-      elseif($count_assign_leads < 37) {
-          $percentage = "Below 75%";
-          $performance = "Poor";
-          $img = "alertwarning.png";
-      } 
-      else {
-          $percentage = "0%";
-          $performance = "Bad";
-          $img = "alertdelete.png";
-      }
-
-        // print_r($sqlsr);
         // print_r($_SESSION);
-        // print_r($count_assign_leads);
         // exit();
-        
-        // ------------------------- /Performance Calulation ---------------------------------
 
     ?>
           <nav
@@ -190,20 +150,19 @@
           <!-- Logout Confirmation Modal -->
           <div class="modal fade" id="logoutModal" tabindex="-1" aria-hidden="true">
                   <div class="modal-dialog modal-simple modal-dialog-centered">
-                      <div class="modal-content" style="padding: 10px 0px; width:70%; margin:0 auto;">
+                      <div class="modal-content">
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           <div class="modal-body text-center">
-                              <img src="<?php echo $img; ?>" alt="Success" class="" style="width:100px;">
-
-                              <h4 class="mb-2"> Today's score is <b> <?php echo $percentage; ?> </b> </h4>
-                              <p>You have made <b> <?php echo $count_assign_leads; ?> </b>calls today.</p>
-                              <p> Your today's performance was <b><?php echo $performance; ?> </b></p>
-                              
+                              <h4 class="mb-2">Logout Confirmation</h4>
+                              <p>Do you really want to log out now?</p>
                               <div class="d-flex justify-content-center gap-3">
-                                  <form action="dist/conf/signout.php" method="POST">
+                                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                                  <!-- Button to redirect to logout -->
+                                   <form action="dist/conf/signout.php" method="POST">
                                     <input type="hidden" id="long_signout" name="longitude_signout" />
                                     <input type="hidden" id="lat_signout" name="latitude_signout" />
                                     <input type="hidden" id="accuracy_signout" name="accuracy_signout" />
-                                    <button type="submit" name="logout" id="logout_button" class="btn btn-info">Submit Today's Report & Logout</button>
+                                     <button type="submit" name="logout" id="logout_button" class="btn btn-danger">Logout</button>
                                    </form>
                               </div>
                           </div>
@@ -212,24 +171,19 @@
               </div>
               <!-- /Logout Confirmation Modal -->
 
-              <!-- <div class="swal2-container swal2-center swal2-backdrop-show" style="overflow-y: auto;"><div aria-labelledby="swal2-title" aria-describedby="swal2-html-container" class="swal2-popup swal2-modal swal2-icon-success swal2-show" tabindex="-1" role="dialog" aria-live="assertive" aria-modal="true" style="display: grid;"><button type="button" class="swal2-close" aria-label="Close this dialog" style="display: none;">×</button><ul class="swal2-progress-steps" style="display: none;"></ul><div class="swal2-icon swal2-success swal2-icon-show" style="display: flex;"><div class="swal2-success-circular-line-left" style="background-color: rgb(255, 255, 255);"></div>
-                <span class="swal2-success-line-tip"></span> <span class="swal2-success-line-long"></span>
-                <div class="swal2-success-ring"></div> <div class="swal2-success-fix" style="background-color: rgb(255, 255, 255);"></div>
-                <div class="swal2-success-circular-line-right" style="background-color: rgb(255, 255, 255);"></div>
-              </div>
-              <img class="swal2-image" style="display: none;">
-              <h2 class="swal2-title" id="swal2-title" style="display: block;">Good job!</h2>
-              <div class="swal2-html-container" id="swal2-html-container" style="display: block;">You clicked the button!</div>
-              <input id="swal2-input" class="swal2-input" style="display: none;">
-              <input type="file" class="swal2-file" style="display: none;">
-              <div class="swal2-range" style="display: none;">
-                <input type="range"><output></output>
-              </div><select id="swal2-select" class="swal2-select" style="display: none;"></select><div class="swal2-radio" style="display: none;"></div><label class="swal2-checkbox" style="display: none;"><input type="checkbox" id="swal2-checkbox"><span class="swal2-label"></span></label><textarea id="swal2-textarea" class="swal2-textarea" style="display: none;"></textarea><div class="swal2-validation-message" id="swal2-validation-message" style="display: none;"></div><div class="swal2-actions" style="display: flex;"><div class="swal2-loader"></div><button type="button" class="swal2-confirm btn btn-primary waves-effect waves-light" aria-label="" style="display: inline-block;">OK</button><button type="button" class="swal2-deny" aria-label="" style="display: none;">No</button><button type="button" class="swal2-cancel" aria-label="" style="display: none;">Cancel</button></div><div class="swal2-footer" style="display: none;"></div><div class="swal2-timer-progress-bar-container"><div class="swal2-timer-progress-bar" style="display: none;"></div></div></div></div> -->
+          <!-- <script>
+            $(document).on("click", ".open-myModal", function (e) {
+                e.preventDefault();  // Prevent the default action
 
-          
+                var employee_id = $(this).data('employee_id');
+                $("#employee_id").val(employee_id);  // Pass employee ID to the hidden input in the modal
+
+                // Show the modal
+                $("#enableOTP").modal('show');
+            });
+          </script> -->
 
           <!-- / Navbar -->
-
 
           <script type="text/javascript">
                 initGeolocation_signout();

@@ -18,10 +18,36 @@
     $property_name_id = $_POST['employee_id'];
     $client_name = $_POST['client_name'];
 
-    $sql_query = "SELECT * from property_name WHERE property_name_id = $property_name_id";
-    // $pdata = $pdo->prepare($sql_query);
-    // $pdata->execute();
-    // $results = $pdata->fetch(PDO::FETCH_ASSOC);
+    $varients = $_POST["hidden_variants"];
+    $location = $_POST["hidden_location"];
+    $builder_possession = $_POST['hidden_builder_possession'];
+
+    // $sql_query = "SELECT * from property_name WHERE property_name_id = $property_name_id";
+
+   // // $pdata = $pdo->prepare($sql_query);
+    // // $pdata->execute();
+    // // $results = $pdata->fetch(PDO::FETCH_ASSOC);
+
+    $sql_query = "SELECT * FROM property_name pn
+    JOIN property_tower pt ON pn.property_name_id = pt.property_name_id
+    JOIN property_varients pv ON pn.property_name_id = pv.property_name_id
+    WHERE pv.varients = :varients 
+    AND pt.builder_possession = :builder_possession 
+    AND pn.location = :location 
+    ORDER BY pn.property_title";
+
+    // Prepare and execute the query
+    // $stmt = $pdo->prepare($sql_query);
+    // $stmt->execute([
+    // ':varients' => $varients,
+    // ':builder_possession' => $builder_possession,
+    // ':location' => $location
+    // ]);
+
+    // // Fetch the results (if needed)
+    // $results = $stmt->fetch(PDO::FETCH_ASSOC);
+
+
 
     // echo "<pre>";
     // print_r($results);
@@ -139,9 +165,20 @@
               <!-- <hr class="my-12"> -->
                 <div class="row">
                     <?php 
-                        $pdata = $pdo->prepare($sql_query);
-                        $pdata->execute();
-                        $row_leads = $pdata->fetch(PDO::FETCH_ASSOC);
+
+                        $stmt = $pdo->prepare($sql_query);
+                        $stmt->execute([
+                        ':varients' => $varients,
+                        ':builder_possession' => $builder_possession,
+                        ':location' => $location
+                        ]);
+
+                        // Fetch the results (if needed)
+                        $row_leads = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                        // $pdata = $pdo->prepare($sql_query);
+                        // $pdata->execute();
+                        // $row_leads = $pdata->fetch(PDO::FETCH_ASSOC);
 
                         $admin_id = $_SESSION['login_user_id'];
                         $sql_admin = "SELECT * from employee WHERE admin_id = $admin_id";
@@ -150,7 +187,6 @@
                         $results_admin = $pdata->fetch(PDO::FETCH_ASSOC);
 
                         $contact = $results_admin['cell_no'];
-
                         
                         // echo "<pre>";
                         // print_R($row_leads);
@@ -160,7 +196,7 @@
                     <div class="col-xl-12 col-lg-12 col-md-12 ">
                         <!-- About User -->
                         <div class="card mb-6">
-                            <div class="card-body demo-vertical-spacing demo-only-element" style="display:flex; justify-content: space-around;">
+                            <div class="card-body demo-vertical-spacing demo-only-element" style="">
                                 <!-- <small class="card-text text-uppercase text-muted small">About</small> -->
                                 <div class="header-img">
                                     <img src="header-img.jpg" alt="Header Image">
@@ -170,14 +206,12 @@
                                 <div class="client-info">
                                     <h6>To, <br> <?php echo $client_name; ?></h6>
                                 </div>
-                                <br>
 
                                 <!-- Property Details Table -->
                                 <table>
                                     <tr>
                                         <th>Title</th>
                                         <th>Details</th>
-                                        
                                     </tr>
                                     
                                     <tr>
@@ -188,41 +222,52 @@
                                     <tr>
                                         <td>Location</td>
                                         <td><?php echo $row_leads['location']; ?></td>
-                                        
+                                    </tr>
+                                    <tr>
+                                        <td>Configration</td>
+                                        <td><?php echo $row_leads['varients']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Builder Possession</td>
+                                        <td><?php echo $row_leads['builder_possession']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>RERA Possession</td>
+                                        <td><?php echo $row_leads['rera_possession']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Area</td>
+                                        <td><?php echo $row_leads['area']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Quoted  Price</td>
+                                        <td><?php echo $row_leads['price']; ?></td>
                                     </tr>
 
-                                    <tr>
+                                    <!-- <tr>
                                         <td>Google Location Lat</td>
                                         <td><?php echo $row_leads['google_location_lat']; ?></td>
-                                        
-                                        
                                     </tr>
                                     <tr>
                                         <td>Google Location Long</td>
                                         <td><?php echo $row_leads['google_location_long']; ?></td>
-                                        
-                                    </tr>
+                                    </tr> -->
                                     <tr>
-                                        <td>Buildeer Name</td>
+                                        <td>Builder Name</td>
                                         <td><?php echo $row_leads['builder_name']; ?></td>
-                                        
                                     </tr>
                                     <tr>
                                         <td>Car Parking</td>
                                         <td><?php echo $row_leads['car_parking']; ?></td>
-                                        
                                     </tr>
 
                                     <tr>
                                         <td>Furnishing</td>
                                         <td><?php echo $row_leads['furnishing']; ?></td>
-                                        
                                     </tr>
                                     <tr>
-                                       
                                         <td>Amenities</td>
                                         <td><?php echo $row_leads['amenities']; ?></td>
-                                        
                                     </tr>
                                     <tr>
                                         <td>USP</td>

@@ -123,6 +123,9 @@ if (isset($_POST["submit"])) {
      {
         border: 2px solid #666cff; /* Highlight both inputs on focus */
     }
+    .mar-top1{
+      /* margin-top:-10px ; */
+    }
   </style>
     <!-- *********** header******************  -->
     <?php include 'layout/header_js.php'; ?>
@@ -157,7 +160,7 @@ if (isset($_POST["submit"])) {
                             
                             <div class="col-md-6">
                               <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Property Title</label>
+                                <label class="col-sm-3 col-form-label text-sm-end mar-top1" for="formtabs-username"> Property Title</label>
                                 <div class="col-sm-9 form-floating form-floating-outline">
                                     <input type="text" name="property_title" id="formtabs-username" class="form-control" placeholder="Property Title" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required>
                                     <label for="formtabs-username"> Property Title</label>
@@ -167,7 +170,7 @@ if (isset($_POST["submit"])) {
 
                             <div class="col-md-6">
                               <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Builder Name</label>
+                                <label class="col-sm-3 col-form-label text-sm-end mar-top1" for="formtabs-username"> Builder Name</label>
                                 <div class="col-sm-9 form-floating form-floating-outline">
                                   <input type="text" name="builder_name" id="formtabs-username" class="form-control" placeholder=" Builder Name" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required>
                                   <label for="formtabs-username"> Builder Name</label>
@@ -221,7 +224,8 @@ if (isset($_POST["submit"])) {
 
                             <!-- Property form details -->
 
-                            <h5 class="card-header" style="padding-bottom: 0;">Upload Property Details</h5>
+                            <hr>
+                            <!-- <h5 class="card-header" style="padding-bottom: 0;">Upload Property Details</h5> -->
                             <h5 class="card-header" style="padding-top:0;"> Other Details </h5>
 
                             <div class="col-md-6">
@@ -281,11 +285,12 @@ if (isset($_POST["submit"])) {
                                   <?php for ($i = 1; $i <= 6; $i++): ?>
                                       <div class="col-md-6">
                                           <div class="row">
-                                              <label class="col-sm-3 col-form-label text-sm-end" for="property-pdf-<?php echo $i; ?>"> PDF <?php echo $i; ?></label>
+                                              <!-- <label class="col-sm-3 col-form-label text-sm-end" for="property-pdf-<?php echo $i; ?>"> PDF <?php echo $i; ?></label> -->
                                               <div class="col-sm-9">
                                                   <label for="property-pdf-<?php echo $i; ?>" class="form-label">Property PDF <?php echo $i; ?></label>
                                                   <input type="file" name="property_pdf_<?php echo $i; ?>" id="property-pdf-<?php echo $i; ?>" class="form-control" accept="application/pdf" >
-                                              </div>
+                                                  <br></div>
+                                              
                                           </div>
                                       </div>
                                   <?php endfor; ?>
@@ -296,10 +301,11 @@ if (isset($_POST["submit"])) {
                                   <?php for ($i = 1; $i <= 4; $i++): ?>
                                       <div class="col-md-6">
                                           <div class="row">
-                                              <label class="col-sm-3 col-form-label text-sm-end" for="property-video-<?php echo $i; ?>"> Video <?php echo $i; ?></label>
+                                              <!-- <label class="col-sm-3 col-form-label text-sm-end" for="property-video-<?php echo $i; ?>"> Video <?php echo $i; ?></label> -->
                                               <div class="col-sm-9">
-                                              <label for="property-video-<?php echo $i; ?>" class="form-label">Property Video <?php echo $i; ?></label>
+                                                  <label for="property-video-<?php echo $i; ?>" class="form-label">Property Video <?php echo $i; ?></label>
                                                   <input type="file" name="property_video_<?php echo $i; ?>" id="property-video-<?php echo $i; ?>" class="form-control" accept="video/*" >
+                                                  <br>
                                               </div>
                                           </div>
                                       </div>

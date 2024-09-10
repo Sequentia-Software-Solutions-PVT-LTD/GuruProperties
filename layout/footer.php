@@ -4,11 +4,11 @@
                 <div
                   class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
                   <div class="text-body mb-2 mb-md-0">
-                    ©
-                    <script>
+                    © <?php echo date('Y'); ?>,
+                    <!-- <script>
                       document.write(new Date().getFullYear());
-                    </script>
-                    , All Rights Reserved. <span class="text-danger"></span> 
+                    </script> -->
+                    All Rights Reserved. <span class="text-danger"></span> 
                     <!-- by
                     <a href="https://www.sequentia.in" target="_blank" class="footer-link">Sequentia</a> -->
                   </div>

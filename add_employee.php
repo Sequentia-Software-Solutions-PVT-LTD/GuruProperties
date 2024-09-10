@@ -8,6 +8,11 @@
   include ('dist/conf/db.php');
   $pdo = Database::connect();
 
+  ini_set('display_errors', 1);
+  ini_set('display_startup_errors', 1);
+  error_reporting(E_ALL);
+  $isError = false;
+
   if(isSet($_POST["subimt"]))
   { 
    
@@ -25,6 +30,11 @@
     $password_post = $_POST['password'];
     $password = password_hash($password_post, PASSWORD_BCRYPT);
     // $assistant_login_id = $_POST['assistant_login_id'];
+
+    $confirm_password_post = $_POST['confirm_password'];
+    $confirm_password = password_hash($confirm_password_post, PASSWORD_BCRYPT);
+
+
     $added_on = date('Y-m-d H-i-s');
     $status = "Active";
     $login_role = $_POST['login_role'];
@@ -40,23 +50,63 @@
     $row_loc = $q->fetch(PDO::FETCH_ASSOC);
 
     $location_name = $row_loc['name'];
-    
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "INSERT INTO `admin`(`login_name`, `login_password`, `login_role`, `login_id`, `status`,`type`, `login_photo`, `location`, location_id) VALUES (?,?,?,?,?,?,?,?,?)";
-    $q = $pdo->prepare($sql);
-    $q->execute(array($employee_name, $password, $login_role, $user_id, $status, $login_role, $login_photo, $location_name, $_employeelocation_id));
-    $lastInsertedId = $pdo->lastInsertId();
+    // echo "<pre>";
+    // print_r($_POST);
+    // exit();
 
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "INSERT INTO employee(admin_id, employee_name, password, added_on, status, login_role,  cell_no, user_id, email_id, designation, `location`, location_id) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "select * from admin where login_id ='$user_id'";
     $q = $pdo->prepare($sql);
-    $q->execute(array($lastInsertedId, $employee_name, $password, $added_on, 'Active', $login_role,  $cell_no, $user_id,$email_id,'Employee', $location_name, $_employeelocation_id));
+    $q->execute(array());      
+    $data = $q->fetch(PDO::FETCH_ASSOC);
 
     // echo "<pre>";
+    // print_r($data);
+    // exit();
+
+
+    if (!$data)
+    {
+      if ($_POST['password'] == $_POST['confirm_password'])
+      {
+        // echo "<pre>";
+        // print_r($password_post);
+        // print_r($confirm_password_post);
+        // exit();
+    
+          $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+          $sql = "INSERT INTO `admin`(`login_name`, `login_password`, `login_role`, `login_id`, `status`,`type`, `login_photo`, `location`, location_id) VALUES (?,?,?,?,?,?,?,?,?)";
+          $q = $pdo->prepare($sql);
+          $q->execute(array($employee_name, $password, $login_role, $user_id, $status, $login_role, $login_photo, $location_name, $_employeelocation_id));
+          $lastInsertedId = $pdo->lastInsertId();
+
+          $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+          $sql = "INSERT INTO employee(admin_id, employee_name, password, added_on, status, login_role,  cell_no, user_id, email_id, designation, `location`, location_id) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+          $q = $pdo->prepare($sql);
+          $q->execute(array($lastInsertedId, $employee_name, $password, $added_on, 'Active', $login_role,  $cell_no, $user_id,$email_id,'Employee', $location_name, $_employeelocation_id));
+
+          $isError = true;
+          $error = "<span  style='color:green;'><b>Congrats:</b> New Employee with LOGIN ID ' ".$employee_name." ' added successfully..!!</span>";
+      }
+      else {
+        $isError = true;
+        $error = "<span  style='color:red;'><b>ERROR:</b> Password doesn't match, please try again with the correct password..!!</span>";
+        
+        // print_r($error);
+        // exit();
+      }
+    } else {
+      $isError = true;
+        $error = "<span  style='color:red;'><b>ERROR:</b> User ID already exist..!!</span>";
+        // print_r($error);
+        // exit();
+    }
+
+    // echo "<pre>";
+    // print_r($error);
     // print_r($sql);
     // exit();
     
-    header('location:add_employee');
+    // header('location:add_employee');
      
   }
 
@@ -118,223 +168,62 @@
                     <h5 class="card-header">Add Employee</h5>
                     <div class="card-body demo-vertical-spacing demo-only-element">
                         <div class="align-items-center1 justify-content-center h-px-260">
-                        <form class="card-body" action="#" method="post">
+                        <form class="card-body" action="#" method="post" enctype="multipart/form-data">
                           <div class="row g-4">
                             
                             <div class="col-md-6">
-                                <!-- <div class="row align-items-center justify-content-center mb-6"> -->
-                                    <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-country">Role</label> -->
-                                    <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
-                                        <!-- <div class="position-relative"> -->
-                                        <div class="form-floating form-floating-outline mb-6">
-                                            <select id="roleDropdown" name="login_role" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
-                                                <option selected hidden disable>Select Employee Role</option>
-                                                <option value="CUSTOMER EXECUTIVE">Customer Executive</option>
-                                                <option value="SALES EXECUTIVE">Sales Executive</option>
-                                            </select>
-                                            <label for="roleDropdown">Role</label>
-                                        </div>
-                                        <!-- </div> -->
-                                    <!-- </div> -->
-                                <!-- </div> -->
-                                <!-- </div>
-                           
-                                <div class="col-md-6"> -->
-                                  <!-- <div class="row align-items-center justify-content-center mb-6"> -->
-                                    <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
+
+                                    <div class="form-floating form-floating-outline mb-6">
+                                        <select id="roleDropdown" name="login_role" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
+                                            <option selected hidden disable>Select Employee Role</option>
+                                            <option value="CUSTOMER EXECUTIVE">Customer Executive</option>
+                                            <option value="SALES EXECUTIVE">Sales Executive</option>
+                                        </select>
+                                        <label for="roleDropdown">Role</label>
+                                    </div>
+
                                     <div class="form-floating form-floating-outline mb-6">
                                       <input type="text" name="employee_name" id="formtabs-username" class="form-control" placeholder="john doe" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required />
                                       <label for="formtabs-username"> Name</label>
                                     </div>
-                                    <!-- </div> -->
-                                  <!-- </div> -->
-                                <!-- </div>
-                                <div class="col-md-6"> -->
-                                  <!-- <div class="row align-items-center justify-content-center mb-6"> -->
-                                    <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-email">Email</label> -->
-                                    <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
-                                      <!-- <div class="input-group input-group-merge"> -->
-                                      <!-- <div class="form-floating form-floating-outline mb-6">
-                                        <input type="email"  name="email_id"  id="formtabs-email" class="form-control" placeholder="@example.com">
-                                        <label for="formtabs-email"> Email</label></div> -->
-                                      <!-- </div> -->
-                                    <!-- </div> -->
-                                  <!-- </div> -->
-                                <!-- </div>
-                                <div class="col-md-6"> -->
-                                  <!-- <div class="row align-items-center justify-content-center mb-6"> -->
-                                    <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-phone">Phone No</label> -->
-                                    <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
-                                    <!-- <div class="form-floating form-floating-outline mb-6">
-                                      <input type="text"  name="cell_no"  id="formtabs-phone" class="form-control phone-mask" placeholder="658 799 8941" aria-label="658 799 8941"  maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 10);">
-                                      <label for="formtabs-phone"> Phone No</label></div> -->
-                                    <!-- </div> -->
-                                  <!-- </div> -->
-                                <!-- </div>
-                                <div class="col-md-6" > -->
-                                  <!-- <div class="row align-items-center justify-content-center mb-6"> -->
-                                    <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username">User ID</label> -->
-                                  
-                                    <!-- <div class="col-sm-12 form-floating form-floating-outline" > -->
-                                      <!-- <input type="text" name="prefix" id="prefixInput" class="prefix-class form-control" readonly style="width: 42px; border-right: none; border-top-right-radius: 0;border-bottom-right-radius: 0;padding-right: 0;"> -->
-                                      <div class="form-floating form-floating-outline mb-6">
+                                   
+                                    <div class="form-floating form-floating-outline mb-6">
                                       <input type="text"  name="user_id"  id="prefixInput" class="form-control" placeholder="" required>
-                                      <label for="prefixInput">User ID</label></div>
-                                    <!-- </div> -->
-                                  <!-- </div> -->
-                                <!-- </div>
-                                <div class="col-md-6"> -->
-                                  <!-- <div class="row align-items-center justify-content-center  mb-6 form-password-toggle"> -->
-                                    <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-password">Password</label> -->
-                                    <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
-                                      <!-- <div class="input-group input-group-merge"> -->
-                                      <div class="form-floating form-floating-outline mb-6">
-                                        <input type="password"  name="password"  id="formtabs-password" class="form-control" placeholder="*********" aria-describedby="formtabs-password2" required>
-                                        <label for="formtabs-password">Password</label></div>
-                                      <!-- </div> -->
-                                    <!-- </div> -->
-                                  <!-- </div> -->
-                                <!-- </div> -->
-
-                                <!-- <div class="col-md-6">
-                                    <div class="row align-items-center justify-content-center">
-                                        <div class="col-sm-12 form-floating form-floating-outline">
-                                            <select id="formtabs-location" name="_employeelocation[]" class="form-select" style="height: 400px;" data-allow-clear="true" data-select2-id="formtabs-location" tabindex="-1" aria-hidden="true" Multiple required>
-                                                    <option selected hidden disable>Select Location</option>
-                                                    <?php
-                                                        // $sqlLocation = "SELECT * FROM location order by name";
-                                                        // foreach($pdo->query($sqlLocation) as $LocationList) {
-                                                        //   echo "<option style='margin-bottom: 8px;' value='".$LocationList["id"]."'>".$LocationList["name"]."</option>";
-                                                        // }
-                                                    ?>
-                                                    
-                                                </select>
-                                                <label for="formtabs-location">Location</label>
-                                        </div>
+                                      <label for="prefixInput">User ID</label>
                                     </div>
-                                </div> -->
+                                   
 
-                                <!-- <div class="col-md-6"> -->
-                                    <!-- <div class="row align-items-center justify-content-center"> -->
-                                        <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
-                                        <!-- <div class="form-floating form-floating-outline mb-6">
-                                                <select id="formtabs-location" name="_employeelocation" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
-                                                    <option value="" data-select2-id="18">Select Property Location Name</option>
-                                                    <?php
-                                                        // $sqlLocation = "SELECT * FROM  location order by name";
-                                                        // foreach ($pdo->query($sqlLocation) as $row) 
-                                                        // { 
-                                                        ?>
-                                                            <option value="<?php //echo $row['id']?>"><?php //echo $row['name']?></option> 
-                                                        <?php //} ?>
-                                                </select>
-                                                <label for="formtabs-location">Location</label>
-                                        </div> -->
-                                        <!-- </div> -->
-                                    <!-- </div> -->
-                                <!-- </div> -->
+                                    <div class="form-floating form-floating-outline mb-6">
+                                      <input type="text"  name="password"  id="password" value="admin" class="form-control" aria-describedby="formtabs-password2" required>
+                                      <label for="formtabs-password">Password</label>
+                                      <span id='message'></span>
+                                    </div>
+
+                                     
 
                             </div>
 
                             <div class="col-md-6">
-                                <!-- <div class="row align-items-center justify-content-center mb-6"> -->
-                                    <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-country">Role</label> -->
-                                    <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
-                                        <!-- <div class="position-relative"> -->
-                                        <!-- <div class="form-floating form-floating-outline mb-6">
-                                            <select id="roleDropdown" name="login_role" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
-                                                <option selected hidden disable>Select Employee Role</option>
-                                                <option value="CUSTOMER EXECUTIVE">Customer Executive</option>
-                                                <option value="SALES EXECUTIVE">Sales Executive</option>
-                                            </select>
-                                            <label for="roleDropdown">Role</label>
-                                        </div> -->
-                                        <!-- </div> -->
-                                    <!-- </div> -->
-                                <!-- </div> -->
-                                <!-- </div>
-                           
-                                <div class="col-md-6"> -->
-                                  <!-- <div class="row align-items-center justify-content-center mb-6"> -->
-                                    <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
-                                    <!-- <div class="form-floating form-floating-outline mb-6">
-                                      <input type="text" name="employee_name" id="formtabs-username" class="form-control" placeholder="john doe" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required />
-                                      <label for="formtabs-username"> Name</label>
-                                    </div> -->
-                                    <!-- </div> -->
-                                  <!-- </div> -->
-                                <!-- </div>
-                                <div class="col-md-6"> -->
-                                  <!-- <div class="row align-items-center justify-content-center mb-6"> -->
-                                    <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-email">Email</label> -->
-                                    <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
-                                      <!-- <div class="input-group input-group-merge"> -->
+
                                       <div class="form-floating form-floating-outline mb-6">
                                         <input type="email"  name="email_id"  id="formtabs-email" class="form-control" placeholder="@example.com">
-                                        <label for="formtabs-email"> Email</label></div>
-                                      <!-- </div> -->
-                                    <!-- </div> -->
-                                  <!-- </div> -->
-                                <!-- </div>
-                                <div class="col-md-6"> -->
-                                  <!-- <div class="row align-items-center justify-content-center mb-6"> -->
-                                    <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-phone">Phone No</label> -->
-                                    <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
-                                    <div class="form-floating form-floating-outline mb-6">
-                                      <input type="text"  name="cell_no"  id="formtabs-phone" class="form-control phone-mask" placeholder="658 799 8941" aria-label="658 799 8941"  maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 10);">
-                                      <label for="formtabs-phone"> Phone No</label></div>
-                                    <!-- </div> -->
-                                  <!-- </div> -->
-                                <!-- </div>
-                                <div class="col-md-6" > -->
-                                  <!-- <div class="row align-items-center justify-content-center mb-6"> -->
-                                    <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username">User ID</label> -->
-                                  
-                                    <!-- <div class="col-sm-12 form-floating form-floating-outline" > -->
-                                      <!-- <input type="text" name="prefix" id="prefixInput" class="prefix-class form-control" readonly style="width: 42px; border-right: none; border-top-right-radius: 0;border-bottom-right-radius: 0;padding-right: 0;"> -->
-                                      <!-- <div class="form-floating form-floating-outline mb-6">
-                                      <input type="text"  name="user_id"  id="prefixInput" class="form-control" placeholder="" required>
-                                      <label for="prefixInput">User ID</label></div> -->
-                                    <!-- </div> -->
-                                  <!-- </div> -->
-                                <!-- </div>
-                                <div class="col-md-6"> -->
-                                  <!-- <div class="row align-items-center justify-content-center  mb-6 form-password-toggle"> -->
-                                    <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-password">Password</label> -->
-                                    <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
-                                      <!-- <div class="input-group input-group-merge"> -->
-                                      <!-- <div class="form-floating form-floating-outline mb-6">
-                                        <input type="password"  name="password"  id="formtabs-password" class="form-control" placeholder="*********" aria-describedby="formtabs-password2" required>
-                                        <label for="formtabs-password">Password</label></div> -->
-                                      <!-- </div> -->
-                                    <!-- </div> -->
-                                  <!-- </div> -->
-                                <!-- </div> -->
+                                        <label for="formtabs-email"> Email</label>
+                                      </div>
+                                     
+                                      <div class="form-floating form-floating-outline mb-6">
+                                        <input type="text"  name="cell_no"  id="formtabs-phone" class="form-control phone-mask" placeholder="658 799 8941" aria-label="658 799 8941"  maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 10);">
+                                        <label for="formtabs-phone"> Phone No</label>
+                                      </div>
+                                   
 
-                                <!-- <div class="col-md-6">
-                                    <div class="row align-items-center justify-content-center">
-                                        <div class="col-sm-12 form-floating form-floating-outline">
-                                            <select id="formtabs-location" name="_employeelocation[]" class="form-select" style="height: 400px;" data-allow-clear="true" data-select2-id="formtabs-location" tabindex="-1" aria-hidden="true" Multiple required>
-                                                    <option selected hidden disable>Select Location</option>
-                                                    <?php
-                                                        // $sqlLocation = "SELECT * FROM location order by name";
-                                                        // foreach($pdo->query($sqlLocation) as $LocationList) {
-                                                        //   echo "<option style='margin-bottom: 8px;' value='".$LocationList["id"]."'>".$LocationList["name"]."</option>";
-                                                        // }
-                                                    ?>
-                                                    
-                                                </select>
-                                                <label for="formtabs-location">Location</label>
-                                        </div>
-                                    </div>
-                                </div> -->
+                                
 
                                 <!-- <div class="col-md-6"> -->
                                     <!-- <div class="row align-items-center justify-content-center"> -->
                                         <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
                                         <div class="form-floating form-floating-outline mb-6">
                                                 <select id="formtabs-location" name="_employeelocation" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
-                                                    <option value="" data-select2-id="18">Select Property Location Name</option>
+                                                    <option value="" data-select2-id="18">Select Property Location</option>
                                                     <?php
                                                         $sqlLocation = "SELECT * FROM  location order by name";
                                                         foreach ($pdo->query($sqlLocation) as $row) 
@@ -348,6 +237,20 @@
                                         <!-- </div> -->
                                     <!-- </div> -->
                                 <!-- </div> -->
+
+                                <div class="form-floating form-floating-outline mb-6">
+                                  <input type="text" onkeyup="check_pass();" name="confirm_password"  id="confirm_password" value="admin" class="form-control" aria-describedby="formtabs-password2" required>
+                                  <label for="formtabs-password">Confirm Password</label>
+                                
+
+                                <?php if($isError){ 
+                                  // $error = 'fgds';?>
+                                  <!-- <div class="form-floating form-floating-outline mb-6"> -->
+                                  <!-- <label for="formtabs-password" class="col-sm-12 text-center"><?php echo $error; ?></label> -->
+                                  <span class="col-sm-12 text-center"><?php echo $error; ?></span>
+                                <!-- </div> -->
+                                <?php } ?>
+                                </div>
 
                             </div>
 
@@ -414,6 +317,22 @@
                 $('#prefixInput').val(prefix + '-');
             });
         });
+      </script>
+
+      <script type="text/javascript">
+        function check_pass()
+        {
+          $('#confirm_password').on('keyup', function () {
+            if ($(this).val() == $('#password').val()) {
+                $('#message').html('Password Matched').css('color', 'green');
+                $('#submit').prop('disabled', false);
+
+            } else {
+              $('#message').html('Password MissMatch').css('color', 'red');
+              $('#submit').prop('disabled', true);
+            }
+          });
+        }
       </script>
     
   </body>

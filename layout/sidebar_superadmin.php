@@ -40,7 +40,7 @@
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons ri-home-smile-line"></i>
                 <div data-i18n="Dashboards">Dashboards</div>
-                <div class="badge bg-danger rounded-pill ms-auto">5</div>
+                <!-- <div class="badge bg-danger rounded-pill ms-auto">5</div> -->
               </a>
             </li>
 
@@ -58,7 +58,9 @@
                 <div data-i18n="Email">Email</div>
               </a>
             </li> -->
-           
+            <li class="menu-header mt-5">
+              <span class="menu-header-text" data-i18nn="Apps & Pages">Employee</span>
+            </li>
 
             <li class="menu-item">
               <a href="#" class="menu-link menu-toggle">
@@ -80,6 +82,10 @@
             </li>
 
             <!--  -->
+
+            <li class="menu-header mt-5">
+              <span class="menu-header-text" data-i18nn="Apps & Pages">Transfer Permission</span>
+            </li>
 
             <li class="menu-item">
               <a href="#" class="menu-link menu-toggle">
@@ -119,6 +125,10 @@
                 <!-- transfer_lead_by_SE_to_SE -->
 
               </ul>
+            </li>
+
+            <li class="menu-header mt-5">
+              <span class="menu-header-text" data-i18nn="Apps & Pages">Reports</span>
             </li>
 
             <li class="menu-item">
