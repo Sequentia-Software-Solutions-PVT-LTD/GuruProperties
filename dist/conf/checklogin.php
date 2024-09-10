@@ -54,6 +54,7 @@
 
 				$CEAllowedPages = array(
 					"add_property_name",
+					"add_property_name_design",
 					"add_property_tower",
 					"add_property_varients",
 					"all_leads_CE",
@@ -91,6 +92,7 @@
 
 				$SEAllowedPages = array(
 					"add_property_name",
+					"add_property_name_design",
 					"add_property_tower",
 					"add_property_varients",
 					"all_leads_SE",

@@ -85,6 +85,9 @@
     $employee_name = $row_assign1['employee_name'];
     $transfer_employee_type = $row_assign1['login_role'];
 
+    $latitude = $_POST['latitude'];
+    $longitude = $_POST['longitude'];
+
     if($transfer_employee_type == 'SALES EXECUTIVE')
     {
 
@@ -97,11 +100,13 @@
             `transfer_reason` = ?,
             `transfer_employee_id` = ?,
             `transfer_employee_type` = ?,
-            `status` = ?
+            `status` = ?,
+            `latitude` = ?, 
+            `longitude` = ?
             WHERE `assign_leads_sr_id` = ?";
 
         $q = $pdo->prepare($sql);
-        $q->execute(array($added_on, $Transferred, $transfer_reason, $transfer_employee_id, $transfer_employee_type, $Active, $assign_leads_sr_id));
+        $q->execute(array($added_on, $Transferred, $transfer_reason, $transfer_employee_id, $transfer_employee_type, $Active, $assign_leads_sr_id, $latitude, $longitude));
 
         // ---------------------- transfer lead to SE-SE (insert new row)-------------------------------------------------------------------------------------------
         
@@ -122,11 +127,13 @@
              `transfer_reason` = ?,
              `transfer_employee_id` = ?,
              `transfer_employee_type` = ?,
-             `status` = ?
+             `status` = ?,
+              `latitude` = ?, 
+              `longitude` = ?
              WHERE `assign_leads_sr_id` = ?";
  
          $q = $pdo->prepare($sql);
-         $q->execute(array($added_on, $Transferred, $transfer_reason, $transfer_employee_id, $transfer_employee_type, $Active, $assign_leads_sr_id));
+         $q->execute(array($added_on, $Transferred, $transfer_reason, $transfer_employee_id, $transfer_employee_type, $Active, $assign_leads_sr_id, $latitude, $longitude));
  
          // ---------------------- transfer lead to SE-SE (insert new row) -------------------------------------------------------------------------------------------
          

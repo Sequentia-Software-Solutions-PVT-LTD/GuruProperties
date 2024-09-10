@@ -99,7 +99,11 @@ if(isset($_POST["submit"]))
           // print_r($_SESSION);
           // exit();
 
-          header("Location:dashboard");                    
+          if($data['login_role'] == "LEAD GENERATOR") {
+            header("Location:add-leads");
+          } else {
+            header("Location:dashboard");                    
+          }
           // header("Location:index.php");                    
       }
       else

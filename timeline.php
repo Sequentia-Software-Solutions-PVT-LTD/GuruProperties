@@ -10,7 +10,7 @@
 
     $i = 1;
     // $leads_id = $_REQUEST['leads_id'];
-    $leads_id = 26;
+    $leads_id = 24;
     
     
     $sqlleads = "select * from leads where id = $leads_id ";
@@ -783,13 +783,14 @@
                           <div class="d-flex justify-content-between align-items-center flex-wrap">
                             <div>
                                 <?php
-                                    echo "dateShowcase:- ".$dateShowcase."<br><br>";
-                                    echo "message:- ".$message."<br><br>";
-                                    echo "leadType:- ".$leadType."<br><br>";
-                                    echo "reason:- ".$reason."<br><br>";
-                                    echo "noteRemark:- ".$noteRemark."<br><br>";
-                                    echo "connectionStatus:- ".$connectionStatus."<br><br>";
-                                    echo "employeeName:- ".$employeeName."<br><br>";
+                                    // echo "dateShowcase:- ".$dateShowcase."<br><br>";
+                                    echo $message;
+                                    // echo "leadType:- ".$leadType."<br><br>";
+                                    echo $reason;
+                                    echo $noteRemark;
+                                    // echo "noteRemark:- ".$noteRemark."<br><br>";
+                                    // echo "connectionStatus:- ".$connectionStatus."<br><br>";
+                                    // echo "employeeName:- ".$employeeName."<br><br>";
                                 ?>
                             </div>
                           </div>

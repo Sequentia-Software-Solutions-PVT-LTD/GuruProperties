@@ -55,7 +55,7 @@ $budget_Values = [
                             </div>
                             <div class="mb-6 col-lg-6 col-xl-2 col-12 mb-0">
                               <div class="form-floating form-floating-outline">
-                                <input type="text" name="input4[]" id="form-repeater-3-8" class="form-control" placeholder="">
+                                <input type="text" name="input4[]"  pattern="[7-9]{1}[0-9]{9}" id="form-repeater-3-8" class="form-control" placeholder="">
                                 <label for="form-repeater-1-4">Contact</label>
                               </div>
                             </div>
