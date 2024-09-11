@@ -204,7 +204,7 @@
 
                 function fail_signout()
                 {
-                    alert("Please enable your location and refresh the page, to login.");
+                    // alert("Please enable your location and refresh the page, to login.");
                     // alert("Sorry, your browser does not support geolocation services.");
                     document.getElementById('long_signout').value = "00.0000000";
                     document.getElementById('lat_signout').value = "00.0000000";

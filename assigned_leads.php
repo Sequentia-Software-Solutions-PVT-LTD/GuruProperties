@@ -163,7 +163,9 @@
                                     <td><?php echo $row_leads["email_id"]; ?></td>
                                     <td><?php echo $row_leads["budget_range"]; ?></td>
                                     <td>
-                                        <a class="dropdown-item waves-effect" href="view_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-eye-line me-1"></i> </a>
+                                        <a class="dropdown-item" href="view_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>" style="overflow: visible;">
+                                          <i class="ri-eye-line border-2 p-2 bg-success text-white rounded ri-18px"></i> 
+                                        </a>
                                     </td>
                             </tr>
                             <?php $i++; } ?>

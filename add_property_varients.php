@@ -102,10 +102,10 @@
               <!-- *************** - main containt in page write here - **********************  -->
               <h5 class="card-header mar-bot-10">Property Variants Management</h5>
                 <div class="card">
-                    <h5 class="card-header"> Add Property Variants </h5>
+                    <h5 class="card-header"> Add Property Variants </h5><hr class="m-0">
                     <div class="card-body demo-vertical-spacing demo-only-element">
                       <form action="#" method="post">
-                        <div class="row">
+                        <div class="row my-9">
 
                           <!-- <div class="col-md-6">
                             <div class="row">
@@ -181,9 +181,18 @@
 
                         </div>
 
-                        <h5 class="card-header mt-4">Available Variants</h5>
-                        <div id="variants-container" >
+                        
+                        <div class="divider pt-8">
+                          <div class="divider-text">Available Variants</div>
+                        </div>
+                        <div class="row justify-content-end">
+                        <div class="col-4 text-center">
+                              <button type="button" class="btn btn-primary mt-4" onclick="addVariant()">Click here to add more Variant inforamtion</button>
+                            </div>
+                        </div>
+                        <div id="variants-container" style="margin-bottom: 80px;"">
                           <div class="row align-items-center justify-content-center g-4 variant-item" style="margin-top:10px;">
+                            
                             <div class="col-md-4 form-floating form-floating-outline">
                               <!-- <label>Variants</label> -->
                               <!-- <input type="text" name="varients[]" class="form-control" placeholder="Variant" required> -->
@@ -209,6 +218,7 @@
                               
                               <label for="area">Area in sq ft</label>
                             </div>
+
                             <div class="col-md-4 form-floating form-floating-outline">
                               <!-- <label>Price quoted by builder</label> -->
                               <input type="text" name="price[]" id="price" class="form-control" placeholder="Price" required>
@@ -219,16 +229,15 @@
                           </div>
                         </div>
 
-                        <button type="button" class="btn btn-primary mt-4" onclick="addVariant()">Add More</button>
-
-                        <div class="row mt-4">
+                        
+                        <div class="row mt-4 border-top pt-5">
                           <div class="col-md-12">
-                            <div class="row justify-content-end">
-                              <div class="col-sm-4">
-                                <button type="submit" class="btn btn-primary me-4 waves-effect waves-light" name="subimt">Submit</button>
-                                <button type="reset" class="btn btn-outline-secondary waves-effect">Cancel</button>
-                              </div>
-                            </div>
+                            <div class="text-right">
+                              <!-- <div class="col-sm-4"> -->
+                                <button type="submit" data-bs-toggle="tooltip" data-bs-placement="left"  title="Click here to add above information" class="btn btn-primary me-4 waves-effect waves-light" name="subimt">Submit</button>
+                                <button type="reset" class="btn btn-outline-secondary waves-effect float-left">Cancel</button>
+                              <!-- </div> -->
+                            <!-- </div> -->
                           </div>
                         </div>
                       </form>

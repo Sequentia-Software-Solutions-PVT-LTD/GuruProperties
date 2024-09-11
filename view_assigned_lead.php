@@ -193,7 +193,9 @@
                         <!-- About User -->
                         <div class="card mb-6">
                         <div class="card-body demo-vertical-spacing demo-only-element">
-                            <small class="card-text text-uppercase text-muted small">About</small>
+                            <!-- <small class="card-text text-uppercase text-muted small">About</small> -->
+                            <h5 class="card-action-title text-info mb-0">About</h5>
+                            <hr>
                             <ul class="list-unstyled my-3 py-1" style="">
                                 <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Lead Name:</span> <span><?php echo $row_leads['lead_name']; ?></span></li>
                                 <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span><?php 
@@ -209,13 +211,20 @@
                                 <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li>
                                 <!-- <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li> -->
                             </ul>
-                            <small class="card-text text-uppercase text-muted small" >Contacts</small>
+                            <!-- <small class="card-text text-uppercase text-muted small" >Contacts</small> -->
+                            <hr>
+                             <h5 class="card-action-title text-info mb-0">Contacts</h5>
+                            <hr>
                             <ul class="list-unstyled my-3 py-1" style="">
                                 <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Contact:</span> <span><?php echo $row_leads['phone_no']; ?></span></li>
                                 <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Email ID:</span> <span><?php echo $row_leads['email_id']; ?></span></li>
                                
                             </ul>
-                            <small class="card-text text-uppercase text-muted small">Other</small>
+                            <!-- <small class="card-text text-uppercase text-muted small">Other</small> -->
+                            <hr>
+                             <h5 class="card-action-title text-info mb-0">Other</h5>
+                            <hr>
+                            
                             <ul class="list-unstyled my-3 py-1" style="">
                                 <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Source:</span> <span><?php echo $row_leads['source']; ?></span></li>
                                 <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_leads['added_on'])); ?></span></li>
@@ -236,127 +245,168 @@
                     </div>
                     <!--  -->
                     <div class="col-xl-6 col-lg-6 col-md-6">
-                        <div class="card mb-6" >
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="card-title mb-0"><i class="ri-survey-line ri-24px text-body me-2"></i>Add Follow Up Details</h5>
-                                <a class="btn btn-secondary" href="transfer_assigned_lead.php?assign_leads_id=<?php echo $row_assign["assign_leads_id"]; ?>">Transfer Lead </a>
-                            </div>
-                            <div class="col-md-12" style="text-align: right;margin-left: -22px;">
-                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addNewCCModal"> Mark Dead </button>
-                            </div>
+                        
+                        <div class="row  justify-content-between align-items-center">
+                            <div class="col-12">
+                                <div class="card mb-6" >
 
-                            <form action="#" method="post">
-                                <input type="hidden" value="<?php echo $_REQUEST['assign_leads_id']; ?>" name="assign_leads_id">
-                                <div class="card-body demo-vertical-spacing demo-only-element" style="padding-top: 0px;">
-                                    <div class="mb-4">
-                                        <label class="form-label">Connection Status</label>
-                                        <div class="d-flex gap-4">
-                                            <div class="form-check form-check-success">
-                                                <input name="connection_status" class="form-check-input" type="radio" value="connected" id="customRadioSuccess" checked>
-                                                <label class="form-check-label" for="customRadioSuccess">Connected</label>
-                                            </div>
-                                            <div class="form-check form-check-danger">
-                                                <input name="connection_status" class="form-check-input" type="radio" value="not_connected" id="customRadioDanger">
-                                                <label class="form-check-label" for="customRadioDanger">Not Connected</label>
+                                    <div class="card-header header-elements">
+                                        <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
+                                        <h5 class="card-action-title text-success mb-0"><i class="ri-survey-line ri-24px me-2"></i>Add Follow Up Details</h5>
+                                        <div class="card-header-elements me-6 me-sm-0">
+                                        </div>
+                                        <div class="card-header-elements ms-sm-auto">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-primary waves-effect waves-light">Update</button>
+                                                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split waves-effect waves-light" data-bs-toggle="dropdown" data-bs-reference="parent" aria-expanded="false"></button>
+                                                <div class="dropdown-menu" style="">
+                                                    <a class="dropdown-item waves-effect" href="view_leads_for_assigned_SE.php?assign_leads_id=<?php echo $row_assign["assign_leads_id"]; ?>">Assign Lead</a>
+                                                    <a class="dropdown-item waves-effect" href="transfer_assigned_lead.php?assign_leads_id=<?php echo $row_assign["assign_leads_id"]; ?>">Transfer Lead</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item waves-effect" data-bs-toggle="modal" data-bs-target="#addNewCCModal">Mark Dead</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <hr class="m-0">
 
-                                    <label for="notes" class="form-label w-100 text-center">Notes</label>
-                                    <div class="mb-4  mt-2 form-floating form-floating-outline">
-                                        <input class="form-control" type="text" placeholder="Enter your notes" id="notes" name="notes">
-                                        <label for="notes">Notes</label>
-                                    </div>
-
-                                    <label for="next_date" class="form-label w-100 text-center">Next Follow Up Date Time</label>
-                                    <div class="mb-4 form-floating form-floating-outline">
-                                        <input class="form-control" type="datetime-local" id="next_date" name="next_date" required>
-                                        <label for="next_date">Next Follow Up Date Time</label>
-                                    </div>
-
-                                    <div class="mb-4">
-                                        <label class="form-label">Lead Type</label>
-                                        <div class="d-flex gap-4">
-                                            <label class="switch">
-                                                <input type="radio" class="switch-input" name="lead_type" checked="" value="hot">
-                                                <span class="switch-toggle-slider">
-                                                    <span class="switch-on"></span>
-                                                    <span class="switch-off"></span>
-                                                </span>
-                                                <span class="switch-label">Hot</span>
-                                            </label>
-
-                                            <label class="switch">
-                                                <input type="radio" class="switch-input" name="lead_type" value="warm">
-                                                <span class="switch-toggle-slider">
-                                                    <span class="switch-on"></span>
-                                                    <span class="switch-off"></span>
-                                                </span>
-                                                <span class="switch-label">Warm</span>
-                                            </label>
-
-                                            <label class="switch">
-                                                <input type="radio" class="switch-input" name="lead_type" value="cold">
-                                                <span class="switch-toggle-slider">
-                                                    <span class="switch-on"></span>
-                                                    <span class="switch-off"></span>
-                                                </span>
-                                                <span class="switch-label">Cold</span>
-                                            </label>
-
-                                            
-                                        </div>
-                                    </div>
-                                    <div class="row justify-content-center">
-                                                            <div class="col-sm-12 text-center">
-                                                                <div class="form-floating form-floating-outline">
-                                                                    <input class="form-control" type="hidden" id="lat" readonly name="latitude">
-                                                                    <span>Current Latitude:- </span>
-                                                                    <span class="text-danger" id="latitude"></span> 
-                                                                    
-                                                                    <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
-                                                                    <br>
-                                                                    <!-- <label for="latitude">Latitude</label> -->
-                                                                <!-- </div>
-                                                            </div>
-                                                            <div class="col-sm-3">
-                                                                <div class="form-floating form-floating-outline"> -->
-                                                                    <input class="form-control" type="hidden" id="long" readonly name="longitude">
-                                                                    <span>Current Longitude:- </span>
-                                                                    <span class="text-danger" id="longitude"></span>
-                                                                    <!-- <label for="longitude">Longitude</label> -->
-                                                                    <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
-                                                                    <br>
-
-                                                                    <span>Accuracy:- </span>
-                                                                    <span class="text-danger" id="accuracy"></span>
-                                                                    
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-              
-                                    <!-- <div class="mb-4">
-                                        <div class="form-check form-check-danger">
-                                            <input class="form-check-input" type="checkbox" value="yes" id="customCheckDanger" name="mark_dead" onchange="toggleReasonBox()">
-                                            <label class="form-check-label" for="customCheckDanger">Mark Dead</label>
-                                        </div>
-                                    </div>
-
-                                    <div id="reasonBox" class="mb-4" style="display:none;">
-                                        <label for="dead_reason" class="form-label">Remark For Mark Dead</label>
-                                        <textarea class="form-control" id="dead_reason" placeholder="Write comment here..." name="dead_reason"></textarea>
-                                    </div> -->
-
-                                    <div class="d-flex justify-content-between">
-                                        <a class="btn btn-outline-info" href="view_leads_for_assigned_SE.php?assign_leads_id=<?php echo $row_assign["assign_leads_id"]; ?>">Assign Lead To Sales Executive </a>
-                                        <button type="submit" id="submit1"  name="submit" class="btn btn-success logo-btn">Submit</button>
-                                        <!-- <a class="btn btn-secondary" href="transfer_assigned_lead.php?assign_leads_id=<?php echo $row_assign["assign_leads_id"]; ?>">Transfer Lead </a> -->
+                                    <form action="#" method="post">
                                         
-                                    </div>
+                                        <input type="hidden" value="<?php echo $_REQUEST['assign_leads_id']; ?>" name="assign_leads_id">
+                                        
+                                        <div class="col-md-12 pt-6">
+                                            <div class="card-body demo-vertical-spacing demo-only-element">
+                                                <div class="d-flex justify-content-between  align-items-center">
+                                                    <h6 class="w-max-content mb-0">1. Connection Status*</h6>
+                                                    <!-- <div class="mb-4"> -->
+                                                        <!-- <label class="form-label">Connection Status</label> -->
+                                                        <div class="d-flex gap-4 ml-6">
+                                                            <div class="form-check form-check-inline form-check-success">
+                                                                <input name="connection_status" class="form-check-input" type="radio" value="connected" id="customRadioSuccess" checked>
+                                                                <label class="form-check-label" for="customRadioSuccess">Connected</label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline form-check-danger">
+                                                                <input name="connection_status" class="form-check-input" type="radio" value="not_connected" id="customRadioDanger">
+                                                            <label class="form-check-label" for="customRadioDanger">Not Connected</label>
+                                                        </div>
+                                                    <!-- </div> -->
+                                                </div>
+                                            </div>
+                                            </div>
+                                            <!-- <hr class="mt-0"> -->
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="card-body demo-vertical-spacing demo-only-element">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <h6 class="mt-0">2. Notes*</h6>
+                                                    <div class="mb-6 mt-1 form-floating form-floating-outline">
+                                                        <textarea class="form-control" type="text" placeholder="Enter your notes" id="notes" name="notes" style="width: 400px;height: 100px;resize: none;"> </textarea>
+                                                        <label for="notes">Notes</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-12">
+                                            <div class="card-body demo-vertical-spacing demo-only-element">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <h6 class="mt-0">3. Follow Up Date Time*</h6>
+                                                    <div class="mb-4 form-floating form-floating-outline">
+                                                    <input class="form-control" type="datetime-local" id="next_date" name="next_date" required style="width: 300px;">
+                                                    <label for="next_date">Next Follow Up Date Time</label>
+                                                </div>        
+                                                </div>
+                                            </div>    
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="card-body demo-vertical-spacing demo-only-element">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <h6 class="mt-0">4. Lead Type*</h6>
+                                                    <div class="mb-4 d-flex gap-4">
+                                                        <label class="switch">
+                                                            <input type="radio" class="switch-input" name="lead_type" checked="" value="hot">
+                                                            <span class="switch-toggle-slider">
+                                                                <span class="switch-on"></span>
+                                                                <span class="switch-off"></span>
+                                                            </span>
+                                                            <span class="switch-label">Hot</span>
+                                                        </label>
+
+                                                        <label class="switch">
+                                                            <input type="radio" class="switch-input" name="lead_type" value="warm">
+                                                            <span class="switch-toggle-slider">
+                                                                <span class="switch-on"></span>
+                                                                <span class="switch-off"></span>
+                                                            </span>
+                                                            <span class="switch-label">Warm</span>
+                                                        </label>
+
+                                                        <label class="switch">
+                                                            <input type="radio" class="switch-input" name="lead_type" value="cold">
+                                                            <span class="switch-toggle-slider">
+                                                                <span class="switch-on"></span>
+                                                                <span class="switch-off"></span>
+                                                            </span>
+                                                            <span class="switch-label">Cold</span>
+                                                        </label>
+                                                    </div>        
+                                                </div>
+                                            </div>    
+                                        </div>
+                                    
+                                        <div class="col-sm-12 text-center">
+                                                <div class="form-floating form-floating-outline">
+                                                    <input class="form-control" type="hidden" id="lat" readonly name="latitude">
+                                                    <!-- <span>Current Latitude:- </span> -->
+                                                    <!-- <span class="text-danger" id="latitude"></span>  -->
+                                                    <!-- <br> -->
+                                                    <input class="form-control" type="hidden" id="long" readonly name="longitude">
+                                                    <!-- <span>Current Longitude:- </span> -->
+                                                    <!-- <span class="text-danger" id="longitude"></span> -->
+                                                    <!-- <br> -->
+                                                    <!-- <span>Accuracy:- </span> -->
+                                                    <!-- <span class="text-danger" id="accuracy"></span> -->
+                                                    <div class="mx-7 alert alert-solid-warning" id="warningMessage" role="alert" style="display:none;">
+                                                        Make sure your location is enabled before submitting this form
+                                                    </div>
+                                                    <div class="mx-7 alert alert-solid-danger" id="errormessage" role="alert" style="display:none;">
+                                                        Please turn on location to submit this form!
+                                                    </div>
+                                                    <div class="mx-7 mb-0 alert text-danger alert-solid-success" id="successmessage" role="alert" style="display:none; width:max-content">
+                                                        <span class="d-none" class="" id="latitude"></span><span class="d-none" id="longitude"></span>
+                                                        <span class="text-white"  data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Make sure this is below 100" id="accuracy"></span>
+                                                    </div>
+                                                    
+                                                </div>
+                                        </div>
+                    
+                                        <div class="col-sm-12 text-right">
+                                            <hr class="m-0">
+                                        </div>
+
+                                        <div class="col-sm-12 text-right">
+                                            <div class="card-body demo-vertical-spacing demo-only-element">
+                                                <div class="d-flex justify-content-end align-items-center">
+                                                    <!-- <div class="mx-7 mb-0 alert text-danger alert-solid-success" id="successmessage" role="alert"> -->
+                                                        <span class="d-none" class="" id="latitude"></span><span class="d-none" id="longitude"></span>
+                                                        
+                                                    <!-- </div> -->
+                                                    <!-- <button type="button" id="successmessage" class="btn btn-warning"  style="display:none;" >
+                                                        <span class="text-white"  data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Make sure this is below 100" id="accuracy"></span>
+                                                    </button> -->
+
+                                                    <button type="submit" id="submit1" name="submit" class="btn btn-success">Submit</button>
+                                                </div>        
+                                            </div>    
+                                        </div>
+
+                                    </form>
                                 </div>
-                            </form>
+                            </div>
                         </div>
+
                     </div>
 
                     <!-- Timeline code -->
@@ -610,6 +660,9 @@ toggleReasonBox();
         }
         function initGeolocation()
         {
+            document.getElementById('warningMessage').style.display = "none";
+             document.getElementById('errormessage').style.display = "none";
+             document.getElementById('successmessage').style.display = "none";
             window.setInterval(function(){
                 navigator.geolocation.getCurrentPosition( success, fail );
             }, 1000);
@@ -617,6 +670,9 @@ toggleReasonBox();
 
         function success(position)
         {   
+                document.getElementById('warningMessage').style.display = "none";
+                document.getElementById('errormessage').style.display = "none";
+                document.getElementById('successmessage').style.display = "none";
                 document.getElementById('long').value = position.coords.longitude;
                 document.getElementById('longitude').innerHTML = position.coords.longitude;
                 document.getElementById('lat').value = position.coords.latitude;
@@ -627,7 +683,10 @@ toggleReasonBox();
 
         function fail()
         {
-            alert("Please enable your location and refresh the page, to submit this form.");
+            document.getElementById('warningMessage').style.display = "none";
+             document.getElementById('errormessage').style.display = "block";
+             document.getElementById('successmessage').style.display = "none";
+            // alert("Please enable your location and refresh the page, to submit this form.");
             // alert("Sorry, your browser does not support geolocation services.");
             document.getElementById('long').value = "00.0000000";
             document.getElementById('lat').value = "00.0000000";

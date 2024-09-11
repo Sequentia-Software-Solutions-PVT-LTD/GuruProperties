@@ -87,9 +87,9 @@
                 <div class="card">
                     <h5 class="card-header">Add Property Location </h5>
                     <div class="card-body demo-vertical-spacing demo-only-element">
-                        <div class="d-flexz align-items-center1 justify-content-center1 h-px-200">
+                        <div class="d-flexz align-items-center1 justify-content-center1">
                         <form action="#" method="post">
-                          <div class="row mt-12">
+                          <div class="row mt-2">
                             <div class="col-md-12">
                             <!-- <div class="row">
                                 <label class="col-sm-2 col-form-label text-sm-end" for="formtabs-username">Property Location</label>
@@ -105,7 +105,7 @@
                           </div>
                           </div>
 
-                          <div class="row mt-12">
+                          <div class="row">
                             <div class="col-md-11">
                               <div class="row justify-content-end" style="float: right;">
                                 <div class="col-sm-4">

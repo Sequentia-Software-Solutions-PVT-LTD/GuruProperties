@@ -122,7 +122,7 @@
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ri-more-2-line"></i></button>
                                             <div class="dropdown-menu"> -->
                                                 <!-- <a class="dropdown-item waves-effect" href="edit_employee?employee_id=<?php echo $row["employee_id"]; ?>"><i class="ri-pencil-line me-1"></i> Edit</a> -->
-                                                <a class="dropdown-item waves-effect open-myModal" data-bs-toggle="modal" data-bs-target="#enableOTP" data-employee_id="<?php echo $row["property_tower_id"]; ?>"><i class="ri-delete-bin-7-line me-1"></i> </a>
+                                                <a class="dropdown-item waves-effect open-myModal text-danger" data-bs-toggle="modal" data-bs-target="#enableOTP" data-employee_id="<?php echo $row["property_tower_id"]; ?>"><i class="ri-delete-bin-7-line me-1"></i> </a>
                                             <!-- </div>
                                         </div> -->
                                     </td>

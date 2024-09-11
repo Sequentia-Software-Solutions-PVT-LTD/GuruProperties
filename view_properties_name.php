@@ -259,15 +259,15 @@
                                       <td><?php echo $row["varients"]; ?></td>
                                       <!-- <td><?php echo $row["google_location_lat"]; ?></td>
                                       <td><?php echo $row["google_location_long"]; ?></td> -->
-                                      <td><?php echo $row["builder_name"]; ?></td>
                                       <td><?php echo $row["builder_possession"]; ?></td>
+                                      <td><?php echo $row["builder_name"]; ?></td>
                                       <!-- <td><?php //echo $row["status"]; ?></td> -->
                                       <td>
                                           <!-- <div class="dropdown">
                                               <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ri-more-2-line"></i></button>
                                               <div class="dropdown-menu"> -->
                                                   <!-- <a class="dropdown-item waves-effect open-myModal" data-bs-toggle="modal" data-bs-target="#enableOTP" data-employee_id="<?php echo $row["property_name_id"]; ?>"><i class="ri-delete-bin-7-line me-1"></i> </a> -->
-                                                  <a class="dropdown-item waves-effect open-myModal" data-bs-toggle="modal" data-bs-target="#enableOTP" data-employee_id="<?php echo $row["property_name_id"]; ?>"><i class="ri-file-pdf-2-line me-1"></i> </a>
+                                                  <a class="dropdown-item waves-effect open-myModal text-danger" data-bs-toggle="modal" data-bs-target="#enableOTP" data-employee_id="<?php echo $row["property_name_id"]; ?>"><i class="ri-file-pdf-2-line me-1"></i> </a>
                                               <!-- </div>
                                           </div> -->
                                       </td>
@@ -281,7 +281,7 @@
                 <!-- Enable OTP Modal -->
               <div class="modal fade" id="enableOTP" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-simple modal-enable-otp modal-dialog-centered">
-                  <div class="modal-content">
+                  <div class="modal-content p-9">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     <div class="modal-body p-0">
                       <div class="text-center mb-6">
@@ -293,16 +293,17 @@
                       </p> -->
                       <form id="enableOTPForm" class="row g-5"  action="export_pdf_property_details.php" method="POST">
                         <input type="hidden" name="employee_id" id="employee_id"  value=""/>
-                        <input type="text" name="hidden_variants" id="hidden_variants"  value="<?php echo $varients; ?>"/>
-                        <input type="text" name="hidden_location" id="hidden_location"  value="<?php echo $location; ?>"/>
-                        <input type="text" name="hidden_builder_possession" id="hidden_builder_possession"  value="<?php echo $builder_possession; ?>"/>
+                        <input type="hidden" name="hidden_variants" id="hidden_variants"  value="<?php echo $varients; ?>"/>
+                        <input type="hidden" name="hidden_location" id="hidden_location"  value="<?php echo $location; ?>"/>
+                        <input type="hidden" name="hidden_builder_possession" id="hidden_builder_possession"  value="<?php echo $builder_possession; ?>"/>
 
-                          <div id="reasonBox" class="mb-4" style="">
-                              <label for="client_name" class="form-label">Client Name</label>
+                        <!-- <label for="client_name" class="form-label">Client Name</label> -->
+                          <div id="reasonBox" class="form-floating form-floating-outline mb-4" style="">
                               <input type="text" name="client_name" id="formtabs-username" class="form-control" placeholder=" Client Name" required>
+                              <label for="formtabs-username">Client Name</label>
                           </div>
                       
-                        <div class="col-12 d-flex flex-wrap justify-content-center gap-4 row-gap-4">
+                        <div class="col-12 mt-8">
                           <button
                             type="reset"
                             class="btn btn-outline-secondary"
@@ -311,7 +312,7 @@
                             Cancel
                           </button>
 
-                          <button type="submit" name ="suspend" class="btn btn-success">Export</button>
+                          <button type="submit" name ="suspend" class="btn btn-success float-right">Export</button>
                         </div>
                       </form>
                     </div>

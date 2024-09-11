@@ -10,8 +10,8 @@ class Database {
   //  ------------------------------------------------------------
   
 
-  // private static $dbName = 'guru_enterprises_nr'; 
-  private static $dbName = 'guru_seqpro'; 
+  private static $dbName = 'guru_enterprises'; 
+  // private static $dbName = 'guru_seqpro'; 
   // private static $dbName = 'guru_enterprises_gayatri'; 
   private static $dbHost = 'localhost';
   private static $dbUsername = 'root';

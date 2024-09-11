@@ -1439,7 +1439,7 @@
 
         function fail()
         {
-            alert("Please enable your location and refresh the page, to submit this form.");
+            // alert("Please enable your location and refresh the page, to submit this form.");
             // alert("Sorry, your browser does not support geolocation services.");
             document.getElementById('long').value = "00.0000000";
             document.getElementById('lat').value = "00.0000000";

@@ -39,6 +39,23 @@
         .form-floating > label {
           left: 15px;
         }
+
+        thead, tbody, tfoot, tr, td, th {
+          text-align: center;
+        }
+        .float-right {
+          float: right;
+        }
+        .float-left {
+          float: left;
+        }
+        
+        .text-right {
+          text-align: right;
+        }
+        .w-max-content {
+          width: max-content !important;
+        }
     </style>
     <!--  -->
 
@@ -250,7 +267,7 @@
 
                 function fail_signout()
                 {
-                    alert("Please enable your location and refresh the page, to login.");
+                    // alert("Please enable your location and refresh the page, to login.");
                     // alert("Sorry, your browser does not support geolocation services.");
                     document.getElementById('long_signout').value = "00.0000000";
                     document.getElementById('lat_signout').value = "00.0000000";

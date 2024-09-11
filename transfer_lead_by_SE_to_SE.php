@@ -168,7 +168,7 @@
                                             <!-- <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ri-more-2-line"></i></button>
                                             <div class="dropdown-menu"> -->
                                                 <!-- <a class="dropdown-item waves-effect" href="edit_location?id=<?php echo $row["id"]; ?>"><i class="ri-pencil-line me-1"></i> Edit</a> -->
-                                                <a class="dropdown-item waves-effect open-myModal" data-bs-toggle="modal" data-bs-target="#enableOTP" data-id="<?php echo $row1["assign_leads_sr_id"]; ?>"><i class="ri-check-line me-1"></i> </a>
+                                                <a class="dropdown-item waves-effect open-myModal text-success" data-bs-toggle="modal" data-bs-target="#enableOTP" data-id="<?php echo $row1["assign_leads_sr_id"]; ?>"><i class="ri-check-line me-1"></i> Approve</a>
                                             <!-- </div> -->
                                         </div>
                                     </td>
