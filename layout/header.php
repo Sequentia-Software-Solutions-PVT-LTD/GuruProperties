@@ -67,6 +67,26 @@
             background: transparent !important;
             border: 1px solid #b0810d !important;
         }
+        a,
+        .menu-toggle::after,
+        .app-brand .layout-menu-toggle svg path,
+        a:hover {
+          color: #ffffff;
+          fill: #ffffff;
+        }
+        .menu-vertical .menu-item .menu-link:hover {
+            background-color: #000000;
+        }
+        .light-style .menu-vertical .menu-item.active > .menu-toggle, .light-style .menu-vertical .menu-item.open > .menu-toggle {
+          background-color: #414141;
+        }
+        .menu-header .menu-header-text {
+          color: #ffffff;
+          font-weight: 800;
+        }
+        html:not([dir=rtl]) .menu-inner > .menu-header::before {
+          width: 100%;
+        }
     </style>
     <!--  -->
 

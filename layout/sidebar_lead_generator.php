@@ -5,7 +5,7 @@
 // exit();
 
 ?>
-<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme-bg-dark text-white bg-secondary">
 <div class="app-brand demo">
             <a href="index.html" class="app-brand-link">
               <span class="app-brand-logo demo">
@@ -36,13 +36,13 @@
 
           <ul class="menu-inner py-1">
             <!-- Dashboards -->
-            <li class="menu-item active open">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons ri-home-smile-line"></i>
-                <div data-i18n="Dashboards">Dashboards</div>
-                <div class="badge bg-danger rounded-pill ms-auto">5</div>
+            <li class="menu-item">
+              <a href="Dashboard" class="menu-link">
+                <i class="menu-icon tf-icons ri-bill-line"></i>
+                <div data-i18nn="#">Dashboard</div>
               </a>
             </li>
+
 
 
             <!--  -->
