@@ -56,6 +56,17 @@
         .w-max-content {
           width: max-content !important;
         }
+        .btn-success {
+          background: #004040;
+          border: 1px solid #004040;
+        }
+        .btn-success:hover {
+            color: #b0810d !important;
+            /* background-color: #5c61e6 !important; */
+            /* border-color: #5c61e6 !important; */
+            background: transparent !important;
+            border: 1px solid #b0810d !important;
+        }
     </style>
     <!--  -->
 

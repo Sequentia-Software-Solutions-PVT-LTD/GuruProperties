@@ -7,8 +7,7 @@
 
   include ('dist/conf/db.php');
   $pdo = Database::connect();
-    
-    $leads_id_timeline = 0;
+
     $i = 1;
     $assign_leads_id = $_REQUEST['assign_leads_id'];
     
@@ -18,7 +17,6 @@
     $row_assign = $q->fetch(PDO::FETCH_ASSOC);
 
     $leads_id = $row_assign['leads_id'];
-    $leads_id_timeline = $row_assign['leads_id'];
     $admin_id = $row_assign['admin_id'];
 
     $sqlemp = "select * from employee where admin_id = $admin_id ";
@@ -192,71 +190,58 @@
               <!-- <h5 class="card-header mar-bot-10">Leads Details </h5> -->
                 <div class="row">
                     <div class="col-xl-6 col-lg-5 col-md-5 ">
-                        <div class="row  justify-content-between align-items-center">
-                            <div class="col-12">
-                                <div class="card mb-6">
-                                <div class="card-header header-elements">
-                                        <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
-                                        <h5 class="card-action-title mb-0 underline">Lead Details</h5>
-                                        
-                                        <div class="card-header-elements ms-sm-auto">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-primary waves-effect waves-light" style="visibility:hidden;">Update</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <hr class="m-0">
-                                    <div class="card-body demo-vertical-spacing demo-only-element">
-                                        <!-- <small class="card-text text-uppercase text-muted small">About</small> -->
-                                        <h5 class="card-action-title  mb-0">About</h5>
-                                        <hr class="mt-1">
-                                        <ul class="list-unstyled my-3 py-1" style="">
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Lead Name:</span> <span><?php echo $row_leads['lead_name']; ?></span></li>
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span><?php 
-                                                $needle = $row_leads["location"];
-                                                $resultArray = array_filter($row_location, function ($v) use ($needle) {
-                                                    return $needle == $v['id']; 
-                                                });
-                                                if($needle == 1) $needle = 1;
-                                                else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                                if(isset($resultArray[$needle]["name"]) && $resultArray[$needle]["name"] != "") echo $resultArray[$needle]["name"]; 
-                                                else echo "Not Found";
-                                            ?></span></li>
-                                            <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li>
-                                            <!-- <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li> -->
-                                        </ul>
-                                        <!-- <small class="card-text text-uppercase text-muted small" >Contacts</small> -->
-                                        <!-- <hr> -->
-                                        <h5 class="card-action-title  mb-0">Contacts</h5>
-                                        <hr class="mt-1">
-                                        <ul class="list-unstyled my-3 py-1" style="">
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Contact:</span> <span><?php echo $row_leads['phone_no']; ?></span></li>
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Email ID:</span> <span><?php echo $row_leads['email_id']; ?></span></li>
-                                        
-                                        </ul>
-                                        <!-- <small class="card-text text-uppercase text-muted small">Other</small> -->
-                                        <!-- <hr> -->
-                                        <h5 class="card-action-title  mb-0">Other</h5>
-                                        <hr class="mt-1">
-                                        
-                                        <ul class="list-unstyled my-3 py-1" style="">
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Source:</span> <span><?php echo $row_leads['source']; ?></span></li>
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_leads['added_on'])); ?></span></li>
-                                        </ul>
+                        <!-- About User -->
+                        <div class="card mb-6">
+                            <div class="card-body demo-vertical-spacing demo-only-element">
+                                <!-- <small class="card-text text-uppercase text-muted small">About</small> -->
+                                <h5 class="card-action-title text-info mb-0">About</h5>
+                                <hr>
+                                <ul class="list-unstyled my-3 py-1" style="">
+                                    <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Lead Name:</span> <span><?php echo $row_leads['lead_name']; ?></span></li>
+                                    <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span><?php 
+                                        $needle = $row_leads["location"];
+                                        $resultArray = array_filter($row_location, function ($v) use ($needle) {
+                                            return $needle == $v['id']; 
+                                        });
+                                        if($needle == 1) $needle = 1;
+                                        else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                        if(isset($resultArray[$needle]["name"]) && $resultArray[$needle]["name"] != "") echo $resultArray[$needle]["name"]; 
+                                        else echo "Not Found";
+                                    ?></span></li>
+                                    <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li>
+                                    <!-- <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li> -->
+                                </ul>
+                                <!-- <small class="card-text text-uppercase text-muted small" >Contacts</small> -->
+                                <hr>
+                                <h5 class="card-action-title text-info mb-0">Contacts</h5>
+                                <hr>
+                                <ul class="list-unstyled my-3 py-1" style="">
+                                    <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Contact:</span> <span><?php echo $row_leads['phone_no']; ?></span></li>
+                                    <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Email ID:</span> <span><?php echo $row_leads['email_id']; ?></span></li>
+                                
+                                </ul>
+                                <!-- <small class="card-text text-uppercase text-muted small">Other</small> -->
+                                <hr>
+                                <h5 class="card-action-title text-info mb-0">Other</h5>
+                                <hr>
+                                
+                                <ul class="list-unstyled my-3 py-1" style="">
+                                    <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Source:</span> <span><?php echo $row_leads['source']; ?></span></li>
+                                    <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_leads['added_on'])); ?></span></li>
+                                </ul>
 
-                                        <!-- <ul class="list-unstyled my-3 py-1" style="">
-                                            <a href="javascript:void(0)" class="btn btn-primary waves-effect waves-light">
-                                                <i class="ri-user-follow-line ri-16px me-2"></i>Add Followup
-                                            </a>
-                                            <a href="javascript:void(0)" class="btn btn-primary waves-effect waves-light">
-                                                <i class="ri-user-follow-line ri-16px me-2"></i>Transfer Leads
-                                            </a>
-                                        </ul> -->
-                                    </div>
-                                </div>
+                                <!-- <ul class="list-unstyled my-3 py-1" style="">
+                                    <a href="javascript:void(0)" class="btn btn-primary waves-effect waves-light">
+                                        <i class="ri-user-follow-line ri-16px me-2"></i>Add Followup
+                                    </a>
+                                    <a href="javascript:void(0)" class="btn btn-primary waves-effect waves-light">
+                                        <i class="ri-user-follow-line ri-16px me-2"></i>Transfer Leads
+                                    </a>
+                                </ul> -->
                             </div>
-                        </div>                        
+                        </div>
+                        <!--/ About User -->
+                        
                     </div>
                     <!--  -->
                     <div class="col-xl-6 col-lg-6 col-md-6">
@@ -267,7 +252,9 @@
 
                                     <div class="card-header header-elements">
                                         <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
-                                        <h5 class="card-action-title mb-0"><i class="ri-survey-line ri-24px me-2"></i>Add Follow Up Details</h5>
+                                        <h5 class="card-action-title text-success mb-0"><i class="ri-survey-line ri-24px me-2"></i>Add Follow Up Details</h5>
+                                        <div class="card-header-elements me-6 me-sm-0">
+                                        </div>
                                         <div class="card-header-elements ms-sm-auto">
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-primary waves-effect waves-light">Update</button>
@@ -338,7 +325,7 @@
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <h6 class="mt-0">4. Lead Type*</h6>
                                                     <div class="mb-4 d-flex gap-4">
-                                                        <label class="switch switch-danger">
+                                                        <label class="switch">
                                                             <input type="radio" class="switch-input" name="lead_type" checked="" value="hot">
                                                             <span class="switch-toggle-slider">
                                                                 <span class="switch-on"></span>
@@ -347,7 +334,7 @@
                                                             <span class="switch-label">Hot</span>
                                                         </label>
 
-                                                        <label class="switch switch-warning">
+                                                        <label class="switch">
                                                             <input type="radio" class="switch-input" name="lead_type" value="warm">
                                                             <span class="switch-toggle-slider">
                                                                 <span class="switch-on"></span>
@@ -356,7 +343,7 @@
                                                             <span class="switch-label">Warm</span>
                                                         </label>
 
-                                                        <label class="switch switch-info">
+                                                        <label class="switch">
                                                             <input type="radio" class="switch-input" name="lead_type" value="cold">
                                                             <span class="switch-toggle-slider">
                                                                 <span class="switch-on"></span>
@@ -425,16 +412,137 @@
                     <!-- Timeline code -->
                     <div class="col-xl-12 col-lg-12 col-md-12">
                         <div class="card">
-                            <!-- <h5 class="card-header">Timeline For &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info"><?php //echo $row_leads['lead_name']; ?></span></h5> -->
-                            <h5 class="card-header text-center">Timeline</h5>
-                            <hr class="m-0">
-                            <div class="card-body">
+                            <h5 class="card-header">Timeline For &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info"><?php echo $row_leads['lead_name']; ?></span></h5>
+                            <div class="table-responsive text-nowrap">
+                                <table class="table">
+                                <caption class="ms-6">Timeline For Lead</caption>
+                                <thead>
+                                    <tr>
+                                    <th>#</th>
+                                    <th>Time Line Date</th>
+                                    <th>Status</th>
+                                    <!-- <th>Leads Information</th> -->
+                                    <th>Follow Up Details</th>
+                                    <th>Transfer Details</th>
+                                    <th>Lead Dead</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php 
+                                        
 
-                                <?php
-                                $leads_id = $leads_id_timeline;
-                                include_once("timeline_showcase.php");
-                                ?>
+                                        if($leads_id != 0 && $leads_id != "" && $leads_id != null  && $leads_id != "undefined" ) {
+                                            if(isset($_REQUEST['assign_leads_id'])) {
+                                                $assign_leads_id = $_REQUEST['assign_leads_id'];
+                                                $sqlemp = "SELECT * FROM assign_leads where assign_leads_id= $assign_leads_id ";
+                                                $q = $pdo->prepare($sqlemp);
+                                                $q->execute(array());      
+                                                $row_assign = $q->fetch(PDO::FETCH_ASSOC);
 
+                                                $leads_id = $row_assign['leads_id']; 
+                                            } else {
+                                                $assign_leads_id = 0;
+                                            }
+                                        } else {
+                                            $assign_leads_id = 0;
+                                            $leads_id = 0;
+                                        }
+
+                                        $i = 1;
+                                        $sql = "SELECT * FROM assign_leads where assign_leads_id=$assign_leads_id";
+                                        $q = $pdo->query($sql);
+                                        foreach ($pdo->query($sql) as $row1) 
+                                        { 
+                                            $assign_leads_id = $row1['assign_leads_id'];
+                                            $leads_id = $row1['leads_id'];
+                                            $admin_id = $row1['admin_id'];
+
+                                            $sqlemp = "select * from employee where admin_id = $admin_id ";
+                                            $q = $pdo->prepare($sqlemp);
+                                            $q->execute(array());      
+                                            $row_emp = $q->fetch(PDO::FETCH_ASSOC);
+
+                                           
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <?php echo $i; ?> 
+                                        </td>
+                                            <td>
+                                                <?php echo date("d-m-Y", strtotime($row1['added_on'])); ?>
+                                            </td>
+                                            <td>
+                                                <?php 
+                                                    if(strtolower($row1["transfer_status"]) == 'trasnfered') {
+                                                        if(strtoupper($row1["transfer_employee_type"]) == 'SALES EXECUTIVE') {
+                                                            echo '<span class="badge rounded-pill bg-label-success" text-capitalized="">Trasnfered To Sales Executive</span>';
+                                                        } else if(strtoupper($row1["transfer_employee_type"]) == 'CUSTOMER EXECUTIVE') {
+                                                            echo '<span class="badge rounded-pill bg-label-warning" text-capitalized="">Trasnfered To Customer Executive</span>';
+                                                        }
+                                                        
+                                                    } else if(strtolower($row1["mark_dead"]) == 'yes') {
+                                                        echo '<span class="badge rounded-pill bg-label-danger" text-capitalized="">Marked Dead</span>';
+                                                    } else {
+                                                        echo '<span class="badge rounded-pill bg-label-info" text-capitalized="">No Action Taken</span>';
+                                                    }                                                    
+                                                ?>
+                                            </td>
+                                            <!-- <td>
+                                                <?php
+                                                    // $sqlleads = "select * from leads where id = $leads_id ";
+                                                    // $q = $pdo->prepare($sqlleads);
+                                                    // $q->execute(array());      
+                                                    // $row_leads = $q->fetch(PDO::FETCH_ASSOC);
+                                                ?>
+                                                <?php //echo $row_leads["lead_name"]; ?><br>
+                                                <?php //echo '- '. $row_leads["phone_no"]; ?><br>
+                                                <?php //echo '- '. $row_leads["email_id"]; ?><br>
+                                                <?php //echo '-- '. $row_leads["location"]; ?><br>
+                                                <?php //echo '-- '. $row_leads["budget_range"]; ?><br>
+                                                <?php //echo '-- '. $row_leads["source"]; ?>
+                                            </td> -->
+                                            <td>
+                                                <?php if($row1['next_date'] != "0000-00-00 00:00:00") { ?>
+                                                <?php echo $row1["connection_status"]; ?><br>
+                                                <?php echo $row1["notes"]; ?><br>
+                                                <?php echo $row1["lead_type"]; ?><br>
+                                                <?php //echo $row1["remark"]; ?><br>
+                                                
+                                                <?php echo date("d-m-Y", strtotime($row1["next_date"])); ?><br>
+                                                <?php if($row1["next_time"] != "") echo date("H:i", strtotime($row1["next_time"])); ?><br>
+                                                <?php } ?>
+                                            </td>
+                                            <td>
+                                                <?php 
+                                                    if($row1["transfer_status"] == 'Trasnfered'); 
+                                                    {
+                                                        // echo "To Employee: <br> ";
+                                                        // echo $row1["employee_name"].'<br>'.$row1["transfer_reason"]; 
+                                                        if(strtoupper($row1["transfer_employee_type"]) == 'SALES EXECUTIVE') {
+                                                    ?>
+                                                     
+                                                     <div class="d-flex justify-content-start align-items-center product-name"><div class="avatar-wrapper me-3"><div class="avatar rounded-3 bg-label-secondary"><img src="assets/img/front-pages/icons/transition-up.png" alt="Product-9" class="rounded-2"></div></div><div class="d-flex flex-column"><span class="text-nowrap text-heading fw-medium"><?php echo $row1["employee_name"]; ?></span><small class="text-truncate d-none d-sm-block"><?php echo $row1["transfer_reason"]; ?></small></div></div>
+
+                                                    <?php } else if(strtoupper($row1["transfer_employee_type"]) == 'CUSTOMER EXECUTIVE') { ?>
+                                                       
+                                                    <div class="d-flex justify-content-start align-items-center product-name"><div class="avatar-wrapper me-3"><div class="avatar rounded-3 bg-label-secondary"><img src="assets/img/avatars/1.png    " alt="Product-9" class="rounded-2"></div></div><div class="d-flex flex-column"><span class="text-nowrap text-heading fw-medium"><?php echo $row1["employee_name"]; ?></span><small class="text-truncate d-none d-sm-block"><?php echo $row1["transfer_reason"]; ?></small></div></div>
+                                                    
+                                                    <?php } ?>
+                                                    <?php } ?>
+                                                
+                                            </td>                                            
+                                            <td>
+                                                <?php 
+                                                    if(strtolower($row1["mark_dead"]) == 'yes'); 
+                                                    {
+                                                        echo '<small class="text-truncate text-danger d-none d-sm-block">'.$row1["dead_reason"].'</small>'; 
+                                                    }
+                                                ?>
+                                            </td>
+                                    </tr>
+                                    <?php $i++; } ?>
+                                </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
