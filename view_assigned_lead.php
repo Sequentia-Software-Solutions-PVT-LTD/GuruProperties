@@ -312,7 +312,7 @@
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <h6 class="mt-0">2. Notes*</h6>
                                                     <div class="mb-6 mt-1 form-floating form-floating-outline">
-                                                        <textarea class="form-control" type="text" placeholder="Enter your notes" id="notes" name="notes" style="width: 400px;height: 100px;resize: none;"> </textarea>
+                                                        <textarea class="form-control" required type="text" placeholder="Enter your notes" id="notes" name="notes" style="width: 400px;height: 100px;resize: none;"></textarea>
                                                         <label for="notes">Notes</label>
                                                     </div>
                                                 </div>

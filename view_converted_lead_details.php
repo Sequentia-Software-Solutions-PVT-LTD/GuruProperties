@@ -30,6 +30,12 @@
     $q->execute(array());      
     $row_leads = $q->fetch(PDO::FETCH_ASSOC);
 
+
+    $sqllocation = "select * from location ";
+    $qlocation = $pdo->prepare($sqllocation);
+    $qlocation->execute(array());      
+    $row_location = $qlocation->fetchAll(PDO::FETCH_ASSOC);
+
   if(isSet($_POST["submit"]))
   { 
     // echo "<pre>";
@@ -191,164 +197,239 @@
               <!-- // -->
               <h5 class="card-header mar-bot-10">Leads Details </h5>
                 <div class="row">
-                    <div class="col-xl-12 col-lg-12 col-md-12 ">
-                        <!-- About User -->
+                    <!-- <div class="col-xl-12 col-lg-12 col-md-12 ">
                         <div class="card mb-6">
-                        <div class="card-body demo-vertical-spacing demo-only-element" style="display:flex; justify-content: space-around;">
-                            <!-- <small class="card-text text-uppercase text-muted small">About</small> -->
-                            <ul class="list-unstyled my-3 py-1" style="">
-                              <small class="card-text text-uppercase text-muted small">About</small>
-                                <li class="d-flex align-items-center mb-4" style="margin-top: 20px;"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Lead Name:</span> <span><?php echo $row_leads['lead_name']; ?></span></li>
-                                <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span><?php echo $row_leads['location']; ?></span></li>
-                                <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li>
-                                <!-- <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li> -->
-                            </ul>
-                            
-                            <ul class="list-unstyled my-3 py-1" style="">
-                              <small class="card-text text-uppercase text-muted small" >Contacts</small>
-                                <li class="d-flex align-items-center mb-4" style="margin-top: 20px;"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Contact:</span> <span><?php echo $row_leads['phone_no']; ?></span></li>
-                                <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Email ID:</span> <span><?php echo $row_leads['email_id']; ?></span></li>
-                            </ul>
-                            
-                            <ul class="list-unstyled my-3 py-1" style="">
-                              <small class="card-text text-uppercase text-muted small" style="margin-bottom:20px;">Other</small>
-                                <li class="d-flex align-items-center mb-4"  style="margin-top: 20px;"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Source:</span> <span><?php echo $row_leads['source']; ?></span></li>
-                                <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_leads['added_on'])); ?></span></li>
-                            </ul>
+                          <div class="card-body demo-vertical-spacing demo-only-element" style="display:flex; justify-content: space-around;">
+                              <ul class="list-unstyled my-3 py-1" style="">
+                                <small class="card-text text-uppercase text-muted small">About</small>
+                                  <li class="d-flex align-items-center mb-4" style="margin-top: 20px;"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Lead Name:</span> <span><?php echo $row_leads['lead_name']; ?></span></li>
+                                  <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span><?php echo $row_leads['location']; ?></span></li>
+                                  <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li>
+                              </ul>
+                              
+                              <ul class="list-unstyled my-3 py-1" style="">
+                                <small class="card-text text-uppercase text-muted small" >Contacts</small>
+                                  <li class="d-flex align-items-center mb-4" style="margin-top: 20px;"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Contact:</span> <span><?php echo $row_leads['phone_no']; ?></span></li>
+                                  <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Email ID:</span> <span><?php echo $row_leads['email_id']; ?></span></li>
+                              </ul>
+                              
+                              <ul class="list-unstyled my-3 py-1" style="">
+                                <small class="card-text text-uppercase text-muted small" style="margin-bottom:20px;">Other</small>
+                                  <li class="d-flex align-items-center mb-4"  style="margin-top: 20px;"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Source:</span> <span><?php echo $row_leads['source']; ?></span></li>
+                                  <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_leads['added_on'])); ?></span></li>
+                              </ul>
+                          </div>
                         </div>
-                        </div>
-                        <!--/ About User -->
-                        
-                    </div>
-                    <!--  -->
-                    <h5 class="card-header mar-bot-10">Property Details </h5>
-                    <!--  -->
-                    <div class="col-xl-12 col-lg-12 col-md-12">
-                        <div class="card mb-6" >
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="card-title mb-0">Basic Details</h5>
-                                <!-- <a class="btn btn-secondary" href="transfer_assigned_lead.php?assign_leads_id=<?php echo $row_assign["assign_leads_id"]; ?>">Transfer Lead </a> -->
-                            </div>
-
-                            <!-- <form action="#" method="post" enctype="multipart/form-data"> -->
-                                <input type="hidden" value="<?php echo $_REQUEST['assign_leads_sr_id']; ?>" name="assign_leads_sr_id">
-                                <div class="card-body demo-vertical-spacing demo-only-element" style="padding-top: 0px;">
-                                    <!--  -->
-                                    <div style="display: flex; justify-content: space-between;">
-                                    <div style="">
-                                    <small class="card-text text-uppercase text-muted small">Project Details</small>
+                    </div> -->
+                    <div class="col-xl-4 col-lg-4">
+                        <div class="row  justify-content-between align-items-center">
+                            <div class="col-12">
+                                <div class="card mb-6 h-100">
+                                    <div class="card-header header-elements">
+                                        <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
+                                        <h5 class="card-action-title mb-0 underline">Lead Details</h5>
+                                        
+                                        <!-- <div class="card-header-elements ms-sm-auto">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-primary waves-effect waves-light" style="visibility:hidden;">Update</button>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                    
+                                    <hr class="m-0">
+                                    <div class="card-body demo-vertical-spacing demo-only-element">
+                                        <!-- <small class="card-text text-uppercase text-muted small">About</small> -->
+                                        <h5 class="card-action-title  mb-0">About</h5>
+                                        <hr class="mt-1">
                                         <ul class="list-unstyled my-3 py-1" style="">
-                                            <?php 
-
-                                                $sqlcon = "SELECT * FROM converted_leads where assign_leads_sr_id = $assign_leads_sr_id ";
-                                                $q = $pdo->prepare($sqlcon);
-                                                $q->execute(array());      
-                                                $row_assign1 = $q->fetch(PDO::FETCH_ASSOC);
-
-                                                $property_id = $row_assign1['property_name_id'];
-                                                $sub_property_id = $row_assign1['property_tower_id'];
-                                                $variant = $row_assign1['property_variants'];
-
-                                            //  property_varients
-                                                $sqlpro = "SELECT * FROM property_name where property_name_id= $property_id ";
-                                                $q = $pdo->prepare($sqlpro);
-                                                $q->execute(array());      
-                                                $row_property = $q->fetch(PDO::FETCH_ASSOC);
-
-                                                $sqltower = "SELECT * FROM property_tower where property_tower_id = $sub_property_id ";
-                                                $q = $pdo->prepare($sqltower);
-                                                $q->execute(array());      
-                                                $row_tower = $q->fetch(PDO::FETCH_ASSOC);
-                                            ?>
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Property Name:</span> <span><?php echo $row_property['property_title']; ?></span></li>
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span><?php echo $row_property['location']; ?></span></li>
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Builder Name:</span> <span><?php echo $row_property['builder_name']; ?></span></li>
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Tower Name:</span> <span><?php echo $row_tower['property_tower_name']; ?></span></li>
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Builder Possesstion:</span> <span><?php echo $row_tower['builder_possession']; ?></span></li>
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">RERA Possesstion:</span> <span><?php echo $row_tower['rera_possession']; ?></span></li>
-                                        </div>
-                                        <div style="">
-                                            <small class="card-text text-uppercase text-muted small">Varient Details</small>
-                                            
-                                            <?php 
-                                                    $sqlsr = "SELECT * FROM converted_leads WHERE assign_leads_sr_id = :assign_leads_sr_id";
-                                                    $stmt = $pdo->prepare($sqlsr);
-                                                    $stmt->execute(['assign_leads_sr_id' => $assign_leads_sr_id]);
-
-                                                    while ($row_sr = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                                        $varient_group = $row_sr['property_variants']; // Assume this is a comma-separated string like "6,5,4"
-                                                        
-                                                        // Split the variant IDs into an array
-                                                        $variant_ids = explode(',', $varient_group);
-                                                        
-                                                        // Prepare a SQL query to fetch variant names based on these IDs
-                                                        $placeholders = implode(',', array_fill(0, count($variant_ids), '?'));
-                                                        $sqlVariants = "SELECT varients, area, price FROM property_varients WHERE property_varients_id IN ($placeholders)";
-                                                        $stmtVariants = $pdo->prepare($sqlVariants);
-                                                        $stmtVariants->execute($variant_ids);
-                                                        
-                                                        // Fetch the variant details
-                                                        $variant_details = $stmtVariants->fetchAll(PDO::FETCH_ASSOC);
-                                                        
-                                                        // Display each variant's details
-                                                        foreach ($variant_details as $variant) {
-                                            ?>
-                                           
-                                                <div style="display : flex; gap: 20px; margin-top:20px;">
-                                                    <li class="d-flex align-items-center mb-2" ><span class="fw-medium mx-2">Variants:</span> <span><?php echo htmlspecialchars($variant['varients']); ?></span></li>
-                                                    <li class="d-flex align-items-center mb-2"><span class="fw-medium mx-2">Area:</span> <span><?php echo htmlspecialchars($variant['area']); ?></span></li>
-                                                    <li class="d-flex align-items-center mb-2"><span class="fw-medium mx-2">Price:</span> <span><?php echo htmlspecialchars($variant['price']); ?></span></li>
-                                                </div>
-                                            <?php } }?>
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Lead Name:</span> <span><?php echo $row_leads['lead_name']; ?></span></li>
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span><?php 
+                                                $needle = $row_leads["location"];
+                                                $resultArray = array_filter($row_location, function ($v) use ($needle) {
+                                                    return $needle == $v['id']; 
+                                                });
+                                                if($needle == 1) $needle = 1;
+                                                else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                                if(isset($resultArray[$needle]["name"]) && $resultArray[$needle]["name"] != "") echo $resultArray[$needle]["name"]; 
+                                                else echo "Not Found";
+                                            ?></span></li>
+                                            <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li>
+                                            <!-- <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li> -->
+                                        </ul>
+                                        <!-- <small class="card-text text-uppercase text-muted small" >Contacts</small> -->
+                                        <!-- <hr> -->
+                                        <h5 class="card-action-title  mb-0">Contacts</h5>
+                                        <hr class="mt-1">
+                                        <ul class="list-unstyled my-3 py-1" style="">
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Contact:</span> <span><?php echo $row_leads['phone_no']; ?></span></li>
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Email ID:</span> <span><?php echo $row_leads['email_id']; ?></span></li>
                                         
                                         </ul>
-                                        </div>
-
-
-                                        </div>
-                                    <!--  -->
-                                        <hr>
-                                    
-                                        <div class="col-xl-12 col-lg-12 col-md-12 ">
-                                            <!-- About User -->
-                                            <div class="card1 mb-61">
-                                                 <small class="card-text text-uppercase text-muted small">Other Details</small>
-                                                <div class="card-body demo-vertical-spacing demo-only-element" style="display:flex; justify-content: space-around;">
-                                                    <!-- <small class="card-text text-uppercase text-muted small">Other Details</small> -->
-                                                    <ul class="list-unstyled my-3 py-1" style="">
-                                                        <!-- <small class="card-text text-uppercase text-muted small">Values</small> -->
-                                                        <li class="d-flex align-items-center mb-4" style="margin-top: 20px;"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Agreement Value:</span> <span><?php echo $row_assign1['agreement_value']; ?></span></li>
-                                                        <li class="d-flex align-items-center mb-4"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Registration:</span> <span><?php echo $row_assign1['registrantion']; ?></span></li>
-                                                        <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Stamp Duty:</span> <span><?php echo $row_assign1['stamp_duty']; ?></span></li>
-                                                        <!-- <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li> -->
-                                                    </ul>
-                                                    
-                                                    <ul class="list-unstyled my-3 py-1" style="">
-                                                    <!-- <small class="card-text text-uppercase text-muted small" >Other</small> -->
-                                                        <li class="d-flex align-items-center mb-4" style="margin-top: 20px;"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">GST:</span> <span><?php echo $row_assign1['gst']; ?></span></li>
-                                                        <li class="d-flex align-items-center mb-4"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Commision:</span><span><?php echo $row_assign1['commission']; ?></span></li>
-                                                    </ul>
-                                                    
-                                                    <ul class="list-unstyled my-3 py-1" style="">
-                                                    <!-- <small class="card-text text-uppercase text-muted small" style="margin-bottom:20px;">Price</small> -->
-                                                        <li class="d-flex align-items-center mb-4"  style="margin-top: 20px;"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Quoted Price:</span> <span><?php echo $row_assign1['quoted_price']; ?></span></li>
-                                                        <li class="d-flex align-items-center mb-4"  style="margin-top: 20px;"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Sale Price:</span> <span><?php echo $row_assign1['sale_price']; ?></span></li>
-                                                        <!-- <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_assign1['added_on'])); ?></span></li> -->
-                                                    </ul>
-                                                </div>
-                                                <ul class="list-unstyled my-3 py-1" style="">
-                                                <small class="card-text text-uppercase text-muted small" >Notes</small>
-                                                    <li class="d-flex align-items-center mb-4" style="align-items: flex-start !important;margin-top: 20px;"><?php echo $row_assign1['notes']; ?></span></li>
-                                                </ul>
-                                            </div>
-                                            <!--/ About User -->
-                        
-                                        </div>
-                                        <!--  -->
+                                        <!-- <small class="card-text text-uppercase text-muted small">Other</small> -->
+                                        <!-- <hr> -->
+                                        <h5 class="card-action-title  mb-0">Other</h5>
+                                        <hr class="mt-1">
+                                        
+                                        <ul class="list-unstyled my-3 py-1" style="">
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Source:</span> <span><?php echo $row_leads['source']; ?></span></li>
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_leads['added_on'])); ?></span></li>
+                                        </ul>                                        
+                                        
+                                    </div>
                                 </div>
-                            <!-- </form> -->
-                        </div>
+                            </div>
+                        </div>                        
                     </div>
+                    <div class="col-xl-4 col-lg-4">
+                        <div class="row  justify-content-between align-items-center">
+                            <div class="col-12">
+                                <div class="card mb-6">
+                                    <div class="card-header header-elements">
+                                        <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
+                                        <h5 class="card-action-title mb-0 underline">Property Details</h5>
+                                        
+                                        <!-- <div class="card-header-elements ms-sm-auto">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-primary waves-effect waves-light" style="visibility:hidden;">Update</button>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                    
+                                    <hr class="m-0">
+                                    <div class="card-body demo-vertical-spacing demo-only-element">
+                                        <!-- <small class="card-text text-uppercase text-muted small">About</small> -->
+                                        <h5 class="card-action-title  mb-0">Project Details</h5>
+                                        <hr class="mt-1">
+                                        <?php 
+                                            $sqlsr = "SELECT * FROM assign_leads_sr where assign_leads_sr_id= $assign_leads_sr_id ";
+                                            $q = $pdo->prepare($sqlsr);
+                                            $q->execute(array());      
+                                            $row_assign1 = $q->fetch(PDO::FETCH_ASSOC);
+
+                                            $property_id = $row_assign1['property_id'];
+                                            $sub_property_id = $row_assign1['sub_property_id'];
+                                            $variant = $row_assign1['variant'];
+
+                                            //  property_varients
+                                            $sqlpro = "SELECT * FROM property_name where property_name_id= $property_id ";
+                                            $q = $pdo->prepare($sqlpro);
+                                            $q->execute(array());      
+                                            $row_property = $q->fetch(PDO::FETCH_ASSOC);
+
+                                            $sqltower = "SELECT * FROM property_tower where property_tower_id = $sub_property_id ";
+                                            $q = $pdo->prepare($sqltower);
+                                            $q->execute(array());      
+                                            $row_tower = $q->fetch(PDO::FETCH_ASSOC);
+                                        ?>
+                                        <ul class="list-unstyled my-3 py-1" style="">
+                                                <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Property Name:</span> <span class="fw-bold"><?php echo $row_property['property_title']; ?></span></li>
+                                                <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span class="fw-bold"><?php echo $row_property['location']; ?></span></li>
+                                                <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Google Location:</span>Latitude: <span class="fw-bold"><?php echo $row_property['google_location_lat']; ?> & </span>   &nbsp;Longitude: <span class="fw-bold"><?php echo $row_property['google_location_long']; ?> </span></li>
+                                                <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Builder Name:</span> <span class="fw-bold"><?php echo $row_property['builder_name']; ?></span></li>
+                                                <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Tower Name:</span> <span class="fw-bold"><?php echo $row_tower['property_tower_name']; ?></span></li>
+                                                <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Builder Possession:</span> <span class="fw-bold"><?php echo $row_tower['builder_possession']; ?></span></li>
+                                                <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">RERA Possession:</span> <span class="fw-bold"><?php echo $row_tower['rera_possession']; ?></span></li>
+                                        </ul>
+                                        <!-- <small class="card-text text-uppercase text-muted small" >Contacts</small> -->
+                                        <!-- <hr> -->
+                                        <h5 class="card-action-title  mb-0">Varient Details</h5>
+                                        <hr class="mt-1">
+                                        <?php 
+                                            $sqlsr = "SELECT * FROM assign_leads_sr WHERE assign_leads_sr_id = :assign_leads_sr_id";
+                                            $stmt = $pdo->prepare($sqlsr);
+                                            $stmt->execute(['assign_leads_sr_id' => $assign_leads_sr_id]);
+
+                                            while ($row_sr = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                                $varient_group = $row_sr['variant']; // Assume this is a comma-separated string like "6,5,4"
+                                                
+                                                // Split the variant IDs into an array
+                                                $variant_ids = explode(',', $varient_group);
+                                                
+                                                // Prepare a SQL query to fetch variant names based on these IDs
+                                                $placeholders = implode(',', array_fill(0, count($variant_ids), '?'));
+                                                $sqlVariants = "SELECT varients, area, price FROM property_varients WHERE property_varients_id IN ($placeholders)";
+                                                $stmtVariants = $pdo->prepare($sqlVariants);
+                                                $stmtVariants->execute($variant_ids);
+                                                
+                                                // Fetch the variant details
+                                                $variant_details = $stmtVariants->fetchAll(PDO::FETCH_ASSOC);
+                                        ?>
+                                        <ul class="list-unstyled my-3 py-1" style="">
+                                        <!-- <div style="display : flex; gap: 20px; margin-top:20px;"> -->
+                                            <?php 
+                                                // Display each variant's details
+                                                foreach ($variant_details as $variant) {
+                                            ?>
+                                            <li class="d-flex align-items-center mb-2" >
+                                                <span class="fw-medium mx-2">Variants:</span> 
+                                                <span class="fw-bold"><?php echo htmlspecialchars($variant['varients']); ?></span>
+                                            </li>
+                                            <li class="d-flex align-items-center mb-2">
+                                                <span class="fw-medium mx-2">Area:</span> 
+                                                <span class="fw-bold"><?php echo htmlspecialchars($variant['area']); ?></span>
+                                            </li>
+                                            <li class="d-flex align-items-center mb-2">
+                                                <span class="fw-medium mx-2">Price:</span> 
+                                                <span class="fw-bold"><?php echo htmlspecialchars($variant['price']); ?></span>
+                                            </li>
+                                            <?php } }?>
+                                        <!-- </div> -->
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                    <div class="col-xl-4 col-lg-4">
+                        <div class="row  justify-content-between align-items-center">
+                            <div class="col-12">
+                                <div class="card mb-6">
+                                    <div class="card-header header-elements">
+                                        <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
+                                        <h5 class="card-action-title mb-0 underline">Other Details</h5>
+                                        
+                                        <!-- <div class="card-header-elements ms-sm-auto">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-primary waves-effect waves-light" style="visibility:hidden;">Update</button>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                    
+                                    <hr class="m-0">
+                                    <div class="card-body demo-vertical-spacing demo-only-element">
+                                        <!-- <small class="card-text text-uppercase text-muted small">About</small> -->
+                                        <h5 class="card-action-title  mb-0">SE Submitted Details</h5>
+                                        <hr class="mt-1">
+                                        <?php
+                                              $sqlcon = "SELECT * FROM converted_leads where assign_leads_sr_id = $assign_leads_sr_id ";
+                                              $q = $pdo->prepare($sqlcon);
+                                              $q->execute(array());      
+                                              $row_assign1 = $q->fetch(PDO::FETCH_ASSOC);
+                                        ?>
+                                        <ul class="list-unstyled mb-3 my-3 py-1" style="">
+                                                <li class="d-flex align-items-center mb-4"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Agreement Value:</span> <span><?php echo $row_assign1['agreement_value']; ?></span></li>
+                                                <li class="d-flex align-items-center mb-4"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Registration:</span> <span><?php echo $row_assign1['registrantion']; ?></span></li>
+                                                <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Stamp Duty:</span> <span><?php echo $row_assign1['stamp_duty']; ?></span></li>
+                                                <li class="d-flex align-items-center mb-4" style="margin-top: 20px;"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">GST:</span> <span><?php echo $row_assign1['gst']; ?></span></li>
+                                                <li class="d-flex align-items-center mb-4"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Commision:</span><span><?php echo $row_assign1['commission']; ?></span></li>
+                                                <li class="d-flex align-items-center mb-4"  style="margin-top: 20px;"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Quoted Price:</span> <span><?php echo $row_assign1['quoted_price']; ?></span></li>
+                                                <li class="d-flex align-items-center mb-4"  style="margin-top: 20px;"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Sale Price:</span> <span><?php echo $row_assign1['sale_price']; ?></span></li>
+                                        </ul>
+
+                                        <ul class="list-unstyled my-3 py-1" style="">
+                                          <h5 class="card-action-title  mb-0">Notes</h5>
+                                          <hr class="mt-1">
+                                            <!-- <small class="card-text text-uppercase text-muted small" >Notes</small> -->
+                                            <li class="d-flex align-items-center mb-4" style="align-items: flex-start !important;margin-top: 20px;"><?php echo $row_assign1['notes']; ?></span></li>
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                    
                 </div>
                <!-- *************** - /main containt in page write here - **********************  -->
             </div>

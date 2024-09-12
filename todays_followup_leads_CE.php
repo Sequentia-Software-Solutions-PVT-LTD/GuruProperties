@@ -174,11 +174,24 @@
                                         ?></td>
                                     <td><?php echo $row_leads["phone_no"]; ?></td>
                                     <!-- <td><?php echo $row_leads["email_id"]; ?></td> -->
-                                    <td><?php echo $row_asn_leads["lead_type"]; ?></td>
+                                    <td>                                      
+                                        <?php 
+                                          if($row_asn_leads["lead_type"] == 'hot')
+                                          echo "<span class='badge rounded-pill bg-danger text-uppercase'>";
+                                          if($row_asn_leads["lead_type"] == 'warm')
+                                          echo "<span class='badge rounded-pill bg-warning text-uppercase'>";
+                                          if($row_asn_leads["lead_type"] == 'cold')
+                                          echo "<span class='badge rounded-pill bg-info text-uppercase'>";
+                                          echo $row_asn_leads["lead_type"]; 
+                                          echo "</span>";
+                                        ?>
+                                    </td>
                                     <td><?php echo $row_leads["budget_range"]; ?></td>
                                     <td>
-                                        <a class="dropdown-item waves-effect" href="view_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-eye-line me-1"></i> </a>
-                                        <!-- <a class="dropdown-item waves-effect" href="transfer_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-eye-line me-1"></i> </a> -->
+                                        <!-- <a class="dropdown-item waves-effect" href="view_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-eye-line me-1"></i> </a> -->
+                                        <a class="dropdown-item" href="view_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>" style="overflow: visible;">
+                                          <i class="ri-eye-line border-2 p-2 bg-success text-white rounded ri-18px"></i> 
+                                        </a>
                                     </td>
                             </tr>
                             <?php $i++; } ?>

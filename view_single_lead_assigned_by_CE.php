@@ -21,6 +21,7 @@
     $row_assign = $q->fetch(PDO::FETCH_ASSOC);
 
     $leads_id = $row_assign['leads_id'];
+    $leads_id_timeline = $row_assign['leads_id'];
     $admin_id = $row_assign['admin_id'];
 
     $sqlemp = "select * from employee where admin_id = $admin_id ";
@@ -392,539 +393,428 @@
               <!-- *************** - main containt in page write here - **********************  -->
                
               <!-- // -->
-              <h5 class="card-header mar-bot-10">Leads Details </h5>
+              <!-- <h5 class="card-header mar-bot-10">Leads Details </h5> -->
+                <div class="alert alert-solid-warning d-flex align-items-center alert-dismissible" role="alert">
+                    <span class="alert-icon rounded">
+                        <i class="ri-alert-line ri-22px"></i>
+                    </span>
+                    Scroll down to update visit details for this lead 
+                    
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
                 <div class="row">
-                    <div class="col-xl-12 col-lg-12 col-md-12 ">
-                        <!-- About User -->
-                        <div class="card mb-6">
-                            <div class="card-body demo-vertical-spacing demo-only-element">
-                                <div style="">
-                                <small class="card-text text-uppercase text-muted small">About</small>
-                                <ul class="list-unstyled my-3 py-1" style="">
-                                    <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Lead Name:</span> <span><?php echo $row_leads['lead_name']; ?></span></li>
-                                    <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span><?php 
-                                        $needle = $row_leads["location"];
-                                        $resultArray = array_filter($row_location, function ($v) use ($needle) {
-                                          return $needle == $v['id']; 
-                                        });
-                                        if($needle == 1) $needle = 1;
-                                        else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                        if(isset($resultArray[$needle]["name"]) && $resultArray[$needle]["name"] != "") echo $resultArray[$needle]["name"]; 
-                                        else echo "Not Found";
-                                      ?>  </span></li>
-                                    <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li>
-                                    <!-- <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li> -->
-                                </ul>
-                                <small class="card-text text-uppercase text-muted small" >Contacts</small>
-                                <ul class="list-unstyled my-3 py-1" style="">
-                                    <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Contact:</span> <span><?php echo $row_leads['phone_no']; ?></span></li>
-                                    <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Email ID:</span> <span><?php echo $row_leads['email_id']; ?></span></li>
-                                
-                                </ul>
-                                </div>
-                                <small class="card-text text-uppercase text-muted small">Other</small>
-                                <ul class="list-unstyled my-3 py-1" style="">
-                                    <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Source:</span> <span><?php echo $row_leads['source']; ?></span></li>
-                                    <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_leads['added_on'])); ?></span></li>
-                                </ul>
-
-                                <small class="card-text text-uppercase text-muted small">Assigned Details</small>
-                                <ul class="list-unstyled my-3 py-1" style="">
-                                    <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Employee Name:</span> <span><?php echo $row_assign['employee_name']; ?></span></li>
-                                    <!-- <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Employee Type:</span> <span><?php echo $row_assign['employee_type']; ?></span></li> -->
-                                    <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Visit Date Time:</span> <span>
-                                        <?php
-                                            if($row_assign['visit_date'] == "0000-00-00") {
-                                                echo date("d-M-Y" , strtotime($row_assign['next_date'])); 
-                                            } else {
-                                                echo date("d-M-Y" , strtotime($row_assign['visit_date'])); 
-                                            }
-                                        ?>
-                                        </span> &nbsp;&nbsp; <span>
-                                        <?php 
-                                            if($row_assign['visit_time'] == "00:00:00") {
-                                                echo date("H:i A" , strtotime($row_assign['next_time'])); 
-                                            } else {
-                                                echo date("H:i A" , strtotime($row_assign['visit_time'])); 
-                                            }
-                                        ?>
-                                        </span></li>
-                                </ul>
-
-                                <div class="col-md-12" style="text-align: right;">
-                                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#addNewCCModald"> Mark Dead </button>
-                                    <a class="btn btn-success" href="convert_lead_by_SE.php?assign_leads_sr_id=<?php echo $row_assign["assign_leads_sr_id"]; ?>">Convert </a>
-                                    <a class="btn btn-success" href="trasnfer_lead_by_SE.php?assign_leads_sr_id=<?php echo $row_assign["assign_leads_sr_id"]; ?>">Transfer </a>
-                                </div>
-                            </div>
-                        </div>
-                        <!--/ About User -->
-                    </div>
-                    <!--  -->
-                    <div class="col-xl-12 col-lg-12 col-md-12">
-                        <div class="card mb-6" >
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="card-title mb-0"><i class="ri-survey-line ri-24px text-body me-2"></i>Add Visit Details</h5>
-                                <!-- <a class="btn btn-secondary" href="transfer_assigned_lead.php?assign_leads_id=<?php echo $row_assign["assign_leads_id"]; ?>">Transfer Lead </a> -->
-                            </div>
-
-                            <form action="#" method="post" enctype="multipart/form-data">
-                                <input type="hidden" value="<?php echo $_REQUEST['assign_leads_sr_id']; ?>" name="assign_leads_sr_id">
-                                <div class="card-body demo-vertical-spacing demo-only-element" style="padding-top: 0px;">
-                                    <!--  -->
-                                    <div style="display: flex; justify-content: space-between;">
-                                    <div style="">
-                                    <small class="card-text text-uppercase text-muted small">Project Details</small>
-                                        <ul class="list-unstyled my-3 py-1" style="">
-                                            <?php 
-                                                 $sqlsr = "SELECT * FROM assign_leads_sr where assign_leads_sr_id= $assign_leads_sr_id ";
-                                                 $q = $pdo->prepare($sqlsr);
-                                                 $q->execute(array());      
-                                                 $row_assign1 = $q->fetch(PDO::FETCH_ASSOC);
-
-                                                 $property_id = $row_assign1['property_id'];
-                                                 $sub_property_id = $row_assign1['sub_property_id'];
-                                                 $variant = $row_assign1['variant'];
-
-                                                //  property_varients
-                                                 $sqlpro = "SELECT * FROM property_name where property_name_id= $property_id ";
-                                                 $q = $pdo->prepare($sqlpro);
-                                                 $q->execute(array());      
-                                                 $row_property = $q->fetch(PDO::FETCH_ASSOC);
-
-                                                 $sqltower = "SELECT * FROM property_tower where property_tower_id = $sub_property_id ";
-                                                 $q = $pdo->prepare($sqltower);
-                                                 $q->execute(array());      
-                                                 $row_tower = $q->fetch(PDO::FETCH_ASSOC);
-                                            ?>
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Property Name:</span> <span><?php echo $row_property['property_title']; ?></span></li>
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span><?php echo $row_property['location']; ?></span></li>
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Google Location:</span>Latitude: <span><?php echo $row_property['google_location_lat']; ?> & Longitude: <?php echo $row_property['google_location_long']; ?> </span></li>
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Builder Name:</span> <span><?php echo $row_property['builder_name']; ?></span></li>
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Tower Name:</span> <span><?php echo $row_tower['property_tower_name']; ?></span></li>
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Builder Possession:</span> <span><?php echo $row_tower['builder_possession']; ?></span></li>
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">RERA Possession:</span> <span><?php echo $row_tower['rera_possession']; ?></span></li>
-                                        </div>
-                                        <div style="">
-                                            <small class="card-text text-uppercase text-muted small">Varient Details</small>
-                                            <?php 
-                                                // $sqlsr = "SELECT * FROM assign_leads_sr where assign_leads_sr_id= $assign_leads_sr_id ";
-                                                // foreach ($pdo->query($sqlsr) as $row_sr) 
-                                                // {
-                                                //     $varient_group = $row_sr['variant'];
-                                            ?>
-                                            <?php 
-                                                    $sqlsr = "SELECT * FROM assign_leads_sr WHERE assign_leads_sr_id = :assign_leads_sr_id";
-                                                    $stmt = $pdo->prepare($sqlsr);
-                                                    $stmt->execute(['assign_leads_sr_id' => $assign_leads_sr_id]);
-
-                                                    while ($row_sr = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                                        $varient_group = $row_sr['variant']; // Assume this is a comma-separated string like "6,5,4"
-                                                        
-                                                        // Split the variant IDs into an array
-                                                        $variant_ids = explode(',', $varient_group);
-                                                        
-                                                        // Prepare a SQL query to fetch variant names based on these IDs
-                                                        $placeholders = implode(',', array_fill(0, count($variant_ids), '?'));
-                                                        $sqlVariants = "SELECT varients, area, price FROM property_varients WHERE property_varients_id IN ($placeholders)";
-                                                        $stmtVariants = $pdo->prepare($sqlVariants);
-                                                        $stmtVariants->execute($variant_ids);
-                                                        
-                                                        // Fetch the variant details
-                                                        $variant_details = $stmtVariants->fetchAll(PDO::FETCH_ASSOC);
-                                                        
-                                                        // Display each variant's details
-                                                        foreach ($variant_details as $variant) {
-                                            ?>
-                                           
-                                            <div style="display : flex; gap: 20px; margin-top:20px;">
-                                                <li class="d-flex align-items-center mb-2" ><span class="fw-medium mx-2">Variants:</span> <span><?php echo htmlspecialchars($variant['varients']); ?></span></li>
-                                                <li class="d-flex align-items-center mb-2"><span class="fw-medium mx-2">Area:</span> <span><?php echo htmlspecialchars($variant['area']); ?></span></li>
-                                                <li class="d-flex align-items-center mb-2"><span class="fw-medium mx-2">Price:</span> <span><?php echo htmlspecialchars($variant['price']); ?></span></li>
-                                            </div>
-                                            <?php } }?>
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="row  justify-content-between align-items-center">
+                            <div class="col-12">
+                                <div class="card mb-6">
+                                    <div class="card-header header-elements">
+                                        <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
+                                        <h5 class="card-action-title mb-0 underline">Lead Details</h5>
                                         
-                                        </ul>
-                                        </div>
-                                        </div>
-                                    <!--  -->
-                                    <div style="display: flex;gap:200px;">
-                                        <div class="mb-4" style="display: flex; gap:30px;">
-                                            <label class="form-label" for="notes">Visited?</label>
-                                            <div class="d-flex gap-4">
-                                                <div class="form-check form-check-success">
-                                                    <input name="connection_status" class="form-check-input" type="radio" value="connected" id="customRadioSuccess" checked>
-                                                    <label class="form-check-label" for="customRadioSuccess">Yes</label>
-                                                </div>
-                                                <div class="form-check form-check-danger">
-                                                    <input name="connection_status" class="form-check-input" type="radio" value="not_connected" id="customRadioDanger">
-                                                    <label class="form-check-label" for="customRadioDanger">No</label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-4" style="display: flex;gap:20px;">
-                                            <label class="form-label">Lead Type:</label>
-                                            <div class="d-flex gap-4">
-                                                <label class="switch">
-                                                    <input type="radio" class="switch-input" name="lead_type" checked="" value="hot">
-                                                    <span class="switch-toggle-slider">
-                                                        <span class="switch-on"></span>
-                                                        <span class="switch-off"></span>
-                                                    </span>
-                                                    <span class="switch-label">Hot</span>
-                                                </label>
-
-                                                <label class="switch">
-                                                    <input type="radio" class="switch-input" name="lead_type" value="warm">
-                                                    <span class="switch-toggle-slider">
-                                                        <span class="switch-on"></span>
-                                                        <span class="switch-off"></span>
-                                                    </span>
-                                                    <span class="switch-label">Warm</span>
-                                                </label>
-
-                                                <label class="switch">
-                                                    <input type="radio" class="switch-input" name="lead_type" value="cold">
-                                                    <span class="switch-toggle-slider">
-                                                        <span class="switch-on"></span>
-                                                        <span class="switch-off"></span>
-                                                    </span>
-                                                    <span class="switch-label">Cold</span>
-                                                </label>
-
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <label for="notes" class="form-label w-100 text-left">Remark For Today's Visit</label>
-                                    <div class="mb-4 form-floating form-floating-outline">
-                                        <input class="form-control" type="text" placeholder="Enter your remark here.." id="today_visit_remark" name="today_visit_remark">
-                                        <label for="today_visit_remark">Remark For Today's Visit</label>
-                                    </div>
-
-                                    <!-- photo Options -->
-                                        <!-- <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group" id="take_photo_div" style="">
-                                                    <div class="row">
-                                                        <div class="col-sm-11" style="display:flex;gap:20px;">
-                                                            <label for="patientDate" class="col-sm-2 control-label" style="margin-top: 10px;">Today's Visit Photo</label>
-                                                            <div class="col-sm-3" style="padding-right: 0px;">
-                                                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addNewCCModal" onclick="startup();"> Take Photo </button>
-                                                            </div>
-                                                            <div class="col-sm-4"style="padding: 0px;" >
-                                                                <input type="hiddden" class="form-control" name="photo_capture1" id="photo_capture1" readonly />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>	
+                                        <!-- <div class="card-header-elements ms-sm-auto">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-primary waves-effect waves-light" style="visibility:hidden;">Update</button>
                                             </div>
                                         </div> -->
-                                        <!-- /photo options -->
-
-                                        <!-- Photo Options -->
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="form-group" id="take_photo_div" style="">
-                                                        <div class="row justify-content-center">
-                                                            <div class="col-sm-12 text-center">
-                                                                <div class="form-floating form-floating-outline">
-                                                                    <input class="form-control" type="hidden" id="lat" readonly name="latitude">
-                                                                    <span>Current Latitude:- </span>
-                                                                    <span class="text-danger" id="latitude"></span> 
-                                                                    
-                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                    <!-- <label for="latitude">Latitude</label> -->
-                                                                <!-- </div>
-                                                            </div>
-                                                            <div class="col-sm-3">
-                                                                <div class="form-floating form-floating-outline"> -->
-                                                                    <input class="form-control" type="hidden" id="long" readonly name="longitude">
-                                                                    <span>Current Longitude:- </span>
-                                                                    <span class="text-danger" id="longitude"></span>
-                                                                    <!-- <label for="longitude">Longitude</label> -->
-                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                                                                    <span>Accuracy:- </span>
-                                                                    <span class="text-danger" id="accuracy"></span>
-                                                                    
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-sm-11 mt-6" style="display:flex;gap:20px;">
-                                                                <label for="patientDate" class="col-sm-2 control-label" style="margin-top: 10px;">Today's Visit Photo</label>
-                                                                <div class="col-sm-3" style="padding-right: 0px;">
-                                                                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addNewCCModal" onclick="startup();"> Take Photo </button>
-                                                                </div>
-                                                                <!-- Image display section -->
-                                                                <div class="col-sm-4" style="padding: 0px;">
-                                                                    <!-- <img id="captured_photo_preview" src="" alt="Captured Photo" style="max-width: 150px; display: none;" /> -->
-                                                                    <img id="captured_photo_preview" src="" alt="Captured Photo" style="max-width: 150px; display: none;" />
-                                                                    <input type="hidden" class="form-control" name="photo_capture1" id="photo_capture1" readonly />
-                                                                </div>                                                                
-                                                            </div>
-                                                        </div>
-                                                    </div>  
-                                                </div>
-                                            </div>
-                                        <!-- /photo options -->
-
-                                        <hr>
-
-                                    <!-- <div class="col-12"> -->
-
-                                        <!-- <div class="mb-4" sstyle="">
-                                            <div class="form-check form-check-danger">
-                                                <input class="form-check-input" type="checkbox" value="yes" id="customCheckDanger1" name="is_next_date" onchange="toggleReasonBox1()">
-                                                <label class="form-check-label" for="customCheckDanger1">Is next date?</label>
-                                            </div>
-                                        </div> -->
-
-                                        <label for="next_date" class="form-label">Select One Option</label>
-                                    <div class="mb-4 form-floating form-floating-outline" id="selectBox1">
-                                        <select id="roleDropdown" name="followup_or_another_property" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
-                                            <option value="" data-select2-id="18">Select One</option>
-                                            <option value="Follow Up">Follow Up</option>
-                                            <option value="Another Property">Another Property</option>
-                                        </select>
-                                        <label for="roleDropdown">Select One Option</label>
                                     </div>
                                     
-                                    <!-- <label for="next_date" class="form-label">Next Follow Up Date Time</label> -->
-                                    <div class="mb-4  form-floating form-floating-outline" id="reasonBoxfollowup" style="display:none;">
-                                        <input class="form-control" type="datetime-local" id="next_date_followup" name="next_date_followup" required>
-                                        <label for="next_date_followup">Next Follow Up Date Time</label>
-                                    </div>
-
-                                    <!-- <div class="mb-4" id="reasonBoxvisit" style="display:none;">
-                                        <label for="next_date" class="form-label">Visit Date Time</label>
-                                        <input class="form-control" type="datetime-local" id="next_date_visit" name="next_date_visit" required>
-                                    </div> -->
-
-                                    <!-- new form -->
-                                    <div class="row g-4" id="property_details_box" style="display:none;">
-                                        <div class="row">
-                                          <h5 class="card-header mt-4" style="padding-left: 0px;"> Property Details </h5>
-                                          <div class="col-md-6">
-                                              
-                                              <div class="row">
-                                                  <label class="col-sm-3 col-form-label text-sm-end mar-top">Property </label>
-                                                  <div class="col-sm-9  form-floating form-floating-outline">
-                                                      <select id="propertyDropdown" name="property_name_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true">
-                                                          <option value="">Select Property Name</option>
-                                                          <?php
-                                                              $sql = "SELECT * FROM property_name where status = 'Active'";
-                                                              foreach ($pdo->query($sql) as $row) { 
-                                                                  echo '<option value="'.$row['property_name_id'].'">'.$row['property_title'].'</option>';
-                                                              }
-                                                          ?>
-                                                      </select>
-                                                      <label for="propertyDropdown">Property</label>
-                                                  </div>
-                                              </div>
-                                          </div>
-
-                                            <div class="col-md-6">
-                                                <div class="row">
-                                                    <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Tower</label>
-                                                    <div class="col-sm-9 form-floating form-floating-outline">
-                                                        <select id="towerDropdown" name="property_tower_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
-                                                            <option value="">Select Property Tower</option>
-                                                            <!-- Towers will be loaded here based on the selected property -->
-                                                        </select>
-                                                        <label for="towerDropdown">Property Tower</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--  -->
-                                        <br>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="row">
-                                                    <label class="col-sm-3 col-form-label text-sm-end mar-top"> Variants</label>
-                                                    <div class="col-sm-9 form-floating form-floating-outline">
-                                                        <!-- <select id="variantDropdown" name="property_variants[]" class="js-example-basic-single select2 form-select select2-hidden-accessiblee select2-hidden-accessible" multiple="multiple" data-allow-clear="true"> -->
-                                                        <select id="variantDropdown" name="property_variants[]" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true">
-                                                            <option value="">Select Variants</option>
-                                                        </select>
-                                                        <label for="variantDropdown">Variants</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                              <div class="row">
-                                              <label for="next_date" class="col-sm-3 col-form-label text-sm-end mar-top ">Visit Date Time</label>
-                                                <div class="col-sm-9 form-floating form-floating-outline" id="reasonBoxvisit">
-                                                    <input class="form-control" type="datetime-local" id="next_date_visit" name="next_date_visit">
-                                                    <label for="next_date_visit">Variants</label>
-                                                </div>
-                                              </div>
-                                            </div>
-
-                                         </div>
-
-                                    </div>
-                                    <!-- /new form -->
-
-
-                                    <div class="d-flex justify-content-between">
-                                        <!-- <a class="btn btn-outline-info" href="view_leads_for_assigned_SE.php?assign_leads_id=<?php echo $row_assign["assign_leads_id"]; ?>">Assign Lead To Sales Executive </a> -->
-                                        <button type="submit" name="submit1" id="submit1" class="btn btn-success logo-btn">Submit</button>
-                                        <!-- <a class="btn btn-secondary" href="transfer_assigned_lead.php?assign_leads_id=<?php echo $row_assign["assign_leads_id"]; ?>">Transfer Lead </a> -->
+                                    <hr class="m-0">
+                                    <div class="card-body demo-vertical-spacing demo-only-element">
+                                        <!-- <small class="card-text text-uppercase text-muted small">About</small> -->
+                                        <h5 class="card-action-title  mb-0">About</h5>
+                                        <hr class="mt-1">
+                                        <ul class="list-unstyled my-3 py-1" style="">
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Lead Name:</span> <span><?php echo $row_leads['lead_name']; ?></span></li>
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span><?php 
+                                                $needle = $row_leads["location"];
+                                                $resultArray = array_filter($row_location, function ($v) use ($needle) {
+                                                    return $needle == $v['id']; 
+                                                });
+                                                if($needle == 1) $needle = 1;
+                                                else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                                if(isset($resultArray[$needle]["name"]) && $resultArray[$needle]["name"] != "") echo $resultArray[$needle]["name"]; 
+                                                else echo "Not Found";
+                                            ?></span></li>
+                                            <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li>
+                                            <!-- <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li> -->
+                                        </ul>
+                                        <!-- <small class="card-text text-uppercase text-muted small" >Contacts</small> -->
+                                        <!-- <hr> -->
+                                        <h5 class="card-action-title  mb-0">Contacts</h5>
+                                        <hr class="mt-1">
+                                        <ul class="list-unstyled my-3 py-1" style="">
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Contact:</span> <span><?php echo $row_leads['phone_no']; ?></span></li>
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Email ID:</span> <span><?php echo $row_leads['email_id']; ?></span></li>
                                         
+                                        </ul>
+                                        <!-- <small class="card-text text-uppercase text-muted small">Other</small> -->
+                                        <!-- <hr> -->
+                                        <h5 class="card-action-title  mb-0">Other</h5>
+                                        <hr class="mt-1">
+                                        
+                                        <ul class="list-unstyled my-3 py-1" style="">
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Source:</span> <span><?php echo $row_leads['source']; ?></span></li>
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_leads['added_on'])); ?></span></li>
+                                        </ul>
+                                        <!-- <small class="card-text text-uppercase text-muted small">Assigned Details</small> -->
+                                        <h5 class="card-action-title  mb-0">Assigned By - <b><?php echo $row_assign['employee_name']; ?></b></h5>
+                                        <!-- <hr class="mt-1">
+                                        <ul class="list-unstyled my-3 py-1" style="">
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Employee Name:</span> <span><?php echo $row_assign['employee_name']; ?></span></li>
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Visit Date Time:</span> <span>
+                                                <?php
+                                                    if($row_assign['visit_date'] == "0000-00-00") {
+                                                        echo date("d-M-Y" , strtotime($row_assign['next_date'])); 
+                                                    } else {
+                                                        echo date("d-M-Y" , strtotime($row_assign['visit_date'])); 
+                                                    }
+                                                ?>
+                                                </span> &nbsp;&nbsp; <span>
+                                                <?php 
+                                                    if($row_assign['visit_time'] == "00:00:00") {
+                                                        echo date("H:i A" , strtotime($row_assign['next_time'])); 
+                                                    } else {
+                                                        echo date("H:i A" , strtotime($row_assign['visit_time'])); 
+                                                    }
+                                                ?>
+                                                </span></li>
+                                        </ul> -->
+
+                                        <!-- <div class="col-md-12" style="text-align: right;">
+                                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#addNewCCModald"> Mark Dead </button>
+                                            <a class="btn btn-success" href="convert_lead_by_SE.php?assign_leads_sr_id=<?php echo $row_assign["assign_leads_sr_id"]; ?>">Convert </a>
+                                            <a class="btn btn-success" href="trasnfer_lead_by_SE.php?assign_leads_sr_id=<?php echo $row_assign["assign_leads_sr_id"]; ?>">Transfer </a>
+                                        </div> -->
+                                        <!-- <ul class="list-unstyled my-3 py-1" style="">
+                                            <a href="javascript:void(0)" class="btn btn-primary waves-effect waves-light">
+                                                <i class="ri-user-follow-line ri-16px me-2"></i>Add Followup
+                                            </a>
+                                            <a href="javascript:void(0)" class="btn btn-primary waves-effect waves-light">
+                                                <i class="ri-user-follow-line ri-16px me-2"></i>Transfer Leads
+                                            </a>
+                                        </ul> -->
                                     </div>
                                 </div>
-                            </form>
+                            </div>
+                        </div>                        
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="row  justify-content-between align-items-center">
+                            <div class="col-12">
+                                <div class="card mb-6">
+                                    <div class="card-header header-elements">
+                                        <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
+                                        <h5 class="card-action-title mb-0 underline">Property Details</h5>
+                                        
+                                        <!-- <div class="card-header-elements ms-sm-auto">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-primary waves-effect waves-light" style="visibility:hidden;">Update</button>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                    
+                                    <hr class="m-0">
+                                    <div class="card-body demo-vertical-spacing demo-only-element">
+                                        <!-- <small class="card-text text-uppercase text-muted small">About</small> -->
+                                        <h5 class="card-action-title  mb-0">Project Details</h5>
+                                        <hr class="mt-1">
+                                        <?php 
+                                            $sqlsr = "SELECT * FROM assign_leads_sr where assign_leads_sr_id= $assign_leads_sr_id ";
+                                            $q = $pdo->prepare($sqlsr);
+                                            $q->execute(array());      
+                                            $row_assign1 = $q->fetch(PDO::FETCH_ASSOC);
+
+                                            $property_id = $row_assign1['property_id'];
+                                            $sub_property_id = $row_assign1['sub_property_id'];
+                                            $variant = $row_assign1['variant'];
+
+                                            //  property_varients
+                                            $sqlpro = "SELECT * FROM property_name where property_name_id= $property_id ";
+                                            $q = $pdo->prepare($sqlpro);
+                                            $q->execute(array());      
+                                            $row_property = $q->fetch(PDO::FETCH_ASSOC);
+
+                                            $sqltower = "SELECT * FROM property_tower where property_tower_id = $sub_property_id ";
+                                            $q = $pdo->prepare($sqltower);
+                                            $q->execute(array());      
+                                            $row_tower = $q->fetch(PDO::FETCH_ASSOC);
+                                        ?>
+                                        <ul class="list-unstyled my-3 py-1" style="">
+                                                <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Property Name:</span> <span class="fw-bold"><?php echo $row_property['property_title']; ?></span></li>
+                                                <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span class="fw-bold"><?php echo $row_property['location']; ?></span></li>
+                                                <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Google Location:</span>Latitude: <span class="fw-bold"><?php echo $row_property['google_location_lat']; ?> & </span>   &nbsp;Longitude: <span class="fw-bold"><?php echo $row_property['google_location_long']; ?> </span></li>
+                                                <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Builder Name:</span> <span class="fw-bold"><?php echo $row_property['builder_name']; ?></span></li>
+                                                <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Tower Name:</span> <span class="fw-bold"><?php echo $row_tower['property_tower_name']; ?></span></li>
+                                                <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Builder Possession:</span> <span class="fw-bold"><?php echo $row_tower['builder_possession']; ?></span></li>
+                                                <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">RERA Possession:</span> <span class="fw-bold"><?php echo $row_tower['rera_possession']; ?></span></li>
+                                        </ul>
+                                        <!-- <small class="card-text text-uppercase text-muted small" >Contacts</small> -->
+                                        <!-- <hr> -->
+                                        <h5 class="card-action-title  mb-0">Varient Details</h5>
+                                        <hr class="mt-1">
+                                        <?php 
+                                            $sqlsr = "SELECT * FROM assign_leads_sr WHERE assign_leads_sr_id = :assign_leads_sr_id";
+                                            $stmt = $pdo->prepare($sqlsr);
+                                            $stmt->execute(['assign_leads_sr_id' => $assign_leads_sr_id]);
+
+                                            while ($row_sr = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                                $varient_group = $row_sr['variant']; // Assume this is a comma-separated string like "6,5,4"
+                                                
+                                                // Split the variant IDs into an array
+                                                $variant_ids = explode(',', $varient_group);
+                                                
+                                                // Prepare a SQL query to fetch variant names based on these IDs
+                                                $placeholders = implode(',', array_fill(0, count($variant_ids), '?'));
+                                                $sqlVariants = "SELECT varients, area, price FROM property_varients WHERE property_varients_id IN ($placeholders)";
+                                                $stmtVariants = $pdo->prepare($sqlVariants);
+                                                $stmtVariants->execute($variant_ids);
+                                                
+                                                // Fetch the variant details
+                                                $variant_details = $stmtVariants->fetchAll(PDO::FETCH_ASSOC);
+                                        ?>
+                                        <ul class="list-unstyled my-3 py-1" style="">
+                                        <!-- <div style="display : flex; gap: 20px; margin-top:20px;"> -->
+                                            <?php 
+                                                // Display each variant's details
+                                                foreach ($variant_details as $variant) {
+                                            ?>
+                                            <li class="d-flex align-items-center mb-2" >
+                                                <span class="fw-medium mx-2">Variants:</span> 
+                                                <span class="fw-bold"><?php echo htmlspecialchars($variant['varients']); ?></span>
+                                            </li>
+                                            <li class="d-flex align-items-center mb-2">
+                                                <span class="fw-medium mx-2">Area:</span> 
+                                                <span class="fw-bold"><?php echo htmlspecialchars($variant['area']); ?></span>
+                                            </li>
+                                            <li class="d-flex align-items-center mb-2">
+                                                <span class="fw-medium mx-2">Price:</span> 
+                                                <span class="fw-bold"><?php echo htmlspecialchars($variant['price']); ?></span>
+                                            </li>
+                                            <?php } }?>
+                                        <!-- </div> -->
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                    
+                    <div class="col-xl-6 col-lg-6 col-md-6">
+                        <div class="row justify-content-between align-items-center">
+                            <div class="col-12">
+                                <div class="card mb-6" >
+
+                                    <form action="#" method="post" enctype="multipart/form-data">
+                                            <input type="hidden" value="<?php echo $_REQUEST['assign_leads_sr_id']; ?>" name="assign_leads_sr_id">        
+                                            <div class="card-header header-elements">
+                                                <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
+                                                <h5 class="card-action-title mb-0"><i class="ri-survey-line ri-24px me-2"></i>Add Follow Up Details</h5>
+                                                <div class="card-header-elements ms-sm-auto">
+                                                    <div class="btn-group">
+                                                        <button type="submit" name="submit1" id="submit1"  class="btn btn-primary waves-effect waves-light">Update</button>
+                                                        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split waves-effect waves-light" data-bs-toggle="dropdown" data-bs-reference="parent" aria-expanded="false"></button>
+                                                        <div class="dropdown-menu" style="">
+                                                            <a class="dropdown-item waves-effect" href="convert_lead_by_SE.php?assign_leads_sr_id=<?php echo $row_assign["assign_leads_sr_id"]; ?>">Convert</a>
+                                                            <a class="dropdown-item waves-effect" href="trasnfer_lead_by_SE.php?assign_leads_sr_id=<?php echo $row_assign["assign_leads_sr_id"]; ?>">Transfer</a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a class="dropdown-item waves-effect" data-bs-toggle="modal" data-bs-target="#addNewCCModald">Mark Dead</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr class="m-0">                                        
+                                            
+                                            
+                                            <div class="col-md-12 pt-6">
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <div class="d-flex justify-content-between  align-items-center">
+                                                        <h6 class="w-max-content mb-0">1. Visited*</h6>
+                                                        <!-- <div class="mb-4"> -->
+                                                            <!-- <label class="form-label">Connection Status</label> -->
+                                                            <div class="d-flex gap-4" style="width:72%">
+                                                                <div class="form-check form-check-success mb-0">
+                                                                    <input name="connection_status" class="form-check-input" type="radio" value="connected" id="customRadioSuccess" checked>
+                                                                    <label class="form-check-label" for="customRadioSuccess">Yes</label>
+                                                                </div>
+                                                                <div class="form-check form-check-danger mb-0">
+                                                                    <input name="connection_status" class="form-check-input" type="radio" value="not_connected" id="customRadioDanger">
+                                                                    <label class="form-check-label" for="customRadioDanger">No</label>
+                                                                </div>
+                                                            </div>
+                                                        <!-- </div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <!-- <h6 class="mt-0">2. Remark For Today's Visit*</h6> -->
+                                                        <h6 class="mt-0">2. Remark*</h6>
+                                                        <div class="d-flex gap-4" style="width: 72%;">
+                                                            <div class="mb-6 mt-1 form-floating form-floating-outline" style="width: 100%;">
+                                                                <textarea class="form-control" type="text" placeholder="Enter your remark here.." id="today_visit_remark" name="today_visit_remark" required style="height: 100px;resize: none;"></textarea>
+                                                                <label for="today_visit_remark">Remark For Today's Visit</label>
+                                                                <!-- <label for="notes">Notes</label> -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-12">
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <h6 class="mt-0">3. Follow Up*</h6>
+                                                        <div class="d-flex gap-4" style="width: 72%;">
+                                                            <div class="mb-4 form-floating form-floating-outline" style="width: 100%;">
+                                                            <input class="form-control" type="datetime-local" id="next_date" name="next_date" required>
+                                                            <label for="next_date">Next Follow Up Date Time</label>
+                                                        </div>  
+                                                        </div>
+                                                            
+                                                    </div>
+                                                </div>    
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <h6 class="mt-0">4. Lead Type*</h6>
+                                                        <div class="mb-4 d-flex gap-4" style="width: 72%;">
+                                                            <label class="switch switch-danger">
+                                                                <input type="radio" class="switch-input" name="lead_type" checked="" value="hot">
+                                                                <span class="switch-toggle-slider">
+                                                                    <span class="switch-on"></span>
+                                                                    <span class="switch-off"></span>
+                                                                </span>
+                                                                <span class="switch-label">Hot</span>
+                                                            </label>
+
+                                                            <label class="switch switch-warning">
+                                                                <input type="radio" class="switch-input" name="lead_type" value="warm">
+                                                                <span class="switch-toggle-slider">
+                                                                    <span class="switch-on"></span>
+                                                                    <span class="switch-off"></span>
+                                                                </span>
+                                                                <span class="switch-label">Warm</span>
+                                                            </label>
+
+                                                            <label class="switch switch-info">
+                                                                <input type="radio" class="switch-input" name="lead_type" value="cold">
+                                                                <span class="switch-toggle-slider">
+                                                                    <span class="switch-on"></span>
+                                                                    <span class="switch-off"></span>
+                                                                </span>
+                                                                <span class="switch-label">Cold</span>
+                                                            </label>
+                                                        </div>        
+                                                    </div>
+                                                </div>    
+                                            </div>
+                                            
+                                            <div class="col-12">
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <h6 class="mt-0">5. Visit Photo*</h6>
+                                                        <div class="mb-4 d-flex align-items-center gap-2" style="width: 72%; height: 125px;">
+                                                            <div class="col-sm-6" style="padding-right: 0px;">
+                                                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addNewCCModal" onclick="startup();"> Take Photo </button>
+                                                            </div>
+                                                            <!-- Image display section -->
+                                                            <div class="col-sm-6" style="padding: 0px;">
+                                                                <!-- <img id="captured_photo_preview" src="" alt="Captured Photo" style="max-width: 150px; display: none;" /> -->
+                                                                <img id="captured_photo_preview" src="" alt="Captured Photo" style="max-width: 150px; display: none;" />
+                                                                <input type="hidden" class="form-control" name="photo_capture1" id="photo_capture1" readonly />
+                                                            </div>    
+                                                        </div>        
+                                                    </div>
+                                                </div>    
+                                            </div>
+                                            
+                                            <div class="col-12">
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <h6 class="my-0">5. Update For*</h6>
+                                                        <div class="d-flex align-items-center gap-2" style="width: 72%;">
+                                                            <!-- <label for="next_date" class="form-label">Select One Option</label> -->
+                                                            <div class="form-floating form-floating-outline" id="selectBox1" style="width: 100%;">
+                                                                <select id="roleDropdown" name="followup_or_another_property" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
+                                                                    <option value="" data-select2-id="18">Select One</option>
+                                                                    <option value="Follow Up">Follow Up</option>
+                                                                    <option value="Another Property">Another Property</option>
+                                                                </select>
+                                                                <label for="roleDropdown">Select One Option</label>
+                                                            </div>
+                                                        </div>        
+                                                    </div>
+                                                </div>    
+                                            </div>                                        
+                                        
+                                            <div class="col-sm-12 text-center">
+                                                    <div class="form-floating form-floating-outline">
+                                                        <input class="form-control" type="hidden" id="lat" readonly name="latitude">
+                                                        <!-- <span>Current Latitude:- </span> -->
+                                                        <!-- <span class="text-danger" id="latitude"></span>  -->
+                                                        <!-- <br> -->
+                                                        <input class="form-control" type="hidden" id="long" readonly name="longitude">
+                                                        <!-- <span>Current Longitude:- </span> -->
+                                                        <!-- <span class="text-danger" id="longitude"></span> -->
+                                                        <!-- <br> -->
+                                                        <!-- <span>Accuracy:- </span> -->
+                                                        <!-- <span class="text-danger" id="accuracy"></span> -->
+                                                        <div class="mx-7 alert alert-solid-warning" id="warningMessage" role="alert" style="display:none;">
+                                                            Make sure your location is enabled before submitting this form
+                                                        </div>
+                                                        <div class="mx-7 alert alert-solid-danger" id="errormessage" role="alert" style="display:none;">
+                                                            Please turn on location to submit this form!
+                                                        </div>
+                                                        <div class="mx-7 mb-0 alert text-danger alert-solid-success" id="successmessage" role="alert" style="display:none; width:max-content">
+                                                            <span class="d-none" class="" id="latitude"></span><span class="d-none" id="longitude"></span>
+                                                            <span class="text-white"  data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Make sure this is below 100" id="accuracy"></span>
+                                                        </div>
+                                                        
+                                                    </div>
+                                            </div>
+                        
+                                            <div class="col-sm-12 text-right">
+                                                <hr class="m-0">
+                                            </div>
+
+                                            <div class="col-sm-12 text-right">
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <div class="d-flex justify-content-end align-items-center">
+                                                        <span class="d-none" class="" id="latitude"></span><span class="d-none" id="longitude"></span>
+                                                        <!-- <button type="submit" name="submit1" id="submit1" class="btn btn-success">Submit</button> -->
+                                                    </div>        
+                                                </div>    
+                                            </div>
+                                    </form>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Timeline code -->
-                    <div class="col-xl-12 col-lg-12 col-md-12">
+                    <div class="col-xl-6 col-lg-6 col-md-6">
                         <div class="card">
-                            <h5 class="card-header">Timeline For &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info"><?php echo $row_leads['lead_name']; ?></span></h5>
-                            <div class="table-responsive text-nowrap">
-                                <table class="table">
-                                <caption class="ms-6">Timeline For Lead</caption>
-                                <thead>
-                                    <tr>
-                                    <th>#</th>
-                                    <th>Time Line Date</th>
-                                    <th>Status</th>
-                                    <th>Latitude </th>
-                                    <th>Longitude </th>
-                                    <!-- <th>Leads Information</th> -->
-                                    <th>Follow Up Details</th>
-                                    <th>Transfer Details</th>
-                                    <th>Lead Dead</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php 
-                                        
+                            <!-- <h5 class="card-header">Timeline For &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info"><?php //echo $row_leads['lead_name']; ?></span></h5> -->
+                            <h5 class="card-header text-center">Timeline</h5>
+                            <hr class="m-0">
+                            <div class="card-body">
 
-                                        if($leads_id != 0 && $leads_id != "" && $leads_id != null  && $leads_id != "undefined" ) {
-                                            if(isset($_REQUEST['assign_leads_id'])) {
-                                                $assign_leads_id = $_REQUEST['assign_leads_id'];
-                                                $sqlemp = "SELECT * FROM assign_leads where assign_leads_id= $assign_leads_id ";
-                                                $q = $pdo->prepare($sqlemp);
-                                                $q->execute(array());      
-                                                $row_assign = $q->fetch(PDO::FETCH_ASSOC);
+                                <?php
+                                $leads_id = $leads_id_timeline;
+                                include_once("timeline_showcase.php");
+                                ?>
 
-                                                $leads_id = $row_assign['leads_id']; 
-                                            } else {
-                                                $assign_leads_id = 0;
-                                            }
-                                        } else {
-                                            $assign_leads_id = 0;
-                                            $leads_id = 0;
-                                        }
-
-                                        $i = 1;
-                                        $sql = "SELECT * FROM assign_leads where assign_leads_id=$assign_leads_id";
-                                        $q = $pdo->query($sql);
-                                        foreach ($pdo->query($sql) as $row1) 
-                                        { 
-                                            $assign_leads_id = $row1['assign_leads_id'];
-                                            $leads_id = $row1['leads_id'];
-                                            $admin_id = $row1['admin_id'];
-
-                                            $sqlemp = "select * from employee where admin_id = $admin_id ";
-                                            $q = $pdo->prepare($sqlemp);
-                                            $q->execute(array());      
-                                            $row_emp = $q->fetch(PDO::FETCH_ASSOC);
-
-                                           
-                                    ?>
-                                    <tr>
-                                        <td>
-                                            <?php echo $i; ?> 
-                                        </td>
-                                            <td>
-                                                <?php echo date("d-m-Y", strtotime($row1['added_on'])); ?>
-                                            </td>
-                                            <td>
-                                                <?php 
-                                                    if(strtolower($row1["transfer_status"]) == 'trasnfered') {
-                                                        if(strtoupper($row1["transfer_employee_type"]) == 'SALES EXECUTIVE') {
-                                                            echo '<span class="badge rounded-pill bg-label-success" text-capitalized="">Trasnfered To Sales Executive</span>';
-                                                        } else if(strtoupper($row1["transfer_employee_type"]) == 'CUSTOMER EXECUTIVE') {
-                                                            echo '<span class="badge rounded-pill bg-label-warning" text-capitalized="">Trasnfered To Customer Executive</span>';
-                                                        }
-                                                        
-                                                    } else if(strtolower($row1["mark_dead"]) == 'yes') {
-                                                        echo '<span class="badge rounded-pill bg-label-danger" text-capitalized="">Marked Dead</span>';
-                                                    } else {
-                                                        echo '<span class="badge rounded-pill bg-label-info" text-capitalized="">No Action Taken</span>';
-                                                    }                                                    
-                                                ?>
-                                            </td>
-                                            <!-- <td>
-                                                <?php
-                                                    // $sqlleads = "select * from leads where id = $leads_id ";
-                                                    // $q = $pdo->prepare($sqlleads);
-                                                    // $q->execute(array());      
-                                                    // $row_leads = $q->fetch(PDO::FETCH_ASSOC);
-                                                ?>
-                                                <?php //echo $row_leads["lead_name"]; ?><br>
-                                                <?php //echo '- '. $row_leads["phone_no"]; ?><br>
-                                                <?php //echo '- '. $row_leads["email_id"]; ?><br>
-                                                <?php //echo '-- '. $row_leads["location"]; ?><br>
-                                                <?php //echo '-- '. $row_leads["budget_range"]; ?><br>
-                                                <?php //echo '-- '. $row_leads["source"]; ?>
-                                            </td> -->
-                                            <td>
-                                                <?php if($row1['next_date'] != "0000-00-00 00:00:00") { ?>
-                                                <?php echo $row1["connection_status"]; ?><br>
-                                                <?php echo $row1["notes"]; ?><br>
-                                                <?php echo $row1["lead_type"]; ?><br>
-                                                <?php //echo $row1["remark"]; ?><br>
-                                                
-                                                <?php echo date("d-m-Y", strtotime($row1["next_date"])); ?><br>
-                                                <?php if($row1["next_time"] != "") echo date("H:i", strtotime($row1["next_time"])); ?><br>
-                                                <?php } ?>
-                                            </td>
-                                            <td>
-                                                <?php 
-                                                    if($row1["transfer_status"] == 'Trasnfered'); 
-                                                    {
-                                                        // echo "To Employee: <br> ";
-                                                        // echo $row1["employee_name"].'<br>'.$row1["transfer_reason"]; 
-                                                        if(strtoupper($row1["transfer_employee_type"]) == 'SALES EXECUTIVE') {
-                                                    ?>
-                                                     
-                                                     <div class="d-flex justify-content-start align-items-center product-name"><div class="avatar-wrapper me-3"><div class="avatar rounded-3 bg-label-secondary"><img src="assets/img/front-pages/icons/transition-up.png" alt="Product-9" class="rounded-2"></div></div><div class="d-flex flex-column"><span class="text-nowrap text-heading fw-medium"><?php echo $row1["employee_name"]; ?></span><small class="text-truncate d-none d-sm-block"><?php echo $row1["transfer_reason"]; ?></small></div></div>
-
-                                                    <?php } else if(strtoupper($row1["transfer_employee_type"]) == 'CUSTOMER EXECUTIVE') { ?>
-                                                       
-                                                    <div class="d-flex justify-content-start align-items-center product-name"><div class="avatar-wrapper me-3"><div class="avatar rounded-3 bg-label-secondary"><img src="assets/img/avatars/1.png    " alt="Product-9" class="rounded-2"></div></div><div class="d-flex flex-column"><span class="text-nowrap text-heading fw-medium"><?php echo $row1["employee_name"]; ?></span><small class="text-truncate d-none d-sm-block"><?php echo $row1["transfer_reason"]; ?></small></div></div>
-                                                    
-                                                    <?php } ?>
-                                                    <?php } ?>
-                                                
-                                            </td>                                            
-                                            <td>
-                                                <?php 
-                                                    if(strtolower($row1["mark_dead"]) == 'yes'); 
-                                                    {
-                                                        echo '<small class="text-truncate text-danger d-none d-sm-block">'.$row1["dead_reason"].'</small>'; 
-                                                    }
-                                                ?>
-                                            </td>
-                                    </tr>
-                                    <?php $i++; } ?>
-                                </tbody>
-                                </table>
                             </div>
                         </div>
                     </div>
                     <!-- /timeline code -->
-
                     <!-- photo model for employee -->
                 <!-- PhotoCapture model 1-->
 

@@ -117,7 +117,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php 
+                            <?php
+
+                                $sqllocation = "select * from location ";
+                                $qlocation = $pdo->prepare($sqllocation);
+                                $qlocation->execute(array());      
+                                $row_location = $qlocation->fetchAll(PDO::FETCH_ASSOC);
+
                                 $i = 1;
                                 $today_date = date('Y-m-d');
                                 $sqllocation = "select * from location ";
@@ -185,9 +191,24 @@
                                     <!-- <td><?php echo $row_leads["email_id"]; ?></td> -->
                                     <!-- <td><?php echo $row_leads["budget_range"]; ?></td> -->
                                     <!-- <td><?php echo $row_leads["status"]; ?></td> -->
-                                    <td><?php echo $row_asn_leads["lead_type"]; ?></td>
                                     <td>
-                                        <a class="dropdown-item waves-effect" href="view_single_lead_assigned_by_CE.php?assign_leads_sr_id=<?php echo $row1["assign_leads_sr_id"]; ?>"><i class="ri-eye-line me-1"></i> </a>
+                                      <?php 
+                                          if($row_asn_leads["lead_type"] == "hot")
+                                          echo '<span class="badge rounded-pill bg-label-danger">';
+                                          if($row_asn_leads["lead_type"] == "warm")
+                                          echo '<span class="badge rounded-pill bg-label-warning">';
+                                          if($row_asn_leads["lead_type"] == "cold")
+                                          echo '<span class="badge rounded-pill bg-label-info">'; 
+                                          echo '<span class="text-capitalize">'.$row_asn_leads["lead_type"]; 
+                                          echo '</span>';
+                                      ?>
+                                    </td>
+                                    <td>
+                                        <!-- <a class="dropdown-item waves-effect" href="view_single_lead_assigned_by_CE.php?assign_leads_sr_id=<?php echo $row1["assign_leads_sr_id"]; ?>"><i class="ri-eye-line me-1"></i> </a> -->
+                                         
+                                        <a class="dropdown-item" href="view_single_lead_assigned_by_CE.php?assign_leads_sr_id=<?php echo $row1["assign_leads_sr_id"]; ?>" style="overflow: visible;">
+                                          <i class="ri-eye-line border-2 p-2 bg-success text-white rounded ri-18px"></i> 
+                                        </a>
                                     </td>
                             </tr>
                             <?php $i++; } ?>

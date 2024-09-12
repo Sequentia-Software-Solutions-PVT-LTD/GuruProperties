@@ -119,6 +119,11 @@
                         </thead>
                         <tbody>
                             <?php 
+                            
+                                $sqllocation = "select * from location ";
+                                $qlocation = $pdo->prepare($sqllocation);
+                                $qlocation->execute(array());      
+                                $row_location = $qlocation->fetchAll(PDO::FETCH_ASSOC);
                                 $i = 1;
                                 $today_date = date('Y-m-d');
                                 $tomorrow_date = date('Y-m-d', strtotime('+1 day'));
@@ -155,9 +160,18 @@
                                     <td><?php echo $row_leads["lead_name"]; ?></td>
                                     <td><?php echo $row_pro["property_title"]; ?></td>
                                     <!-- <td><?php //echo $row_emp["employee_name"]; ?></td> -->
-                                    <td><?php echo $row_leads["location"]; ?></td>
+                                    <td><?php 
+                                        $needle = $row_leads["location"];
+                                        $resultArray = array_filter($row_location, function ($v) use ($needle) {
+                                          return $needle == $v['id']; 
+                                        });
+                                        if($needle == 1) $needle = 1;
+                                        else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                        if(isset($resultArray[$needle]["name"]) && $resultArray[$needle]["name"] != "") echo $resultArray[$needle]["name"]; 
+                                        else echo "Not Found";
+                                        ?></td>
                                     <td><?php echo $row_leads["phone_no"]; ?></td>
-                                    <td><?php echo $row_leads["email_id"]; ?></td>
+                                    <!-- <td><?php echo $row_leads["email_id"]; ?></td> -->
                                     <td><?php echo $row1["visit_time"]; ?></td>
                                     <td><?php echo $row_leads["budget_range"]; ?></td>
                                     <!-- <td><?php //echo $row_leads["status"]; ?></td> -->

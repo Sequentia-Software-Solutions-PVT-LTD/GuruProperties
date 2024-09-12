@@ -29,6 +29,12 @@
     $q->execute(array());      
     $row_leads = $q->fetch(PDO::FETCH_ASSOC);
 
+    $today_date = date('Y-m-d');
+    $sqllocation = "select * from location ";
+    $qlocation = $pdo->prepare($sqllocation);
+    $qlocation->execute(array());      
+    $row_location = $qlocation->fetchAll(PDO::FETCH_ASSOC);
+
   if(isSet($_POST["submit"]))
   { 
     // echo "<pre>";
@@ -148,187 +154,369 @@
               <!-- // -->
               <h5 class="card-header mar-bot-10">Leads Details </h5>
                 <div class="row">
-                    <div class="col-xl-6 col-lg-5 col-md-5 ">
-                        <!-- About User -->
-                        <div class="card mb-6">
-                            <div class="card-body demo-vertical-spacing demo-only-element">
-                                <small class="card-text text-uppercase text-muted small">About</small>
-                                <ul class="list-unstyled my-3 py-1" style="">
-                                    <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Lead Name:</span> <span><?php echo $row_leads['lead_name']; ?></span></li>
-                                    <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span><?php echo $row_leads['location']; ?></span></li>
-                                    <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li>
-                                    <!-- <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li> -->
-                                </ul>
-                                <small class="card-text text-uppercase text-muted small" >Contacts</small>
-                                <ul class="list-unstyled my-3 py-1" style="">
-                                    <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Contact:</span> <span><?php echo $row_leads['phone_no']; ?></span></li>
-                                    <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Email ID:</span> <span><?php echo $row_leads['email_id']; ?></span></li>
-                                
-                                </ul>
-                                <small class="card-text text-uppercase text-muted small">Other</small>
-                                <ul class="list-unstyled my-3 py-1" style="">
-                                    <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Source:</span> <span><?php echo $row_leads['source']; ?></span></li>
-                                    <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_leads['added_on'])); ?></span></li>
-                                </ul>
 
-                                <!-- <ul class="list-unstyled my-3 py-1" style="">
-                                    <a href="javascript:void(0)" class="btn btn-primary waves-effect waves-light">
-                                        <i class="ri-user-follow-line ri-16px me-2"></i>Add Followup
-                                    </a>
-                                    <a href="javascript:void(0)" class="btn btn-primary waves-effect waves-light">
-                                        <i class="ri-user-follow-line ri-16px me-2"></i>Transfer Leads
-                                    </a>
-                                </ul> -->
-                            </div>
-                        </div>
-                        <!--/ About User -->
-                        
-                    </div>
-                    <!--  -->
-                    <div class="col-xl-6 col-lg-6 col-md-6">
-                        <div class="card mb-6" >
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="card-title mb-0"><i class="ri-survey-line ri-24px text-body me-2"></i>Add Convert Details</h5>
-                            </div>
-
-                            <form action="#" method="post">
-                                <input type="hidden" value="<?php echo $_REQUEST['assign_leads_sr_id']; ?>" name="assign_leads_sr_id">
-                                <div class="card-body demo-vertical-spacing demo-only-element" style="padding-top: 0px;">
-
-                                    <!--  -->
-                                    <div class="row g-4">
-                                        <div class="row">
-                                          <h5 class="card-header mt-4" style="padding-left: 0px;"> Property Details </h5>
-                                          <div class="col-md-12">                                              
-                                              <div class="row mt-4">
-                                                  <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Title</label>
-                                                  <div class="col-sm-9 form-floating form-floating-outline">
-                                                      <select id="propertyDropdown" name="property_name_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
-                                                          <option value="">Select Property Name</option>
-                                                          <?php
-                                                              $sql = "SELECT * FROM property_name";
-                                                              foreach ($pdo->query($sql) as $row) { 
-                                                                  echo '<option value="'.$row['property_name_id'].'">'.$row['property_title'].'</option>';
-                                                              }
-                                                          ?>
-                                                      </select>
-                                                      <label for="propertyDropdown">Select Property Name</label>
-                                                  </div>
-                                              </div>
-                                          </div>
-
-                                            <div class="col-md-12">
-                                                <div class="row mt-4">
-                                                    <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Tower</label>
-                                                    <div class="col-sm-9 form-floating form-floating-outline">
-                                                        <select id="towerDropdown" name="property_tower_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
-                                                            <option value="">Select Property Tower</option>
-                                                            <!-- Towers will be loaded here based on the selected property -->
-                                                        </select>
-                                                        <label for="towerDropdown">Select Property Tower</label>
-                                                    </div>
-                                                </div>
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="row  justify-content-between align-items-center">
+                            <div class="col-12">
+                                <div class="card mb-6 h-100">
+                                    <div class="card-header header-elements">
+                                        <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
+                                        <h5 class="card-action-title mb-0 underline">Lead Details</h5>
+                                        
+                                        <div class="card-header-elements ms-sm-auto">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-primary waves-effect waves-light" style="visibility:hidden;">Update</button>
                                             </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="row mt-4">
-                                                    <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Variants</label>
-                                                    <div class="col-sm-9  form-floating form-floating-outline">
-                                                        <!-- <select id="variantDropdown" name="property_variants[]" class="js-example-basic-single select2 form-select select2-hidden-accessiblee" multiple="multiple" data-allow-clear="true" required> -->
-                                                        <select id="variantDropdown" name="property_variants[]" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
-                                                            <option value="">Select Variants</option>
-                                                        </select>
-                                                        <label for="variantDropdown">Select Variants</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--  -->
-                                        <div class="row">
-                                          <h5 class="card-header mt-4" style="padding-left: 0px;"> Other Details </h5>
-                                          
-                                          <div class="col-md-12 mt-4">
-                                              <div class="row">
-                                                  <label class="col-sm-4 col-form-label text-sm-end mar-top1" style="margin-top: -10px;"> Agreement Value</label>
-                                                  <div class="col-sm-8 form-floating form-floating-outline">
-                                                    <input class="form-control" type="number" placeholder="Agreement Value" id="stamp_duty" name="agreement_value">
-                                                    <label for="stamp_duty"> Agreement Value</label>
-                                                  </div>
-                                              </div>
-                                          </div>
-
-                                          <div class="col-md-12 mt-4">
-                                              <div class="row">
-                                                  <label class="col-sm-4 col-form-label text-sm-end mar-top"> Registration </label>
-                                                  <div class="col-sm-8 form-floating form-floating-outline">
-                                                    <input class="form-control" type="number" placeholder="Registration" id="Registration" name="registrantion">
-                                                    <label for="Registration">Registration</label>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                          <div class="col-md-12 mt-4">
-                                              <div class="row">
-                                                  <label class="col-sm-4 col-form-label text-sm-end mar-top"> GST </label>
-                                                  <div class="col-sm-8 form-floating form-floating-outline">
-                                                    <input class="form-control" type="number" placeholder="GST Amount" id="gst" name="gst"><label for="gst">GST Amount</label>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                          <div class="col-md-12 mt-4">
-                                              <div class="row">
-                                                  <label class="col-sm-4 col-form-label text-sm-end mar-top"> Stamp Duty</label>
-                                                  <div class="col-sm-8 form-floating form-floating-outline">
-                                                    <input class="form-control" type="number" placeholder="Stamp Duty" id="stamp_duty" name="stamp_duty"><label for="stamp_duty">Stamp Duty Amount</label>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                          <div class="col-md-12 mt-4">
-                                              <div class="row">
-                                                  <label class="col-sm-4 col-form-label text-sm-end mar-top"> Commission </label>
-                                                  <div class="col-sm-8 form-floating form-floating-outline">
-                                                    <input class="form-control" type="number" placeholder="Commission To Guru Properties" id="commission" name="commission"><label for="commission">Commission To Guru Properties</label>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                          <div class="col-md-12 mt-4">
-                                              <div class="row">
-                                                  <label class="col-sm-4 col-form-label text-sm-end mar-top"> Quoted Price </label>
-                                                  <div class="col-sm-8 form-floating form-floating-outline">
-                                                    <input class="form-control" type="number" placeholder="Quoted Price " id="quoted_price" name="quoted_price"><label for="commission">Commission To Guru Properties</label>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                          <div class="col-md-12 mt-4">
-                                              <div class="row">
-                                                  <label class="col-sm-4 col-form-label text-sm-end mar-top"> Sale Price </label>
-                                                  <div class="col-sm-8 form-floating form-floating-outline">
-                                                    <input class="form-control" type="number" placeholder="Sale Price" id="sale_price" name="sale_price"><label for="sale_price">Sale Price</label>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                          
-                                          <div class="col-md-12 mt-4">
-                                              <div class="row">
-                                                  <label class="col-sm-4 col-form-label text-sm-end mar-top">Notes</label>
-                                                  <div class="col-sm-8 form-floating form-floating-outline">
-                                                    <input class="form-control" type="text" placeholder="Enter your notes" id="notes" name="notes"><label for="notes">Enter your notes</label>
-                                                  </div>
-                                              </div>
-                                          </div>
-
                                         </div>
                                     </div>
-                                    <!-- /new form -->
-                                    <!--  -->
+                                    
+                                    <hr class="m-0">
+                                    <div class="card-body demo-vertical-spacing demo-only-element">
+                                        <!-- <small class="card-text text-uppercase text-muted small">About</small> -->
+                                        <h5 class="card-action-title  mb-0">About</h5>
+                                        <hr class="mt-1">
+                                        <ul class="list-unstyled my-3 py-1" style="">
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Lead Name:</span> <span><?php echo $row_leads['lead_name']; ?></span></li>
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span><?php 
+                                                $needle = $row_leads["location"];
+                                                $resultArray = array_filter($row_location, function ($v) use ($needle) {
+                                                    return $needle == $v['id']; 
+                                                });
+                                                if($needle == 1) $needle = 1;
+                                                else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                                if(isset($resultArray[$needle]["name"]) && $resultArray[$needle]["name"] != "") echo $resultArray[$needle]["name"]; 
+                                                else echo "Not Found";
+                                            ?></span></li>
+                                            <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li>
+                                            <!-- <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li> -->
+                                        </ul>
+                                        <!-- <small class="card-text text-uppercase text-muted small" >Contacts</small> -->
+                                        <!-- <hr> -->
+                                        <h5 class="card-action-title  mb-0">Contacts</h5>
+                                        <hr class="mt-1">
+                                        <ul class="list-unstyled my-3 py-1" style="">
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Contact:</span> <span><?php echo $row_leads['phone_no']; ?></span></li>
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Email ID:</span> <span><?php echo $row_leads['email_id']; ?></span></li>
+                                        
+                                        </ul>
+                                        <!-- <small class="card-text text-uppercase text-muted small">Other</small> -->
+                                        <!-- <hr> -->
+                                        <h5 class="card-action-title  mb-0">Other</h5>
+                                        <hr class="mt-1">
+                                        
+                                        <ul class="list-unstyled my-3 py-1" style="">
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Source:</span> <span><?php echo $row_leads['source']; ?></span></li>
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_leads['added_on'])); ?></span></li>
+                                        </ul>
 
-                                    <div class="d-flex justify-content-between">
-                                        <button type="submit" name="submit" class="btn btn-success logo-btn">Submit</button>
+                                        <!-- <hr class="m-0"> -->
+                                        <!-- <div class="card-body demo-vertical-spacing demo-only-element"> -->
+                                            <!-- <small class="card-text text-uppercase text-muted small">About</small> -->
+                                            <h5 class="card-action-title  mb-0">Project Details</h5>
+                                            <hr class="mt-1">
+                                            <?php 
+                                                $sqlsr = "SELECT * FROM assign_leads_sr where assign_leads_sr_id= $assign_leads_sr_id ";
+                                                $q = $pdo->prepare($sqlsr);
+                                                $q->execute(array());      
+                                                $row_assign1 = $q->fetch(PDO::FETCH_ASSOC);
+
+                                                $property_id = $row_assign1['property_id'];
+                                                $sub_property_id = $row_assign1['sub_property_id'];
+                                                $variant = $row_assign1['variant'];
+
+                                                //  property_varients
+                                                $sqlpro = "SELECT * FROM property_name where property_name_id= $property_id ";
+                                                $q = $pdo->prepare($sqlpro);
+                                                $q->execute(array());      
+                                                $row_property = $q->fetch(PDO::FETCH_ASSOC);
+
+                                                $sqltower = "SELECT * FROM property_tower where property_tower_id = $sub_property_id ";
+                                                $q = $pdo->prepare($sqltower);
+                                                $q->execute(array());      
+                                                $row_tower = $q->fetch(PDO::FETCH_ASSOC);
+                                            ?>
+                                            <ul class="list-unstyled my-3 py-1" style="">
+                                                    <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Property Name:</span> <span class="fw-bold"><?php echo $row_property['property_title']; ?></span></li>
+                                                    <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span class="fw-bold"><?php echo $row_property['location']; ?></span></li>
+                                                    <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Google Location:</span>Latitude: <span class="fw-bold"><?php echo $row_property['google_location_lat']; ?> & </span>   &nbsp;Longitude: <span class="fw-bold"><?php echo $row_property['google_location_long']; ?> </span></li>
+                                                    <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Builder Name:</span> <span class="fw-bold"><?php echo $row_property['builder_name']; ?></span></li>
+                                                    <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Tower Name:</span> <span class="fw-bold"><?php echo $row_tower['property_tower_name']; ?></span></li>
+                                                    <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Builder Possession:</span> <span class="fw-bold"><?php echo $row_tower['builder_possession']; ?></span></li>
+                                                    <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">RERA Possession:</span> <span class="fw-bold"><?php echo $row_tower['rera_possession']; ?></span></li>
+                                            </ul>
+                                            <!-- <small class="card-text text-uppercase text-muted small" >Contacts</small> -->
+                                            <!-- <hr> -->
+                                            <h5 class="card-action-title  mb-0">Varient Details</h5>
+                                            <hr class="mt-1">
+                                            <?php 
+                                                $sqlsr = "SELECT * FROM assign_leads_sr WHERE assign_leads_sr_id = :assign_leads_sr_id";
+                                                $stmt = $pdo->prepare($sqlsr);
+                                                $stmt->execute(['assign_leads_sr_id' => $assign_leads_sr_id]);
+
+                                                while ($row_sr = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                                    $varient_group = $row_sr['variant']; // Assume this is a comma-separated string like "6,5,4"
+                                                    
+                                                    // Split the variant IDs into an array
+                                                    $variant_ids = explode(',', $varient_group);
+                                                    
+                                                    // Prepare a SQL query to fetch variant names based on these IDs
+                                                    $placeholders = implode(',', array_fill(0, count($variant_ids), '?'));
+                                                    $sqlVariants = "SELECT varients, area, price FROM property_varients WHERE property_varients_id IN ($placeholders)";
+                                                    $stmtVariants = $pdo->prepare($sqlVariants);
+                                                    $stmtVariants->execute($variant_ids);
+                                                    
+                                                    // Fetch the variant details
+                                                    $variant_details = $stmtVariants->fetchAll(PDO::FETCH_ASSOC);
+                                            ?>
+                                            <ul class="list-unstyled my-3 py-1" style="">
+                                            <!-- <div style="display : flex; gap: 20px; margin-top:20px;"> -->
+                                                <?php 
+                                                    // Display each variant's details
+                                                    foreach ($variant_details as $variant) {
+                                                ?>
+                                                <li class="d-flex align-items-center mb-2" >
+                                                    <span class="fw-medium mx-2">Variants:</span> 
+                                                    <span class="fw-bold"><?php echo htmlspecialchars($variant['varients']); ?></span>
+                                                </li>
+                                                <li class="d-flex align-items-center mb-2">
+                                                    <span class="fw-medium mx-2">Area:</span> 
+                                                    <span class="fw-bold"><?php echo htmlspecialchars($variant['area']); ?></span>
+                                                </li>
+                                                <li class="d-flex align-items-center mb-2">
+                                                    <span class="fw-medium mx-2">Price:</span> 
+                                                    <span class="fw-bold"><?php echo htmlspecialchars($variant['price']); ?></span>
+                                                </li>
+                                                <?php } }?>
+                                            <!-- </div> -->
+                                            </ul>
+                                        <!-- </div> -->
+                                        
+                                        
                                     </div>
                                 </div>
+                            </div>
+                        </div>                        
+                    </div>
+                    
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="row justify-content-between align-items-center">
+                            <div class="col-12">
+                                <div class="card pb-5 h-100" >
 
-                            </form>
+                                    <form action="#" method="post" enctype="multipart/form-data">
+                                            <input type="hidden" value="<?php echo $_REQUEST['assign_leads_sr_id']; ?>" name="assign_leads_sr_id">        
+                                            <div class="card-header header-elements">
+                                                <h5 class="card-action-title mb-0"><i class="ri-survey-line ri-24px me-2"></i>Add Convert Details</h5>
+                                                <div class="card-header-elements ms-sm-auto">
+                                                    <div class="btn-group">
+                                                        <button type="submit" name="submit1" id="submit1"  class="btn btn-primary waves-effect waves-light">Update</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr class="m-0">   
+
+                                            <div class="card-body demo-vertical-spacing demo-only-element">
+                                                <h5 class="card-action-title  mb-0">Property Details</h5>
+                                                <hr class="mt-1">
+                                            </div>
+
+                                            <!-- <div class="col-12 mt-4 px-5">
+                                                <h5 class="card-action-title  mb-0">Property Details</h5>
+                                                <hr class="mt-1">
+                                            </div> -->
+                                            
+                                            <div class="col-md-12">
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <div class="d-flex justify-content-between  align-items-center">
+                                                        <h6 class="w-max-content mb-0">1. Property Title*</h6>
+                                                        <!-- <div class="mb-4"> -->
+                                                            <!-- <label class="form-label">Connection Status</label> -->
+                                                            <div class="d-flex gap-4" style="width:72%">
+                                                                    <!-- <div class="row mt-4"> -->
+                                                                    <!-- <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Title</label> -->
+                                                                    <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
+                                                                    <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                                        <select id="propertyDropdown" name="property_name_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
+                                                                            <option value="">Select Property Name</option>
+                                                                            <?php
+                                                                                $sql = "SELECT * FROM property_name";
+                                                                                foreach ($pdo->query($sql) as $row) { 
+                                                                                    echo '<option value="'.$row['property_name_id'].'">'.$row['property_title'].'</option>';
+                                                                                }
+                                                                            ?>
+                                                                        </select>
+                                                                        <label for="propertyDropdown">Select Property Name</label>
+                                                                    </div>
+                                                                    <!-- </div> -->
+                                                            </div>
+                                                        <!-- </div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <!-- <h6 class="mt-0">2. Remark For Today's Visit*</h6> -->
+                                                        <h6 class="my-0">2. Property Tower*</h6>
+                                                        <div class="d-flex gap-4" style="width: 72%;">
+                                                            <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                                <select id="towerDropdown" name="property_tower_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
+                                                                    <option value="">Select Property Tower</option>
+                                                                    <!-- Towers will be loaded here based on the selected property -->
+                                                                </select>
+                                                                <label for="towerDropdown">Select Property Tower</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-12">
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <h6 class="my-0">3. Property Variants*</h6>
+                                                            <div class="d-flex gap-4" style="width: 72%;">
+                                                                <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                                    <select id="variantDropdown" name="property_variants[]" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
+                                                                        <option value="">Select Variants</option>
+                                                                    </select>
+                                                                    <label for="variantDropdown">Select Variants</label>
+                                                                </div>
+                                                            </div>  
+                                                    </div>      
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="card-body demo-vertical-spacing demo-only-element">
+                                                <h5 class="card-action-title  mb-0">Other Details</h5>
+                                                <hr class="mt-1">
+                                            </div>
+
+                                            <div class="col-12">
+                                                <!-- <div class="row"> -->
+                                                    <!-- <h5 class="card-header" > Other Details </h5> -->
+                                                    
+                                                    <div class="card-body demo-vertical-spacing demo-only-element">
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <h6 class="my-0">1.  Agreement Value*</h6>
+                                                            <div class="d-flex gap-4" style="width: 72%;">
+                                                                <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                                    <input class="form-control" type="number" placeholder="Agreement Value" id="stamp_duty" name="agreement_value">
+                                                                    <label for="stamp_duty"> Agreement Value</label>
+                                                                </div>
+                                                            </div>  
+                                                        </div>
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <h6 class="my-0">2.  Registration *</h6>
+                                                            <div class="d-flex gap-4" style="width: 72%;">
+                                                                <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                                    <input class="form-control" type="number" placeholder="Registration" id="Registration" name="registrantion">
+                                                                    <label for="Registration">Registratione</label>
+                                                                </div>
+                                                            </div>  
+                                                        </div>      
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <h6 class="my-0">3.  GST *</h6>
+                                                            <div class="d-flex gap-4" style="width: 72%;">
+                                                                <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                                    <input class="form-control" type="number" placeholder="GST Amount" id="gst" name="gst">
+                                                                    <label for="gst">GST Amount</label>
+                                                                </div>
+                                                            </div>  
+                                                        </div>      
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <h6 class="my-0">4.  Stamp Duty*</h6>
+                                                            <div class="d-flex gap-4" style="width: 72%;">
+                                                                <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                                    <input class="form-control" type="number" placeholder="Stamp Duty" id="stamp_duty" name="stamp_duty">
+                                                                    <label for="stamp_duty">Stamp Duty Amount</label>
+                                                                </div>
+                                                            </div>  
+                                                        </div>      
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <h6 class="my-0">5.  Commission *</h6>
+                                                            <div class="d-flex gap-4" style="width: 72%;">
+                                                                <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                                    <input class="form-control" type="number" placeholder="Commission To Guru Properties" id="commission" name="commission">
+                                                                    <label for="commission">Commission To Guru Properties</label>
+                                                                </div>
+                                                            </div>  
+                                                        </div>      
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <h6 class="my-0">6.  Quoted Price *</h6>
+                                                            <div class="d-flex gap-4" style="width: 72%;">
+                                                                <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                                    <input class="form-control" type="number" placeholder="Quoted Price " id="quoted_price" name="quoted_price">
+                                                                    <label for="commission">Commission To Guru Properties</label>
+                                                                </div>
+                                                            </div>  
+                                                        </div>      
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <h6 class="my-0">7.  Sale Price *</h6>
+                                                            <div class="d-flex gap-4" style="width: 72%;">
+                                                                <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                                    <input class="form-control" type="number" placeholder="Sale Price" id="sale_price" name="sale_price">
+                                                                    <label for="sale_price">Sale Price</label>
+                                                                </div>
+                                                            </div>  
+                                                        </div>      
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <h6 class="my-0">8. Notes*</h6>
+                                                            <div class="d-flex gap-4" style="width: 72%;">
+                                                                <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                                    <input class="form-control" type="text" placeholder="Enter your notes" id="notes" name="notes">
+                                                                    <label for="notes">Enter your notes</label>
+                                                                </div>
+                                                            </div>  
+                                                        </div>      
+                                                    </div>
+
+                                                <!-- </div> -->
+                                            </div>
+                                        
+                                            <div class="col-sm-12 text-center">
+                                                    <div class="form-floating form-floating-outline">
+                                                        <input class="form-control" type="hidden" id="lat" readonly name="latitude">
+                                                        <!-- <span>Current Latitude:- </span> -->
+                                                        <!-- <span class="text-danger" id="latitude"></span>  -->
+                                                        <!-- <br> -->
+                                                        <input class="form-control" type="hidden" id="long" readonly name="longitude">
+                                                        <!-- <span>Current Longitude:- </span> -->
+                                                        <!-- <span class="text-danger" id="longitude"></span> -->
+                                                        <!-- <br> -->
+                                                        <!-- <span>Accuracy:- </span> -->
+                                                        <!-- <span class="text-danger" id="accuracy"></span> -->
+                                                        <div class="mx-7 alert alert-solid-warning" id="warningMessage" role="alert" style="display:none;">
+                                                            Make sure your location is enabled before submitting this form
+                                                        </div>
+                                                        <div class="mx-7 alert alert-solid-danger" id="errormessage" role="alert" style="display:none;">
+                                                            Please turn on location to submit this form!
+                                                        </div>
+                                                        <div class="mx-7 mb-0 alert text-danger alert-solid-success" id="successmessage" role="alert" style="display:none; width:max-content">
+                                                            <span class="d-none" class="" id="latitude"></span><span class="d-none" id="longitude"></span>
+                                                            <span class="text-white"  data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Make sure this is below 100" id="accuracy"></span>
+                                                        </div>
+                                                        
+                                                    </div>
+                                            </div>
+                        
+                                            <div class="col-sm-12 text-right">
+                                                <hr class="m-0">
+                                            </div>
+
+                                            <div class="col-sm-12 text-right">
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <div class="d-flex justify-content-end align-items-center">
+                                                        <span class="d-none" class="" id="latitude"></span><span class="d-none" id="longitude"></span>
+                                                        <!-- <button type="submit" name="submit1" id="submit1" class="btn btn-success">Submit</button> -->
+                                                    </div>        
+                                                </div>    
+                                            </div>
+                                    </form>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
 

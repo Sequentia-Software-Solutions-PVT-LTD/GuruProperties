@@ -115,7 +115,7 @@
       $employee_name = $rowcearray['employee_name'];
       $location = $rowcearray['location_id'];
       $location = explode(",", $location);
-      $employee_array = array("admin_id" => $admin_id, "employee_id" => $employee_id, "location_id" => $location);
+      $employee_array = array("admin_id" => $admin_id, "employee_id" => $employee_id, "location_id" => $location, "employee_name" => $employee_name);
       array_push($customerExecutiveArray,$employee_array);
     }
     
@@ -149,7 +149,7 @@
         // var_dump($adminIds);
         // var_dump($employeeIds);
 
-        $LocationWiseEmployeeArray = ["location_id" => $needle, "admin_id" => $adminIds, "employee_id" => $employeeIds];
+        $LocationWiseEmployeeArray = ["location_id" => $needle, "admin_id" => $adminIds, "employee_id" => $employeeIds, "employee_name" => $employee_name];
         array_push($LocationWiseEmployeeList, $LocationWiseEmployeeArray);
       }
       
@@ -249,7 +249,7 @@
                       $employee_id = implode(",", $customerExecutiveArray[$i]["employee_id"]);
                       $location_id = $customerExecutiveArray[$i]["location_id"];                 
                       //   $employee_name = $customerExecutiveArray[$i][2];
-                      $employee_name = "test";
+                      $employee_name = $customerExecutiveArray[$i]["employee_name"];
                       $added_on = date('Y-m-d H-i-s');
                       $lead_date = date('Y-m-d');
 
@@ -286,7 +286,8 @@
                             $employee_id = implode(",", $customerExecutiveArray[$i]["employee_id"]);
                             $location_id = $customerExecutiveArray[$i]["location_id"];                 
                             //   $employee_name = $customerExecutiveArray[$i][2];
-                            $employee_name = "test";
+                            
+                            $employee_name = $customerExecutiveArray[$i]["employee_name"];
                             $added_on = date('Y-m-d H-i-s');
                             $lead_date = date('Y-m-d');
 
@@ -331,7 +332,7 @@
                         $employee_id = implode(",", $customerExecutiveArray[$i]["employee_id"]);
                         $location_id = $customerExecutiveArray[$i]["location_id"];                 
                         //   $employee_name = $customerExecutiveArray[$i][2];
-                        $employee_name = "test";
+                        $employee_name = $customerExecutiveArray[$i]["employee_name"];
                         $added_on = date('Y-m-d H-i-s');
                         $lead_date = date('Y-m-d');
 

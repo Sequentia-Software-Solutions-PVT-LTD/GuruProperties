@@ -116,8 +116,14 @@
                         </thead>
                         <tbody>
                             <?php 
+                            
+                                $sqllocation = "select * from location ";
+                                $qlocation = $pdo->prepare($sqllocation);
+                                $qlocation->execute(array());      
+                                $row_location = $qlocation->fetchAll(PDO::FETCH_ASSOC);
+
                                 $i = 1;
-                                $sql = "SELECT * FROM assign_leads where admin_id= $admin_id and status = 'Transferred' and transfer_status='Available' and mark_dead='' ";
+                                $sql = "SELECT * FROM assign_leads where admin_id= $admin_id and status = 'Transferred'  and transfer_status='Available' and mark_dead='' ";
 
                                 // $sql = "SELECT * FROM assign_leads where admin_id= $admin_id and status = 'Followup' and transfer_status='Available' and mark_dead=''";
                                 // $sql = "SELECT * FROM assign_leads where admin_id= $admin_id and status='Active' ";
@@ -155,14 +161,37 @@
                                     <td><i class="ri-building-2-line ri-22px text-primary me-4"></i><span class="fw-medium"><?php echo $i; ?></span></td>
                                     <td><?php echo $row_leads["lead_name"]; ?></td>
                                     <!-- <td><?php //echo $row_emp["employee_name"]; ?></td> -->
-                                    <td><?php echo $row_leads["location"]; ?></td>
+                                    <td>
+                                      <?php 
+                                          $needle = $row_leads["location"];
+                                          $resultArray = array_filter($row_location, function ($v) use ($needle) {
+                                            return $needle == $v['id']; 
+                                          });
+                                          if($needle == 1) $needle = 1;
+                                          else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                          if(isset($resultArray[$needle]["name"]) && $resultArray[$needle]["name"] != "") echo $resultArray[$needle]["name"]; 
+                                          else echo "Not Found";
+                                      ?>
+                                    </td>  
                                     <td><?php echo $row_leads["phone_no"]; ?></td>
                                     <td><?php echo $row_leads["email_id"]; ?></td>
                                     <td><?php echo $row_leads["budget_range"]; ?></td>
-                                    <td><?php echo date('d-m-Y', strtotime($row1["next_date"])); ?></td>
                                     <td>
-                                        <!-- <a class="dropdown-item waves-effect" href="transfer_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-eye-line me-1"></i> </a> -->
-                                        <a class="dropdown-item waves-effect" href="view_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-eye-line me-1"></i> </a>
+                                        <?php 
+                                            $status_next_date = date('Y-m-d', strtotime($row1["next_date"]));
+                                            if($status_next_date > date('Y-m-d'))
+                                            {
+                                              echo "<span class='text-danger'>";
+                                            }
+                                            echo date('d-m-Y', strtotime($row1["next_date"])); 
+                                            echo "</span>";
+                                          ?>
+                                    </td>
+                                    <td>
+                                        <!-- <a class="dropdown-item waves-effect" href="view_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-eye-line me-1"></i> </a> -->
+                                        <a class="dropdown-item" href="view_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>" style="overflow: visible;">
+                                          <i class="ri-eye-line border-2 p-2 bg-success text-white rounded ri-18px"></i> 
+                                        </a>
                                     </td>
                             </tr>
                             <?php $i++; } ?>
@@ -226,14 +255,35 @@
                                     <td><i class="ri-building-2-line ri-22px text-primary me-4"></i><span class="fw-medium"><?php echo $i; ?></span></td>
                                     <td><?php echo $row_leads["lead_name"]; ?></td>
                                     <!-- <td><?php //echo $row_emp["employee_name"]; ?></td> -->
-                                    <td><?php echo $row_leads["location"]; ?></td>
+                                    <td>
+                                    <?php 
+                                          $needle = $row_leads["location"];
+                                          $resultArray = array_filter($row_location, function ($v) use ($needle) {
+                                            return $needle == $v['id']; 
+                                          });
+                                          if($needle == 1) $needle = 1;
+                                          else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                          if(isset($resultArray[$needle]["name"]) && $resultArray[$needle]["name"] != "") echo $resultArray[$needle]["name"]; 
+                                          else echo "Not Found";
+                                    ?>  
+                                    </td>
                                     <td><?php echo $row_leads["phone_no"]; ?></td>
                                     <td><?php echo $row_leads["email_id"]; ?></td>
                                     <td><?php echo $row_leads["budget_range"]; ?></td>
-                                    <td><?php echo date('d-m-Y', strtotime($row1["next_date"])); ?></td>
+                                    <td><?php 
+                                            $status_next_date = date('Y-m-d', strtotime($row1["next_date"]));
+                                            if($status_next_date > date('Y-m-d'))
+                                            {
+                                              echo "<span class='text-danger'>";
+                                            }
+                                            echo date('d-m-Y', strtotime($row1["next_date"])); 
+                                            echo "</span>";
+                                          ?></td>
                                     <td>
                                         <!-- <a class="dropdown-item waves-effect" href="transfer_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-eye-line me-1"></i> </a> -->
-                                        <a class="dropdown-item waves-effect" href="view_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-eye-line me-1"></i> </a>
+                                        <a class="dropdown-item" href="view_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>" style="overflow: visible;">
+                                          <i class="ri-eye-line border-2 p-2 bg-success text-white rounded ri-18px"></i> 
+                                        </a>
                                     </td>
                             </tr>
                             <?php $i++; } ?>

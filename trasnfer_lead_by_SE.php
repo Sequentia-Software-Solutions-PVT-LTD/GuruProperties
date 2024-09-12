@@ -29,6 +29,11 @@
     $q->execute(array());      
     $row_leads = $q->fetch(PDO::FETCH_ASSOC);
 
+    $sqllocation = "select * from location ";
+    $qlocation = $pdo->prepare($sqllocation);
+    $qlocation->execute(array());      
+    $row_location = $qlocation->fetchAll(PDO::FETCH_ASSOC);
+
   if(isSet($_POST["submit"]))
   { 
     echo "<pre>";
@@ -209,133 +214,210 @@
               <!-- // -->
               <h5 class="card-header mar-bot-10">Leads Details </h5>
                 <div class="row">
-                    <div class="col-xl-6 col-lg-5 col-md-5 ">
-                        <!-- About User -->
-                        <div class="card mb-6">
-                        <div class="card-body demo-vertical-spacing demo-only-element">
-                            <small class="card-text text-uppercase text-muted small">About</small>
-                            <ul class="list-unstyled my-3 py-1" style="">
-                                <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Lead Name:</span> <span><?php echo $row_leads['lead_name']; ?></span></li>
-                                <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span><?php echo $row_leads['location']; ?></span></li>
-                                <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li>
-                                <!-- <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li> -->
-                            </ul>
-                            <small class="card-text text-uppercase text-muted small" >Contacts</small>
-                            <ul class="list-unstyled my-3 py-1" style="">
-                                <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Contact:</span> <span><?php echo $row_leads['phone_no']; ?></span></li>
-                                <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Email ID:</span> <span><?php echo $row_leads['email_id']; ?></span></li>
-                               
-                            </ul>
-                            <small class="card-text text-uppercase text-muted small">Other</small>
-                            <ul class="list-unstyled my-3 py-1" style="">
-                                <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Source:</span> <span><?php echo $row_leads['source']; ?></span></li>
-                                <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_leads['added_on'])); ?></span></li>
-                            </ul>
-                        </div>
-                        </div>
-                        <!--/ About User -->
-                        
-                    </div>
-                    <!--  -->
-                    <div class="col-xl-6 col-lg-6 col-md-6">
-                        <div class="card mb-6" >
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="card-title mb-0"><i class="ri-survey-line ri-24px text-body me-2"></i>Add Transfer Details </h5>
-                            </div>
-                            <form action="#" method="post">
-                              <input type="hidden" value="<?php echo $_REQUEST['assign_leads_sr_id']; ?>" name="assign_leads_sr_id">
-                              <input type="hidden" value="<?php echo $row_assign['leads_id']; ?>" name="leads_id">
-                                <div class="card-body demo-vertical-spacing demo-only-element" style="padding-top: 0px;">
-                                    
-                                    <!-- <div class="mb-4">
-                                        <label for="notes" class="form-label">Select Employee</label>
-                                        <select id="roleDropdown" name="transfer_employee_id" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
-                                          <option value="" data-select2-id="18">Select Employee</option>
-                                            <?php
-                                                // $sql = "SELECT * FROM  employee where status='Active' and login_role='CUSTOMER EXECUTIVE'  and login_role='SALES EXECUTIVE'";
-                                                // foreach ($pdo->query($sql) as $row) 
-                                                // { 
-                                                ?>
-                                                  <option value="<?php //echo $row['employee_id']?>"><?php //echo $row['employee_name']?></option> 
-                                              <?php //} ?>
-                                          </select>
-                                    </div> -->
-
-                                    <label for="roleDropdown" class="form-label w-100 text-center">Select Employee</label>
-                                    <div class="mb-4 form-floating form-floating-outline">
-                                        <select id="roleDropdown" name="transfer_employee_id" class="form-select" required>
-                                            <option value="">Select Employee</option>
-                                            <!-- PHP to generate grouped options -->
-                                            <?php
-                                            $sql = "SELECT * FROM employee WHERE status='Active' AND login_role IN ('CUSTOMER EXECUTIVE', 'SALES EXECUTIVE') ORDER BY login_role";
-                                            $stmt = $pdo->query($sql);
-                                            $currentRole = '';
-
-                                            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                                $employeeRole = $row['login_role'];
-
-                                                // Add a header if the role changes
-                                                if ($employeeRole !== $currentRole) {
-                                                    if ($currentRole != '') {
-                                                        echo '<option disabled></option>'; // Add a separator
-                                                    }
-                                                    echo '<option disabled>' . htmlspecialchars($employeeRole) . 's ARE</option>';
-                                                    $currentRole = $employeeRole;
-                                                }
-
-                                                // Add the employee option
-                                                echo '<option value="' . htmlspecialchars($row['employee_id']) . '">' 
-                                                . htmlspecialchars($row['employee_name']) . ' - ' 
-                                                . htmlspecialchars($row['location']) 
-                                                . '</option>';
-                                            }
-                                            ?>
-                                        </select>                                        
-                                        <label for="roleDropdown">Customer Executive</label>
-                                    </div>
-
-                                    <!-- <div class="col-md-6 mb-6">
-                                        <div class="form-floating form-floating-outline form-floating-bootstrap-select">
-                                        <div class="dropdown bootstrap-select w-100 dropup"><select id="selectpickerGroups" class="selectpicker w-100" data-style="btn-default" tabindex="null">
-                                            <optgroup label="Movies">
-                                            <option>Rocky</option>
-                                            <option>Pulp Fiction</option>
-                                            <option>The Godfather</option>
-                                            </optgroup>
-                                            <optgroup label="Series">
-                                            <option>Breaking Bad</option>
-                                            <option>Black Mirror</option>
-                                            <option>Money Heist</option>
-                                            </optgroup>
-                                        </select><button type="button" tabindex="-1" class="btn dropdown-toggle btn-default show" data-bs-toggle="dropdown" role="combobox" aria-owns="bs-select-2" aria-haspopup="listbox" aria-expanded="true" title="Rocky" data-id="selectpickerGroups"><div class="filter-option"><div class="filter-option-inner"><div class="filter-option-inner-inner">Rocky</div></div> </div></button><div class="dropdown-menu show" style="max-height: 213.764px; overflow: hidden; min-height: 130px; position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(0px, -49.7778px, 0px);" data-popper-placement="top-start"><div class="inner show" role="listbox" id="bs-select-2" tabindex="-1" aria-activedescendant="bs-select-2-1" style="max-height: 197.764px; overflow: hidden auto; min-height: 114px;"><ul class="dropdown-menu inner show" role="presentation" style="margin-top: 0px; margin-bottom: 0px;"><li class="dropdown-header optgroup-1"><span class="text">Movies</span></li><li class="optgroup-1 selected active"><a role="option" class="dropdown-item opt selected active" id="bs-select-2-1" tabindex="0" aria-setsize="6" aria-posinset="1" aria-selected="true"><span class="text">Rocky</span></a></li><li class="optgroup-1"><a role="option" class="dropdown-item opt" id="bs-select-2-2" tabindex="0" aria-setsize="6" aria-posinset="2"><span class="text">Pulp Fiction</span></a></li><li class="optgroup-1"><a role="option" class="dropdown-item opt" id="bs-select-2-3" tabindex="0" aria-setsize="6" aria-posinset="3"><span class="text">The Godfather</span></a></li><li class="dropdown-divider optgroup-1div"></li><li class="dropdown-header optgroup-2"><span class="text">Series</span></li><li class="optgroup-2"><a role="option" class="dropdown-item opt" id="bs-select-2-6" tabindex="0" aria-setsize="6" aria-posinset="4"><span class="text">Breaking Bad</span></a></li><li class="optgroup-2"><a role="option" class="dropdown-item opt" id="bs-select-2-7" tabindex="0" aria-setsize="6" aria-posinset="5"><span class="text">Black Mirror</span></a></li><li class="optgroup-2"><a role="option" class="dropdown-item opt" id="bs-select-2-8" tabindex="0" aria-setsize="6" aria-posinset="6"><span class="text">Money Heist</span></a></li></ul></div></div></div>
-                                        <label for="selectpickerGroups" class="form-floating-bootstrap-select-label">Groups</label>
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="row  justify-content-between align-items-center">
+                            <div class="col-12">
+                                <div class="card mb-6 h-100">
+                                    <div class="card-header header-elements">
+                                        <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
+                                        <h5 class="card-action-title mb-0 underline">Lead Details</h5>
+                                        
+                                        <div class="card-header-elements ms-sm-auto">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-primary waves-effect waves-light" style="visibility:hidden;">Update</button>
+                                            </div>
                                         </div>
-                                    </div> -->
-
-                                    <label for="next_date" class="form-label w-100 text-center">Next Follow Up Date Time</label>
-                                    <div class="mb-4 form-floating form-floating-outline">
-                                        <input class="form-control" type="datetime-local" id="next_date" name="next_date" required>
-                                        <label for="next_date">Next Follow Up Date Time</label>
                                     </div>
-
-                                    <label for="notes" class="form-label w-100 text-center">Reason For Transfer</label>
-                                    <div class="mb-4 form-floating form-floating-outline">
-                                        <textarea class="form-control" id="transfer_reason" placeholder="Write Reason here..." name="transfer_reason" style="height: 100px;"></textarea>
-                                        <label for="transfer_reason">Reason For Transfer</label>
-                                    </div>
-
-                                    <div class="d-flex justify-content-between">
-                                        <button type="submit" name="submit" class="btn btn-success logo-btn">
-                                            Transfer
-                                        </button>
-                                        <!-- <button type="button" class="btn btn-secondary">
-                                            Transfer Lead
-                                        </button> -->
+                                    
+                                    <hr class="m-0">
+                                    <div class="card-body demo-vertical-spacing demo-only-element">
+                                        <!-- <small class="card-text text-uppercase text-muted small">About</small> -->
+                                        <h5 class="card-action-title  mb-0">About</h5>
+                                        <hr class="mt-1">
+                                        <ul class="list-unstyled my-3 py-1" style="">
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Lead Name:</span> <span><?php echo $row_leads['lead_name']; ?></span></li>
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span><?php 
+                                                $needle = $row_leads["location"];
+                                                $resultArray = array_filter($row_location, function ($v) use ($needle) {
+                                                    return $needle == $v['id']; 
+                                                });
+                                                if($needle == 1) $needle = 1;
+                                                else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                                if(isset($resultArray[$needle]["name"]) && $resultArray[$needle]["name"] != "") echo $resultArray[$needle]["name"]; 
+                                                else echo "Not Found";
+                                            ?></span></li>
+                                            <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li>
+                                            <!-- <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li> -->
+                                        </ul>
+                                        <!-- <small class="card-text text-uppercase text-muted small" >Contacts</small> -->
+                                        <!-- <hr> -->
+                                        <h5 class="card-action-title  mb-0">Contacts</h5>
+                                        <hr class="mt-1">
+                                        <ul class="list-unstyled my-3 py-1" style="">
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Contact:</span> <span><?php echo $row_leads['phone_no']; ?></span></li>
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Email ID:</span> <span><?php echo $row_leads['email_id']; ?></span></li>
+                                        
+                                        </ul>
+                                        <!-- <small class="card-text text-uppercase text-muted small">Other</small> -->
+                                        <!-- <hr> -->
+                                        <h5 class="card-action-title  mb-0">Other</h5>
+                                        <hr class="mt-1">
+                                        
+                                        <ul class="list-unstyled my-3 py-1" style="">
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Source:</span> <span><?php echo $row_leads['source']; ?></span></li>
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_leads['added_on'])); ?></span></li>
+                                        </ul>                                        
+                                        
                                     </div>
                                 </div>
-                            </form>
+                            </div>
+                        </div>                        
+                    </div>
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="row justify-content-between align-items-center">
+                            <div class="col-12">
+                                <div class="card pb-5 h-100" >
+
+                                    <form action="#" method="post" enctype="multipart/form-data">
+                                            <input type="hidden" value="<?php echo $_REQUEST['assign_leads_sr_id']; ?>" name="assign_leads_sr_id">
+                                            <input type="hidden" value="<?php echo $row_assign['leads_id']; ?>" name="leads_id">
+
+                                            <div class="card-header header-elements">
+                                                <h5 class="card-action-title mb-0"><i class="ri-survey-line ri-24px me-2"></i>Add Transfer Details</h5>
+                                                <div class="card-header-elements ms-sm-auto">
+                                                    <div class="btn-group">
+                                                        <button type="submit" name="submit1" id="submit1"  class="btn btn-primary waves-effect waves-light">Update</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr class="m-0">   
+
+                                            <!-- <div class="card-body demo-vertical-spacing demo-only-element">
+                                                <h5 class="card-action-title  mb-0">Property Details</h5>
+                                                <hr class="mt-1">
+                                            </div> -->
+                                            <div class="col-md-12 pt-8">
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <div class="d-flex justify-content-between  align-items-center">
+                                                        <h6 class="w-max-content mb-0">1. Select Employee*</h6>
+                                                        <!-- <div class="mb-4"> -->
+                                                            <!-- <label class="form-label">Connection Status</label> -->
+                                                            <div class="d-flex gap-4" style="width:72%">
+                                                                    <!-- <div class="row mt-4"> -->
+                                                                    <!-- <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Title</label> -->
+                                                                    <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
+                                                                    <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                                    <select id="roleDropdown" name="transfer_employee_id" class="form-select" required>
+                                                                        <option value="">Select Employee</option>
+                                                                        <!-- PHP to generate grouped options -->
+                                                                        <?php
+                                                                        $sql = "SELECT * FROM employee WHERE status='Active' AND login_role IN ('CUSTOMER EXECUTIVE', 'SALES EXECUTIVE') ORDER BY login_role";
+                                                                        $stmt = $pdo->query($sql);
+                                                                        $currentRole = '';
+
+                                                                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                                                            $employeeRole = $row['login_role'];
+
+                                                                            // Add a header if the role changes
+                                                                            if ($employeeRole !== $currentRole) {
+                                                                                if ($currentRole != '') {
+                                                                                    echo '<option disabled></option>'; // Add a separator
+                                                                                }
+                                                                                echo '<option disabled>' . htmlspecialchars($employeeRole) . 's ARE</option>';
+                                                                                $currentRole = $employeeRole;
+                                                                            }
+
+                                                                            // Add the employee option
+                                                                            echo '<option value="' . htmlspecialchars($row['employee_id']) . '">' 
+                                                                            . htmlspecialchars($row['employee_name']) . ' - ' 
+                                                                            . htmlspecialchars($row['location']) 
+                                                                            . '</option>';
+                                                                        }
+                                                                        ?>
+                                                                    </select>                                        
+                                                                    <label for="roleDropdown">Customer Executive</label>
+                                                                    </div>
+                                                                    <!-- </div> -->
+                                                            </div>
+                                                        <!-- </div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <!-- <h6 class="mt-0">2. Remark For Today's Visit*</h6> -->
+                                                        <h6 class="my-0">2. Follow Up*</h6>
+                                                        <div class="d-flex gap-4" style="width: 72%;">
+                                                            <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                                <input class="form-control" type="datetime-local" id="next_date" name="next_date" required>
+                                                                <label for="next_date">Next Follow Up Date Time</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-12">
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <h6 class="my-0">3. Reason*</h6>
+                                                            <div class="d-flex gap-4" style="width: 72%;">
+                                                                <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                                    <textarea class="form-control" id="transfer_reason" placeholder="Write Reason here..." required name="transfer_reason" style="height: 100px;"></textarea>
+                                                                    <label for="transfer_reason">Reason For Transfer</label>
+                                                                </div>
+                                                            </div>  
+                                                    </div>      
+                                                </div>
+                                            </div>
+                                                                                    
+                                            <div class="col-sm-12 text-center">
+                                                    <div class="form-floating form-floating-outline">
+                                                        <input class="form-control" type="hidden" id="lat" readonly name="latitude">
+                                                        <!-- <span>Current Latitude:- </span> -->
+                                                        <!-- <span class="text-danger" id="latitude"></span>  -->
+                                                        <!-- <br> -->
+                                                        <input class="form-control" type="hidden" id="long" readonly name="longitude">
+                                                        <!-- <span>Current Longitude:- </span> -->
+                                                        <!-- <span class="text-danger" id="longitude"></span> -->
+                                                        <!-- <br> -->
+                                                        <!-- <span>Accuracy:- </span> -->
+                                                        <!-- <span class="text-danger" id="accuracy"></span> -->
+                                                        <div class="mx-7 alert alert-solid-warning" id="warningMessage" role="alert" style="display:none;">
+                                                            Make sure your location is enabled before submitting this form
+                                                        </div>
+                                                        <div class="mx-7 alert alert-solid-danger" id="errormessage" role="alert" style="display:none;">
+                                                            Please turn on location to submit this form!
+                                                        </div>
+                                                        <div class="mx-7 mb-0 alert text-danger alert-solid-success" id="successmessage" role="alert" style="display:none; width:max-content">
+                                                            <span class="d-none" class="" id="latitude"></span><span class="d-none" id="longitude"></span>
+                                                            <span class="text-white"  data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Make sure this is below 100" id="accuracy"></span>
+                                                        </div>
+                                                        
+                                                    </div>
+                                            </div>
+                        
+                                            <!-- <div class="col-sm-12 text-right">
+                                                <hr class="m-0">
+                                            </div> -->
+
+                                            <div class="col-sm-12 text-right">
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <div class="d-flex justify-content-end align-items-center">
+                                                        <span class="d-none" class="" id="latitude"></span><span class="d-none" id="longitude"></span>
+                                                        <!-- <button type="submit" name="submit1" id="submit1" class="btn btn-success">Submit</button> -->
+                                                    </div>        
+                                                </div>    
+                                            </div>
+                                    </form>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                 </div>
                <!-- *************** - /main containt in page write here - **********************  -->
             </div>
