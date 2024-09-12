@@ -178,7 +178,7 @@
             WHERE `assign_leads_sr_id` = ?";
 
     $q = $pdo->prepare($sql);
-    $q->execute(array($connection_status, $today_visit_remark, $next_date_followup1, $next_time_followup1, $next_date_visit1, $next_time_visit1, $lead_type, $added_on, $status, $photo1, $t_status_ce, $assign_leads_sr_id,$latitude, $longitude));
+    $q->execute(array($connection_status, $today_visit_remark, $next_date_followup1, $next_time_followup1, $next_date_visit1, $next_time_visit1, $lead_type, $added_on, $status, $photo1, $t_status_ce, $latitude, $longitude, $assign_leads_sr_id));
 
 
     // ----------------------- Insert for new ffollowup ---------------------------------------------------------

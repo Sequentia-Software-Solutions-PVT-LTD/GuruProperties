@@ -74,6 +74,7 @@
         $admin_id = $_SESSION['login_user_id'];
         $login_name = $_SESSION['login_name'];
         $login_role = $_SESSION['login_role'];
+        $login_photo = $_SESSION['login_photo'];
         $added_on = date('Y-m-d');
         
         // ------------------------- Performance Calulation ---------------------------------
@@ -100,9 +101,9 @@
           $img = "alertinfo.png";
       } 
       elseif($count_assign_leads < 37) {
-          $percentage = "Below 75%";
-          $performance = "Poor";
-          $img = "alertwarning.png";
+          $percentage = "0%";
+          $performance = "Bad";
+          $img = "alertdelete.png";
       } 
       else {
           $percentage = "0%";
@@ -112,7 +113,7 @@
 
         // print_r($sqlsr);
         // print_r($_SESSION);
-        // print_r($count_assign_leads);
+        // // print_r($count_assign_leads);
         // exit();
         
         // ------------------------- /Performance Calulation ---------------------------------
@@ -137,7 +138,11 @@
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
                       <!-- <img src="assets/img/avatars/1.png" alt class="rounded-circle" /> -->
+                      <?php if($login_role == 'CUSTOMER EXECUTIVE' || $login_role == 'SALES EXECUTIVE') { ?>
+                        <img src="assets/img/avatars/<?php echo $login_photo;?>" alt class="rounded-circle" style="height: 40px;width: 40px;"/>
+                      <?php  } else { ?>
                       <img src="guru-logo-short.jpg" alt class="rounded-circle" style="height: 40px;width: 40px;"/>
+                      <?php } ?>
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -147,7 +152,11 @@
                           <div class="flex-shrink-0 me-2">
                             <div class="avatar avatar-online">
                               <!-- <img src="assets/img/avatars/1.png" alt class="rounded-circle" /> -->
-                              <img src="guru-logo-short.jpg" alt class="rounded-circle" style="height: 40px;width: 40px;"/>
+                              <?php if($login_role == 'CUSTOMER EXECUTIVE' || $login_role == 'SALES EXECUTIVE') { ?>
+                                <img src="assets/img/avatars/<?php echo $login_photo;?>" alt class="rounded-circle" style="height: 40px;width: 40px;"/>
+                              <?php  } else { ?>
+                                <img src="guru-logo-short.jpg" alt class="rounded-circle" style="height: 40px;width: 40px;"/>
+                              <?php } ?>
                             </div>
                           </div>
                           <div class="flex-grow-1">
@@ -192,6 +201,14 @@
                                 </a>
                             <?php } ?>
                         </div>
+                    </li>
+                    <li>
+                      <div class="d-grid px-4 pt-2 pb-1">
+                        <a class="btn btn-sm btn-warning d-flex" href="reset_password.php" >
+                          <small class="align-middle">Reset Password</small>
+                          <i class="ri-user-settings-line ms-2 ri-16px"></i>
+                        </a>
+                      </div>
                     </li>
                     
                   </ul>

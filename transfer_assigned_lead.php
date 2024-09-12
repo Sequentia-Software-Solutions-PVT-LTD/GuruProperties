@@ -81,7 +81,7 @@
           WHERE `assign_leads_id` = ?";
 
     $q = $pdo->prepare($sql);
-    $q->execute(array($added_on, $Transferred, $transfer_reason, $transfer_employee_id, $transfer_employee_type, $Active, $assign_leads_id, $latitude, $longitude));
+    $q->execute(array($added_on, $Transferred, $transfer_reason, $transfer_employee_id, $transfer_employee_type, $Active, $latitude, $longitude, $assign_leads_id));
 
     // ---------------------- Insert query for trasfered employee-------------------------------------------------------------------------------------------
     

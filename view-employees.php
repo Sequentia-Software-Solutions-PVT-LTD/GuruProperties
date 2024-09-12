@@ -117,6 +117,8 @@
                                 $q = $pdo->query($sql);
                                 foreach ($pdo->query($sql) as $row) 
                                 { 
+                                  $login_photo = $row['login_photo'];
+                                  // echo "$login_photo";
                             ?>
                             <tr>
                                 <td><span class="fw-medium"><?php echo $i; ?></span></td>
@@ -126,7 +128,7 @@
                                         <div class="avatar-wrapper">
                                           <div class="avatar avatar-sm me-3">
                                             <!-- <img src="assets/img/avatars/2.png" alt="Avatar" class="rounded-circle"> -->
-                                            <img src="user-img1.jpg" alt="Avatar" class="rounded-circle">
+                                            <img src="assets/img/avatars/<?php echo $login_photo;?>" alt="Avatar" class="rounded-circle">
                                           </div>
                                         </div>
                                         <div class="d-flex flex-column">

@@ -18,6 +18,12 @@ if(!in_array($idAddress, $allowedIps)) {
   exit();
 }
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+$isError = false;
+
+
 // on login form submit 
 if(isset($_POST["submit"]))
 { 
@@ -114,12 +120,21 @@ if(isset($_POST["submit"]))
       }
       else
       {
-          $loginError = "Please enter correct password !";
+          // $loginError = "Please enter correct password !";
+          $isError = true;
+          $error = "<span  style='color:red;'><b>ERROR:</b>Please enter correct password !</span>";
+        
       }
+          // echo "<pre>";
+          // print_r($loginError);
+          // exit();
     }
     else 
     {
-      $loginError = "Please enter correct password !";
+        // $loginError = "Please enter correct password !";
+        $isError = true;
+        $error = "<span  style='color:red;'><b>ERROR:</b> Please enter correct password !</span>";
+        
     }
   }
 }
@@ -252,6 +267,14 @@ if(isset($_POST["submit"]))
                   </div>
                 </div>
               </div>
+
+              <?php if($isError){ 
+                // $error = 'fgds';?>
+                <!-- <div class="form-floating form-floating-outline mb-6"> -->
+                <!-- <label for="formtabs-password" class="col-sm-12 text-center"><?php echo $error; ?></label> -->
+                <span class="col-sm-12 text-center"><?php echo $error; ?></span>
+              <!-- </div> -->
+              <?php } ?>
               
               <button class="btn btn-primary d-grid w-100 login-btn" type="submit" name="submit">Sign in</button>
             </form>

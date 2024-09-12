@@ -106,7 +106,7 @@
             WHERE `assign_leads_sr_id` = ?";
 
         $q = $pdo->prepare($sql);
-        $q->execute(array($added_on, $Transferred, $transfer_reason, $transfer_employee_id, $transfer_employee_type, $Active, $assign_leads_sr_id, $latitude, $longitude));
+        $q->execute(array($added_on, $Transferred, $transfer_reason, $transfer_employee_id, $transfer_employee_type, $Active, $latitude, $longitude, $assign_leads_sr_id));
 
         // ---------------------- transfer lead to SE-SE (insert new row)-------------------------------------------------------------------------------------------
         
@@ -133,7 +133,7 @@
              WHERE `assign_leads_sr_id` = ?";
  
          $q = $pdo->prepare($sql);
-         $q->execute(array($added_on, $Transferred, $transfer_reason, $transfer_employee_id, $transfer_employee_type, $Active, $assign_leads_sr_id, $latitude, $longitude));
+         $q->execute(array($added_on, $Transferred, $transfer_reason, $transfer_employee_id, $transfer_employee_type, $Active, $latitude, $longitude, $assign_leads_sr_id));
  
          // ---------------------- transfer lead to SE-SE (insert new row) -------------------------------------------------------------------------------------------
          

@@ -38,9 +38,11 @@
     $added_on = date('Y-m-d H-i-s');
     $status = "Active";
     $login_role = $_POST['login_role'];
-    $login_photo = "default.png";
+    // $login_photo = "default.png";
     $email_id = $_POST['email_id'];
     $cell_no = $_POST['cell_no'];
+
+    $login_photo = $_POST['avatar'];
 
     $_employeelocation_id = $_POST['_employeelocation'];
 
@@ -80,9 +82,9 @@
           $lastInsertedId = $pdo->lastInsertId();
 
           $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-          $sql = "INSERT INTO employee(admin_id, employee_name, password, added_on, status, login_role,  cell_no, user_id, email_id, designation, `location`, location_id) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+          $sql = "INSERT INTO employee(admin_id, employee_name, password, added_on, status, login_role,  cell_no, user_id, email_id, designation, `location`, location_id, login_photo) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
           $q = $pdo->prepare($sql);
-          $q->execute(array($lastInsertedId, $employee_name, $password, $added_on, 'Active', $login_role,  $cell_no, $user_id,$email_id,'Employee', $location_name, $_employeelocation_id));
+          $q->execute(array($lastInsertedId, $employee_name, $password, $added_on, 'Active', $login_role,  $cell_no, $user_id,$email_id,'Employee', $location_name, $_employeelocation_id, $login_photo,));
 
           $isError = true;
           $error = "<span  style='color:green;'><b>Congrats:</b> New Employee with LOGIN ID ' ".$employee_name." ' added successfully..!!</span>";
@@ -216,8 +218,6 @@
                                       </div>
                                    
 
-                                
-
                                 <!-- <div class="col-md-6"> -->
                                     <!-- <div class="row align-items-center justify-content-center"> -->
                                         <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
@@ -239,20 +239,54 @@
                                 <!-- </div> -->
 
                                 <div class="form-floating form-floating-outline mb-6">
-                                  <input type="text" onkeyup="check_pass();" name="confirm_password"  id="confirm_password" value="admin" class="form-control" aria-describedby="formtabs-password2" required>
-                                  <label for="formtabs-password">Confirm Password</label>
-                                
+                                      <input type="text" onkeyup="check_pass();" name="confirm_password"  id="confirm_password" value="admin" class="form-control" aria-describedby="formtabs-password2" required>
+                                      <label for="formtabs-password">Confirm Password</label>
+                                    
 
-                                <?php if($isError){ 
-                                  // $error = 'fgds';?>
-                                  <!-- <div class="form-floating form-floating-outline mb-6"> -->
-                                  <!-- <label for="formtabs-password" class="col-sm-12 text-center"><?php echo $error; ?></label> -->
-                                  <span class="col-sm-12 text-center"><?php echo $error; ?></span>
-                                <!-- </div> -->
-                                <?php } ?>
+                                    <?php if($isError){ 
+                                      // $error = 'fgds';?>
+                                      <!-- <div class="form-floating form-floating-outline mb-6"> -->
+                                      <!-- <label for="formtabs-password" class="col-sm-12 text-center"><?php echo $error; ?></label> -->
+                                      <span class="col-sm-12 text-center"><?php echo $error; ?></span>
+                                    <!-- </div> -->
+                                    <?php } ?>
+                                    </div>
+
                                 </div>
 
-                            </div>
+                                <div class="col-md-3 col-sm-6">
+                                  <small class="text-light fw-medium">Select Avatar</small>
+                                  <div class="d-flex avatar-group my-4">
+                                    <!-- Avatar 1 -->
+                                    <div class="avatar">
+                                      <input type="radio" name="avatar" id="avatar1" value="5.png" required>
+                                      <label for="avatar1">
+                                        <img src="assets/img/avatars/5.png" alt="Avatar 1" class="rounded-circle pull-up" style="cursor:pointer;">
+                                      </label>
+                                    </div>
+                                    <!-- Avatar 2 -->
+                                    <div class="avatar">
+                                      <input type="radio" name="avatar" id="avatar2" value="12.png" required>
+                                      <label for="avatar2">
+                                        <img src="assets/img/avatars/12.png" alt="Avatar 2" class="rounded-circle pull-up" style="cursor:pointer;">
+                                      </label>
+                                    </div>
+                                    <!-- Avatar 3 -->
+                                    <div class="avatar">
+                                      <input type="radio" name="avatar" id="avatar3" value="6.png" required>
+                                      <label for="avatar3">
+                                        <img src="assets/img/avatars/6.png" alt="Avatar 3" class="rounded-circle pull-up" style="cursor:pointer;">
+                                      </label>
+                                    </div>
+                                    <!-- Avatar 4 -->
+                                    <div class="avatar">
+                                      <input type="radio" name="avatar" id="avatar4" value="10.png" required>
+                                      <label for="avatar4">
+                                        <img src="assets/img/avatars/10.png" alt="Avatar 4" class="rounded-circle pull-up" style="cursor:pointer;">
+                                      </label>
+                                    </div>
+                                  </div>
+                                </div>
 
                             
                           </div>

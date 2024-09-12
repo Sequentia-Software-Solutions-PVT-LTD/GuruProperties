@@ -33,9 +33,7 @@
 
   if(isSet($_POST["submit"]))
   { 
-    // echo "<pre>";
-    // print_r($_POST);
-    // exit();
+   
 
     $connection_status = $_POST['connection_status'];
     $notes = $_POST['notes'];
@@ -80,11 +78,11 @@
             `transfer_status` = ?,
             `latitude` = ?, 
             `longitude` = ?
-            WHERE `assign_leads_id` = ?";
+            WHERE `assign_leads_id` = ? ";
 
     $q = $pdo->prepare($sql);
-    $q->execute(array($connection_status, $notes, $next_date, $next_time, $lead_type, $added_on, $status, $t_status_ce, $assign_leads_id,$latitude, $longitude));
-
+    $q->execute(array($connection_status, $notes, $next_date, $next_time, $lead_type, $added_on, $status, $t_status_ce, $longitude, $latitude, $assign_leads_id));
+    
     // ----------------------- Insert for new ffollowup ---------------------------------------------------------
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "INSERT INTO `assign_leads`(`leads_id`, `admin_id`, `employee_id`,`employee_name`, `status`, `transfer_status`,`next_date`,`next_time`, `added_on`) VALUES (?,?,?,?,?,?,?,?,?)";

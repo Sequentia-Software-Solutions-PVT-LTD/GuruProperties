@@ -82,6 +82,18 @@
         .mar-top {
             margin-top: -12px;
         }
+        thead, tbody, tfoot, tr, td, th {
+            text-align: left !important;
+        }
+        .text-success {
+            color: #fff !important;
+            border: 1px solid #76e22e;
+            padding: 5px;
+            background: #76e22e;
+        }
+        a:not([href]):hover {
+            color: #76e22e !important;
+        }
      </style>
     
   </head>
@@ -115,10 +127,10 @@
                             <tr>
                             <th>#</th>
                             <th>Lead Name</th>
-                            <th>Transferd By</th>
-                            <th>Transferd To</th>
+                            <th>Transferred By</th>
+                            <th>Transferred To</th>
                             <th>Reason</th>
-                            <th>Transfer Date</th>
+                            <th>Transferred Date</th>
                             <th>Action</th>
                             </tr>
                         </thead>
@@ -134,16 +146,26 @@
                                 $q = $pdo->query($sql);
                                 foreach ($pdo->query($sql) as $row1) 
                                 { 
+                                  // echo "<pre>";
+                                  // print_r($row1);
+                                  // exit();
+
                                     $assign_leads_sr_id = $row1['assign_leads_sr_id'];
                                     $assign_leads_id = $row1['assign_leads_id'];
                                     $leads_id = $row1['leads_id'];
                                     $admin_id = $row1['admin_id'];
                                     $employee_id = $row1['employee_id'];
 
-                                    $sqlex = "select * from assign_leads_sr where leads_id = $leads_id and transfer_employee_id = $employee_id";
+                                    $sqlex = "select * from assign_leads_sr where leads_id = $leads_id and transfer_employee_id = $employee_id ORDER by assign_leads_sr_id LIMIT 1";
+                                    echo $sqlex;
                                     $q = $pdo->prepare($sqlex);
                                     $q->execute(array());      
                                     $row_ex = $q->fetch(PDO::FETCH_ASSOC);
+
+                                    // echo "<pre>";
+                                    // print_r($sqlex);
+                                    // print_r($row_ex);
+                                    // exit();
 
                                     $sqlemp = "select * from employee where admin_id = $admin_id ";
                                     $q = $pdo->prepare($sqlemp);

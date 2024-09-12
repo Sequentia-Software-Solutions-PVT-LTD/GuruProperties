@@ -71,6 +71,18 @@
         .mar-top {
             margin-top: -12px;
         }
+        thead, tbody, tfoot, tr, td, th {
+            text-align: left !important;
+        }
+        .text-success {
+            color: #fff !important;
+            border: 1px solid #76e22e;
+            padding: 5px;
+            background: #76e22e;
+        }
+        a:not([href]):hover {
+            color: #76e22e !important;
+        }
      </style>
     
   </head>
@@ -103,10 +115,10 @@
                             <tr>
                             <th>#</th>
                             <th>Lead Name</th>
-                            <th>Transferd By</th>
-                            <th>Transferd To</th>
+                            <th>Transferred By</th>
+                            <th>Transferred To</th>
                             <th>Reason</th>
-                            <th>Transfer Date</th>
+                            <th>Transferred Date</th>
                             <th>Action</th>
                             </tr>
                         </thead>
@@ -148,7 +160,21 @@
                             <tr>
                                     <td><span class="fw-medium"><?php echo $i; ?></span></td>
                                     <td><?php echo $row_leads["lead_name"]; ?></td>
-                                    <td><?php echo $row_ex["employee_name"]; ?></td>
+                                    <!-- <td><?php echo $row_ex["employee_name"]; ?></td> -->
+                                    <td>
+                                      <div class="d-flex justify-content-start align-items-center user-name">
+                                        <div class="avatar-wrapper">
+                                          <div class="avatar avatar-sm me-3">
+                                            <!-- <img src="assets/img/avatars/2.png" alt="Avatar" class="rounded-circle"> -->
+                                            <img src="assets/img/avatars/<?php echo $row_emp["login_photo"];?>" alt="Avatar" class="rounded-circle">
+                                          </div>
+                                        </div>
+                                        <div class="d-flex flex-column">
+                                          <span class="name text-truncate h6 mb-0"><?php echo $row_ex["employee_name"]; ?></span>
+                                          <small class="user_name text-truncate"><?php echo $row_emp["user_id"]; ?></small>
+                                        </div>
+                                      </div>
+                                    </td>
                                     <td><?php echo $row1["employee_name"]; ?></td>
                                     <td><?php echo $row_ex["transfer_reason"]; ?></td>
                                     <td><?php echo date('d-m-Y H:i A', strtotime($row1["admin_request_date"])); ?></td>
