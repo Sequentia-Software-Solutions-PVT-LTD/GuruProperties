@@ -71,8 +71,8 @@
         .menu-toggle::after,
         .app-brand .layout-menu-toggle svg path,
         a:hover {
-          color: #ffffff;
-          fill: #ffffff;
+          color: #d7d8ee;
+          fill: #d7d8ee;
         }
         .menu-vertical .menu-item .menu-link:hover {
             background-color: #000000;
@@ -80,18 +80,17 @@
         .light-style .menu-vertical .menu-item.active > .menu-toggle, .light-style .menu-vertical .menu-item.open > .menu-toggle {
           background-color: #414141;
         }
-        .menu-header .menu-header-text {
+        /* .menu-header .menu-header-text {
           color: #ffffff;
           font-weight: 800;
-        }
-        html:not([dir=rtl]) .menu-inner > .menu-header::before {
+        } */
+        /* html:not([dir=rtl]) .menu-inner > .menu-header::before {
           width: 100%;
-
-
-
-
+        } */
+        .bg-dark-custom {
+          background-color: #282a42 !important;
+          color: #d7d8ee
         }
-
     </style>
     <style>
         .login-btn {

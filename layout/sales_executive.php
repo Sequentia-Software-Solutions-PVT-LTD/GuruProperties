@@ -5,7 +5,7 @@
 // exit();
 
 ?>
-<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme-bg-dark text-white bg-secondary">
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme-bg-dark text-white bg-dark-custom">
           <div class="app-brand demo">
             <a href="dashboard" class="app-brand-link">
               <span class="app-brand-logo demo">

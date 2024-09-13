@@ -6,7 +6,7 @@
 //   exit();
 ?>
 <!-- <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme-bg-dark text-white bg-secondary"> -->
-<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme-bg-dark text-white bg-secondary">
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme-bg-dark text-white bg-dark-custom">
           <div class="app-brand demo">
             <a href="index.html" class="app-brand-link">
               <span class="app-brand-logo demo">
@@ -101,7 +101,7 @@
             </li> -->
 
             <!--  -->
-            <li class="menu-header mt-10">
+            <li class="menu-header mt-5">
               <span class="menu-header-text" data-i18nn="Apps & Pages">Property</span>
             </li>
 
@@ -168,7 +168,7 @@
 
             <!--  -->
 
-            <li class="menu-header mt-10">
+            <li class="menu-header mt-5">
               <span class="menu-header-text" data-i18nn="Apps & Pages">Leads</span>
             </li>
 
