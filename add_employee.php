@@ -196,7 +196,7 @@
                                    
 
                                     <div class="form-floating form-floating-outline mb-6">
-                                      <input type="text"  name="password"  id="password" value="admin" class="form-control" aria-describedby="formtabs-password2" required>
+                                      <input type="text"  name="password"  id="password" value="Executive123$" class="form-control" aria-describedby="formtabs-password2" required>
                                       <label for="formtabs-password">Password</label>
                                       <span id='message'></span>
                                     </div>
@@ -239,7 +239,7 @@
                                 <!-- </div> -->
 
                                 <div class="form-floating form-floating-outline mb-6">
-                                      <input type="text" onkeyup="check_pass();" name="confirm_password"  id="confirm_password" value="admin" class="form-control" aria-describedby="formtabs-password2" required>
+                                      <input type="text" onkeyup="check_pass();" name="confirm_password"  id="confirm_password" value="Executive123$" class="form-control" aria-describedby="formtabs-password2" required>
                                       <label for="formtabs-password">Confirm Password</label>
                                     
 

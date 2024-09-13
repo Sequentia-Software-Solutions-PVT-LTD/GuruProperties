@@ -74,12 +74,12 @@
         }
         .text-success {
             color: #fff !important;
-            border: 1px solid #76e22e;
+            border: 1px solid #3d8d07;
             padding: 5px;
-            background: #76e22e;
+            background: #3d8d07;
         }
         a:not([href]):hover {
-            color: #76e22e !important;
+            color: #3d8d07 !important;
         }
      </style>
     
@@ -196,7 +196,7 @@
                                             <!-- <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ri-more-2-line"></i></button>
                                             <div class="dropdown-menu"> -->
                                                 <!-- <a class="dropdown-item waves-effect" href="edit_location?id=<?php echo $row["id"]; ?>"><i class="ri-pencil-line me-1"></i> Edit</a> -->
-                                                <a class="dropdown-item waves-effect open-myModal  text-success" data-bs-toggle="modal" data-bs-target="#enableOTP" data-id="<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-check-line me-1"></i> Approve</a>
+                                                <a class="dropdown-item waves-effect open-myModal  text-success" data-bs-toggle="modal" data-bs-target="#enableOTP" data-id="<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-check-double-line me-1"></i> Approve</a>
                                             <!-- </div> -->
                                         </div>
                                     </td>

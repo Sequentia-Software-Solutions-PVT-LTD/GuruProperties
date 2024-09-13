@@ -86,6 +86,23 @@
         }
         html:not([dir=rtl]) .menu-inner > .menu-header::before {
           width: 100%;
+
+
+
+
+        }
+    </style>
+    <style>
+        .login-btn {
+          background: #004040;
+          border: 1px solid #004040;
+        }
+        .login-btn:hover {
+            color: #b0810d !important;
+            /* background-color: #5c61e6 !important; */
+            /* border-color: #5c61e6 !important; */
+            background: transparent !important;
+            border: 1px solid #b0810d !important;
         }
     </style>
     <!--  -->
@@ -98,38 +115,56 @@
         $added_on = date('Y-m-d');
         
         // ------------------------- Performance Calulation ---------------------------------
-        // Correct query with placeholders
-        $sqlsr = "SELECT COUNT(assign_leads_id) as total_count 
-                  FROM assign_leads 
-                  WHERE admin_id = $admin_id 
-                  AND next_date = '$added_on' 
-                  AND connection_status = 'connected'";
-        $q = $pdo->prepare($sqlsr);
-        $q->execute(array());
-        $row_assign1 = $q->fetch(PDO::FETCH_ASSOC);
 
-        $count_assign_leads = $row_assign1['total_count'];
-        // --------------------------------------------------------
-        if($count_assign_leads > 50) {
-          $percentage = "100%";
-          $performance = "Excellent";
+        if($login_role == 'CUSTOMER EXECUTIVE')
+        {
+              // Correct query with placeholders
+              $sqlsr = "SELECT COUNT(assign_leads_id) as total_count 
+                        FROM assign_leads 
+                        WHERE admin_id = $admin_id 
+                        AND next_date = '$added_on' 
+                        AND connection_status = 'connected'";
+              $q = $pdo->prepare($sqlsr);
+              $q->execute(array());
+              $row_assign1 = $q->fetch(PDO::FETCH_ASSOC);
+
+              $count_assign_leads = $row_assign1['total_count'];
+              // --------------------------------------------------------
+              if($count_assign_leads >= 50) {
+                $percentage = "Today's score is 100%";
+                $performance = "Your today's performance was Excellent";
+                $img = "alertsuccess.png";
+            } 
+            elseif($count_assign_leads >= 37 && $count_assign_leads <= 49) {
+                $percentage = "Today's score is 75%";
+                $performance = "Your today's performance was Above Average";
+                $img = "alert-warning.png";
+            } 
+            elseif($count_assign_leads <= 37) {
+                $percentage = "Today's score is Below Average";
+                $performance = "Your today's performance was Poor";
+                $img = "alertred.png";
+            } 
+            else {
+                $percentage = "0%";
+                $performance = "Your today's performance was Bad";
+                $img = "alertred.png";
+            }
+            $count_print = 'You have made'. $count_assign_leads .' calls today.';
+    }
+
+    if($login_role == 'SALES EXECUTIVE'){
+
+          $percentage = "Logout Confirmation!";
+          $performance = "Do you really want to log out now?";
           $img = "alertsuccess.png";
-      } 
-      elseif($count_assign_leads >= 37 && $count_assign_leads <= 50) {
-          $percentage = "75%";
-          $performance = "Good";
-          $img = "alertinfo.png";
-      } 
-      elseif($count_assign_leads < 37) {
-          $percentage = "0%";
-          $performance = "Bad";
-          $img = "alertdelete.png";
-      } 
-      else {
-          $percentage = "0%";
-          $performance = "Bad";
-          $img = "alertdelete.png";
-      }
+          $count_print = "";
+    }
+
+
+      // $percentage = "Below Average";
+      // $performance = "Poor";
+      // $img = "alertred.png";
 
         // print_r($sqlsr);
         // print_r($_SESSION);
@@ -259,16 +294,16 @@
                           <div class="modal-body text-center">
                               <img src="<?php echo $img; ?>" alt="Success" class="" style="width:100px;">
 
-                              <h4 class="mb-2"> Today's score is <b> <?php echo $percentage; ?> </b> </h4>
-                              <p>You have made <b> <?php echo $count_assign_leads; ?> </b>calls today.</p>
-                              <p> Your today's performance was <b><?php echo $performance; ?> </b></p>
+                              <h4 class="mb-2">  <?php echo $percentage; ?>  </h4>
+                              <p> <?php echo $count_print; ?> </p>
+                              <p> <?php echo $performance; ?> </p>
                               
                               <div class="d-flex justify-content-center gap-3">
                                   <form action="dist/conf/signout.php" method="POST">
                                     <input type="hidden" id="long_signout" name="longitude_signout" />
                                     <input type="hidden" id="lat_signout" name="latitude_signout" />
                                     <input type="hidden" id="accuracy_signout" name="accuracy_signout" />
-                                    <button type="submit" name="logout" id="logout_button" class="btn btn-info">Submit Today's Report & Logout</button>
+                                    <button type="submit" name="logout" id="logout_button" class="btn btn-info login-btn">Submit Today's Report & Logout</button>
                                    </form>
                               </div>
                           </div>

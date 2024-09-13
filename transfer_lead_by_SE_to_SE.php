@@ -87,12 +87,12 @@
         }
         .text-success {
             color: #fff !important;
-            border: 1px solid #76e22e;
+            border: 1px solid #3d8d07;
             padding: 5px;
-            background: #76e22e;
+            background: #3d8d07;
         }
         a:not([href]):hover {
-            color: #76e22e !important;
+            color: #3d8d07 !important;
         }
      </style>
     
@@ -156,11 +156,15 @@
                                     $admin_id = $row1['admin_id'];
                                     $employee_id = $row1['employee_id'];
 
+
                                     $sqlex = "select * from assign_leads_sr where leads_id = $leads_id and transfer_employee_id = $employee_id ORDER by assign_leads_sr_id LIMIT 1";
-                                    echo $sqlex;
+                                    // echo $sqlex;
                                     $q = $pdo->prepare($sqlex);
                                     $q->execute(array());      
                                     $row_ex = $q->fetch(PDO::FETCH_ASSOC);
+
+                                    $employee_name_by = $row_ex['employee_name'];
+                                    $employee_name_to = $row1['employee_name'];
 
                                     // echo "<pre>";
                                     // print_r($sqlex);
@@ -172,6 +176,18 @@
                                     $q->execute(array());      
                                     $row_emp = $q->fetch(PDO::FETCH_ASSOC);
 
+                                    // emp data for-transferred by 
+                                    $sqlemp_by = "select * from employee where employee_name = '$employee_name_by' ";
+                                    $q = $pdo->prepare($sqlemp_by);
+                                    $q->execute(array());      
+                                    $row_emp_by = $q->fetch(PDO::FETCH_ASSOC);
+
+                                    // emp data for-transferred to
+                                    $sqlemp_to = "select * from employee where employee_name = '$employee_name_to' ";
+                                    $q = $pdo->prepare($sqlemp_to);
+                                    $q->execute(array());      
+                                    $row_emp_to = $q->fetch(PDO::FETCH_ASSOC);
+
                                     $sqlleads = "select * from leads where id = $leads_id ";
                                     $q = $pdo->prepare($sqlleads);
                                     $q->execute(array());      
@@ -181,8 +197,38 @@
                             <tr>
                                     <td><span class="fw-medium"><?php echo $i; ?></span></td>
                                     <td><?php echo $row_leads["lead_name"]; ?></td>
-                                    <td><?php echo $row_ex["employee_name"]; ?></td>
-                                    <td><?php echo $row1["employee_name"]; ?></td>
+                                    <!-- <td><?php echo $row_ex["employee_name"]; ?></td> -->
+                                    <td>
+                                      <div class="d-flex justify-content-start align-items-center user-name">
+                                        <div class="avatar-wrapper">
+                                          <div class="avatar avatar-sm me-3">
+                                            <!-- <img src="assets/img/avatars/2.png" alt="Avatar" class="rounded-circle"> -->
+                                            <img src="assets/img/avatars/<?php echo $row_emp_by["login_photo"];?>" alt="Avatar" class="rounded-circle">
+                                          </div>
+                                        </div>
+                                        <div class="d-flex flex-column">
+                                          <span class="name text-truncate h6 mb-0"><?php echo $row_emp_by["employee_name"]; ?></span>
+                                          <small class="user_name text-truncate"><?php echo $row_emp_by["user_id"]; ?></small>
+                                        </div>
+                                      </div>
+                                    </td>
+                                    <!--  -->
+                                    <!-- <td><?php echo $row1["employee_name"]; ?></td> -->
+                                    <td>
+                                      <div class="d-flex justify-content-start align-items-center user-name">
+                                        <div class="avatar-wrapper">
+                                          <div class="avatar avatar-sm me-3">
+                                            <!-- <img src="assets/img/avatars/2.png" alt="Avatar" class="rounded-circle"> -->
+                                            <img src="assets/img/avatars/<?php echo $row_emp_to["login_photo"];?>" alt="Avatar" class="rounded-circle">
+                                          </div>
+                                        </div>
+                                        <div class="d-flex flex-column">
+                                          <span class="name text-truncate h6 mb-0"><?php echo $row_emp_to["employee_name"]; ?></span>
+                                          <small class="user_name text-truncate"><?php echo $row_emp_to["user_id"]; ?></small>
+                                        </div>
+                                      </div>
+                                    </td>
+                                    <!--  -->
                                     <td><?php echo $row_ex["transfer_reason"]; ?></td>
                                     <td><?php echo date('d-m-Y H:i A', strtotime($row1["admin_request_date"])); ?></td>
                                     <td>
@@ -190,7 +236,7 @@
                                             <!-- <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ri-more-2-line"></i></button>
                                             <div class="dropdown-menu"> -->
                                                 <!-- <a class="dropdown-item waves-effect" href="edit_location?id=<?php echo $row["id"]; ?>"><i class="ri-pencil-line me-1"></i> Edit</a> -->
-                                                <a class="dropdown-item waves-effect open-myModal text-success" data-bs-toggle="modal" data-bs-target="#enableOTP" data-id="<?php echo $row1["assign_leads_sr_id"]; ?>"><i class="ri-check-line me-1"></i> Approve</a>
+                                                <a class="dropdown-item waves-effect open-myModal text-success" data-bs-toggle="modal" data-bs-target="#enableOTP" data-id="<?php echo $row1["assign_leads_sr_id"]; ?>"><i class="ri-check-double-line me-1"></i> Approve</a>
                                             <!-- </div> -->
                                         </div>
                                     </td>
