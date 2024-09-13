@@ -105,6 +105,7 @@
                         <thead>
                             <tr>
                             <th>#</th>
+                            <th>Lead ID</th>
                             <th>Lead Name</th>
                             <!-- <th>Employee Name</th> -->
                             <th>Location</th>
@@ -125,7 +126,7 @@
                                 $i = 1;
                                 $today_date = date('Y-m-d');
                                 // $sql = "SELECT * FROM assign_leads_sr where admin_id= $admin_id and status='Active' and transfer_status='Available' ";
-                                $sql = "SELECT * FROM assign_leads_sr where admin_id = $admin_id  ";
+                                $sql = "SELECT * FROM assign_leads_sr where admin_id = $admin_id GROUP BY leads_id ORDER BY  edited_on, added_on";
                                 $q = $pdo->query($sql);
                                 // print_r($sql);
                                 // exit();
@@ -147,6 +148,7 @@
                             ?>
                             <tr>
                                     <td><i class="ri-building-2-line ri-22px text-primary me-4"></i><span class="fw-medium"><?php echo $i; ?></span></td>
+                                    <td><?php echo $row1["leads_id"]; ?></td>
                                     <td><?php echo $row_leads["lead_name"]; ?></td>
                                     <!-- <td><?php //echo $row_emp["employee_name"]; ?></td> -->
                                     <td><?php 
