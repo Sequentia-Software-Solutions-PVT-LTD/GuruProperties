@@ -36,12 +36,12 @@
 
           <ul class="menu-inner py-1">
             <!-- Dashboards -->
-            <li class="menu-item">
+            <!-- <li class="menu-item">
               <a href="Dashboard" class="menu-link">
                 <i class="menu-icon tf-icons ri-bill-line"></i>
                 <div data-i18nn="#">Dashboard</div>
               </a>
-            </li>
+            </li> -->
 
 
 
@@ -52,6 +52,10 @@
                 <div data-i18nn="List">Add Leads</div>
               </a>
             </li> -->
+
+            <li class="menu-header mt-5">
+              <span class="menu-header-text" data-i18nn="Apps & Pages">Leads</span>
+            </li>
 
             <li class="menu-item">
               <a href="#" class="menu-link menu-toggle">

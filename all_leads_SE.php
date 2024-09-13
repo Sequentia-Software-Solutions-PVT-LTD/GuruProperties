@@ -95,7 +95,7 @@
 
             <div class="container-xxl flex-grow-1 container-p-y">
               <!-- *************** - main containt in page write here - **********************  -->
-              <h5 class="card-header mar-bot-10">Leads Management</h5>
+              <h5 class="card-header mar-bot-10">All Leads</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
                     <h5 class="card-header"> All Leads are listed below</h5>
@@ -132,6 +132,9 @@
                                 // exit();
                                 foreach ($pdo->query($sql) as $row1) 
                                 { 
+                                    // echo "<pre>";
+                                    // print_r($row1);
+                                    
                                     // $assign_leads_id = $row1['assign_leads_id'];
                                     $leads_id = $row1['leads_id'];
                                     $admin_id = $row1['admin_id'];

@@ -72,7 +72,7 @@
         thead, tbody, tfoot, tr, td, th {
             text-align: left !important;
         }
-        .text-success {
+        /* .text-success {
             color: #fff !important;
             border: 1px solid #3d8d07;
             padding: 5px;
@@ -80,7 +80,7 @@
         }
         a:not([href]):hover {
             color: #3d8d07 !important;
-        }
+        } */
      </style>
     
   </head>
@@ -189,14 +189,14 @@
                                         </div>
                                       </div>
                                     </td>
-                                    <td><?php echo $row1["transfer_reason"]; ?></td>
+                                    <td style="text-wrap: wrap;"><?php echo $row1["transfer_reason"]; ?></td>
                                     <td><?php echo date('d-m-Y H:i A', strtotime($row1["admin_request_date"])); ?></td>
                                     <td>
                                         <div class="dropdown">
                                             <!-- <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ri-more-2-line"></i></button>
                                             <div class="dropdown-menu"> -->
                                                 <!-- <a class="dropdown-item waves-effect" href="edit_location?id=<?php echo $row["id"]; ?>"><i class="ri-pencil-line me-1"></i> Edit</a> -->
-                                                <a class="dropdown-item waves-effect open-myModal  text-success" data-bs-toggle="modal" data-bs-target="#enableOTP" data-id="<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-check-double-line me-1"></i> Approve</a>
+                                                <a class="btn btn-primary btn-fab demo waves-effect waves-light open-myModal " style="color:#fff;" data-bs-toggle="modal" data-bs-target="#enableOTP" data-id="<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-check-double-line me-1"></i> Approve</a>
                                             <!-- </div> -->
                                         </div>
                                     </td>

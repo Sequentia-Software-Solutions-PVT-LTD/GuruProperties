@@ -149,7 +149,7 @@
                 <div class="card">
                     <h5 class="card-header">Edit Employee</h5>
                     <div class="card-body demo-vertical-spacing demo-only-element">
-                        <div class="d-flex align-items-center1 justify-content-center h-px-300">
+                        <div class="d-flex align-items-center1 justify-content-center h-px-250">
                         <form action="#" method="post">
                           <input type="hidden" value="<?php echo $row_d['employee_id']; ?>" name="employee_id">
                           <div class="row g-4">

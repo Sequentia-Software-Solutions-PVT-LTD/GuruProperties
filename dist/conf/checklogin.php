@@ -50,7 +50,10 @@
 					"admin_request_leads_by_CE",
 					"admin_request_leads_by_SE",
 					"transfer_lead_by_SE_to_SE",
-					"timeline"
+					"timeline",
+					"dashboard_superadmin",
+					"dashboard_CE",
+					"dashboard_SE"
 				);
 
 				$CEAllowedPages = array(
@@ -89,7 +92,8 @@
 					"add_location",
 					"view_locations",
 					"export_pdf_property_details",
-					"reset_password"
+					"reset_password",
+					"dashboard_CE"
 				);
 
 				$SEAllowedPages = array(
@@ -130,7 +134,8 @@
 					"add_location",
 					"view_locations",
 					"export_pdf_property_details",
-					"reset_password"
+					"reset_password",
+					"dashboard_SE"
 				);
 
 				$LeadAllowedPages = array(

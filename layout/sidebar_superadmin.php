@@ -37,7 +37,8 @@
           <ul class="menu-inner py-1">
             <!-- Dashboards -->
             <li class="menu-item">
-              <a href="Dashboard" class="menu-link">
+              <!-- <a href="Dashboard" class="menu-link"> -->
+              <a href="dashboard_superadmin" class="menu-link">
                 <i class="menu-icon tf-icons ri-bill-line"></i>
                 <div data-i18nn="#">Dashboard</div>
               </a>

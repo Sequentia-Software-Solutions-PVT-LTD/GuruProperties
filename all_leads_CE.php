@@ -95,7 +95,7 @@
 
             <div class="container-xxl flex-grow-1 container-p-y">
               <!-- *************** - main containt in page write here - **********************  -->
-              <h5 class="card-header mar-bot-10">Leads Management</h5>
+              <h5 class="card-header mar-bot-10">All Leads </h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
                     <h5 class="card-header"> All Leads are listed below</h5>
@@ -106,7 +106,7 @@
                             <tr>
                             <th>#</th>
                             <th>Lead Name</th>
-                            <th>Lead Id</th>
+                            <!-- <th>Lead Id</th> -->
                             <!-- <th>Employee Name</th> -->
                             <th>Location</th>
                             <th>Contact</th>
@@ -125,8 +125,8 @@
                                 $row_location = $qlocation->fetchAll(PDO::FETCH_ASSOC);
                                 $i = 1;
                                 $today_date = date('Y-m-d');
-                                // $sql = "SELECT * FROM assign_leads_sr where admin_id= $admin_id and status='Active' and transfer_status='Available' ";
-                                $sql = "SELECT * FROM assign_leads where admin_id = $admin_id  ORDER BY leads_id";
+                                // $sql = "SELECT * FROM assign_leads where admin_id = $admin_id  ORDER BY leads_id";
+                                $sql = "SELECT * FROM assign_leads where admin_id = $admin_id  GROUP BY leads_id";
                                 $q = $pdo->query($sql);
                                 // print_r($sql);
                                 // exit();
@@ -150,7 +150,7 @@
                                     <td><i class="ri-building-2-line ri-22px text-primary me-4"></i><span class="fw-medium"><?php echo $i; ?></span></td>
                                     
                                     <td><?php echo $row_leads["lead_name"]; ?></td>
-                                    <td><?php echo $row1["leads_id"]; ?></td>
+                                    <!-- <td><?php echo $row1["leads_id"]; ?></td> -->
                                     <!-- <td><?php //echo $row_emp["employee_name"]; ?></td> -->
                                     <td><?php 
                                         $needle = $row_leads["location"];
