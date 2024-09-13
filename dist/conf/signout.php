@@ -32,7 +32,6 @@ date_default_timezone_set('Asia/Kolkata'); // Set to your timezone
         $latitude = $_POST['latitude_signout'];
         $longitude = $_POST['longitude_signout'];
         $accuracy = $_POST['accuracy_signout'];
-
     
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "INSERT INTO `attendance`(`login_id`,`login_name`,`date`,`time`,`status`, `added_on`, `latitude`, `longitude`, `accuracy`) VALUES (?,?,?,?,?,?,?,?,?)";
