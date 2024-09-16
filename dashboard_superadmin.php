@@ -60,6 +60,7 @@
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
               <!-- *************** - main containt in page write here - **********************  -->
+              <h3 class="card-header mar-bot-10">Weekly Performance </h3>
               <h5 class="card-header mar-bot-10">Customer Executive Performance Weekly</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
@@ -70,7 +71,7 @@
                         <thead>
                             <tr>
                                 <th> #</th>
-                                <th>  Name</th>
+                                <th> Name</th>
                                 <th> Fresh Leads </th>
                                 <th> Followup Leads</th>
                                 <th> Transferred Leads</th>
@@ -94,7 +95,8 @@
                                             COUNT(CASE WHEN status = 'Dead' THEN 1 END) AS dead_leads
                                         FROM assign_leads
                                         -- WHERE added_on >= CURDATE() - INTERVAL 7 DAY          -- Last 7 days logic   
-                                        WHERE YEARWEEK(added_on, 1) = YEARWEEK(CURDATE(), 1)     -- and this is sunday to saturday week logic
+                                        -- WHERE YEARWEEK(added_on, 1) = YEARWEEK(CURDATE(), 1)     -- and this is sunday to saturday week logic
+                                        WHERE YEARWEEK(added_on, 1) = YEARWEEK(CURDATE() - INTERVAL 1 WEEK, 1)
                                         GROUP BY employee_name
                                     ";
                                 // $sql = "SELECT * FROM assign_leads ";
@@ -105,10 +107,29 @@
 
                                 foreach ($pdo->query($sql) as $row) 
                                 { 
+                                    $emp_name = $row["employee_name"];
+                                    $sqlemp = "select * from employee where employee_name = '$emp_name' ";
+                                    $q = $pdo->prepare($sqlemp);
+                                    $q->execute(array());      
+                                    $row_emp = $q->fetch(PDO::FETCH_ASSOC);
                             ?>
                             <tr>
                                 <td><span class="fw-medium"><?php echo $i; ?></span></td>
-                                <td><?php echo $row["employee_name"]; ?></td>
+                                <!-- <td><?php echo $row["employee_name"]; ?></td> -->
+                                <td>
+                                    <div class="d-flex justify-content-start align-items-center user-name">
+                                    <div class="avatar-wrapper">
+                                        <div class="avatar avatar-sm me-3">
+                                        <!-- <img src="assets/img/avatars/2.png" alt="Avatar" class="rounded-circle"> -->
+                                        <img src="assets/img/avatars/<?php echo $row_emp["login_photo"];?>" alt="Avatar" class="rounded-circle">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <span class="name text-truncate h6 mb-0"><?php echo $row["employee_name"]; ?></span>
+                                        <small class="user_name text-truncate"><?php echo $row_emp["user_id"]; ?></small>
+                                    </div>
+                                    </div>
+                                </td>
                                 <td><?php echo $row["active_leads"]; ?></td>
                                 <td><?php echo $row["followup_leads"]; ?></td>
                                 <td><?php echo $row["transferred_leads"]; ?></td>
@@ -130,7 +151,7 @@
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
               <!-- *************** - main containt in page write here - **********************  -->
-              <h5 class="card-header mar-bot-10">Sales Executive Performance Weekly</h5>
+              <h5 class="card-header mar-bot-10"style="margin-top:10px;">Sales Executive Performance Weekly</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
                     <h5 class="card-header"> All performance data are listed below</h5>
@@ -164,7 +185,8 @@
                                             COUNT(CASE WHEN status = 'Dead' THEN 1 END) AS dead_leads
                                         FROM assign_leads_sr
                                         -- WHERE added_on >= CURDATE() - INTERVAL 7 DAY
-                                        WHERE YEARWEEK(added_on, 1) = YEARWEEK(CURDATE(), 1)          
+                                        -- WHERE YEARWEEK(added_on, 1) = YEARWEEK(CURDATE(), 1) 
+                                        WHERE YEARWEEK(added_on, 1) = YEARWEEK(CURDATE() - INTERVAL 1 WEEK, 1)         
                                         GROUP BY employee_name
                                     ";
                                 // $sql = "SELECT * FROM assign_leads ";
@@ -175,10 +197,29 @@
 
                                 foreach ($pdo->query($sql_sr) as $row_sr) 
                                 { 
+                                    $emp_name = $row_sr["employee_name"];
+                                    $sqlemp = "select * from employee where employee_name = '$emp_name' ";
+                                    $q = $pdo->prepare($sqlemp);
+                                    $q->execute(array());      
+                                    $row_emp = $q->fetch(PDO::FETCH_ASSOC);
                             ?>
                             <tr>
                                 <td><span class="fw-medium"><?php echo $i; ?></span></td>
-                                <td><?php echo $row_sr["employee_name"]; ?></td>
+                                <!-- <td><?php echo $row_sr["employee_name"]; ?></td> -->
+                                <td>
+                                    <div class="d-flex justify-content-start align-items-center user-name">
+                                    <div class="avatar-wrapper">
+                                        <div class="avatar avatar-sm me-3">
+                                        <!-- <img src="assets/img/avatars/2.png" alt="Avatar" class="rounded-circle"> -->
+                                        <img src="assets/img/avatars/<?php echo $row_emp["login_photo"];?>" alt="Avatar" class="rounded-circle">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <span class="name text-truncate h6 mb-0"><?php echo $row_sr["employee_name"]; ?></span>
+                                        <small class="user_name text-truncate"><?php echo $row_emp["user_id"]; ?></small>
+                                    </div>
+                                    </div>
+                                </td>
                                 <td><?php echo $row_sr["received_leads"]; ?></td>
                                 <td><?php echo $row_sr["followup_leads"]; ?></td>
                                 <td><?php echo $row_sr["transferred_leads"]; ?></td>
@@ -194,11 +235,14 @@
             </div>
             <!-- / Content -->
 
+            <hr>
+
             <!-- Customer Executive Performance Daily -->
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
               <!-- *************** - main containt in page write here - **********************  -->
-              <h5 class="card-header mar-bot-10">Customer Executive Performance Daily</h5>
+              <h3 class="card-header mar-bot-10">Today's Performance </h3>
+              <h5 class="card-header mar-bot-10">Customer Executive Performance Today's</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
                     <h5 class="card-header"> All performance data are listed below</h5>
@@ -243,10 +287,29 @@
 
                                 foreach ($pdo->query($sql) as $row) 
                                 { 
+                                    $emp_name = $row["employee_name"];
+                                    $sqlemp = "select * from employee where employee_name = '$emp_name' ";
+                                    $q = $pdo->prepare($sqlemp);
+                                    $q->execute(array());      
+                                    $row_emp = $q->fetch(PDO::FETCH_ASSOC);
                             ?>
                             <tr>
                                 <td><span class="fw-medium"><?php echo $i; ?></span></td>
-                                <td><?php echo $row["employee_name"]; ?></td>
+                                <!-- <td><?php echo $row["employee_name"]; ?></td> -->
+                                <td>
+                                    <div class="d-flex justify-content-start align-items-center user-name">
+                                    <div class="avatar-wrapper">
+                                        <div class="avatar avatar-sm me-3">
+                                        <!-- <img src="assets/img/avatars/2.png" alt="Avatar" class="rounded-circle"> -->
+                                        <img src="assets/img/avatars/<?php echo $row_emp["login_photo"];?>" alt="Avatar" class="rounded-circle">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <span class="name text-truncate h6 mb-0"><?php echo $row["employee_name"]; ?></span>
+                                        <small class="user_name text-truncate"><?php echo $row_emp["user_id"]; ?></small>
+                                    </div>
+                                    </div>
+                                </td>
                                 <td><?php echo $row["active_leads"]; ?></td>
                                 <td><?php echo $row["followup_leads"]; ?></td>
                                 <td><?php echo $row["transferred_leads"]; ?></td>
@@ -268,7 +331,7 @@
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
               <!-- *************** - main containt in page write here - **********************  -->
-              <h5 class="card-header mar-bot-10">Sales Executive Performance Daily</h5>
+              <h5 class="card-header mar-bot-10" style="margin-top:10px;">Sales Executive Performance Today's</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
                     <h5 class="card-header"> All performance data are listed below</h5>
@@ -312,10 +375,29 @@
 
                                 foreach ($pdo->query($sql_sr) as $row_sr) 
                                 { 
+                                    $emp_name = $row_sr["employee_name"];
+                                    $sqlemp = "select * from employee where employee_name = '$emp_name' ";
+                                    $q = $pdo->prepare($sqlemp);
+                                    $q->execute(array());      
+                                    $row_emp = $q->fetch(PDO::FETCH_ASSOC);
                             ?>
                             <tr>
                                 <td><span class="fw-medium"><?php echo $i; ?></span></td>
-                                <td><?php echo $row_sr["employee_name"]; ?></td>
+                                <!-- <td><?php echo $row_sr["employee_name"]; ?></td> -->
+                                <td>
+                                    <div class="d-flex justify-content-start align-items-center user-name">
+                                    <div class="avatar-wrapper">
+                                        <div class="avatar avatar-sm me-3">
+                                        <!-- <img src="assets/img/avatars/2.png" alt="Avatar" class="rounded-circle"> -->
+                                        <img src="assets/img/avatars/<?php echo $row_emp["login_photo"];?>" alt="Avatar" class="rounded-circle">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <span class="name text-truncate h6 mb-0"><?php echo $row_sr["employee_name"]; ?></span>
+                                        <small class="user_name text-truncate"><?php echo $row_emp["user_id"]; ?></small>
+                                    </div>
+                                    </div>
+                                </td>
                                 <td><?php echo $row_sr["received_leads"]; ?></td>
                                 <td><?php echo $row_sr["followup_leads"]; ?></td>
                                 <td><?php echo $row_sr["transferred_leads"]; ?></td>
@@ -331,10 +413,13 @@
             </div>
             <!-- / Content -->
 
+            <hr>
+
             <!-- Customer Executive Performance Yesterday -->
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
               <!-- *************** - main containt in page write here - **********************  -->
+              <h3 class="card-header mar-bot-10">Yesterday's Performance </h3>
               <h5 class="card-header mar-bot-10">Customer Executive Performance Yesterday</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
@@ -380,10 +465,29 @@
 
                                 foreach ($pdo->query($sql) as $row) 
                                 { 
+                                    $emp_name = $row["employee_name"];
+                                    $sqlemp = "select * from employee where employee_name = '$emp_name' ";
+                                    $q = $pdo->prepare($sqlemp);
+                                    $q->execute(array());      
+                                    $row_emp = $q->fetch(PDO::FETCH_ASSOC);
                             ?>
                             <tr>
                                 <td><span class="fw-medium"><?php echo $i; ?></span></td>
-                                <td><?php echo $row["employee_name"]; ?></td>
+                                <!-- <td><?php echo $row["employee_name"]; ?></td> -->
+                                <td>
+                                    <div class="d-flex justify-content-start align-items-center user-name">
+                                    <div class="avatar-wrapper">
+                                        <div class="avatar avatar-sm me-3">
+                                        <!-- <img src="assets/img/avatars/2.png" alt="Avatar" class="rounded-circle"> -->
+                                        <img src="assets/img/avatars/<?php echo $row_emp["login_photo"];?>" alt="Avatar" class="rounded-circle">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <span class="name text-truncate h6 mb-0"><?php echo $row["employee_name"]; ?></span>
+                                        <small class="user_name text-truncate"><?php echo $row_emp["user_id"]; ?></small>
+                                    </div>
+                                    </div>
+                                </td>
                                 <td><?php echo $row["active_leads"]; ?></td>
                                 <td><?php echo $row["followup_leads"]; ?></td>
                                 <td><?php echo $row["transferred_leads"]; ?></td>
@@ -405,7 +509,7 @@
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
               <!-- *************** - main containt in page write here - **********************  -->
-              <h5 class="card-header mar-bot-10">Sales Executive Performance Yesterday</h5>
+              <h5 class="card-header mar-bot-10" style="margin-top:10px;">Sales Executive Performance Yesterday</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
                     <h5 class="card-header"> All performance data are listed below</h5>
@@ -449,10 +553,29 @@
 
                                 foreach ($pdo->query($sql_sr) as $row_sr) 
                                 { 
+                                    $emp_name = $row_sr["employee_name"];
+                                    $sqlemp = "select * from employee where employee_name = '$emp_name' ";
+                                    $q = $pdo->prepare($sqlemp);
+                                    $q->execute(array());      
+                                    $row_emp = $q->fetch(PDO::FETCH_ASSOC);
                             ?>
                             <tr>
                                 <td><span class="fw-medium"><?php echo $i; ?></span></td>
-                                <td><?php echo $row_sr["employee_name"]; ?></td>
+                                <!-- <td><?php echo $row_sr["employee_name"]; ?></td> -->
+                                <td>
+                                    <div class="d-flex justify-content-start align-items-center user-name">
+                                    <div class="avatar-wrapper">
+                                        <div class="avatar avatar-sm me-3">
+                                        <!-- <img src="assets/img/avatars/2.png" alt="Avatar" class="rounded-circle"> -->
+                                        <img src="assets/img/avatars/<?php echo $row_emp["login_photo"];?>" alt="Avatar" class="rounded-circle">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <span class="name text-truncate h6 mb-0"><?php echo $row_sr["employee_name"]; ?></span>
+                                        <small class="user_name text-truncate"><?php echo $row_emp["user_id"]; ?></small>
+                                    </div>
+                                    </div>
+                                </td>
                                 <td><?php echo $row_sr["received_leads"]; ?></td>
                                 <td><?php echo $row_sr["followup_leads"]; ?></td>
                                 <td><?php echo $row_sr["transferred_leads"]; ?></td>
@@ -468,10 +591,13 @@
             </div>
             <!-- / Content -->
 
+            <hr>
+
             <!-- Customer Executive Performance Last Month -->
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
               <!-- *************** - main containt in page write here - **********************  -->
+              <h3 class="card-header mar-bot-10">Last Month Performance </h3>
               <h5 class="card-header mar-bot-10">Customer Executive Performance Last Month</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
@@ -517,10 +643,29 @@
 
                                 foreach ($pdo->query($sql) as $row) 
                                 { 
+                                    $emp_name = $row["employee_name"];
+                                    $sqlemp = "select * from employee where employee_name = '$emp_name' ";
+                                    $q = $pdo->prepare($sqlemp);
+                                    $q->execute(array());      
+                                    $row_emp = $q->fetch(PDO::FETCH_ASSOC);
                             ?>
                             <tr>
                                 <td><span class="fw-medium"><?php echo $i; ?></span></td>
-                                <td><?php echo $row["employee_name"]; ?></td>
+                                <!-- <td><?php echo $row["employee_name"]; ?></td> -->
+                                <td>
+                                    <div class="d-flex justify-content-start align-items-center user-name">
+                                    <div class="avatar-wrapper">
+                                        <div class="avatar avatar-sm me-3">
+                                        <!-- <img src="assets/img/avatars/2.png" alt="Avatar" class="rounded-circle"> -->
+                                        <img src="assets/img/avatars/<?php echo $row_emp["login_photo"];?>" alt="Avatar" class="rounded-circle">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <span class="name text-truncate h6 mb-0"><?php echo $row["employee_name"]; ?></span>
+                                        <small class="user_name text-truncate"><?php echo $row_emp["user_id"]; ?></small>
+                                    </div>
+                                    </div>
+                                </td>
                                 <td><?php echo $row["active_leads"]; ?></td>
                                 <td><?php echo $row["followup_leads"]; ?></td>
                                 <td><?php echo $row["transferred_leads"]; ?></td>
@@ -542,7 +687,7 @@
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
               <!-- *************** - main containt in page write here - **********************  -->
-              <h5 class="card-header mar-bot-10">Sales Executive Performance Last Month</h5>
+              <h5 class="card-header mar-bot-10" style="margin-top:10px;">Sales Executive Performance Last Month</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
                     <h5 class="card-header"> All performance data are listed below</h5>
@@ -587,10 +732,29 @@
 
                                 foreach ($pdo->query($sql_sr) as $row_sr) 
                                 { 
+                                    $emp_name = $row_sr["employee_name"];
+                                    $sqlemp = "select * from employee where employee_name = '$emp_name' ";
+                                    $q = $pdo->prepare($sqlemp);
+                                    $q->execute(array());      
+                                    $row_emp = $q->fetch(PDO::FETCH_ASSOC);
                             ?>
                             <tr>
                                 <td><span class="fw-medium"><?php echo $i; ?></span></td>
-                                <td><?php echo $row_sr["employee_name"]; ?></td>
+                                <!-- <td><?php echo $row_sr["employee_name"]; ?></td> -->
+                                <td>
+                                    <div class="d-flex justify-content-start align-items-center user-name">
+                                    <div class="avatar-wrapper">
+                                        <div class="avatar avatar-sm me-3">
+                                        <!-- <img src="assets/img/avatars/2.png" alt="Avatar" class="rounded-circle"> -->
+                                        <img src="assets/img/avatars/<?php echo $row_emp["login_photo"];?>" alt="Avatar" class="rounded-circle">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <span class="name text-truncate h6 mb-0"><?php echo $row_sr["employee_name"]; ?></span>
+                                        <small class="user_name text-truncate"><?php echo $row_emp["user_id"]; ?></small>
+                                    </div>
+                                    </div>
+                                </td>
                                 <td><?php echo $row_sr["received_leads"]; ?></td>
                                 <td><?php echo $row_sr["followup_leads"]; ?></td>
                                 <td><?php echo $row_sr["transferred_leads"]; ?></td>

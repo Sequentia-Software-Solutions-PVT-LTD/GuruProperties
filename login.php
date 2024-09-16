@@ -102,12 +102,23 @@ if(isset($_POST["submit"]))
             // ------------- add atendence ----------------------
 
           // echo "<pre>";
-          // print_r($_SESSION);
+          // // print_r($_SESSION);
+          // print_r($data);
           // exit();
 
           if($data['login_role'] == "LEAD GENERATOR") {
             header("Location:add-leads");
-          } else {
+          }
+          else if($data['type'] == "SUPERADMIN") {
+            header("Location:dashboard_superadmin");
+          }
+          else if($data['login_role'] == "CUSTOMER EXECUTIVE") {
+            header("Location:dashboard_CE");
+          }
+          else if($data['login_role'] == "SALES EXECUTIVE") {
+            header("Location:dashboard_SE");
+          }
+          else {
             header("Location:dashboard");                    
           }
           // header("Location:index.php");                    
