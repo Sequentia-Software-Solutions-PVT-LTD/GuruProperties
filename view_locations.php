@@ -8,7 +8,7 @@
   include ('dist/conf/db.php');
   $pdo = Database::connect();
 
-  if(isSet($_POST["subimt"]))
+  if(isSet($_POST["submit"]))
   { 
     $property_title = $_POST['property_title'];
     $builder_name = $_POST['builder_name'];
@@ -144,7 +144,7 @@
                       <form id="enableOTPForm" class="row g-5"  action="delete_location.php" method="POST">
                         <input type="hidden" name="id" id="id"  value=""/>
                       
-                        <div class="col-12 d-flex flex-wrap justify-content-center gap-4 row-gap-4">
+                        <!-- <div class="col-12 d-flex flex-wrap justify-content-center gap-4 row-gap-4">
                           <button
                             type="reset"
                             class="btn btn-outline-secondary"
@@ -154,7 +154,15 @@
                           </button>
 
                           <button type="submit" name ="suspend" class="btn btn-danger">Delete</button>
+                        </div> -->
+
+                        <div class="row d-flex mt-0">
+                            <div class="col-md-12">
+                                <button type="submit" id="submit1"  data-bs-toggle="tooltip" data-bs-placement="left"  class="btn btn-success waves-effect waves-light d-flex float-right" name="suspend">Submit</button>
+                                <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                            </div>
                         </div>
+                        
                       </form>
                     </div>
                   </div>

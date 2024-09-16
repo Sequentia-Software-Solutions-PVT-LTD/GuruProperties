@@ -226,7 +226,7 @@
                             <div class="col-12">
                                 <div class="card mb-6 h-100">
                                     <div class="card-header header-elements">
-                                        <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
+                                        <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line1 ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
                                         <h5 class="card-action-title mb-0 underline">Lead Details</h5>
                                         
                                         <!-- <div class="card-header-elements ms-sm-auto">
@@ -285,7 +285,7 @@
                             <div class="col-12">
                                 <div class="card mb-6">
                                     <div class="card-header header-elements">
-                                        <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
+                                        <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line1 ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
                                         <h5 class="card-action-title mb-0 underline">Property Details</h5>
                                         
                                         <!-- <div class="card-header-elements ms-sm-auto">
@@ -324,7 +324,7 @@
                                         <ul class="list-unstyled my-3 py-1" style="">
                                                 <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Property Name:</span> <span class="fw-bold"><?php echo $row_property['property_title']; ?></span></li>
                                                 <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span class="fw-bold"><?php echo $row_property['location']; ?></span></li>
-                                                <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Google Location:</span>Latitude: <span class="fw-bold"><?php echo $row_property['google_location_lat']; ?> & </span>   &nbsp;Longitude: <span class="fw-bold"><?php echo $row_property['google_location_long']; ?> </span></li>
+                                                <!-- <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Google Location:</span>Latitude: <span class="fw-bold"><?php echo $row_property['google_location_lat']; ?> & </span>   &nbsp;Longitude: <span class="fw-bold"><?php echo $row_property['google_location_long']; ?> </span></li> -->
                                                 <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Builder Name:</span> <span class="fw-bold"><?php echo $row_property['builder_name']; ?></span></li>
                                                 <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Tower Name:</span> <span class="fw-bold"><?php echo $row_tower['property_tower_name']; ?></span></li>
                                                 <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Builder Possession:</span> <span class="fw-bold"><?php echo $row_tower['builder_possession']; ?></span></li>
@@ -386,7 +386,7 @@
                             <div class="col-12">
                                 <div class="card mb-6">
                                     <div class="card-header header-elements">
-                                        <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
+                                        <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line1 ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
                                         <h5 class="card-action-title mb-0 underline">Other Details</h5>
                                         
                                         <!-- <div class="card-header-elements ms-sm-auto">

@@ -170,19 +170,19 @@
                                     <td>
                                       <?php 
                                             if($row1["status"] == "Active")
-                                            echo '<span class="badge rounded-pill bg-danger">';
+                                            echo '<span class="badge rounded-pill bg-label-danger">';
                                             else if($row1["status"] == "Followup")
-                                            echo '<span class="badge rounded-pill bg-info">';
+                                            echo '<span class="badge rounded-pill bg-label-info">';
                                             else if($row1["status"] == "Assigned")
-                                            echo '<span class="badge rounded-pill bg-primary">';
+                                            echo '<span class="badge rounded-pill bg-label-primary">';
                                             else if($row1["status"] == "Transferred")
-                                            echo '<span class="badge rounded-pill bg-warning">';
+                                            echo '<span class="badge rounded-pill bg-label-warning">';
                                             else if($row1["status"] == "From SE")
-                                            echo '<span class="badge rounded-pill bg-warning">';
+                                            echo '<span class="badge rounded-pill bg-label-warning">';
                                             else if($row1["status"] == "Dead")
-                                            echo '<span class="badge rounded-pill bg-dark">';
+                                            echo '<span class="badge rounded-pill bg-label-dark">';
                                             else
-                                            echo '<span class="badge rounded-pill bg-secondary">';
+                                            echo '<span class="badge rounded-pill bg-label-secondary">';
                                             echo $row1["status"]; 
                                             echo '</span>';
                                       ?></td>

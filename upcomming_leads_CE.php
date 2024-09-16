@@ -176,7 +176,7 @@
                       <form id="enableOTPForm" class="row g-5"  action="suspend_property.php" method="POST">
                         <input type="hidden" name="id" id="id" value="" />
                         
-                        <div class="col-12 d-flex flex-wrap justify-content-center gap-4 row-gap-4">
+                        <!-- <div class="col-12 d-flex flex-wrap justify-content-center gap-4 row-gap-4">
                           <button
                             type="reset"
                             class="btn btn-outline-secondary"
@@ -186,7 +186,15 @@
                           </button>
 
                           <button type="submit" name ="suspend" class="btn btn-danger">Suspend</button>
+                        </div> -->
+                        
+                        <div class="row mt-10">
+                            <div class="col-md-12">
+                                  <button type="submit"  data-bs-toggle="tooltip" data-bs-placement="left"  class="btn btn-success waves-effect waves-light d-flex float-right" name="suspend">Submit</button>
+                                  <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                            </div>
                         </div>
+
                       </form>
                     </div>
                   </div>

@@ -233,11 +233,12 @@
                                     <td><?php echo date('d-m-Y H:i A', strtotime($row1["admin_request_date"])); ?></td>
                                     <td>
                                         <div class="dropdown">
-                                            <!-- <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ri-more-2-line"></i></button>
-                                            <div class="dropdown-menu"> -->
-                                                <!-- <a class="dropdown-item waves-effect" href="edit_location?id=<?php echo $row["id"]; ?>"><i class="ri-pencil-line me-1"></i> Edit</a> -->
-                                                <a class="btn btn-primary btn-fab demo waves-effect waves-light open-myModal " style="color:#fff;" data-bs-toggle="modal" data-bs-target="#enableOTP" data-id="<?php echo $row1["assign_leads_sr_id"]; ?>"><i class="ri-check-double-line me-1"></i> Approve</a>
-                                            <!-- </div> -->
+                                                <!-- <a class="btn btn-primary btn-fab demo waves-effect waves-light open-myModal " style="color:#fff;" data-bs-toggle="modal" data-bs-target="#enableOTP" data-id="<?php echo $row1["assign_leads_sr_id"]; ?>"><i class="ri-check-double-line me-1"></i> Approve</a> -->
+
+                                                <a class="btn btn-success btn-fab demo waves-effect waves-light open-myModal" style="color:#fff;" data-bs-toggle="modal" data-bs-target="#enableOTP" 
+                                                data-id="<?php echo $row1["assign_leads_sr_id"]; ?>"
+                                                ><i class="ri-check-double-line me-1 "></i> Approve</a>
+                                                
                                         </div>
                                     </td>
                             </tr>
@@ -264,7 +265,7 @@
                       <form id="enableOTPForm" class="row g-5"  action="#" method="POST">
                         <input type="hidden" name="id" id="id"  value=""/>
                       
-                        <div class="col-12 d-flex flex-wrap justify-content-center gap-4 row-gap-4">
+                        <!-- <div class="col-12 d-flex flex-wrap justify-content-center gap-4 row-gap-4">
                           <button
                             type="reset"
                             class="btn btn-outline-secondary"
@@ -274,7 +275,15 @@
                           </button>
 
                           <button type="submit" name ="suspend" class="btn btn-success">Yes</button>
+                        </div> -->
+
+                        <div class="row mt-10">
+                            <div class="col-md-12">
+                                  <button type="submit"  data-bs-toggle="tooltip" data-bs-placement="left"  class="btn btn-success waves-effect waves-light d-flex float-right" name="suspend">Submit</button>
+                                  <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                            </div>
                         </div>
+
                       </form>
                     </div>
                   </div>

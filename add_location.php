@@ -8,7 +8,7 @@
   include ('dist/conf/db.php');
   $pdo = Database::connect();
 
-  if(isSet($_POST["subimt"]))
+  if(isSet($_POST["submit"]))
   { 
     $location = $_POST['location'];
 
@@ -105,16 +105,22 @@
                           </div>
                           </div>
 
-                          <div class="row">
+                          <!-- <div class="row">
                             <div class="col-md-11">
                               <div class="row justify-content-end" style="float: right;">
                                 <div class="col-sm-4">
-                                  <button type="submit" class="btn btn-primary me-4 waves-effect waves-light" name="subimt">Submit</button>
-                                  <!-- <button type="reset" class="btn btn-outline-secondary waves-effect">Cancel</button> -->
+                                  <button type="submit" class="btn btn-primary me-4 waves-effect waves-light" name="submit">Submit</button>
                                 </div>
                               </div>
                             </div>
+                          </div> -->
+                          <div class="row mt-10">
+                            <div class="col-md-12 justify-content-end text-end">
+                                  <button type="submit" class="btn btn-success me-4 waves-effect waves-light d-flex float-right" name="submit">Submit</button>
+                                  <button type="reset" class="btn btn-outline-secondary waves-effect  d-flex float-left">Cancel</button>
+                            </div>
                           </div>
+
                         </form>
                         </div>
                     </div>

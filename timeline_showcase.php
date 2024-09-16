@@ -2,7 +2,7 @@
 
     $i = 1;
     // $leads_id = $_REQUEST['leads_id'];
-    // $leads_id = 24;
+    $leads_id = 24;
     
     
     $sqlleads = "select * from leads where id = $leads_id ";
@@ -25,6 +25,31 @@
     $qconv->execute(array());      
     $Converted_Leads_Array = $qconv->fetchAll(PDO::FETCH_ASSOC);
 
+    $sqlemployee = "SELECT * FROM employee";
+    $qemployee = $pdo->prepare($sqlemployee);
+    $qemployee->execute(array());      
+    $employee_Array = $qemployee->fetchAll(PDO::FETCH_ASSOC);
+
+    $sqlemployee = "SELECT * FROM employee";
+    $qemployee = $pdo->prepare($sqlemployee);
+    $qemployee->execute(array());      
+    $employee_Array = $qemployee->fetchAll(PDO::FETCH_ASSOC);
+    
+    $sqlproperty = "SELECT * FROM property_name";
+    $qproperty = $pdo->prepare($sqlproperty);
+    $qproperty->execute(array());      
+    $property_Array = $qproperty->fetchAll(PDO::FETCH_ASSOC);
+
+    $sqlsubproperty = "SELECT * FROM property_tower";
+    $qsubproperty = $pdo->prepare($sqlsubproperty);
+    $qsubproperty->execute(array());      
+    $sub_property_Array = $qsubproperty->fetchAll(PDO::FETCH_ASSOC);
+
+    $sqlvariant = "SELECT * FROM property_varients";
+    $qvariant = $pdo->prepare($sqlvariant);
+    $qvariant->execute(array());      
+    $varient_Array = $qvariant->fetchAll(PDO::FETCH_ASSOC);
+    
     $admin_id = 0;
     // if($CE_Leads_Array != null) {
     //   var_dump($CE_Leads_Array);
@@ -337,6 +362,15 @@
                                   $connectionStatus = $CEArray["connection_status"];
                                   $employeeName = $CEArray["employee_id"];
                                   
+                                  $needle = $employeeName;
+                                  $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                    return $needle == $v['employee_id']; 
+                                  });
+                                  if($needle == 1) $needle = 0;
+                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                  $employeeName = $resultArray[$needle]["employee_name"]; 
+                                  
                               }
                               if($variant['status'] == "Followup" && $variant['transfer_status']== "Available"){
                                 // why sales executive in the "transfer_employee_type"
@@ -347,12 +381,33 @@
                                   $noteRemark = "";
                                   $connectionStatus = "";
                                   $employeeName = $CEArray["employee_id"];
+                                  $needle = $employeeName;
+                                  $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                    return $needle == $v['employee_id']; 
+                                  });
+                                  if($needle == 1) $needle = 0;
+                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                  $employeeName = $resultArray[$needle]["employee_name"]; 
                                   
                               }
                               if($variant['status'] == "Active" && $variant['transfer_status']== "Transferred") {
                                   // What is the status of "request_for_admin"
                                   $dateShowcase = date("Y-m-d H:i:s", strtotime($CEArray['edited_on']));
-                                  $message = "The lead is transfer to ".$CEArray["transfer_employee_type"]." - ".$CEArray["transfer_employee_id"];
+                                  // $message = "The lead is transfer to ".$CEArray["transfer_employee_type"]." - ".$CEArray["transfer_employee_id"];
+                                  $message = "The lead is transfer to ".$CEArray["transfer_employee_type"]." - ";
+                                
+                                  $needle = $CEArray["transfer_employee_id"];
+                                  $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                    return $needle == $v['employee_id']; 
+                                  });
+                                  if($needle == 1) $needle = 0;
+                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                  $employeeName = $resultArray[$needle]["employee_name"];
+
+                                  $message .= $employeeName;
+
                                   $leadType = $CEArray["lead_type"];
                                   $reason = $CEArray["transfer_reason"];
                                   // if($CEArray['request_for_admin'] == "") {
@@ -362,18 +417,36 @@
                                   // }
                                   $noteRemark = "";
                                   $connectionStatus = $CEArray["connection_status"];
-                                  $employeeName = $CEArray["employee_id"];
                                   
                               }
 
                               if($variant['status'] == "Assigned" && $variant['transfer_status']== "Transferred"){
                                   $dateShowcase = date("Y-m-d H:i:s", strtotime($CEArray['edited_on']));
-                                  $message = "This lead is assigned to the ". $CEArray['assign_employee_type'] ." - ".$CEArray['transfer_employee_id'];
+                                  // $message = "This lead is assigned to the ". $CEArray['assign_employee_type'] ." - ".$CEArray['transfer_employee_id'];
+                                  $message = "This lead is assigned to the ". $CEArray['assign_employee_type'] ." - ";
+                                  $needle = $CEArray["transfer_employee_id"];
+                                  $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                    return $needle == $v['employee_id']; 
+                                  });
+                                  if($needle == 1) $needle = 0;
+                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                  $employeeName = $resultArray[$needle]["employee_name"];
+
+                                  $message .= $employeeName;
                                   $leadType = "";
                                   $reason = $CEArray['transfer_reason'];
                                   $noteRemark = "";
                                   $connectionStatus = "";
                                   $employeeName = $CEArray['employee_id'];
+                                  $needle = $employeeName;
+                                  $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                    return $needle == $v['employee_id']; 
+                                  });
+                                  if($needle == 1) $needle = 0;
+                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                  $employeeName = $resultArray[$needle]["employee_name"]; 
                                   
                               }
                               if($variant['status'] == "Transferred" && $variant['transfer_status']== "Admin Pending" && strtolower($CEArray['request_for_admin']) == "no" ){
@@ -385,6 +458,14 @@
                                   $noteRemark = "Waiting For Admin Approval.";
                                   $connectionStatus = "";
                                   $employeeName = $CEArray["transfer_employee_id"];
+                                  $needle = $employeeName;
+                                  $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                    return $needle == $v['employee_id']; 
+                                  });
+                                  if($needle == 1) $needle = 0;
+                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                  $employeeName = $resultArray[$needle]["employee_name"]; 
                                   
                               }
                               if($variant['status'] == "Transferred" && $variant['transfer_status']== "Available" && strtolower($CEArray['request_for_admin']) == "yes" ){
@@ -395,18 +476,73 @@
                                 $noteRemark = "Next follow up on ".date("Y-m-d", strtotime($CEArray['next_date']))." ".date("H:i:s", strtotime($CEArray['next_time']));
                                 $connectionStatus = "";
                                 $employeeName = $CEArray["employee_id"];
+                                $needle = $employeeName;
+                                  $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                    return $needle == $v['employee_id']; 
+                                  });
+                                  if($needle == 1) $needle = 0;
+                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                  $employeeName = $resultArray[$needle]["employee_name"]; 
                                 
                               }
                               if($variant['status'] == "From SE" && $variant['transfer_status'] == "Admin Pending" && $CEArray['request_for_admin'] == "no" ){
                                   // What is the status of "request_for_admin"
                                   // if all the related information is getting copied to related columns
                                   $dateShowcase = date("Y-m-d H:i:s", strtotime($CEArray['admin_request_date']));
-                                  $message = "The lead is trasnferred from SALES EXECUTIVE ".$CEArray['transfer_employee_id']." to CUSTOMER EXECUTIVE ".$CEArray["employee_id"].". Waiting for admin approval.";
+                                  // $message = "The lead is trasnferred from SALES EXECUTIVE ".$CEArray['transfer_employee_id']." to CUSTOMER EXECUTIVE ".$CEArray["employee_id"].". Waiting for admin approval.";
+                                  $message = "The lead is trasnferred from SALES EXECUTIVE ";
+                                  
+                                  $needle = $CEArray['transfer_employee_id'];
+                                  $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                    return $needle == $v['employee_id']; 
+                                  });
+                                  if($needle == 1) $needle = 0;
+                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                  $employeeName1 = $resultArray[$needle]["employee_name"];
+
+                                  $message .= $employeeName1;
+
+                                  $message .= " to CUSTOMER EXECUTIVE ";
+
+                                  $needle = $CEArray["employee_id"];
+                                  $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                    return $needle == $v['employee_id']; 
+                                  });
+                                  if($needle == 1) $needle = 0;
+                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                  $employeeName2 = $resultArray[$needle]["employee_name"];
+
+                                  $message .= $employeeName2;
+
+                                  $message .= ". Waiting for admin approval.";
+                                  
+                                  $needle = $CEArray["transfer_employee_id"];
+                                  $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                    return $needle == $v['employee_id']; 
+                                  });
+                                  if($needle == 1) $needle = 0;
+                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                  $employeeName = $resultArray[$needle]["employee_name"];
+
+                                  $message .= $employeeName;
+
                                   $leadType = "";
                                   $reason = $CEArray["transfer_reason"];
                                   $noteRemark = "";
                                   $connectionStatus = "";
                                   $employeeName = $CEArray["employee_id"];
+                                  $needle = $employeeName;
+                                  $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                    return $needle == $v['employee_id']; 
+                                  });
+                                  if($needle == 1) $needle = 0;
+                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                  $employeeName = $resultArray[$needle]["employee_name"]; 
                               }
                               if($variant['status'] == "From SE" && $variant['transfer_status']== "Available" && $CEArray['request_for_admin'] == "yes" ){
                                   // What is the status of "request_for_admin"
@@ -418,6 +554,15 @@
                                   $noteRemark = "";
                                   $connectionStatus = "";
                                   $employeeName = $CEArray["employee_id"];
+                                  $needle = $CEArray["employee_id"];
+                                  $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                    return $needle == $v['employee_id']; 
+                                  });
+                                  if($needle == 1) $needle = 0;
+                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                  $employeeName = $resultArray[$needle]["employee_name"];
+
                               }
                               if($variant['status'] == "Dead"){
                                   $dateShowcase = date("Y-m-d H:i:s", strtotime($CEArray['edited_on']));
@@ -427,6 +572,15 @@
                                   $noteRemark = "";
                                   $connectionStatus = "";
                                   $employeeName = $CEArray["employee_id"];
+                                  $needle = $CEArray["employee_id"];
+                                  $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                    return $needle == $v['employee_id']; 
+                                  });
+                                  if($needle == 1) $needle = 0;
+                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                  $employeeName = $resultArray[$needle]["employee_name"];
+
                               }
                             } 
 
@@ -446,28 +600,95 @@
                                       $noteRemark = $ALArray['visit_notes'];
                                       $connectionStatus = "";
                                       $employeeName = $ALArray["employee_id"];
+
+                                      $needle = $ALArray["employee_id"];
+                                      $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                        return $needle == $v['employee_id']; 
+                                      });
+                                      if($needle == 1) $needle = 0;
+                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                      $employeeName = $resultArray[$needle]["employee_name"];
                                   }
-                                  if($variant['status'] == "Followup" && $variant['transfer_status']== "Not Available" && $ALArray['followup_or_another_property']=="Follow Up"){
+                                  if($variant['status'] == "Followup" && $variant['transfer_status'] == "Not Available" && $ALArray['followup_or_another_property']=="Follow Up"){
                                     if($ALArray['visit_date'] == '0000-00-00') {
                                       $dateShowcase = date("Y-m-d", strtotime($ALArray['next_date']))." ".date("H:i:s", strtotime($ALArray['next_time']));
                                     } else {
                                       $dateShowcase = date("Y-m-d", strtotime($ALArray['visit_date']))." ".date("H:i:s", strtotime($ALArray['visit_time']));
                                     }
                                       $message = "<img src='".$ALArray['photo']."' alt='SE Photo' style='height: 64px; width: 64px;'>";
+
+                                      $property_id = $ALArray['property_id'];
+                                      $property_id_name = "";
+                                      $sub_property_id = $ALArray['sub_property_id'];
+                                      $sub_property_id_name = "";
+                                      $variant_id = $ALArray['variant'];
+                                      $variant_name = "";
+                                      
+                                      $needle = $property_id;
+                                      $resultArray = array_filter($property_Array, function ($v) use ($needle) {
+                                        return $needle == $v['property_name_id']; 
+                                      });
+                                      if($needle == 1) $needle = 0;
+                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                      if(isset($resultArray[$needle]["property_title"]) && $resultArray[$needle]["property_title"] != "") 
+                                      $property_id_name = $resultArray[$needle]["property_title"];
+                                      
+                                      $needle = $sub_property_id;
+                                      $resultArray = array_filter($sub_property_Array, function ($v) use ($needle) {
+                                        return $needle == $v['property_tower_id']; 
+                                      });
+                                      if($needle == 1) $needle = 0;
+                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                      if(isset($resultArray[$needle]["property_tower_name"]) && $resultArray[$needle]["property_tower_name"] != "") 
+                                      $sub_property_id_name = $resultArray[$needle]["property_tower_name"];
+                                      
+                                      $variant_name_array = array();
+                                      $variant_id = explode(",", $variant_id);
+                                      foreach($variant_id as $variantelement) {
+                                        $needle =  $variantelement;
+                                        $resultArray = array_filter($varient_Array, function ($v) use ($needle) {
+                                          return $needle == $v['property_varients_id']; 
+                                        });
+                                        if($needle == 1) $needle = 0;
+                                        else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                        if(isset($resultArray[$needle]["varients"]) && $resultArray[$needle]["varients"] != "") 
+                                        $variant_name = $resultArray[$needle]["varients"];
+                                        array_push($variant_name_array, $variant_name);
+                                      }
+                                      $variant_name = implode(",", $variant_name_array);
+                                      // $propertyDetails = [
+                                      //   'property_id' => $ALArray['property_id'],
+                                      //   'sub_property_id' => $ALArray['sub_property_id'],
+                                      //   'variant' => $ALArray['variant'],
+                                      //   'property_id' => $ALArray['property_id'],
+                                      // ];
                                       $propertyDetails = [
-                                        'property_id' => $ALArray['property_id'],
-                                        'sub_property_id' => $ALArray['sub_property_id'],
-                                        'variant' => $ALArray['variant'],
-                                        'property_id' => $ALArray['property_id'],
+                                        'property_name' => $property_id_name,
+                                        'sub_property_name' => $sub_property_id_name,
+                                        'variant_name' => $variant_name ,
+                                        'property_name' => $property_id_name,
                                       ];
+                                      
                                       $message .= implode("*", $propertyDetails);
                                       $leadType = $ALArray['lead_type'];
                                       $reason = "";
                                       $noteRemark = $ALArray['notes'];
                                       $connectionStatus = $ALArray['connection_status'];
                                       $employeeName = $ALArray["employee_id"];
+                                      
+                                      $needle = $ALArray["employee_id"];
+                                      $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                        return $needle == $v['employee_id']; 
+                                      });
+                                      if($needle == 1) $needle = 0;
+                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                      $employeeName = $resultArray[$needle]["employee_name"];
+                                    
                                   }
                                   if($variant['status'] == "Followup" && $variant['transfer_status']== "Not Available" && $ALArray['followup_or_another_property']=="Another Property"){
+                                    
                                     if($ALArray['visit_date'] == '0000-00-00') {
                                       $dateShowcase = date("Y-m-d", strtotime($ALArray['next_date']))." ".date("H:i:s", strtotime($ALArray['next_time']));
                                     } else {
@@ -479,6 +700,15 @@
                                       $noteRemark = $ALArray['notes'];
                                       $connectionStatus = $ALArray['connection_status'];
                                       $employeeName = $ALArray["employee_id"];
+                                      
+                                      $needle = $ALArray["employee_id"];
+                                      $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                        return $needle == $v['employee_id']; 
+                                      });
+                                      if($needle == 1) $needle = 0;
+                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                      $employeeName = $resultArray[$needle]["employee_name"];
                                   }
 
                                   if($variant['status'] == "Followup" && $variant['transfer_status']== "Not Available" && $ALArray['followup_or_another_property']==""){
@@ -493,6 +723,15 @@
                                       $noteRemark = $ALArray['notes'];
                                       $connectionStatus = $ALArray['connection_status'];
                                       $employeeName = $ALArray["employee_id"];
+                                      
+                                      $needle = $ALArray["employee_id"];
+                                      $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                        return $needle == $v['employee_id']; 
+                                      });
+                                      if($needle == 1) $needle = 0;
+                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                      $employeeName = $resultArray[$needle]["employee_name"];
                                   }
                                   
                                   if($variant['status'] == "Followup" && $variant['transfer_status']== "Available" && $ALArray['followup_or_another_property']=="Follow Up"){
@@ -508,6 +747,15 @@
                                       $noteRemark = $ALArray['notes'];
                                       $connectionStatus = $ALArray['connection_status'];
                                       $employeeName = $ALArray["employee_id"];
+                                      
+                                      $needle = $ALArray["employee_id"];
+                                      $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                        return $needle == $v['employee_id']; 
+                                      });
+                                      if($needle == 1) $needle = 0;
+                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                      $employeeName = $resultArray[$needle]["employee_name"];
                                   }
                                   if($variant['status'] == "Followup" && $variant['transfer_status']== "Available" && $ALArray['followup_or_another_property']=="Another Property"){
                                       
@@ -535,6 +783,15 @@
                                       $noteRemark = $ALArray['notes'];
                                       $connectionStatus = $ALArray['connection_status'];
                                       $employeeName = $ALArray["employee_id"];
+                                      
+                                      $needle = $ALArray["employee_id"];
+                                      $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                        return $needle == $v['employee_id']; 
+                                      });
+                                      if($needle == 1) $needle = 0;
+                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                      $employeeName = $resultArray[$needle]["employee_name"];
                                   }
                                   if($SE_Leads_Single['status'] == "Followup" && $SE_Leads_Single['transfer_status']== "Available" && $SE_Leads_Single['followup_or_another_property']==""){
                                     if($ALArray['visit_date'] == '0000-00-00') {
@@ -561,53 +818,179 @@
                                       $noteRemark = $ALArray['notes'];
                                       $connectionStatus = $ALArray['connection_status'];
                                       $employeeName = $ALArray["employee_id"];
+                                      
+                                      $needle = $ALArray["employee_id"];
+                                      $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                        return $needle == $v['employee_id']; 
+                                      });
+                                      if($needle == 1) $needle = 0;
+                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                      $employeeName = $resultArray[$needle]["employee_name"];
                                   }
                                   if($variant['status'] == "Active" && $variant['transfer_status']== "Transferred" && strtoupper($ALArray['transfer_employee_type']) == "SALES EXECUTIVE" ){
                                       $dateShowcase = date("Y-m-d H:i:s", strtotime($ALArray['edited_on']));
-                                      $message = "Lead is transferred to SALES EXECUTIVE ".$ALArray['transfer_employee_id']." by ".$ALArray['employee_id'];
+                                      // $message = "Lead is transferred to SALES EXECUTIVE ".$ALArray['transfer_employee_id']." by ".$ALArray['employee_id'];
+                                      $message = "Lead is transferred to SALES EXECUTIVE ";
+                                    
+                                      $needle = $ALArray["transfer_employee_id"];
+                                      $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                        return $needle == $v['employee_id']; 
+                                      });
+                                      if($needle == 1) $needle = 0;
+                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                      $employeeName = $resultArray[$needle]["employee_name"];
+                                      
+                                      $message .= $employeeName;
+                                      $message .= " by ";
+                                      
+                                      $needle = $ALArray["employee_id"];
+                                      $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                        return $needle == $v['employee_id']; 
+                                      });
+                                      if($needle == 1) $needle = 0;
+                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                      $employeeName1 = $resultArray[$needle]["employee_name"];
+                                      $message .= $employeeName1;
+                                      
                                       $leadType = "";
                                       $reason = $ALArray["transfer_reason"];
                                       $noteRemark = "";
                                       $connectionStatus = "";
-                                      $employeeName = $ALArray['employee_id'];
+                                      // $employeeName = $ALArray['employee_id'];
                                   }
                                   if($variant['status'] == "Active" && $variant['transfer_status']== "Transferred" && strtoupper($ALArray['transfer_employee_type']) == "SALES EXECUTIVE" && strtolower($ALArray['request_for_admin']) == "no"){
                                       $dateShowcase = date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date']));
-                                      $message = "Lead is transferred to SALES EXECUTIVE ".$ALArray['transfer_employee_id']." by ".$ALArray['employee_id']." on ".date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date']));
+                                      $message = "Lead is transferred to SALES EXECUTIVE ";
+                                      
+                                      $needle = $ALArray["transfer_employee_id"];
+                                      $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                        return $needle == $v['employee_id']; 
+                                      });
+                                      if($needle == 1) $needle = 0;
+                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                      $employeeName1 = $resultArray[$needle]["employee_name"];
+
+                                      $message .= $employeeName1;
+
+                                      $message .= " by ";
+                                      $needle = $ALArray["employee_id"];
+                                      $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                        return $needle == $v['employee_id']; 
+                                      });
+                                      if($needle == 1) $needle = 0;
+                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                      $employeeName = $resultArray[$needle]["employee_name"];
+                                      $message .= $employeeName;
+                                      
+                                      $message .= " on ".date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date']));
                                       $leadType = "";
                                       $reason = $ALArray["transfer_reason"];
                                       $noteRemark = "";
                                       $connectionStatus = "";
-                                      $employeeName = $ALArray['employee_id'];
+                                      // $employeeName = $ALArray['employee_id'];
                                   }
                                   if($variant['status'] == "Active" && $variant['transfer_status'] == "Transferred" && strtoupper($ALArray['transfer_employee_type']) == "CUSTOMER EXECUTIVE" && strtolower($ALArray['request_for_admin']) == ""){
                                     $dateShowcase = date("Y-m-d H:i:s", strtotime($ALArray['edited_on']));
-                                    $message = "Lead is transferred to CUSTOMER EXECUTIVE ".$ALArray['transfer_employee_id']." by ".$ALArray['employee_id'];
+                                    $message = "Lead is transferred to CUSTOMER EXECUTIVE ";
+                                    
+                                    $needle = $ALArray["transfer_employee_id"];
+                                      $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                        return $needle == $v['employee_id']; 
+                                      });
+                                      if($needle == 1) $needle = 0;
+                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                      $employeeName1 = $resultArray[$needle]["employee_name"];
+                                    
+                                    $message .= $employeeName1;
+                                    $message .= " by ";
+                                    
+                                    $needle = $ALArray["employee_id"];
+                                      $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                        return $needle == $v['employee_id']; 
+                                      });
+                                      if($needle == 1) $needle = 0;
+                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                      $employeeName = $resultArray[$needle]["employee_name"];
+                                    
+                                      $message .= $employeeName;
+                                      
                                     $leadType = "";
                                     $reason = $ALArray["transfer_reason"];
                                     $noteRemark = "";
                                     $connectionStatus = "";
-                                    $employeeName = $ALArray['employee_id'];
+                                    // $employeeName = $ALArray['employee_id'];
                                   }     
                           
                                   if($variant['status'] == "Transferred" && $variant['transfer_status']== "Admin Pending" && strtoupper($ALArray['assign_employee_type']) == "SALES EXECUTIVE" && strtolower($ALArray['request_for_admin']) == "no"){
                                     $dateShowcase = date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date']));
-                                    $message = "Lead is transferred to SALES EXECUTIVE by ".$ALArray['assign_employee_id'].". Waiting for admin approval.";
+                                    $message = "Lead is transferred to SALES EXECUTIVE by ";
+                                    
+                                    $needle = $ALArray["assign_employee_id"];
+                                    $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                      return $needle == $v['employee_id']; 
+                                    });
+                                    if($needle == 1) $needle = 0;
+                                    else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                    if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                    $employeeName1 = $resultArray[$needle]["employee_name"];
+                                    
+                                    $message .= $employeeName1;
+                                    $message .= ". Waiting for admin approval.";
                                     $leadType = "";
                                     $reason = $ALArray["transfer_reason"];
                                     $noteRemark = "";
                                     $connectionStatus = "";
-                                    $employeeName = $ALArray['employee_id'];
+                                    // $employeeName = $ALArray['employee_id'];
+                                    $needle = $ALArray["employee_id"];
+                                    $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                      return $needle == $v['employee_id']; 
+                                    });
+                                    if($needle == 1) $needle = 0;
+                                    else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                    if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                    $employeeName = $resultArray[$needle]["employee_name"];
                                   }
                                   
                                   if($variant['status'] == "Transferred" && $variant['transfer_status']== "Admin Pending" && strtoupper($ALArray['assign_employee_type']) == "SALES EXECUTIVE" && strtolower($ALArray['request_for_admin']) == "yes"){
                                     $dateShowcase = date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date']));
-                                    $message = "Lead is transferred to SALES EXECUTIVE ".$ALArray['transfer_employee_id']." by ".$ALArray['employee_id']." on ".date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date'])).". Waiting for admin approval.";
+                                    $message = "Lead is transferred to SALES EXECUTIVE ";
+                                    
+                                    $needle = $ALArray["transfer_employee_id"];
+                                    $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                      return $needle == $v['employee_id']; 
+                                    });
+                                    if($needle == 1) $needle = 0;
+                                    else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                    if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                    $employeeName1 = $resultArray[$needle]["employee_name"];
+
+                                    $message .= $employeeName1;
+                                    $message .= " by ";
+
+                                    $needle = $ALArray["employee_id"];
+                                    $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                      return $needle == $v['employee_id']; 
+                                    });
+                                    if($needle == 1) $needle = 0;
+                                    else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                    if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                    $employeeName = $resultArray[$needle]["employee_name"];
+
+                                    $message .= $employeeName;
+                                    $message .= " on ".date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date'])).". Waiting for admin approval.";
+                                    
                                     $leadType = "";
                                     $reason = $ALArray["transfer_reason"];
                                     $noteRemark = "";
                                     $connectionStatus = "";
-                                    $employeeName = $ALArray['employee_id'];
+                                    // $employeeName = $ALArray['employee_id'];
                                   }
 
 
@@ -622,44 +1005,165 @@
                                   // }
                                   if($variant['status'] == "Transferred" && $variant['transfer_status']== "Available" && strtoupper($ALArray['assign_employee_type']) == "SALES EXECUTIVE" && strtolower($ALArray['request_for_admin']) == "yes"){
                                     $dateShowcase = date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date']));
-                                    $message = "Lead is transferred to SALES EXECUTIVE by ".$ALArray['assign_employee_id'].". Admin approved.";
+                                    $message = "Lead is transferred to SALES EXECUTIVE by ";
+
+                                    $needle = $ALArray["assign_employee_id"];
+                                    $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                      return $needle == $v['employee_id']; 
+                                    });
+                                    if($needle == 1) $needle = 0;
+                                    else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                    if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                    $employeeName1 = $resultArray[$needle]["employee_name"];
+                                    $message .= $employeeName1;
+                                    
+                                    $message .= ". Admin approved.";
                                     $leadType = "";
                                     $reason = $ALArray["transfer_reason"];
                                     $noteRemark = "";
                                     $connectionStatus = "";
-                                    $employeeName = $ALArray['employee_id'];
+                                    // $employeeName = $ALArray['employee_id'];
+                                    $needle = $ALArray["employee_id"];
+                                    $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                      return $needle == $v['employee_id']; 
+                                    });
+                                    if($needle == 1) $needle = 0;
+                                    else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                    if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                    $employeeName = $resultArray[$needle]["employee_name"];
                                   }                          
                                   if($variant['status'] == "Converted" && $variant['transfer_status']== "Converted"){
+
+                                    $property_id = $ALArray['property_id'];
+                                      $property_id_name = "";
+                                      $sub_property_id = $ALArray['sub_property_id'];
+                                      $sub_property_id_name = "";
+                                      $variant_id = $ALArray['variant'];
+                                      $variant_name = "";
+                                      
+                                      $needle = $property_id;
+                                      $resultArray = array_filter($property_Array, function ($v) use ($needle) {
+                                        return $needle == $v['property_name_id']; 
+                                      });
+                                      if($needle == 1) $needle = 0;
+                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                      if(isset($resultArray[$needle]["property_title"]) && $resultArray[$needle]["property_title"] != "") 
+                                      $property_id_name = $resultArray[$needle]["property_title"];
+                                      
+                                      $needle = $sub_property_id;
+                                      $resultArray = array_filter($sub_property_Array, function ($v) use ($needle) {
+                                        return $needle == $v['property_tower_id']; 
+                                      });
+                                      if($needle == 1) $needle = 0;
+                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                      if(isset($resultArray[$needle]["property_tower_name"]) && $resultArray[$needle]["property_tower_name"] != "") 
+                                      $sub_property_id_name = $resultArray[$needle]["property_tower_name"];
+                                      
+                                      $variant_name_array = array();
+                                      $variant_id = explode(",", $variant_id);
+                                      foreach($variant_id as $variantelement) {
+                                        $needle =  $variantelement;
+                                        $resultArray = array_filter($varient_Array, function ($v) use ($needle) {
+                                          return $needle == $v['property_varients_id']; 
+                                        });
+                                        if($needle == 1) $needle = 0;
+                                        else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                        if(isset($resultArray[$needle]["varients"]) && $resultArray[$needle]["varients"] != "") 
+                                        $variant_name = $resultArray[$needle]["varients"];
+                                        array_push($variant_name_array, $variant_name);
+                                      }
+                                      $variant_name = implode(",", $variant_name_array);
+
+
                                       $dateShowcase = date("Y-m-d H:i:s", strtotime($ALArray['added_on']));
                                       $message = "This lead in converted with following details ".
-                                      "<br> property_id:- ".$ALArray['property_id'].
-                                      "<br> sub_property_id:- ".$ALArray['sub_property_id'].
-                                      "<br> variant:- ".$ALArray['variant'].
+                                      "<br> property_id:- ".$property_id_name.
+                                      "<br> sub_property_id:- ".$sub_property_id_name.
+                                      "<br> variant:- ".$variant_name.
                                       "<br> area:- ".$ALArray['area'].
                                       "<br> location1:- ".$ALArray['location1'];
                                       $leadType = "";
                                       $reason = "";
                                       $noteRemark = "";
                                       $connectionStatus = "";
-                                      $employeeName = $ALArray["employee_id"];
+                                      // $employeeName = $ALArray["employee_id"];
+                                      $needle = $ALArray["employee_id"];
+                                    $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                      return $needle == $v['employee_id']; 
+                                    });
+                                    if($needle == 1) $needle = 0;
+                                    else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                    if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                    $employeeName = $resultArray[$needle]["employee_name"];
                                   }
                                   if($variant['status'] == "Dead"){
                                     $dateShowcase = date("Y-m-d H:i:s", strtotime($ALArray['edited_on']));
-                                    $message = "Marked dead by SALES EXECUTIVE ".$ALArray["employee_id"]." on ".date("Y-m-d H:i:s", strtotime($ALArray['edited_on']));
+                                    $needle = $ALArray["employee_id"];
+                                    $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                      return $needle == $v['employee_id']; 
+                                    });
+                                    if($needle == 1) $needle = 0;
+                                    else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                    if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                    $employeeName = $resultArray[$needle]["employee_name"];
+
+                                    $message = "Marked dead by SALES EXECUTIVE ".$employeeName." on ".date("Y-m-d H:i:s", strtotime($ALArray['edited_on']));
                                     $leadType = "";
                                     $reason = $ALArray["dead_reason"];
                                     $noteRemark = "";
                                     $connectionStatus = "";
-                                    $employeeName = $ALArray["employee_id"];
+                                    // $employeeName = $employeeName;
+                                    
                                   }
                             } 
                             
                             if($variant['table_name'] == "converted_leads") {
+
+                                      $property_id = $CONArray['property_name_id'];
+                                      $property_id_name = "";
+                                      $sub_property_id = $CONArray['property_tower_id'];
+                                      $sub_property_id_name = "";
+                                      $variant_id = $CONArray['property_variants'];
+                                      $variant_name = "";
+                                      
+                                      $needle = $property_id;
+                                      $resultArray = array_filter($property_Array, function ($v) use ($needle) {
+                                        return $needle == $v['property_name_id']; 
+                                      });
+                                      if($needle == 1) $needle = 0;
+                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                      if(isset($resultArray[$needle]["property_title"]) && $resultArray[$needle]["property_title"] != "") 
+                                      $property_id_name = $resultArray[$needle]["property_title"];
+                                      
+                                      $needle = $sub_property_id;
+                                      $resultArray = array_filter($sub_property_Array, function ($v) use ($needle) {
+                                        return $needle == $v['property_tower_id']; 
+                                      });
+                                      if($needle == 1) $needle = 0;
+                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                      if(isset($resultArray[$needle]["property_tower_name"]) && $resultArray[$needle]["property_tower_name"] != "") 
+                                      $sub_property_id_name = $resultArray[$needle]["property_tower_name"];
+                                      
+                                      $variant_name_array = array();
+                                      $variant_id = explode(",", $variant_id);
+                                      foreach($variant_id as $variantelement) {
+                                        $needle =  $variantelement;
+                                        $resultArray = array_filter($varient_Array, function ($v) use ($needle) {
+                                          return $needle == $v['property_varients_id']; 
+                                        });
+                                        if($needle == 1) $needle = 0;
+                                        else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                        if(isset($resultArray[$needle]["varients"]) && $resultArray[$needle]["varients"] != "") 
+                                        $variant_name = $resultArray[$needle]["varients"];
+                                        array_push($variant_name_array, $variant_name);
+                                      }
+                                      $variant_name = implode(",", $variant_name_array);
+
                                       $dateShowcase = date("Y-m-d H:i:s", strtotime($CONArray['added_on']));
                                       $message = "This lead in converted with following details ".
-                                      "<br> property_name_id:- ".$CONArray['property_name_id'].
-                                      "<br> property_variants:- ".$CONArray['property_variants'].
-                                      "<br> property_tower_id:- ".$CONArray['property_tower_id'].
+                                      "<br> property_name_id:- ".$property_id_name.
+                                      "<br> property_variants:- ".$variant_name.
+                                      "<br> property_tower_id:- ".$sub_property_id_name.
                                       "<br> agreement_value:- ".$CONArray['agreement_value'].
                                       "<br> registrantion:- ".$CONArray['registrantion'].
                                       "<br> gst:- ".$CONArray['gst'].
@@ -672,7 +1176,15 @@
                                       $reason = "";
                                       $noteRemark = "";
                                       $connectionStatus = "";
-                                      $employeeName = $CONArray["employee_id"];
+                                      // $employeeName = $CONArray["employee_id"];
+                                      $needle = $CONArray["employee_id"];
+                                      $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                        return $needle == $v['employee_id']; 
+                                      });
+                                      if($needle == 1) $needle = 0;
+                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                      $employeeName = $resultArray[$needle]["employee_name"];
                             }
 
                             if($variant['table_name'] == "leads") {
@@ -687,7 +1199,16 @@
                                 $qleads_assignedLeads->execute(array());      
                                 $leads_assignedLeadsArray = $qleads_assignedLeads->fetch(PDO::FETCH_ASSOC);
                                 $employee_id = $leads_assignedLeadsArray['employee_id'];
-                                $message .= $employee_id;
+
+                                $needle = $employee_id;
+                                $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                  return $needle == $v['employee_id']; 
+                                });
+                                if($needle == 1) $needle = 0;
+                                else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                $employeeName = $resultArray[$needle]["employee_name"]; 
+                                $message .= $employeeName;
                               }
                               
                               $leadType = "";
@@ -699,18 +1220,69 @@
                     }
                     ?>
                     <li class="timeline-item">
+                      
+                      <?php 
+                      if ($roleName == 'SALES EXECUTIVE') { ?>
                       <span
-                        class="timeline-indicator timeline-indicator-primary"
+                        class="timeline-indicator timeline-indicator-warning"
                         data-aos="zoom-in"
                         data-aos-delay="200">
-                        <i class="ri-brush-line ri-20px"></i>
+                        <i class="ri-map-pin-line ri-20px"></i>
                       </span>
+                      <?php } else if ($roleName == 'CUSTOMER EXECUTIVE') { ?>
+                        <span
+                          class="timeline-indicator timeline-indicator-success"
+                          data-aos="zoom-in"
+                          data-aos-delay="200">
+                          <i class="ri-open-arm-line ri-20px"></i>
+                        </span>
+                      <?php } else if ($roleName == 'LEADS GENERATOR') { ?>
+                        <span
+                          class="timeline-indicator timeline-indicator-primary"
+                          data-aos="zoom-in"
+                          data-aos-delay="200">
+                          <i class="ri-donut-chart-fill ri-20px"></i>
+                        </span>
+                      <?php } else { ?>
+                        <span
+                          class="timeline-indicator timeline-indicator-dander"
+                          data-aos="zoom-in"
+                          data-aos-delay="200">
+                          <i class="ri-question-mark ri-20px"></i>
+                        </span>
+                      <?php } ?>
+
                       <div class="timeline-event card p-0" data-aos="<?php echo $showside; ?>">
                         <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
-                          <h6 class="card-title mb-0"><?php if($employeeName != "" ) echo $roleName." - ".$employeeName; else echo $roleName; ?></h6>
+                          <h6 class="card-title mb-0">
+                            <?php //if($employeeName != "" ) echo $roleName." - ".$employeeName; else echo $roleName; ?>
+                            <?php echo $roleName; ?>
+                          </h6>
                           <div class="meta">
-                            <span class="badge rounded-pill bg-label-primary"><?php echo $variant['status']; ?></span>
-                            <span class="badge rounded-pill bg-label-success"><?php echo $variant['transfer_status']; ?></span>
+                            <!-- <span class="badge rounded-pill bg-label-primary"><?php echo $variant['status']; ?></span> -->
+                            <!-- <span class="badge rounded-pill bg-label-success"><?php echo $variant['transfer_status']; ?></span> -->
+                            <?php
+                                if($variant["status"] == "Active")
+                                echo '<span class="badge rounded-pill bg-label-danger">';
+                                else if($variant["status"] == "Followup")
+                                echo '<span class="badge rounded-pill bg-label-info">';
+                                else if($variant["status"] == "Assigned")
+                                echo '<span class="badge rounded-pill bg-label-primary">';
+                                else if($variant["status"] == "Transferred")
+                                echo '<span class="badge rounded-pill bg-label-warning">';
+                                else if($variant["status"] == "From SE")
+                                echo '<span class="badge rounded-pill bg-label-warning">';
+                                else if($variant["status"] == "From CE")
+                                echo '<span class="badge rounded-pill bg-label-warning">';
+                                else if($variant["status"] == "Dead")
+                                echo '<span class="badge rounded-pill bg-label-dark">';
+                                else if($variant["status"] == "Converted")
+                                echo '<span class="badge rounded-pill bg-label-success">';
+                                else
+                                echo '<span class="badge rounded-pill bg-label-secondary">';
+                                echo $variant["status"]; 
+                                echo '</span>';
+                            ?>
                             <?php if(isset($data['transfer_employee_type'])) { ?>
                             <span class="badge rounded-pill bg-label-info"><?php echo $data['transfer_employee_type']; ?></span>
                             <?php } ?>
@@ -723,186 +1295,37 @@
                           <div class="d-flex justify-content-between align-items-center flex-wrap">
                             <div>
                                 <?php
+                                    echo $message."<br>";
+                                    echo $reason."<br>";
+                                    echo $noteRemark."<br>";
+                                    // echo "message:- ".$message."<br><br>";
+                                    // echo "reason:- ".$reason."<br><br>";
+                                    // echo "noteRemark:- ".$noteRemark."<br><br>";
                                     // echo "dateShowcase:- ".$dateShowcase."<br><br>";
-                                    echo $message;
                                     // echo "leadType:- ".$leadType."<br><br>";
-                                    echo $reason;
-                                    echo $noteRemark;
                                     // echo "noteRemark:- ".$noteRemark."<br><br>";
                                     // echo "connectionStatus:- ".$connectionStatus."<br><br>";
                                     // echo "employeeName:- ".$employeeName."<br><br>";
                                 ?>
                             </div>
+                            
+                          </div>
+                          <div>
+                            <p class="text-muted mb-2">Employee Name - <?php echo $employeeName; ?></p>
+                            <ul class="list-unstyled users-list d-flex align-items-center avatar-group">
+                              <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" aria-label="Vinnie Mostowy" data-bs-original-title="Vinnie Mostowy">
+                                <img class="rounded-circle" src="assets/img/avatars/5.png" alt="Avatar">
+                              </li>
+                            </ul>
                           </div>
                         </div>
                         <div class="timeline-event-time"><?php 
                         echo date("d-m-Y" , strtotime($variant['timlinedate']));
                         echo "<br>";
                         echo date("H:i:s" , strtotime($variant['timlinedate']));
-                        ?></div>
+                        ?>
+                        </div>
                       </div>
+                      
                     </li>
                     <?php } ?>
-                    <!-- <li class="timeline-item">
-                      <span
-                        class="timeline-indicator timeline-indicator-success"
-                        data-aos="zoom-in"
-                        data-aos-delay="200">
-                        <i class="ri-question-mark ri-20px"></i>
-                      </span>
-                      <div class="timeline-event card p-0" data-aos="fade-left">
-                        <h6 class="card-header">Survey Report</h6>
-                        <div class="card-body demo-vertical-spacing demo-only-element">
-                          <div class="d-flex flex-wrap mb-6">
-                            <div>
-                              <div class="avatar avatar-xs me-4">
-                                <img src="../../assets/img/avatars/4.png" alt="Avatar" class="rounded-circle" />
-                              </div>
-                            </div>
-                            <span>assigned this task to <span class="fw-medium">Sarah</span></span>
-                          </div>
-                          <ul class="list-unstyled">
-                            <li class="d-flex">
-                              <div>
-                                <div class="avatar avatar-xs me-4">
-                                  <img src="../../assets/img/avatars/2.png" alt="Avatar" class="rounded-circle" />
-                                </div>
-                              </div>
-                              <div class="mb-4 w-100">
-                                <div class="progress bg-label-danger" style="height: 6px">
-                                  <div
-                                    class="progress-bar bg-danger"
-                                    role="progressbar"
-                                    style="width: 48.7%"
-                                    aria-valuenow="25"
-                                    aria-valuemin="0"
-                                    aria-valuemax="100"></div>
-                                </div>
-                                <small>Jquery</small>
-                              </div>
-                            </li>
-                            <li class="d-flex">
-                              <div>
-                                <div class="avatar avatar-xs me-4">
-                                  <img src="../../assets/img/avatars/3.png" alt="Avatar" class="rounded-circle" />
-                                </div>
-                              </div>
-                              <div class="mb-4 w-100">
-                                <div class="progress" style="height: 6px">
-                                  <div
-                                    class="progress-bar bg-primary"
-                                    role="progressbar"
-                                    style="width: 31.3%"
-                                    aria-valuenow="25"
-                                    aria-valuemin="0"
-                                    aria-valuemax="100"></div>
-                                </div>
-                                <small>React</small>
-                                <small>React</small>
-                                <small>React</small>
-                                <small>React</small>
-                              </div>
-                            </li>
-                            <li class="d-flex">
-                              <div>
-                                <div class="avatar avatar-xs me-4">
-                                  <img src="../../assets/img/avatars/4.png" alt="Avatar" class="rounded-circle" />
-                                </div>
-                              </div>
-                              <div class="mb-4 w-100">
-                                <div class="progress bg-label-warning" style="height: 6px">
-                                  <div
-                                    class="progress-bar bg-warning"
-                                    role="progressbar"
-                                    style="width: 30%"
-                                    aria-valuenow="25"
-                                    aria-valuemin="0"
-                                    aria-valuemax="100"></div>
-                                </div>
-                                <small>Angular</small>
-                              </div>
-                            </li>
-                            <li class="d-flex">
-                              <div>
-                                <div class="avatar avatar-xs me-4">
-                                  <img src="../../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
-                                </div>
-                              </div>
-                              <div class="mb-4 w-100">
-                                <div class="progress bg-label-info" style="height: 6px">
-                                  <div
-                                    class="progress-bar bg-info"
-                                    role="progressbar"
-                                    style="width: 15%"
-                                    aria-valuenow="25"
-                                    aria-valuemin="0"
-                                    aria-valuemax="100"></div>
-                                </div>
-                                <small>VUE</small>
-                              </div>
-                            </li>
-                            <li class="d-flex">
-                              <div>
-                                <div class="avatar avatar-xs me-4">
-                                  <img src="../../assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
-                                </div>
-                              </div>
-                              <div class="w-100">
-                                <div class="progress bg-label-success" style="height: 6px">
-                                  <div
-                                    class="progress-bar bg-success"
-                                    role="progressbar"
-                                    style="width: 10%"
-                                    aria-valuenow="25"
-                                    aria-valuemin="0"
-                                    aria-valuemax="100"></div>
-                                </div>
-                                <small>Laravel</small>
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
-                        <div class="timeline-event-time">2nd January</div>
-                      </div>
-                    </li> -->
-                  </ul>
-                </div>
-              </div>
-              
-            
-    <script>
-    $(document).ready(function() {
-        $('#roleDropdown').change(function() {
-            var selectedRole = $(this).val();
-            var prefix = '';
-
-            if (selectedRole === 'CUSTOMER EXECUTIVE') {
-                prefix = 'CE';
-            } else if (selectedRole === 'SALES EXECUTIVE') {
-                prefix = 'SE';
-            }
-
-            // Set the prefix in the input field
-            $('#prefixInput').val(prefix + '-');
-        });
-    });
-    </script>
-
-    <script>
-        function toggleReasonBox() {
-            const checkbox = document.getElementById('customCheckDanger');
-            const reasonBox = document.getElementById('reasonBox');
-
-            if (checkbox.checked) {
-                reasonBox.style.display = 'block';
-            } else {
-                reasonBox.style.display = 'none';
-            }
-        }
-
-        // Initially hide the reason box if the checkbox is not checked
-        toggleReasonBox();
-    </script>
-    
-  </body>
-</html>

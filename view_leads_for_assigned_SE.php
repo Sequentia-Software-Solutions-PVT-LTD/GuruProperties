@@ -29,6 +29,11 @@
     $q->execute(array());      
     $row_leads = $q->fetch(PDO::FETCH_ASSOC);
 
+    $sqllocation = "select * from location ";
+    $qlocation = $pdo->prepare($sqllocation);
+    $qlocation->execute(array());      
+    $row_location = $qlocation->fetchAll(PDO::FETCH_ASSOC);
+
   if(isSet($_POST["submit"]))
   { 
     // echo "<pre>";
@@ -163,8 +168,12 @@
   </style>
     <!-- *********** header******************  -->
     <?php include 'layout/header_js.php'; ?>
-     <!-- *********** /header******************  -->
-    
+
+    <!-- Helpers -->
+    <script src="assets/vendor/js/helpers.js"></script>
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="assets/js/config.js"></script>
   </head>
 
   <body>
@@ -188,46 +197,343 @@
               <!-- // -->
               <h5 class="card-header mar-bot-10">Leads Details </h5>
                 <div class="row">
-                    <div class="col-xl-12 col-lg-12 col-md-12 ">
-                        <!-- About User -->
+                    <!-- <div class="col-xl-12 col-lg-12 col-md-12 ">
                         <div class="card mb-6">
-                        <div class="card-body demo-vertical-spacing demo-only-element" style="display:flex; justify-content: space-around;">
-                            <!-- <small class="card-text text-uppercase text-muted small">About</small> -->
-                            <ul class="list-unstyled my-3 py-1" style="">
-                              <small class="card-text text-uppercase text-muted small">About</small>
-                                <li class="d-flex align-items-center mb-4" style="margin-top: 20px;"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Lead Name:</span> <span><?php echo $row_leads['lead_name']; ?></span></li>
-                                <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span><?php echo $row_leads['location']; ?></span></li>
-                                <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li>
-                                <!-- <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li> -->
-                            </ul>
-                            
-                            <ul class="list-unstyled my-3 py-1" style="">
-                              <small class="card-text text-uppercase text-muted small" >Contacts</small>
-                                <li class="d-flex align-items-center mb-4" style="margin-top: 20px;"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Contact:</span> <span><?php echo $row_leads['phone_no']; ?></span></li>
-                                <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Email ID:</span> <span><?php echo $row_leads['email_id']; ?></span></li>
-                            </ul>
-                            
-                            <ul class="list-unstyled my-3 py-1" style="">
-                              <small class="card-text text-uppercase text-muted small" style="margin-bottom:20px;">Other</small>
-                                <li class="d-flex align-items-center mb-4"  style="margin-top: 20px;"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Source:</span> <span><?php echo $row_leads['source']; ?></span></li>
-                                <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_leads['added_on'])); ?></span></li>
-                            </ul>
-                        </div>
-                        </div>
-                        <!--/ About User -->
+                            <div class="card-body demo-vertical-spacing demo-only-element">
+                                <div class="row justify-content-center">
+                                    <div class="col-md-4">
+                                        <ul class="list-unstyled my-3 py-1" style="width: max-content;margin:auto;">
+                                                <small class="card-text text-uppercase text-muted small">About</small>
+                                            <li class="d-flex align-items-center mb-4" style="margin-top: 20px;"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Lead Name:</span> <span><?php echo $row_leads['lead_name']; ?></span></li>
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span><?php echo $row_leads['location']; ?></span></li>
+                                            <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <ul class="list-unstyled my-3 py-1" style="width: max-content;margin:auto;">
+                                            <small class="card-text text-uppercase text-muted small" >Contacts</small>
+                                            <li class="d-flex align-items-center mb-4" style="margin-top: 20px;"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Contact:</span> <span><?php echo $row_leads['phone_no']; ?></span></li>
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Email ID:</span> <span><?php echo $row_leads['email_id']; ?></span></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <ul class="list-unstyled my-3 py-1" style="width: max-content;margin:auto;">
+                                            <small class="card-text text-uppercase text-muted small" style="margin-bottom:20px;">Other</small>
+                                            <li class="d-flex align-items-center mb-4"  style="margin-top: 20px;"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Source:</span> <span><?php echo $row_leads['source']; ?></span></li>
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_leads['added_on'])); ?></span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>                        
+                    </div> -->
+
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="row  justify-content-between align-items-center">
+                            <div class="col-12">
+                                <div class="card mb-6">
+                                    <div class="card-header header-elements">
+                                        <h5 class="card-action-title mb-0 underline">Lead Details</h5>
+                                        
+                                        <!-- <div class="card-header-elements ms-sm-auto">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-primary waves-effect waves-light" style="visibility:hidden;">Update</button>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                    
+                                    <hr class="m-0">
+                                    <div class="card-body demo-vertical-spacing demo-only-element">
+                                        <h5 class="card-action-title  mb-0">About</h5>
+                                        <hr class="mt-1">
+                                        <ul class="list-unstyled my-3 py-1" style="">
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Lead Name:</span> <span><?php echo $row_leads['lead_name']; ?></span></li>
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span><?php 
+                                                $needle = $row_leads["location"];
+                                                $resultArray = array_filter($row_location, function ($v) use ($needle) {
+                                                    return $needle == $v['id']; 
+                                                });
+                                                if($needle == 1) $needle = 1;
+                                                else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                                if(isset($resultArray[$needle]["name"]) && $resultArray[$needle]["name"] != "") echo $resultArray[$needle]["name"]; 
+                                                else echo "Not Found";
+                                            ?></span></li>
+                                            <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li>
+                                        </ul>
+                                        <h5 class="card-action-title  mb-0">Contacts</h5>
+                                        <hr class="mt-1">
+                                        <ul class="list-unstyled my-3 py-1" style="">
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Contact:</span> <span><?php echo $row_leads['phone_no']; ?></span></li>
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Email ID:</span> <span><?php echo $row_leads['email_id']; ?></span></li>
+                                        
+                                        </ul>
+                                        <h5 class="card-action-title  mb-0">Other</h5>
+                                        <hr class="mt-1">
+                                        
+                                        <ul class="list-unstyled my-3 py-1" style="">
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Source:</span> <span><?php echo $row_leads['source']; ?></span></li>
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_leads['added_on'])); ?></span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6 col-md-6">
+                        <div class="row justify-content-between align-items-center">
+                            <div class="col-12">
+                                <div class="card mb-6" >
+
+                                    <form action="#" method="post" enctype="multipart/form-data">
+                                            <input type="hidden" value="<?php echo $_REQUEST['assign_leads_id']; ?>" name="assign_leads_id">        
+                                            <div class="card-header header-elements">
+                                                <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line1 ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
+                                                <h5 class="card-action-title mb-0">Form for assign Sales Executive to lead</h5>
+                                                <div class="card-header-elements ms-sm-auto">
+                                                    <div class="btn-group">
+                                                        <!-- <button type="submit" name="submit1" id="submit1"  class="btn btn-success waves-effect waves-light" style="border-right-color: inherit !important; border-left-color: inherit !important;">Update</button> -->
+                                                        <!-- <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split waves-effect waves-light" data-bs-toggle="dropdown" data-bs-reference="parent" aria-expanded="false"></button>
+                                                        <div class="dropdown-menu" style="">
+                                                            <a class="dropdown-item waves-effect" href="convert_lead_by_SE.php?assign_leads_sr_id=<?php echo $row_assign["assign_leads_sr_id"]; ?>">Convert</a>
+                                                            <a class="dropdown-item waves-effect" href="transfer_lead_by_SE.php?assign_leads_sr_id=<?php echo $row_assign["assign_leads_sr_id"]; ?>">Transfer</a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a class="dropdown-item waves-effect" data-bs-toggle="modal" data-bs-target="#addNewCCModald">Mark Dead</a>
+                                                        </div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr class="m-0">
+                                            
+                                            <div class="col-md-12">
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <h5 class="card-action-title  mb-0">Employee Details</h5>
+                                                    <hr class="mt-1">
+                                                </div>
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <div class="d-flex justify-content-between  align-items-center">
+                                                        <!-- <h6 class="w-max-content mb-0">1. Employee*</h6> -->
+                                                            <!-- <div class="d-flex gap-4" style="width:72%"> -->
+                                                            <div class="d-flex gap-4" style="width:100%">
+                                                                <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                                    <!-- <select id="roleDropdown" name="transfer_employee_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
+                                                                        <option value="" data-select2-id="18">Select Sales Executive</option>
+                                                                            <?php
+                                                                                // $sql = "SELECT * FROM  employee where status='Active' and login_role='SALES EXECUTIVE' ";
+                                                                                // foreach ($pdo->query($sql) as $row) 
+                                                                                // { 
+                                                                            ?>
+                                                                                <option value="<?php //echo $row['employee_id']?>"><?php //echo $row['employee_name']?> (<?php //echo $row['location']?>)</option> 
+                                                                            <?php //} ?>
+                                                                    </select>
+                                                                    <label for="roleDropdown">Sales Executive</label> -->
+                                                                    
+                                                                    <select
+                                                                        name="transfer_employee_id"
+                                                                        id="selectpickerSubtext"
+                                                                        class="selectpicker w-100"
+                                                                        data-style="btn-default"
+                                                                        data-show-subtext="true" required
+                                                                    >
+                                                                    <?php
+                                                                        $sql = "SELECT * FROM  employee where status='Active' and login_role='CUSTOMER EXECUTIVE' ";
+                                                                        foreach ($pdo->query($sql) as $row) 
+                                                                        { 
+                                                                        ?>
+                                                                        <option data-subtext="<?php echo $row['location']?>" value="<?php echo $row['employee_id']?>"><?php echo $row['employee_name']?></option> 
+                                                                    <?php } ?>
+                                                                    </select>
+                                                                    <label for="selectpickerSubtext">Select Customer Executive</label>
+
+                                                                </div>
+                                                            </div>
+                                                        <!-- </div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <h5 class="card-action-title  mb-0">Property Details</h5>
+                                                    <hr class="mt-1">
+                                                </div>
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <!-- <h6 class="mt-0">2. Property Title*</h6> -->
+                                                        <!-- <div class="d-flex gap-4" style="width: 72%;"> -->
+                                                        <div class="d-flex gap-4" style="width: 100%;">
+                                                            <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                                <select id="propertyDropdown" name="property_name_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
+                                                                    <option value="">Select Property Name</option>
+                                                                    <?php
+                                                                        $sql = "SELECT * FROM property_name where status = 'Active'";
+                                                                        foreach ($pdo->query($sql) as $row) { 
+                                                                            $sqllocation = "select * from location ";
+                                                                            $qlocation = $pdo->prepare($sqllocation);
+                                                                            $qlocation->execute(array());      
+                                                                            $row_location = $qlocation->fetchAll(PDO::FETCH_ASSOC);
+
+                                                                            $needle = $row['location_id'];
+                                                                            $resultArray = array_filter($row_location, function ($v) use ($needle) {
+                                                                            return $needle == $v['id']; 
+                                                                            });
+                                                                            if($needle == 1) $needle = 1;
+                                                                            else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                                                            if(isset($resultArray[$needle]["name"]) && $resultArray[$needle]["name"] != "") $location_name = $resultArray[$needle]["name"];
+                                                                            else 
+                                                                            $location_name = "Not Found";
+
+                                                                            
+                                                                            echo '<option value="'.$row['property_name_id'].'">'.$row['property_title']." (".$location_name.")".'</option>';
+                                                                        }
+                                                                    ?>
+                                                                </select>
+                                                                <label for="propertyDropdown">Property Title</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-12">
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <!-- <h6 class="mt-0">3. Property Tower*</h6> -->
+                                                        <!-- <div class="d-flex gap-4" style="width: 72%;"> -->
+                                                        <div class="d-flex gap-4" style="width: 100%;">
+                                                            <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                                <select id="towerDropdown" name="property_tower_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
+                                                                    <option value="">Select Property Tower</option>
+                                                                    <!-- Towers will be loaded here based on the selected property -->
+                                                                </select>
+                                                                <label for="towerDropdown">Property Tower</label>
+                                                            </div>
+                                                        </div>
+                                                            
+                                                    </div>
+                                                </div>    
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <!-- <h6 class="mt-0">4. Property Variants*</h6> -->
+                                                        <!-- <div class="mb-4 d-flex gap-4" style="width: 72%;"> -->
+                                                        <div class="mb-4 d-flex gap-4" style="width: 100%;">
+                                                            <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                                <select id="variantDropdown" name="property_variants[]" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
+                                                                <!-- <select id="variantDropdown" name="property_variants[]" class="js-example-basic-single select2 form-select select2-hidden-accessiblee" multiple="multiple" data-allow-clear="true" required> -->
+                                                                    <option value="">Select Variants</option>
+                                                                </select>
+                                                                <label for="variantDropdown">Property Variants</label>
+                                                            </div>
+                                                        </div>        
+                                                    </div>
+                                                </div>    
+                                            </div>
+                                            
+                                            <div class="col-12">
+                                                <div class="card-body demo-vertical-spacing demo-only-element pt-0">
+                                                    <h5 class="card-action-title  mb-0">Other Details</h5>
+                                                    <hr class="mt-1">
+                                                </div>
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <!-- <h6 class="mt-0">5. Visit Date*</h6> -->
+                                                        <!-- <div class="mb-1 d-flex align-items-center gap-2" style="width: 72%; "> -->
+                                                        <div class="mb-1 d-flex align-items-center gap-2" style="width: 100%; ">
+                                                            <!-- <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                                <input class="form-control" type="datetime-local" id="next_date" name="next_date">
+                                                                <label for="next_date">Visit Date</label>
+                                                            </div> -->
+                                                            <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                                <input
+                                                                name="next_date"
+                                                                type="text"
+                                                                class="form-control"
+                                                                placeholder="YYYY-MM-DD HH:MM"
+                                                                id="flatpickr-datetime" />
+                                                                <label for="flatpickr-datetime">Visit Date-Time</label>
+                                                            </div>
+                                                        </div>        
+                                                    </div>
+                                                </div>    
+                                            </div>
+                                            
+                                            <div class="col-12">
+                                                <div class="card-body demo-vertical-spacing demo-only-element pt-0 mb-5">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <!-- <h6 class="my-0">6. Notes*</h6> -->
+                                                        <!-- <div class="d-flex align-items-center gap-2" style="width: 72%;"> -->
+                                                        <div class="d-flex align-items-center gap-2" style="width: 100%;">
+                                                            <!-- <label for="next_date" class="form-label">Select One Option</label> -->
+                                                            <div class="form-floating form-floating-outline" id="selectBox1" style="width: 100%;">
+                                                                <input class="form-control" type="text" placeholder="Enter your notes" id="notes" name="notes">
+                                                                <label for="notes">Notes</label>
+                                                            </div>
+                                                        </div>        
+                                                    </div>
+                                                </div>    
+                                            </div>                                        
+                                        
+                                            <div class="col-sm-12 text-center">
+                                                    <div class="form-floating form-floating-outline">
+                                                        <input class="form-control" type="hidden" id="lat" readonly name="latitude">
+                                                        <!-- <span>Current Latitude:- </span> -->
+                                                        <!-- <span class="text-danger" id="latitude"></span>  -->
+                                                        <!-- <br> -->
+                                                        <input class="form-control" type="hidden" id="long" readonly name="longitude">
+                                                        <!-- <span>Current Longitude:- </span> -->
+                                                        <!-- <span class="text-danger" id="longitude"></span> -->
+                                                        <!-- <br> -->
+                                                        <!-- <span>Accuracy:- </span> -->
+                                                        <!-- <span class="text-danger" id="accuracy"></span> -->
+                                                        <div class="mx-7 alert alert-solid-warning" id="warningMessage" role="alert" style="display:none;">
+                                                            Make sure your location is enabled before submitting this form
+                                                        </div>
+                                                        <div class="mx-7 alert alert-solid-danger" id="errormessage" role="alert" style="display:none;">
+                                                            Please turn on location to submit this form!
+                                                        </div>
+                                                        <div class="mx-7 mb-0 alert text-danger alert-solid-success" id="successmessage" role="alert" style="display:none; width:max-content">
+                                                            <span class="d-none" class="" id="latitude"></span><span class="d-none" id="longitude"></span>
+                                                            <span class="text-white"  data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Make sure this is below 100" id="accuracy"></span>
+                                                        </div>
+                                                        
+                                                    </div>
+                                            </div>
                         
+                                            <div class="col-sm-12 text-right">
+                                                <hr class="m-0">
+                                            </div>
+
+                                            <div class="col-sm-12 text-right">
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <div class="justify-content-end align-items-center mb-10">
+                                                        <span class="d-none" class="" id="latitude"></span><span class="d-none" id="longitude"></span>
+                                                        <button type="reset" class="btn btn-outline-secondary float-left" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                                                        <button type="submit" id="submit1"  data-bs-toggle="tooltip" data-bs-placement="left"  class="btn btn-success waves-effect waves-light d-flex float-right" name="submit1">Submit</button>
+                                                    </div>        
+                                                </div>    
+                                            </div>
+
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!--  -->
-                    <div class="col-xl-12 col-lg-12 col-md-12">
+                    <!-- <div class="col-xl-12 col-lg-12 col-md-12">
                         <div class="card mb-6" >
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="card-title mb-0"><i class="ri-survey-line ri-24px text-body me-2"></i>Form for assign Sales Executive to lead</h5>
+                                <h5 class="card-title mb-0"><i class="ri-survey-line1 ri-24px text-body me-2"></i>Form for assign Sales Executive to lead</h5>
                             </div>
                             <form action="#" method="post">
                                 <input type="hidden" value="<?php echo $_REQUEST['assign_leads_id']; ?>" name="assign_leads_id">
                                 <div class="card-body demo-vertical-spacing demo-only-element" style="padding-top: 0px;">
 
-                                    <!-- new form -->
                                     <div class="row g-4">
                                     <div class="row">
                                         <h5 class="card-header mt-4" style="padding-left: 0px;"> Employee </h5>
@@ -252,8 +558,6 @@
                                           </div>
                                         </div>                         
                                     </div>
-                                    <!--  -->
-                                    <!-- <h5 class="card-header mt-4" style="padding-left: 0px;"> Employee </h5> -->
                                     <div class="row g-4">
                                         <div class="row">
                                           <h5 class="card-header mt-4" style="padding-left: 0px;"> Property Details </h5>
@@ -298,21 +602,18 @@
                                                     <div class="col-sm-9 form-floating form-floating-outline">
                                                         <select id="towerDropdown" name="property_tower_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
                                                             <option value="">Select Property Tower</option>
-                                                            <!-- Towers will be loaded here based on the selected property -->
                                                         </select>
                                                         <label for="towerDropdown">Property Tower</label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--  -->
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="row mt-5">
                                                     <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Variants</label>
                                                     <div class="col-sm-9 form-floating form-floating-outline">
                                                         <select id="variantDropdown" name="property_variants[]" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
-                                                        <!-- <select id="variantDropdown" name="property_variants[]" class="js-example-basic-single select2 form-select select2-hidden-accessiblee" multiple="multiple" data-allow-clear="true" required> -->
                                                             <option value="">Select Variants</option>
                                                         </select>
                                                         <label for="variantDropdown">Property Variants</label>
@@ -321,26 +622,6 @@
                                             </div>
                                         </div>
 
-                                        
-
-                                        <!-- <div class="row">
-                                          <div class="col-md-6">
-                                              <div class="row">
-                                                  <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Varients</label>
-                                                  <div class="col-sm-9">
-                                                      <select id="propertyDropdown" name="property_varients_id" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" required>
-                                                          <option value="">Select Varients</option>
-                                                          <?php
-                                                              $sql = "SELECT * FROM property_varients";
-                                                              foreach ($pdo->query($sql) as $row) { 
-                                                                  echo '<option value="'.$row['property_varients_id'].'">'.$row['varients'].'</option>';
-                                                              }
-                                                          ?>
-                                                      </select>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                        </div> -->
 
                                         <div class="row">
                                           <h5 class="card-header mt-4" style="padding-left: 0px;"> Visit Details </h5>
@@ -364,7 +645,6 @@
                                           </div>
                                         </div>
                                     </div>
-                                    <!-- /new form -->
                                     
                                                             
 
@@ -372,12 +652,11 @@
                                         <button type="submit" name="submit" class="btn btn-success logo-btn" style="margin-top:30px;">
                                             Submit
                                         </button>
-                                        <!-- <a class="btn btn-secondary" href="transfer_assigned_lead.php?assign_leads_id=<?php echo $row_assign["assign_leads_id"]; ?>">Transfer Lead </a> -->
                                     </div>
                                 </div>
                             </form>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                <!-- *************** - /main containt in page write here - **********************  -->
             </div>

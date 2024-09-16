@@ -14,7 +14,7 @@
   $q->execute(array());      
   $row_d = $q->fetch(PDO::FETCH_ASSOC);
 
-  if(isSet($_POST["subimt"]))
+  if(isSet($_POST["submit"]))
   { 
     $property_title = $_POST['property_title'];
     $builder_name = $_POST['builder_name'];
@@ -105,15 +105,16 @@
                 <div class="card">
                     <h5 class="card-header"> Edit Property </h5>
                     <div class="card-body demo-vertical-spacing demo-only-element">
-                        <div class="d-flex align-items-center1 justify-content-center h-px-500">
+                        <!-- <div class="d-flex align-items-center1 justify-content-center h-px-500"> -->
+                        <div class="d-flex align-items-center1 justify-content-center">
                         <form action="#" method="post">
                         <input type="hidden" value="<?php echo $row_d['id']; ?>" name="id">
                           <div class="row g-4">
                             
                             <div class="col-md-6">
                               <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end mar-top" for="formtabs-username"> Property Title</label>
-                                <div class="col-sm-9 form-floating form-floating-outline">
+                                <!-- <label class="col-sm-3 col-form-label text-sm-end mar-top" for="formtabs-username"> Property Title</label> -->
+                                <div class="col-sm-12 form-floating form-floating-outline">
                                   <input type="text" name="property_title" id="formtabs-username" class="form-control" placeholder="Property Title" value="<?php echo $row_d['property_title']; ?>">
                                   <label for="formtabs-username">Property Title</label>
                                 </div>
@@ -122,8 +123,8 @@
 
                             <div class="col-md-6">
                               <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end mar-top" for="formtabs-username">Builder Name</label>
-                                <div class="col-sm-9 form-floating form-floating-outline">
+                                <!-- <label class="col-sm-3 col-form-label text-sm-end mar-top" for="formtabs-username">Builder Name</label> -->
+                                <div class="col-sm-12 form-floating form-floating-outline">
                                   <input type="text" name="builder_name" id="formtabs-username" class="form-control" placeholder="Builder Name"  value="<?php echo $row_d['property_title']; ?>">
                                   <label for="formtabs-username">Builder Name</label>
                                 </div>
@@ -132,8 +133,8 @@
 
                             <div class="col-md-6">
                               <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end mar-top">Possession By Builder</label>
-                                <div class="col-sm-9 form-floating form-floating-outline">
+                                <!-- <label class="col-sm-3 col-form-label text-sm-end mar-top">Possession By Builder</label> -->
+                                <div class="col-sm-12 form-floating form-floating-outline">
                                   <input type="text" id="builder_possession" name="builder_possession" class="form-control" placeholder="Possession By Builder" value="<?php echo $row_d['builder_possession']; ?>">
                                   <label for="builder_possession">Possession By Builder</label>
                                 </div>
@@ -141,8 +142,8 @@
                             </div>
                             <div class="col-md-6">
                               <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end mar-top">Possession By RERA </label>
-                                <div class="col-sm-9 form-floating form-floating-outline">
+                                <!-- <label class="col-sm-3 col-form-label text-sm-end mar-top">Possession By RERA </label> -->
+                                <div class="col-sm-12 form-floating form-floating-outline">
                                   <input type="text" id="rera_possession1" name="rera_possession" class="form-control" placeholder="Possession By RERA" value="<?php echo $row_d['rera_possession']; ?>">
                                   <label for="rera_possession1">Possession By RERA</label>
                                 </div>
@@ -153,8 +154,8 @@
 
                             <div class="col-md-6">
                               <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-country">Variants</label>
-                                <div class="col-sm-9 form-floating form-floating-outline">
+                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-country">Variants</label> -->
+                                <div class="col-sm-12 form-floating form-floating-outline">
                                   <!-- <div class="position-relative"> -->
                                     <select id="formtabs-country"  name="varients" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true">
                                       <option value="" data-select2-id="18">Select Variants</option>
@@ -176,8 +177,8 @@
                             
                             <div class="col-md-6">
                               <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username">country</label>
-                                <div class="col-sm-9 form-floating form-floating-outline">
+                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username">country</label> -->
+                                <div class="col-sm-12 form-floating form-floating-outline">
                                   <input type="text"  name="location"  id="formtabs-username" class="form-control" placeholder="Location"  value="<?php echo $row_d['location']; ?>">
                                   <label for="formtabs-username">Location</label>
                                 </div>
@@ -186,8 +187,8 @@
 
                             <div class="col-md-6">
                               <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username">Area in sq ft</label>
-                                <div class="col-sm-9 form-floating form-floating-outline">
+                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username">Area in sq ft</label> -->
+                                <div class="col-sm-12 form-floating form-floating-outline">
                                   <input type="text"  name="area" id="formtabs-username" class="form-control" placeholder="Ex. 650 sq.ft" value="<?php echo $row_d['area']; ?>">
                                   <label for="formtabs-username">Area in sq ft</label>
                                 </div>
@@ -197,8 +198,8 @@
 
                             <div class="col-md-6">
                               <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end mar-top" for="formtabs-username">Price quoted by builder</label>
-                                <div class="col-sm-9 form-floating form-floating-outline">
+                                <!-- <label class="col-sm-3 col-form-label text-sm-end mar-top" for="formtabs-username">Price quoted by builder</label> -->
+                                <div class="col-sm-12 form-floating form-floating-outline">
                                   <input type="text"  name="price" id="formtabs-username" class="form-control" placeholder="Price quoted by builder"  value="<?php echo $row_d['price']; ?>">
                                   <label for="formtabs-username">Price quoted by builder</label>
                                 </div>
@@ -206,16 +207,24 @@
                             </div>
                             
                           </div>
-                          <div class="row mt-12">
+                          <!-- <div class="row mt-12">
                             <div class="col-md-12">
                               <div class="row justify-content-end">
                                 <div class="col-sm-4">
-                                  <button type="submit" class="btn btn-primary me-4 waves-effect waves-light" name="subimt">Submit</button>
+                                  <button type="submit" class="btn btn-primary me-4 waves-effect waves-light" name="submit">Submit</button>
                                   <button type="reset" class="btn btn-outline-secondary waves-effect">Cancel</button>
                                 </div>
                               </div>
                             </div>
+                          </div> -->
+
+                          <div class="row mt-10">
+                              <div class="col-md-12">
+                                    <button type="submit"  data-bs-toggle="tooltip" data-bs-placement="left"  class="btn btn-success waves-effect waves-light d-flex float-right" name="submit">Submit</button>
+                                    <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                              </div>
                           </div>
+
                         </form>
                         </div>
                     </div>

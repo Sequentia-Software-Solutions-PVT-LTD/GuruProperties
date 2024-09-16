@@ -40,9 +40,9 @@
           left: 15px;
         }
 
-        thead, tbody, tfoot, tr, td, th {
+        /* thead, tbody, tfoot, tr, td, th {
           text-align: center;
-        }
+        } */
         .float-right {
           float: right;
         }
@@ -90,6 +90,23 @@
         .bg-dark-custom {
           background-color: #282a42 !important;
           color: #d7d8ee
+        }
+        /* .form-floating > .form-control:focus ~ label, .form-floating > .form-control:not(:placeholder-shown) ~ label, .form-floating > .form-control-plaintext ~ label, .form-floating > .form-select ~ label
+         */
+        .table > :not(caption) > * > *
+        {
+          color: #000000 !important;
+        }
+        .card-body
+        {
+          color: #000000 !important;
+        }
+        .form-label, .col-form-label
+        {
+          color: #000000 !important;
+        }
+        .ri-survey-line1 {
+          display: none;
         }
     </style>
     <style>
@@ -303,7 +320,7 @@
                                     <input type="hidden" id="long_signout" name="longitude_signout" />
                                     <input type="hidden" id="lat_signout" name="latitude_signout" />
                                     <input type="hidden" id="accuracy_signout" name="accuracy_signout" />
-                                    <button type="submit" name="logout" id="logout_button" class="btn btn-info login-btn">Submit Today's Report & Logout</button>
+                                    <button type="submit" name="logout" id="logout_button" class="btn btn-success">Submit Today's Report & Logout</button>
                                    </form>
                               </div>
                           </div>

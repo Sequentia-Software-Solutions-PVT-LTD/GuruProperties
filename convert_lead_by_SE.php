@@ -1,6 +1,6 @@
 <?php
   include_once ('dist/conf/checklogin.php'); 
-
+    
   // if ($_SESSION['login_id'] == "superadmin" || $_SESSION['login_id'] == "ASSISTANT" ){
   //   header('location:dashboard');
   // }
@@ -160,14 +160,14 @@
                             <div class="col-12">
                                 <div class="card mb-6 h-100">
                                     <div class="card-header header-elements">
-                                        <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
+                                        <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line1 ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
                                         <h5 class="card-action-title mb-0 underline">Lead Details</h5>
                                         
-                                        <div class="card-header-elements ms-sm-auto">
+                                        <!-- <div class="card-header-elements ms-sm-auto">
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-primary waves-effect waves-light" style="visibility:hidden;">Update</button>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     
                                     <hr class="m-0">
@@ -238,7 +238,7 @@
                                             <ul class="list-unstyled my-3 py-1" style="">
                                                     <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Property Name:</span> <span class="fw-bold"><?php echo $row_property['property_title']; ?></span></li>
                                                     <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span class="fw-bold"><?php echo $row_property['location']; ?></span></li>
-                                                    <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Google Location:</span>Latitude: <span class="fw-bold"><?php echo $row_property['google_location_lat']; ?> & </span>   &nbsp;Longitude: <span class="fw-bold"><?php echo $row_property['google_location_long']; ?> </span></li>
+                                                    <!-- <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Google Location:</span>Latitude: <span class="fw-bold"><?php //echo $row_property['google_location_lat']; ?> & </span>   &nbsp;Longitude: <span class="fw-bold"><?php //echo $row_property['google_location_long']; ?> </span></li> -->
                                                     <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Builder Name:</span> <span class="fw-bold"><?php echo $row_property['builder_name']; ?></span></li>
                                                     <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Tower Name:</span> <span class="fw-bold"><?php echo $row_tower['property_tower_name']; ?></span></li>
                                                     <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Builder Possession:</span> <span class="fw-bold"><?php echo $row_tower['builder_possession']; ?></span></li>
@@ -301,17 +301,17 @@
                     <div class="col-xl-6 col-lg-6">
                         <div class="row justify-content-between align-items-center">
                             <div class="col-12">
-                                <div class="card pb-5 h-100" >
+                                <div class="card h-100" >
 
                                     <form action="#" method="post" enctype="multipart/form-data">
                                             <input type="hidden" value="<?php echo $_REQUEST['assign_leads_sr_id']; ?>" name="assign_leads_sr_id">        
                                             <div class="card-header header-elements">
-                                                <h5 class="card-action-title mb-0"><i class="ri-survey-line ri-24px me-2"></i>Add Convert Details</h5>
-                                                <div class="card-header-elements ms-sm-auto">
+                                                <h5 class="card-action-title mb-0">Add Convert Details</h5>
+                                                <!-- <div class="card-header-elements ms-sm-auto">
                                                     <div class="btn-group">
                                                         <button type="submit" name="submit1" id="submit1"  class="btn btn-primary waves-effect waves-light">Update</button>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </div>
                                             <hr class="m-0">   
 
@@ -328,10 +328,10 @@
                                             <div class="col-md-12">
                                                 <div class="card-body demo-vertical-spacing demo-only-element">
                                                     <div class="d-flex justify-content-between  align-items-center">
-                                                        <h6 class="w-max-content mb-0">1. Property Title*</h6>
+                                                        <!-- <h6 class="w-max-content mb-0">1. Property Title*</h6> -->
                                                         <!-- <div class="mb-4"> -->
-                                                            <!-- <label class="form-label">Connection Status</label> -->
-                                                            <div class="d-flex gap-4" style="width:72%">
+                                                            <!-- <div class="d-flex gap-4" style="width:72%"> -->
+                                                            <div class="d-flex gap-4" style="width:100%">
                                                                     <!-- <div class="row mt-4"> -->
                                                                     <!-- <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Title</label> -->
                                                                     <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
@@ -357,9 +357,9 @@
                                             <div class="col-12">
                                                 <div class="card-body demo-vertical-spacing demo-only-element">
                                                     <div class="d-flex justify-content-between align-items-center">
-                                                        <!-- <h6 class="mt-0">2. Remark For Today's Visit*</h6> -->
-                                                        <h6 class="my-0">2. Property Tower*</h6>
-                                                        <div class="d-flex gap-4" style="width: 72%;">
+                                                        <!-- <h6 class="my-0">2. Property Tower*</h6> -->
+                                                        <!-- <div class="d-flex gap-4" style="width: 72%;"> -->
+                                                        <div class="d-flex gap-4" style="width: 100%;">
                                                             <div class="form-floating form-floating-outline" style="width: 100%;">
                                                                 <select id="towerDropdown" name="property_tower_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
                                                                     <option value="">Select Property Tower</option>
@@ -375,13 +375,14 @@
                                             <div class="col-12">
                                                 <div class="card-body demo-vertical-spacing demo-only-element">
                                                     <div class="d-flex justify-content-between align-items-center">
-                                                        <h6 class="my-0">3. Property Variants*</h6>
-                                                            <div class="d-flex gap-4" style="width: 72%;">
+                                                        <!-- <h6 class="my-0">3. Property Variants*</h6> -->
+                                                            <!-- <div class="d-flex gap-4" style="width: 72%;"> -->
+                                                            <div class="d-flex gap-4" style="width: 100%;">
                                                                 <div class="form-floating form-floating-outline" style="width: 100%;">
                                                                     <select id="variantDropdown" name="property_variants[]" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
-                                                                        <option value="">Select Variants</option>
+                                                                        <option value="">Select Property Variants</option>
                                                                     </select>
-                                                                    <label for="variantDropdown">Select Variants</label>
+                                                                    <label for="variantDropdown">Select Property Variants</label>
                                                                 </div>
                                                             </div>  
                                                     </div>      
@@ -399,8 +400,9 @@
                                                     
                                                     <div class="card-body demo-vertical-spacing demo-only-element">
                                                         <div class="d-flex justify-content-between align-items-center">
-                                                            <h6 class="my-0">1.  Agreement Value*</h6>
-                                                            <div class="d-flex gap-4" style="width: 72%;">
+                                                            <!-- <h6 class="my-0">1.  Agreement Value*</h6> -->
+                                                            <!-- <div class="d-flex gap-4" style="width: 72%;"> -->
+                                                            <div class="d-flex gap-4" style="width: 100%;">
                                                                 <div class="form-floating form-floating-outline" style="width: 100%;">
                                                                     <input class="form-control" type="number" placeholder="Agreement Value" id="stamp_duty" name="agreement_value">
                                                                     <label for="stamp_duty"> Agreement Value</label>
@@ -408,8 +410,9 @@
                                                             </div>  
                                                         </div>
                                                         <div class="d-flex justify-content-between align-items-center">
-                                                            <h6 class="my-0">2.  Registration *</h6>
-                                                            <div class="d-flex gap-4" style="width: 72%;">
+                                                            <!-- <h6 class="my-0">2.  Registration *</h6> -->
+                                                            <!-- <div class="d-flex gap-4" style="width: 72%;"> -->
+                                                            <div class="d-flex gap-4" style="width: 100%;">
                                                                 <div class="form-floating form-floating-outline" style="width: 100%;">
                                                                     <input class="form-control" type="number" placeholder="Registration" id="Registration" name="registrantion">
                                                                     <label for="Registration">Registratione</label>
@@ -417,8 +420,9 @@
                                                             </div>  
                                                         </div>      
                                                         <div class="d-flex justify-content-between align-items-center">
-                                                            <h6 class="my-0">3.  GST *</h6>
-                                                            <div class="d-flex gap-4" style="width: 72%;">
+                                                            <!-- <h6 class="my-0">3.  GST *</h6> -->
+                                                            <!-- <div class="d-flex gap-4" style="width: 72%;"> -->
+                                                            <div class="d-flex gap-4" style="width: 100%;">
                                                                 <div class="form-floating form-floating-outline" style="width: 100%;">
                                                                     <input class="form-control" type="number" placeholder="GST Amount" id="gst" name="gst">
                                                                     <label for="gst">GST Amount</label>
@@ -426,8 +430,9 @@
                                                             </div>  
                                                         </div>      
                                                         <div class="d-flex justify-content-between align-items-center">
-                                                            <h6 class="my-0">4.  Stamp Duty*</h6>
-                                                            <div class="d-flex gap-4" style="width: 72%;">
+                                                            <!-- <h6 class="my-0">4.  Stamp Duty*</h6> -->
+                                                            <!-- <div class="d-flex gap-4" style="width: 72%;"> -->
+                                                            <div class="d-flex gap-4" style="width: 100%;">
                                                                 <div class="form-floating form-floating-outline" style="width: 100%;">
                                                                     <input class="form-control" type="number" placeholder="Stamp Duty" id="stamp_duty" name="stamp_duty">
                                                                     <label for="stamp_duty">Stamp Duty Amount</label>
@@ -435,8 +440,9 @@
                                                             </div>  
                                                         </div>      
                                                         <div class="d-flex justify-content-between align-items-center">
-                                                            <h6 class="my-0">5.  Commission *</h6>
-                                                            <div class="d-flex gap-4" style="width: 72%;">
+                                                            <!-- <h6 class="my-0">5.  Commission *</h6> -->
+                                                            <!-- <div class="d-flex gap-4" style="width: 72%;"> -->
+                                                            <div class="d-flex gap-4" style="width: 100%;">
                                                                 <div class="form-floating form-floating-outline" style="width: 100%;">
                                                                     <input class="form-control" type="number" placeholder="Commission To Guru Properties" id="commission" name="commission">
                                                                     <label for="commission">Commission To Guru Properties</label>
@@ -444,8 +450,9 @@
                                                             </div>  
                                                         </div>      
                                                         <div class="d-flex justify-content-between align-items-center">
-                                                            <h6 class="my-0">6.  Quoted Price *</h6>
-                                                            <div class="d-flex gap-4" style="width: 72%;">
+                                                            <!-- <h6 class="my-0">6.  Quoted Price *</h6> -->
+                                                            <!-- <div class="d-flex gap-4" style="width: 72%;"> -->
+                                                            <div class="d-flex gap-4" style="width: 100%;">
                                                                 <div class="form-floating form-floating-outline" style="width: 100%;">
                                                                     <input class="form-control" type="number" placeholder="Quoted Price " id="quoted_price" name="quoted_price">
                                                                     <label for="commission">Commission To Guru Properties</label>
@@ -453,8 +460,9 @@
                                                             </div>  
                                                         </div>      
                                                         <div class="d-flex justify-content-between align-items-center">
-                                                            <h6 class="my-0">7.  Sale Price *</h6>
-                                                            <div class="d-flex gap-4" style="width: 72%;">
+                                                            <!-- <h6 class="my-0">7.  Sale Price *</h6> -->
+                                                            <!-- <div class="d-flex gap-4" style="width: 72%;"> -->
+                                                            <div class="d-flex gap-4" style="width: 100%;">
                                                                 <div class="form-floating form-floating-outline" style="width: 100%;">
                                                                     <input class="form-control" type="number" placeholder="Sale Price" id="sale_price" name="sale_price">
                                                                     <label for="sale_price">Sale Price</label>
@@ -462,8 +470,9 @@
                                                             </div>  
                                                         </div>      
                                                         <div class="d-flex justify-content-between align-items-center">
-                                                            <h6 class="my-0">8. Notes*</h6>
-                                                            <div class="d-flex gap-4" style="width: 72%;">
+                                                            <!-- <h6 class="my-0">8. Notes*</h6> -->
+                                                            <!-- <div class="d-flex gap-4" style="width: 72%;"> -->
+                                                            <div class="d-flex gap-4" style="width: 100%;">
                                                                 <div class="form-floating form-floating-outline" style="width: 100%;">
                                                                     <input class="form-control" type="text" placeholder="Enter your notes" id="notes" name="notes">
                                                                     <label for="notes">Enter your notes</label>
@@ -509,7 +518,8 @@
                                                 <div class="card-body demo-vertical-spacing demo-only-element">
                                                     <div class="d-flex justify-content-end align-items-center">
                                                         <span class="d-none" class="" id="latitude"></span><span class="d-none" id="longitude"></span>
-                                                        <!-- <button type="submit" name="submit1" id="submit1" class="btn btn-success">Submit</button> -->
+                                                        <button type="submit" name="submit1" id="submit1" class="btn btn-success">Submit</button>
+                                                        
                                                     </div>        
                                                 </div>    
                                             </div>

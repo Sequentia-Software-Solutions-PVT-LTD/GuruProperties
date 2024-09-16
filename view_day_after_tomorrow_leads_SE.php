@@ -1,6 +1,6 @@
 <?php
-  include_once ('dist/conf/checklogin.php'); 
-
+  // include_once ('dist/conf/checklogin.php'); 
+session_start();
   // if ($_SESSION['login_id'] == "superadmin" || $_SESSION['login_id'] == "ASSISTANT" ){
   //   header('location:dashboard');
   // }
@@ -15,6 +15,12 @@
 
   include ('dist/conf/db.php');
   $pdo = Database::connect();
+
+
+  $sqllocation = "select * from location ";
+  $qlocation = $pdo->prepare($sqllocation);
+  $qlocation->execute(array());      
+  $row_location = $qlocation->fetchAll(PDO::FETCH_ASSOC);
 
   if(isSet($_POST["suspend"]))
   { 
@@ -145,7 +151,16 @@
                                     <td><i class="ri-building-2-line ri-22px text-primary me-4"></i><span class="fw-medium"><?php echo $i; ?></span></td>
                                     <td><?php echo $row_leads["lead_name"]; ?></td>
                                     <!-- <td><?php //echo $row_emp["employee_name"]; ?></td> -->
-                                    <td><?php echo $row_leads["location"]; ?></td>
+                                    <td><?php                                    
+                                                $needle = $row_leads["location"];
+                                                $resultArray = array_filter($row_location, function ($v) use ($needle) {
+                                                    return $needle == $v['id']; 
+                                                });
+                                                if($needle == 1) $needle = 1;
+                                                else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                                if(isset($resultArray[$needle]["name"]) && $resultArray[$needle]["name"] != "") echo $resultArray[$needle]["name"]; 
+                                                else echo "Not Found";
+                                            ?></td>
                                     <td><?php echo $row_leads["phone_no"]; ?></td>
                                     <td><?php echo $row_leads["email_id"]; ?></td>
                                     <td><?php echo $row_leads["budget_range"]; ?></td>
@@ -175,7 +190,7 @@
                       <form id="enableOTPForm" class="row g-5"  action="suspend_property.php" method="POST">
                         <input type="hidden" name="id" id="id" value="" />
 
-                        <div class="col-12 d-flex flex-wrap justify-content-center gap-4 row-gap-4">
+                        <!-- <div class="col-12 d-flex flex-wrap justify-content-center gap-4 row-gap-4">
                           <button
                             type="reset"
                             class="btn btn-outline-secondary"
@@ -185,7 +200,15 @@
                           </button>
 
                           <button type="submit" name ="suspend" class="btn btn-danger">Suspend</button>
+                        </div> -->
+
+                        <div class="row d-flex mt-0">
+                            <div class="col-md-12">
+                                <button type="submit" id="submit1"  data-bs-toggle="tooltip" data-bs-placement="left"  class="btn btn-success waves-effect waves-light d-flex float-right" name="suspend">Submit</button>
+                                <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                            </div>
                         </div>
+
                       </form>
                     </div>
                   </div>

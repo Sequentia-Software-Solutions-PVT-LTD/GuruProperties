@@ -93,8 +93,6 @@ if (isset($_POST["submit"])) {
     }
 }
 ?>
-
-?>
 <!doctype html>
 
 <html
@@ -161,7 +159,16 @@ if (isset($_POST["submit"])) {
     <!-- *********** header******************  -->
     <?php include 'layout/header_js.php'; ?>
      <!-- *********** /header******************  -->
-    
+    <style>
+      .bs-stepper .step.active .bs-stepper-icon svg,
+      .bs-stepper .step.crossed .step-trigger .bs-stepper-icon svg {
+        fill: red !important;
+      }
+      .bs-stepper.wizard-icons .step.crossed .bs-stepper-label, .bs-stepper.wizard-icons .step.active .bs-stepper-label,
+      .bs-stepper .step.crossed + .line i {
+        color: red !important;
+      }
+    </style>
   </head>
 
   <body>
@@ -174,7 +181,7 @@ if (isset($_POST["submit"])) {
         <!-- Layout container -->
         <div class="layout-page">
           <?php include 'layout/header.php'; ?>
-
+          
           <!-- Content wrapper -->
           <div class="content-wrapper">
             <!-- Content -->
@@ -327,7 +334,7 @@ if (isset($_POST["submit"])) {
                                 <i class="ri-arrow-left-line me-sm-1"></i>
                                 <span class="align-middle d-sm-inline-block d-none">Previous</span>
                               </button>
-                              <button class="btn btn-primary btn-next">
+                              <button class="btn btn-success btn-next">
                                 <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span>
                                 <i class="ri-arrow-right-line"></i>
                               </button>
@@ -396,7 +403,7 @@ if (isset($_POST["submit"])) {
                                 <i class="ri-arrow-left-line me-sm-1"></i>
                                 <span class="align-middle d-sm-inline-block d-none">Previous</span>
                               </button>
-                              <button class="btn btn-primary btn-next">
+                              <button class="btn btn-success btn-next">
                                 <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span>
                                 <i class="ri-arrow-right-line"></i>
                               </button>
@@ -426,7 +433,7 @@ if (isset($_POST["submit"])) {
                                 <i class="ri-arrow-left-line me-sm-1"></i>
                                 <span class="align-middle d-sm-inline-block d-none">Previous</span>
                               </button>
-                              <button class="btn btn-primary btn-next">
+                              <button class="btn btn-success btn-next">
                                 <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span>
                                 <i class="ri-arrow-right-line"></i>
                               </button>
@@ -457,7 +464,7 @@ if (isset($_POST["submit"])) {
                                 <i class="ri-arrow-left-line me-sm-1"></i>
                                 <span class="align-middle d-sm-inline-block d-none">Previous</span>
                               </button>
-                              <button class="btn btn-primary btn-next">
+                              <button class="btn btn-success btn-next">
                                 <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span>
                                 <i class="ri-arrow-right-line"></i>
                               </button>
@@ -471,7 +478,7 @@ if (isset($_POST["submit"])) {
                             <li>Property Title:- <span id="show_property_title"></span> </li>
                             <li>Builder Name:- <span id="show_builder_name"></span></li>
                             <li>Property Location:- <span id="show_property_location_id"></span></li>
-                            <li>Google Location:- <b>Latitude</b>-<span id="show_google_location_lat"></span> <b>Longitude</b>-<span id="show_google_location_long"></span></li>
+                            <!-- <li>Google Location:- <b>Latitude</b>-<span id="show_google_location_lat"></span> <b>Longitude</b>-<span id="show_google_location_long"></span></li> -->
                           </ul>
                           <hr />
                           <p class="fw-medium mb-2">Other Details</p>
@@ -494,8 +501,8 @@ if (isset($_POST["submit"])) {
                               <i class="ri-arrow-left-line me-sm-1"></i>
                               <span class="align-middle d-sm-inline-block d-none">Previous</span>
                             </button>
-                            <!-- <button class="btn btn-primary btn-submit">Submit</button> -->
-                            <button type="submit" class="btn btn-primary me-4 waves-effect waves-light" name="submit">Submit</button>
+                            <!-- <button class="btn btn-success btn-submit">Submit</button> -->
+                            <button type="submit" class="btn btn-success me-4 waves-effect waves-light" name="submit">Submit</button>
                           </div>
                         </div>
                       </form>

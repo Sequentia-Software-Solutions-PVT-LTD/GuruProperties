@@ -10,6 +10,8 @@
   const flatpickrDate = document.querySelector('#flatpickr-date'),
     flatpickrTime = document.querySelector('#flatpickr-time'),
     flatpickrDateTime = document.querySelector('#flatpickr-datetime'),
+    flatpickrDateTime1 = document.querySelector('#flatpickr-datetime1'),
+    flatpickrDateTime2 = document.querySelector('#flatpickr-datetime2'),
     flatpickrMulti = document.querySelector('#flatpickr-multi'),
     flatpickrRange = document.querySelector('#flatpickr-range'),
     flatpickrInline = document.querySelector('#flatpickr-inline'),
@@ -34,6 +36,18 @@
   // Datetime
   if (flatpickrDateTime) {
     flatpickrDateTime.flatpickr({
+      enableTime: true,
+      dateFormat: 'Y-m-d H:i'
+    });
+  }
+  if (flatpickrDateTime1) {
+    flatpickrDateTime1.flatpickr({
+      enableTime: true,
+      dateFormat: 'Y-m-d H:i'
+    });
+  }
+  if (flatpickrDateTime2) {
+    flatpickrDateTime2.flatpickr({
       enableTime: true,
       dateFormat: 'Y-m-d H:i'
     });

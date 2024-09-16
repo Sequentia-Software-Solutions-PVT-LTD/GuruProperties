@@ -159,8 +159,8 @@ if (isset($_POST["submit"])) {
                             
                             <div class="col-md-6">
                               <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end mar-top1" for="formtabs-username"> Property Title</label>
-                                <div class="col-sm-9 form-floating form-floating-outline">
+                                <!-- <label class="col-sm-3 col-form-label text-sm-end mar-top1" for="formtabs-username"> Property Title</label> -->
+                                <div class="col-sm-12 form-floating form-floating-outline">
                                     <input type="text" name="property_title" id="formtabs-username" class="form-control" placeholder="Property Title" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required>
                                     <label for="formtabs-username"> Property Title</label>
                                 </div>
@@ -169,8 +169,8 @@ if (isset($_POST["submit"])) {
 
                             <div class="col-md-6">
                               <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end mar-top1" for="formtabs-username"> Builder Name</label>
-                                <div class="col-sm-9 form-floating form-floating-outline">
+                                <!-- <label class="col-sm-3 col-form-label text-sm-end mar-top1" for="formtabs-username"> Builder Name</label> -->
+                                <div class="col-sm-12 form-floating form-floating-outline">
                                   <input type="text" name="builder_name" id="formtabs-username" class="form-control" placeholder=" Builder Name" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required>
                                   <label for="formtabs-username"> Builder Name</label>
                                 </div>
@@ -179,8 +179,8 @@ if (isset($_POST["submit"])) {
 
                             <div class="col-md-6">
                               <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Property Location</label>
-                                <div class="col-sm-9 form-floating form-floating-outline">
+                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Property Location</label> -->
+                                <div class="col-sm-12 form-floating form-floating-outline">
                                     <!-- <input type="text" name="location" id="formtabs-username" class="form-control" placeholder="Location" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required> -->
                                     <select id="formtabs-location" name="property_location_id" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
                                         <option value="" data-select2-id="18">Select Property Location</option>
@@ -201,22 +201,22 @@ if (isset($_POST["submit"])) {
 
                             <div class="col-md-6">
                                 <div class="row">
-                                    <label class="col-sm-3 col-form-label text-sm-end" for="google-location-lat">Google Location</label>
-                                    <div class="col-sm-4 form-floating form-floating-outline">
+                                    <!-- <label class="col-sm-3 col-form-label text-sm-end" for="google-location-lat">Google Location</label> -->
+                                    <div class="col-sm-6 form-floating form-floating-outline">
                                         <!-- Latitude Input Field -->
                                         <input type="text" name="google_location_lat" id="google-location-lat" class="form-control" placeholder="Latitude" 
                                             pattern="^(\+|-)?(?:90(?:\.0+)?|\d{1,2}(?:\.\d+)?)$" 
                                             title="Please enter a valid latitude (-90 to 90)" 
                                             required>
-                                            <label for="google-location-lat">Latitude</label>
+                                            <label for="google-location-lat">Google Location Latitude</label>
                                     </div>
-                                    <div class="col-sm-5 form-floating form-floating-outline">
+                                    <div class="col-sm-6 form-floating form-floating-outline">
                                         <!-- Longitude Input Field -->
                                         <input type="text" name="google_location_long" id="google-location-long" class="form-control" placeholder="Longitude" 
                                             pattern="^(\+|-)?(?:180(?:\.0+)?|(?:1[0-7]\d|\d{1,2})(?:\.\d+)?)$" 
                                             title="Please enter a valid longitude (-180 to 180)" 
                                             required>
-                                        <label for="google-location-long">Longitude</label>
+                                        <label for="google-location-long">Google Location Longitude</label>
                                     </div>
                                 </div>
                             </div>
@@ -229,8 +229,8 @@ if (isset($_POST["submit"])) {
 
                             <div class="col-md-6">
                               <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Car Parking</label>
-                                <div class="col-sm-9 form-floating form-floating-outline">
+                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Car Parking</label> -->
+                                <div class="col-sm-12 form-floating form-floating-outline">
                                   <select id="defaultSelect" class="form-select" name="car_parking">
                                     <option>Select Parking Type</option>
                                     <option value="Open">Open</option>
@@ -244,8 +244,8 @@ if (isset($_POST["submit"])) {
 
                             <div class="col-md-6">
                               <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Furnishing </label>
-                                <div class="col-sm-9 form-floating form-floating-outline">
+                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Furnishing </label> -->
+                                <div class="col-sm-12 form-floating form-floating-outline">
                                   <select id="defaultSelect" class="form-select" name="furnishing">
                                     <option>Select Furnishing Type</option>
                                     <option value="Furnished">Furnished</option>
@@ -259,8 +259,8 @@ if (isset($_POST["submit"])) {
 
                             <div class="col-md-6">
                               <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Amenities  </label>
-                                <div class="col-sm-9 form-floating form-floating-outline">
+                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Amenities  </label> -->
+                                <div class="col-sm-12 form-floating form-floating-outline">
                                   <textarea class="form-control h-px-100" name="amenities" id="exampleFormControlTextarea1" placeholder="Write amenities here..."></textarea>
                                   <label for="formtabs-username"> Amenities  </label>
                                 </div>
@@ -269,8 +269,8 @@ if (isset($_POST["submit"])) {
 
                             <div class="col-md-6">
                               <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> USP  </label>
-                                <div class="col-sm-9 form-floating form-floating-outline">
+                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> USP  </label> -->
+                                <div class="col-sm-12 form-floating form-floating-outline">
                                   <textarea class="form-control h-px-100" name="USP" id="exampleFormControlTextarea1" placeholder="Write USP here..."></textarea>
                                   <label for="formtabs-username"> USP  </label>
                                 </div>
@@ -285,8 +285,8 @@ if (isset($_POST["submit"])) {
                                       <div class="col-md-6">
                                           <div class="row">
                                               <!-- <label class="col-sm-3 col-form-label text-sm-end" for="property-pdf-<?php echo $i; ?>"> PDF <?php echo $i; ?></label> -->
-                                              <div class="col-sm-9">
-                                                  <label for="property-pdf-<?php echo $i; ?>" class="form-label">Property PDF <?php echo $i; ?></label>
+                                              <div class="col-sm-12">
+                                                  <!-- <label for="property-pdf-<?php echo $i; ?>" class="form-label">Property PDF <?php echo $i; ?></label> -->
                                                   <input type="file" name="property_pdf_<?php echo $i; ?>" id="property-pdf-<?php echo $i; ?>" class="form-control" accept="application/pdf" >
                                                   <br></div>
                                               
@@ -301,8 +301,8 @@ if (isset($_POST["submit"])) {
                                       <div class="col-md-6">
                                           <div class="row">
                                               <!-- <label class="col-sm-3 col-form-label text-sm-end" for="property-video-<?php echo $i; ?>"> Video <?php echo $i; ?></label> -->
-                                              <div class="col-sm-9">
-                                                  <label for="property-video-<?php echo $i; ?>" class="form-label">Property Video <?php echo $i; ?></label>
+                                              <div class="col-sm-12">
+                                                  <!-- <label for="property-video-<?php echo $i; ?>" class="form-label">Property Video <?php echo $i; ?></label> -->
                                                   <input type="file" name="property_video_<?php echo $i; ?>" id="property-video-<?php echo $i; ?>" class="form-control" accept="video/*" >
                                                   <br>
                                               </div>
@@ -313,7 +313,7 @@ if (isset($_POST["submit"])) {
                             <!--  -->
 
                           </div>
-                          <div class="row mt-12">
+                          <!-- <div class="row mt-12">
                             <div class="col-md-12">
                               <div class="row justify-content-end">
                                 <div class="col-sm-4">
@@ -322,7 +322,15 @@ if (isset($_POST["submit"])) {
                                 </div>
                               </div>
                             </div>
+                          </div> -->
+
+                          <div class="row mt-10">
+                            <div class="col-md-12 justify-content-end text-end">
+                                  <button type="submit" class="btn btn-success me-4 waves-effect waves-light d-flex float-right" name="submit">Submit</button>
+                                  <button type="reset" class="btn btn-outline-secondary waves-effect  d-flex float-left">Cancel</button>
+                            </div>
                           </div>
+
                         </form>
                         </div>
                     </div>

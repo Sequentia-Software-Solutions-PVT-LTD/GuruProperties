@@ -8,7 +8,7 @@
   include ('dist/conf/db.php');
   $pdo = Database::connect();
 
-  if(isSet($_POST["subimt"]))
+  if(isSet($_POST["submit"]))
   { 
     $property_name_id = $_POST['property_name_id'];
     $property_tower_id = $_POST['property_tower_id'];
@@ -147,9 +147,9 @@
 
                           <div class="col-md-6">
                               <div class="row align-items-center justify-content-center">
-                                  <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Title</label>
+                                  <!-- <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Title</label> -->
                                   <!-- <label class="text-sm-end">Property Title</label> -->
-                                  <div class="col-sm-9 form-floating form-floating-outline">
+                                  <div class="col-sm-12 form-floating form-floating-outline">
                                       <select id="propertyDropdown" name="property_name_id" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" required>
                                           <option value="">Select Property Name</option>
                                           <?php
@@ -166,8 +166,8 @@
 
                           <div class="col-md-6">
                               <div class="row align-items-center justify-content-center">
-                                  <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Tower</label>
-                                  <div class="col-sm-9 form-floating form-floating-outline">
+                                  <!-- <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Tower</label> -->
+                                  <div class="col-sm-12 form-floating form-floating-outline">
                                       <select id="towerDropdown" name="property_tower_id" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" required>
                                           <option value="">Select Property Tower</option>
                                           <!-- Towers will be loaded here based on the selected property -->
@@ -185,61 +185,74 @@
                         <div class="divider pt-8">
                           <div class="divider-text">Available Variants</div>
                         </div>
-                        <div class="row justify-content-end">
-                        <div class="col-4 text-center">
-                              <button type="button" class="btn btn-primary mt-4" onclick="addVariant()">Click here to add more Variant inforamtion</button>
+                        <div class="mb-5">
+
+                            <div id="variants-container">
+                              <div class="row align-items-center justify-content-center g-4 variant-item" style="margin-top:10px;">
+                                
+                                <div class="col-md-4 form-floating form-floating-outline">
+                                  <!-- <label>Variants</label> -->
+                                  <!-- <input type="text" name="varients[]" class="form-control" placeholder="Variant" required> -->
+                                  <select id="formtabs-country"  name="varients[]" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
+                                    <option value="" data-select2-id="18">Select Variants</option>
+                                    <option value="1BHK">1 BHK</option>
+                                    <option value="1.5BHK">1.5 BHK</option>
+                                    <option value="2BHK">2 BHK</option>
+                                    <option value="2.5BHK">2.5 BHK</option>
+                                    <option value="3BHK">3 BHK</option>
+                                    <option value="3.5BHK">3.5 BHK</option>
+                                    <option value="4BHK">4 BHK</option>
+                                    <option value="4.5BHK">4.5 BHK</option>
+                                    <option value="5BHK">5 BHK</option>
+                                  </select>
+                                  
+                                  <label for="formtabs-country">Select Variants</label>
+                                </div>
+
+                                <div class="col-md-4 form-floating form-floating-outline">
+                                  <!-- <label>Area in sq ft</label> -->
+                                  <input type="text" name="area[]" id="area" class="form-control" placeholder="Area in sq ft" required>
+                                  
+                                  <label for="area">Area in sq ft</label>
+                                </div>
+
+                                <div class="col-md-4 form-floating form-floating-outline">
+                                  <!-- <label>Price quoted by builder</label> -->
+                                  <input type="text" name="price[]" id="price" class="form-control" placeholder="Price" required>
+                                  
+                                  <label for="price">Price quoted by builder</label>
+                                </div>
+                                
+                              </div>
                             </div>
+
                         </div>
-                        <div id="variants-container" style="margin-bottom: 80px;"">
-                          <div class="row align-items-center justify-content-center g-4 variant-item" style="margin-top:10px;">
-                            
-                            <div class="col-md-4 form-floating form-floating-outline">
-                              <!-- <label>Variants</label> -->
-                              <!-- <input type="text" name="varients[]" class="form-control" placeholder="Variant" required> -->
-                              <select id="formtabs-country"  name="varients[]" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
-                                <option value="" data-select2-id="18">Select Variants</option>
-                                <option value="1BHK">1 BHK</option>
-                                <option value="1.5BHK">1.5 BHK</option>
-                                <option value="2BHK">2 BHK</option>
-                                <option value="2.5BHK">2.5 BHK</option>
-                                <option value="3BHK">3 BHK</option>
-                                <option value="3.5BHK">3.5 BHK</option>
-                                <option value="4BHK">4 BHK</option>
-                                <option value="4.5BHK">4.5 BHK</option>
-                                <option value="5BHK">5 BHK</option>
-                              </select>
-                              
-                              <label for="formtabs-country">Select Variants</label>
-                            </div>
-
-                            <div class="col-md-4 form-floating form-floating-outline">
-                              <!-- <label>Area in sq ft</label> -->
-                              <input type="text" name="area[]" id="area" class="form-control" placeholder="Area in sq ft" required>
-                              
-                              <label for="area">Area in sq ft</label>
-                            </div>
-
-                            <div class="col-md-4 form-floating form-floating-outline">
-                              <!-- <label>Price quoted by builder</label> -->
-                              <input type="text" name="price[]" id="price" class="form-control" placeholder="Price" required>
-                              
-                              <label for="price">Price quoted by builder</label>
-                            </div>
-                            
-                          </div>
-                        </div>
-
                         
-                        <div class="row mt-4 border-top pt-5">
+                        <!-- <div class="row mt-4 border-top pt-5">
                           <div class="col-md-12">
                             <div class="text-right">
-                              <!-- <div class="col-sm-4"> -->
-                                <button type="submit" data-bs-toggle="tooltip" data-bs-placement="left"  title="Click here to add above information" class="btn btn-primary me-4 waves-effect waves-light" name="subimt">Submit</button>
+                                <button type="submit" data-bs-toggle="tooltip" data-bs-placement="left"  title="Click here to add above information" class="btn btn-primary me-4 waves-effect waves-light" name="submit">Submit</button>
                                 <button type="reset" class="btn btn-outline-secondary waves-effect float-left">Cancel</button>
-                              <!-- </div> -->
-                            <!-- </div> -->
+                            </div>
                           </div>
+                        </div> -->
+                        <div class="row justify-content-start">
+                            <div class="col-4">
+                              <!-- <button type="button" class="btn btn-primary mt-4" onclick="addVariant()">+ Add</button> -->
+                              <button type="button" onclick="addVariant();" class="btn btn-primary waves-effect waves-light repeater-add-btn">
+                                <i class="ri-add-line me-1"></i>
+                                <span class="align-middle">Add</span>
+                              </button>
+                            </div>
                         </div>
+
+                        <div class="row mt-10">
+                            <div class="col-md-12">
+                                  <button type="submit"  data-bs-toggle="tooltip" data-bs-placement="left"  class="btn btn-success me-4 waves-effect waves-light d-flex float-right" name="submit"  title="Click here to add above information">Submit</button>
+                                  <button type="reset" class="btn btn-outline-secondary waves-effect  d-flex float-left">Cancel</button>
+                            </div>
+                        </div>
+
                       </form>
                     </div>
                 </div>

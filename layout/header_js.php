@@ -25,6 +25,18 @@
 <link rel="stylesheet" href="assets/vendor/libs/typeahead-js/typeahead.css" />
 <link rel="stylesheet" href="assets/vendor/libs/apex-charts/apex-charts.css" />
 <link rel="stylesheet" href="assets/vendor/libs/swiper/swiper.css" />
+        
+<!-- Vendors CSS -->
+<link rel="stylesheet" href="assets/vendor/libs/select2/select2.css" />
+<link rel="stylesheet" href="assets/vendor/libs/tagify/tagify.css" />
+<link rel="stylesheet" href="assets/vendor/libs/bootstrap-select/bootstrap-select.css" />
+
+<!-- Vendors CSS -->
+<link rel="stylesheet" href="assets/vendor/libs/flatpickr/flatpickr.css" />
+<link rel="stylesheet" href="assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css" />
+<link rel="stylesheet" href="assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
+<link rel="stylesheet" href="assets/vendor/libs/jquery-timepicker/jquery-timepicker.css" />
+<link rel="stylesheet" href="assets/vendor/libs/pickr/pickr-themes.css" />
 
 <!-- Page CSS -->
 <link rel="stylesheet" href="assets/vendor/css/pages/cards-statistics.css" />
@@ -37,3 +49,5 @@
 <script src="assets/vendor/js/template-customizer.js"></script>
 <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
 <script src="assets/js/config.js"></script>
+
+<!-- --------------------------------------------------------------------------------------- -->

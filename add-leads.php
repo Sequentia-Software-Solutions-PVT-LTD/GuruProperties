@@ -429,16 +429,33 @@
                           </div>
                       </div>
 
-                      <div class="mb-0">
+                      <!-- <div class="mb-0">
                         <button type="button" onClick="addMore();"  class="btn btn-primary waves-effect waves-light repeater-add-btn">
                           <i class="ri-add-line me-1"></i>
                           <span class="align-middle">Add</span>
                         </button>
                         <button type="submit" name="submit" class="btn btn-success waves-effect waves-light" style="float: right;">
-                          <!-- <i class="ri-add-line me-1"></i> -->
                           <span class="align-middle">Submit</span>
                         </button>
+                      </div> -->
+
+                      <div class="row justify-content-start">
+                            <div class="col-4">
+                              <!-- <button type="button" class="btn btn-primary mt-4" onclick="addVariant()">+ Add</button> -->
+                              <button type="button" onclick="addMore();" class="btn btn-primary waves-effect waves-light repeater-add-btn">
+                                <i class="ri-add-line me-1"></i>
+                                <span class="align-middle">Add</span>
+                              </button>
+                            </div>
                       </div>
+
+                      <div class="row mt-10">
+                            <div class="col-md-12">
+                                  <button type="submit"  data-bs-toggle="tooltip" data-bs-placement="left"  class="btn btn-success me-4 waves-effect waves-light d-flex float-right" name="submit"  title="Click here to add above information">Submit</button>
+                                  <button type="reset" class="btn btn-outline-secondary waves-effect  d-flex float-left">Cancel</button>
+                            </div>
+                      </div>
+
                     </form>
                   </div>
                 </div>

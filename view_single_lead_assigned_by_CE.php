@@ -354,9 +354,9 @@
 	.modal-dialog {
 		width:900px !important;
 	}
-	.modal-body {
+	/* .modal-body {
 		height:483px !important;
-	}
+	} */
 
 	.modal-body-procedure {
 		height:200px !important;
@@ -408,7 +408,7 @@
                             <div class="col-12">
                                 <div class="card mb-6">
                                     <div class="card-header header-elements">
-                                        <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
+                                        <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line1 ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
                                         <h5 class="card-action-title mb-0 underline">Lead Details</h5>
                                         
                                         <!-- <div class="card-header-elements ms-sm-auto">
@@ -483,7 +483,7 @@
                                         <!-- <div class="col-md-12" style="text-align: right;">
                                             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#addNewCCModald"> Mark Dead </button>
                                             <a class="btn btn-success" href="convert_lead_by_SE.php?assign_leads_sr_id=<?php echo $row_assign["assign_leads_sr_id"]; ?>">Convert </a>
-                                            <a class="btn btn-success" href="trasnfer_lead_by_SE.php?assign_leads_sr_id=<?php echo $row_assign["assign_leads_sr_id"]; ?>">Transfer </a>
+                                            <a class="btn btn-success" href="transfer_lead_by_SE.php?assign_leads_sr_id=<?php echo $row_assign["assign_leads_sr_id"]; ?>">Transfer </a>
                                         </div> -->
                                         <!-- <ul class="list-unstyled my-3 py-1" style="">
                                             <a href="javascript:void(0)" class="btn btn-primary waves-effect waves-light">
@@ -504,7 +504,7 @@
                             <div class="col-12">
                                 <div class="card mb-6">
                                     <div class="card-header header-elements">
-                                        <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
+                                        <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line1 ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
                                         <h5 class="card-action-title mb-0 underline">Property Details</h5>
                                         
                                         <!-- <div class="card-header-elements ms-sm-auto">
@@ -543,7 +543,7 @@
                                         <ul class="list-unstyled my-3 py-1" style="">
                                                 <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Property Name:</span> <span class="fw-bold"><?php echo $row_property['property_title']; ?></span></li>
                                                 <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span class="fw-bold"><?php echo $row_property['location']; ?></span></li>
-                                                <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Google Location:</span>Latitude: <span class="fw-bold"><?php echo $row_property['google_location_lat']; ?> & </span>   &nbsp;Longitude: <span class="fw-bold"><?php echo $row_property['google_location_long']; ?> </span></li>
+                                                <!-- <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Google Location:</span>Latitude: <span class="fw-bold"><?php echo $row_property['google_location_lat']; ?> & </span>   &nbsp;Longitude: <span class="fw-bold"><?php echo $row_property['google_location_long']; ?> </span></li> -->
                                                 <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Builder Name:</span> <span class="fw-bold"><?php echo $row_property['builder_name']; ?></span></li>
                                                 <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Tower Name:</span> <span class="fw-bold"><?php echo $row_tower['property_tower_name']; ?></span></li>
                                                 <li class="d-flex align-items-center mb-4"><i class="ri-home-smile-line ri-24px"></i><span class="fw-medium mx-2">Builder Possession:</span> <span class="fw-bold"><?php echo $row_tower['builder_possession']; ?></span></li>
@@ -609,15 +609,15 @@
                                     <form action="#" method="post" enctype="multipart/form-data">
                                             <input type="hidden" value="<?php echo $_REQUEST['assign_leads_sr_id']; ?>" name="assign_leads_sr_id">        
                                             <div class="card-header header-elements">
-                                                <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
-                                                <h5 class="card-action-title mb-0"><i class="ri-survey-line ri-24px me-2"></i>Add Follow Up Details</h5>
+                                                <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line1 ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
+                                                <h5 class="card-action-title mb-0"><i class="ri-survey-line1 ri-24px me-2"></i>Add Follow Up Details</h5>
                                                 <div class="card-header-elements ms-sm-auto">
                                                     <div class="btn-group">
-                                                        <button type="submit" name="submit1" id="submit1"  class="btn btn-primary waves-effect waves-light">Update</button>
-                                                        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split waves-effect waves-light" data-bs-toggle="dropdown" data-bs-reference="parent" aria-expanded="false"></button>
+                                                        <button type="button" class="btn btn-success waves-effect waves-light">Update</button>
+                                                        <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split waves-effect waves-light" data-bs-toggle="dropdown" data-bs-reference="parent" aria-expanded="false"></button>
                                                         <div class="dropdown-menu" style="">
                                                             <a class="dropdown-item waves-effect" href="convert_lead_by_SE.php?assign_leads_sr_id=<?php echo $row_assign["assign_leads_sr_id"]; ?>">Convert</a>
-                                                            <a class="dropdown-item waves-effect" href="trasnfer_lead_by_SE.php?assign_leads_sr_id=<?php echo $row_assign["assign_leads_sr_id"]; ?>">Transfer</a>
+                                                            <a class="dropdown-item waves-effect" href="transfer_lead_by_SE.php?assign_leads_sr_id=<?php echo $row_assign["assign_leads_sr_id"]; ?>">Transfer</a>
                                                             <div class="dropdown-divider"></div>
                                                             <a class="dropdown-item waves-effect" data-bs-toggle="modal" data-bs-target="#addNewCCModald">Mark Dead</a>
                                                         </div>
@@ -630,10 +630,8 @@
                                             <div class="col-md-12 pt-6">
                                                 <div class="card-body demo-vertical-spacing demo-only-element">
                                                     <div class="d-flex justify-content-between  align-items-center">
-                                                        <h6 class="w-max-content mb-0">1. Visited*</h6>
-                                                        <!-- <div class="mb-4"> -->
-                                                            <!-- <label class="form-label">Connection Status</label> -->
-                                                            <div class="d-flex gap-4" style="width:72%">
+                                                        <h6 class="w-max-content mb-0">Is Customer Visited*</h6>
+                                                            <div class="d-flex gap-4" style="width:62%">
                                                                 <div class="form-check form-check-success mb-0">
                                                                     <input name="connection_status" class="form-check-input" type="radio" value="connected" id="customRadioSuccess" checked>
                                                                     <label class="form-check-label" for="customRadioSuccess">Yes</label>
@@ -651,9 +649,9 @@
                                             <div class="col-12">
                                                 <div class="card-body demo-vertical-spacing demo-only-element">
                                                     <div class="d-flex justify-content-between align-items-center">
-                                                        <!-- <h6 class="mt-0">2. Remark For Today's Visit*</h6> -->
-                                                        <h6 class="mt-0">2. Remark*</h6>
-                                                        <div class="d-flex gap-4" style="width: 72%;">
+                                                        <!-- <h6 class="mt-0">2. Remark*</h6> -->
+                                                        <!-- <div class="d-flex gap-4" style="width: 72%;"> -->
+                                                        <div class="d-flex gap-4" style="width: 100%;">
                                                             <div class="mb-6 mt-1 form-floating form-floating-outline" style="width: 100%;">
                                                                 <textarea class="form-control" type="text" placeholder="Enter your remark here.." id="today_visit_remark" name="today_visit_remark" required style="height: 100px;resize: none;"></textarea>
                                                                 <label for="today_visit_remark">Remark For Today's Visit</label>
@@ -667,11 +665,21 @@
                                             <div class="col-12">
                                                 <div class="card-body demo-vertical-spacing demo-only-element">
                                                     <div class="d-flex justify-content-between align-items-center">
-                                                        <h6 class="mt-0">3. Follow Up*</h6>
-                                                        <div class="d-flex gap-4" style="width: 72%;">
+                                                        <!-- <h6 class="mt-0">3. Follow Up*</h6> -->
+                                                        <!-- <div class="d-flex gap-4" style="width: 72%;"> -->
+                                                        <div class="d-flex gap-4" style="width: 100%;">
                                                             <div class="mb-4 form-floating form-floating-outline" style="width: 100%;">
-                                                            <input class="form-control" type="datetime-local" id="next_date" name="next_date" required>
-                                                            <label for="next_date">Next Follow Up Date Time</label>
+                                                            <!-- <input class="form-control" type="datetime-local" id="next_date" name="next_date" required>
+                                                            <label for="next_date">Next Follow Up Date Time</label> -->
+                                                            <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                                <input
+                                                                name="next_date"
+                                                                type="text"
+                                                                class="form-control"
+                                                                placeholder="YYYY-MM-DD HH:MM"
+                                                                id="flatpickr-datetime" />
+                                                                <label for="flatpickr-datetime">Next Follow Up Date Time</label>
+                                                                </div>
                                                         </div>  
                                                         </div>
                                                             
@@ -682,8 +690,9 @@
                                             <div class="col-12">
                                                 <div class="card-body demo-vertical-spacing demo-only-element">
                                                     <div class="d-flex justify-content-between align-items-center">
-                                                        <h6 class="mt-0">4. Lead Type*</h6>
-                                                        <div class="mb-4 d-flex gap-4" style="width: 72%;">
+                                                        <h6 class="mt-0">Lead Type*</h6>
+                                                        <div class="mb-4 d-flex gap-4" style="width: 78%;">
+                                                        <!-- <div class="mb-4 d-flex gap-4" style="width: 100%;"> -->
                                                             <label class="switch switch-danger">
                                                                 <input type="radio" class="switch-input" name="lead_type" checked="" value="hot">
                                                                 <span class="switch-toggle-slider">
@@ -718,10 +727,11 @@
                                             <div class="col-12">
                                                 <div class="card-body demo-vertical-spacing demo-only-element">
                                                     <div class="d-flex justify-content-between align-items-center">
-                                                        <h6 class="mt-0">5. Visit Photo*</h6>
-                                                        <div class="mb-4 d-flex align-items-center gap-2" style="width: 72%; height: 125px;">
+                                                        <!-- <h6 class="mt-0">5. Visit Photo*</h6> -->
+                                                        <!-- <div class="mb-4 d-flex align-items-center gap-2" style="width: 72%; height: 125px;"> -->
+                                                        <div class="mb-4 d-flex align-items-center gap-2" style="width: 100%; height: 125px;">
                                                             <div class="col-sm-6" style="padding-right: 0px;">
-                                                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addNewCCModal" onclick="startup();"> Take Photo </button>
+                                                                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addNewCCModal" onclick="startup();"> Take Photo </button>
                                                             </div>
                                                             <!-- Image display section -->
                                                             <div class="col-sm-6" style="padding: 0px;">
@@ -737,22 +747,106 @@
                                             <div class="col-12">
                                                 <div class="card-body demo-vertical-spacing demo-only-element">
                                                     <div class="d-flex justify-content-between align-items-center">
-                                                        <h6 class="my-0">5. Update For*</h6>
-                                                        <div class="d-flex align-items-center gap-2" style="width: 72%;">
+                                                        <!-- <h6 class="my-0">5. Update For*</h6> -->
+                                                        <!-- <div class="d-flex align-items-center gap-2" style="width: 72%;"> -->
+                                                        <div class="d-flex align-items-center gap-2" style="width: 100%;">
                                                             <!-- <label for="next_date" class="form-label">Select One Option</label> -->
                                                             <div class="form-floating form-floating-outline" id="selectBox1" style="width: 100%;">
-                                                                <select id="roleDropdown" name="followup_or_another_property" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
+                                                                <select id="roleDropdown" name="followup_or_another_property" class="form-select " data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
                                                                     <option value="" data-select2-id="18">Select One</option>
-                                                                    <option value="Follow Up">Follow Up</option>
-                                                                    <option value="Another Property">Another Property</option>
+                                                                    <option value="Follow Up">Follow Up <span class="text-muted">(For Same Property)</span></option>
+                                                                    <option value="Another Property">Another Property<span class="text-muted">(For New Property Visit)</span></option>
                                                                 </select>
                                                                 <label for="roleDropdown">Select One Option</label>
                                                             </div>
                                                         </div>        
                                                     </div>
                                                 </div>    
-                                            </div>                                        
-                                        
+                                            </div>
+                                            <div id="property_details_box" style="display:none;">
+                                                    <div class="col-12" >
+                                                        <div class="card-body demo-vertical-spacing demo-only-element">
+                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                <h5 class="card-header pb-0" style="padding-top: 0px;"> Property Details </h5>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                                
+                                                    <div class="col-md-12">
+                                                        <div class="card-body demo-vertical-spacing demo-only-element">
+                                                            <div class="col-sm-12  form-floating form-floating-outline">
+                                                                <select id="propertyDropdown" name="property_name_id" class="form-select">
+                                                                    <option value="">Select Property Name</option>
+                                                                    <?php
+                                                                        $sql = "SELECT * FROM property_name where status = 'Active'";
+                                                                        foreach ($pdo->query($sql) as $row) { 
+                                                                            echo '<option value="'.$row['property_name_id'].'">'.$row['property_title'].'</option>';
+                                                                        }
+                                                                    ?>
+                                                                </select>
+                                                                <label for="propertyDropdown">Property</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-12">
+                                                        <div class="card-body demo-vertical-spacing demo-only-element">
+                                                            <div class="col-sm-12 form-floating form-floating-outline">
+                                                                <select id="towerDropdown" name="property_tower_id" class="form-select" data-allow-clear="true" required>
+                                                                    <option value="">Select Property Tower</option>
+                                                                </select>
+                                                                <label for="towerDropdown">Property Tower</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="col-md-12">
+                                                        <div class="card-body demo-vertical-spacing demo-only-element">
+                                                            <div class="col-sm-12 form-floating form-floating-outline">
+                                                                <select id="variantDropdown" name="property_variants[]" class="form-select" data-allow-clear="true">
+                                                                    <option value="">Select Variants</option>
+                                                                </select>
+                                                                <label for="variantDropdown">Variants</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-12">
+                                                        <div class="card-body demo-vertical-spacing demo-only-element">
+                                                            <div class="col-sm-12 form-floating form-floating-outline" id="reasonBoxvisit">
+                                                                <!-- <input class="form-control" type="datetime-local" id="next_date_visit" name="next_date_visit">
+                                                                <label for="next_date_visit">Visit Date Time</label> -->
+                                                                <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                                <input
+                                                                name="next_date_visit"
+                                                                type="text"
+                                                                class="form-control"
+                                                                placeholder="YYYY-MM-DD HH:MM"
+                                                                id="flatpickr-datetime" />
+                                                                <label for="flatpickr-datetime">Visit Date-Time</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                            <div id="reasonBoxfollowup" style="display:none;">
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <div class="col-sm-12 form-floating form-floating-outline" >
+                                                        <!-- <input class="form-control" type="datetime-local" id="next_date_followup" name="next_date_followup" required>
+                                                        <label for="next_date_followup">Next Follow Up Date Time</label> -->
+                                                        <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                        <input
+                                                        name="next_date_followup"
+                                                        type="text"
+                                                        class="form-control"
+                                                        placeholder="YYYY-MM-DD HH:MM"
+                                                        id="flatpickr-datetime1" />
+                                                        <label for="flatpickr-datetime1">Visit Date-Time</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <div class="col-sm-12 text-center">
                                                     <div class="form-floating form-floating-outline">
                                                         <input class="form-control" type="hidden" id="lat" readonly name="latitude">
@@ -785,12 +879,15 @@
 
                                             <div class="col-sm-12 text-right">
                                                 <div class="card-body demo-vertical-spacing demo-only-element">
-                                                    <div class="d-flex justify-content-end align-items-center">
+                                                    <div class="pb-10 justify-content-end align-items-center">
                                                         <span class="d-none" class="" id="latitude"></span><span class="d-none" id="longitude"></span>
                                                         <!-- <button type="submit" name="submit1" id="submit1" class="btn btn-success">Submit</button> -->
+                                                        <button type="submit"  data-bs-toggle="tooltip" data-bs-placement="left"  class="btn btn-success waves-effect waves-light d-flex float-right" name="submit1" id="submit1">Submit</button>
+                                                        <button type="reset" class="btn btn-outline-secondary float-left" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
                                                     </div>        
                                                 </div>    
                                             </div>
+                                            
                                     </form>
 
                                 </div>
@@ -807,8 +904,8 @@
                             <div class="card-body">
 
                                 <?php
-                                $leads_id = $leads_id_timeline;
-                                include_once("timeline_showcase.php");
+                                    $leads_id = $leads_id_timeline;
+                                    include_once("timeline_showcase.php");
                                 ?>
 
                             </div>
@@ -867,7 +964,7 @@
 
               <!-- Add New Credit Card Modal -->
               <div class="modal fade" id="addNewCCModald" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+                <div class="modal-dialog modal-dialog-centered1 modal-simple">
                   <div class="modal-content">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     <div class="modal-body p-0">
@@ -886,15 +983,25 @@
                             </div> -->
 
                             <div id="reasonBox12" class="mb-4" style="">
-                                <label for="dead_reason" class="form-label">Remark For Mark Dead</label>
-                                <textarea class="form-control" id="dead_reason" placeholder="Write a remark here..." name="dead_reason"></textarea>
+                                <div class="col-sm-12 form-floating form-floating-outline">
+                                    <textarea class="form-control" id="dead_reason" placeholder="Write a remark here..." name="dead_reason" style="height: 100px;"></textarea>
+                                    <label for="dead_reason" class="form-label">Remark For Mark Dead</label>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="col-12 d-flex flex-wrap justify-content-center gap-4 row-gap-4">
+                        <!-- <div class="col-12 d-flex flex-wrap justify-content-center gap-4 row-gap-4">
                           <button type="submit" name="submit_dead" class="btn btn-primary">Submit</button>
                           <button type="reset"  class="btn btn-outline-secondary btn-reset" data-bs-dismiss="modal" aria-label="Close"> Cancel </button>
+                        </div> -->
+
+                        <div class="row d-flex mt-0" style="padding-right: 0px;">
+                            <div class="col-md-12" style="padding-right: 0px;">
+                                <button type="submit"  data-bs-toggle="tooltip" data-bs-placement="left"  class="btn btn-success waves-effect waves-light d-flex float-right" name="submit_dead">Submit</button>
+                                <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                            </div>
                         </div>
+                        
                       </form>
                     </div>
                   </div>
@@ -931,9 +1038,9 @@
       <!-- Footer -->
         <?php include 'layout/footer_js.php'; ?>
       <!-- / Footer -->
-
+<!-- 
       <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-      <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
 
       <script>
             // In your Javascript (external .js resource or <script> tag)
@@ -942,72 +1049,72 @@
             });
       </script>
       <script>
-        $(document).ready(function() {
-    $('#roleDropdown').change(function() {
-        var selectedRole = $(this).val();
-        var prefix = '';
+        // $(document).ready(function() {
+        //     $('#roleDropdown').change(function() {
+        //         console.log("test");
+        //         var selectedRole = $(this).val();
+        //         var prefix = '';
+        //         if (selectedRole === 'CUSTOMER EXECUTIVE') {
+        //             prefix = 'CE';
+        //         } else if (selectedRole === 'SALES EXECUTIVE') {
+        //             prefix = 'SE';
+        //         }
 
-        if (selectedRole === 'CUSTOMER EXECUTIVE') {
-            prefix = 'CE';
-        } else if (selectedRole === 'SALES EXECUTIVE') {
-            prefix = 'SE';
-        }
-
-        // Set the prefix in the input field
-        $('#prefixInput').val(prefix + '-');
-    });
-});
+        //         // Set the prefix in the input field
+        //         $('#prefixInput').val(prefix + '-');
+        //     });
+        // });
       </script>
 
 <script>
-    function toggleReasonBox12() {
-        const checkbox12 = document.getElementById('customCheckDanger12');
-        const reasonBox12 = document.getElementById('reasonBox12');
-        // const reasonBox = document.getElementById('reasonBox');
+    // function toggleReasonBox12() {
+    //     const checkbox12 = document.getElementById('customCheckDanger12');
+    //     const reasonBox12 = document.getElementById('reasonBox12');
+    //     // const reasonBox = document.getElementById('reasonBox');
 
-        if (checkbox12.checked) {
-            reasonBox12.style.display = 'block';
-        } else {
-            reasonBox12.style.display = 'none';
-        }
-    }
-    // Initially hide the reason box if the checkbox is not checked
-    toggleReasonBox12();
+    //     if (checkbox12.checked) {
+    //         reasonBox12.style.display = 'block';
+    //     } else {
+    //         reasonBox12.style.display = 'none';
+    //     }
+    // }
+    // // Initially hide the reason box if the checkbox is not checked
+    // toggleReasonBox12();
 </script>
 
 <script>
-    function toggleReasonBox() {
-        const checkbox = document.getElementById('customCheckDanger');
-        const reasonBox = document.getElementById('reasonBox');
-        // const reasonBox = document.getElementById('reasonBox');
+    // function toggleReasonBox() {
+    //     const checkbox = document.getElementById('customCheckDanger');
+    //     const reasonBox = document.getElementById('reasonBox');
+    //     // const reasonBox = document.getElementById('reasonBox');
 
-        if (checkbox.checked) {
-            reasonBox.style.display = 'block';
-        } else {
-            reasonBox.style.display = 'none';
-        }
-    }
-    // Initially hide the reason box if the checkbox is not checked
-    toggleReasonBox();
+    //     if (checkbox.checked) {
+    //         reasonBox.style.display = 'block';
+    //     } else {
+    //         reasonBox.style.display = 'none';
+    //     }
+    // }
+    // // Initially hide the reason box if the checkbox is not checked
+    // toggleReasonBox();
 </script>
 
 <script>
-    function toggleReasonBox1() {
-        const checkbox1 = document.getElementById('customCheckDanger1');
-        // const reasonBox1 = document.getElementById('reasonBox1');
-        // const reasonBox1 = document.getElementById('reasonBox1');
-        const selectBox1 = document.getElementById('selectBox1');
+    // function toggleReasonBox1() {
+    //     const checkbox1 = document.getElementById('customCheckDanger1');
+    //     // const reasonBox1 = document.getElementById('reasonBox1');
+    //     // const reasonBox1 = document.getElementById('reasonBox1');
+    //     const selectBox1 = document.getElementById('selectBox1');
 
-        if (checkbox1.checked) {
-            // reasonBox1.style.display = 'block';
-            selectBox1.style.display = 'block';
-        } else {
-            // reasonBox1.style.display = 'none';
-            selectBox1.style.display = 'none';
-        }
-    }
-    // Initially hide the reason box if the checkbox is not checked
-    toggleReasonBox1();
+    //     if (checkbox1.checked) {
+    //         // reasonBox1.style.display = 'block';
+    //         selectBox1.style.display = 'block';
+    //     } else {
+    //         // reasonBox1.style.display = 'none';
+    //         selectBox1.style.display = 'none';
+    //     }
+    // }
+    // // Initially hide the reason box if the checkbox is not checked
+    // toggleReasonBox1();
 </script>
 
 <script>

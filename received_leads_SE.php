@@ -181,7 +181,7 @@
                                     <td><?php echo $row_emp["employee_name"]; ?></td>
                                     <!-- <td><?php echo $row_leads["budget_range"]; ?></td> -->
                                     <td>
-                                      <!-- trasnfer_lead_by_SE.php -->
+                                      <!-- transfer_lead_by_SE.php -->
                                         <!-- <a class="dropdown-item waves-effect" href="view_single_lead_assigned_by_CE.php?assign_leads_sr_id=<?php echo $row1["assign_leads_sr_id"]; ?>"><i class="ri-eye-line me-1"></i> </a> -->
                                         <!-- <a class="dropdown-item waves-effect" href="view_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-eye-line me-1"></i> </a> -->
                                     </td>

@@ -13,7 +13,7 @@
   error_reporting(E_ALL);
   $isError = false;
 
-  if(isSet($_POST["subimt"]))
+  if(isSet($_POST["submit"]))
   { 
    
 
@@ -170,7 +170,7 @@
                     <h5 class="card-header">Add Employee</h5>
                     <div class="card-body demo-vertical-spacing demo-only-element">
                         <div class="align-items-center1 justify-content-center h-px-260">
-                        <form class="card-body" action="#" method="post" enctype="multipart/form-data">
+                        <form action="#" method="post" enctype="multipart/form-data">
                           <div class="row g-4">
                             
                             <div class="col-md-6">
@@ -254,34 +254,36 @@
 
                                 </div>
 
-                                <div class="col-md-3 col-sm-6">
+                                <div class="col-md-1 col-sm-6 align-self-center">
                                   <small class="text-light fw-medium">Select Avatar</small>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
                                   <div class="d-flex avatar-group my-4">
                                     <!-- Avatar 1 -->
-                                    <div class="avatar">
+                                    <div class="avatar d-flex" style="width: 100px;">
                                       <input type="radio" name="avatar" id="avatar1" value="5.png" required>
-                                      <label for="avatar1">
+                                      <label for="avatar1" style="margin-left: 10px;">
                                         <img src="assets/img/avatars/5.png" alt="Avatar 1" class="rounded-circle pull-up" style="cursor:pointer;">
                                       </label>
                                     </div>
                                     <!-- Avatar 2 -->
-                                    <div class="avatar">
+                                    <div class="avatar d-flex" style="width: 100px;">
                                       <input type="radio" name="avatar" id="avatar2" value="12.png" required>
-                                      <label for="avatar2">
+                                      <label for="avatar2" style="margin-left: 10px;">
                                         <img src="assets/img/avatars/12.png" alt="Avatar 2" class="rounded-circle pull-up" style="cursor:pointer;">
                                       </label>
                                     </div>
                                     <!-- Avatar 3 -->
-                                    <div class="avatar">
+                                    <div class="avatar d-flex" style="width: 100px;">
                                       <input type="radio" name="avatar" id="avatar3" value="6.png" required>
-                                      <label for="avatar3">
+                                      <label for="avatar3" style="margin-left: 10px;">
                                         <img src="assets/img/avatars/6.png" alt="Avatar 3" class="rounded-circle pull-up" style="cursor:pointer;">
                                       </label>
                                     </div>
                                     <!-- Avatar 4 -->
-                                    <div class="avatar">
+                                    <div class="avatar d-flex" style="width: 100px;">
                                       <input type="radio" name="avatar" id="avatar4" value="10.png" required>
-                                      <label for="avatar4">
+                                      <label for="avatar4" style="margin-left: 10px;">
                                         <img src="assets/img/avatars/10.png" alt="Avatar 4" class="rounded-circle pull-up" style="cursor:pointer;">
                                       </label>
                                     </div>
@@ -292,12 +294,8 @@
                           </div>
                           <div class="row mt-10">
                             <div class="col-md-12 justify-content-end text-end">
-                              <!-- <div class="row justify-content-end"> -->
-                                <!-- <div class="col-sm-4"> -->
-                                  <button type="submit" class="btn btn-primary me-4 waves-effect waves-light" name="subimt">Submit</button>
-                                  <button type="reset" class="btn btn-outline-secondary waves-effect">Cancel</button>
-                                <!-- </div> -->
-                              <!-- </div> -->
+                                  <button type="submit" class="btn btn-success me-4 waves-effect waves-light d-flex float-right" name="submit">Submit</button>
+                                  <button type="reset" class="btn btn-outline-secondary waves-effect  d-flex float-left">Cancel</button>
                             </div>
                           </div>
 

@@ -113,7 +113,7 @@
 					"suspend_employee",
 					"suspend_property",
 					"timeline",
-					"trasnfer_lead_by_SE",
+					"transfer_lead_by_SE",
 					"upcomming_leads_SE",
 					"view-employees",
 					"view-properties",

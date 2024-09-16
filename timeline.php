@@ -769,10 +769,32 @@
                         <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
                           <h6 class="card-title mb-0"><?php if($employeeName != "" ) echo $roleName." - ".$employeeName; else echo $roleName; ?></h6>
                           <div class="meta">
-                            <span class="badge rounded-pill bg-label-primary"><?php echo $variant['status']; ?></span>
-                            <span class="badge rounded-pill bg-label-success"><?php echo $variant['transfer_status']; ?></span>
+                            <?php
+                                if($variant["status"] == "Active")
+                                echo '<span class="badge rounded-pill bg-label-danger">';
+                                else if($variant["status"] == "Followup")
+                                echo '<span class="badge rounded-pill bg-label-info">';
+                                else if($variant["status"] == "Assigned")
+                                echo '<span class="badge rounded-pill bg-label-primary">';
+                                else if($variant["status"] == "Transferred")
+                                echo '<span class="badge rounded-pill bg-label-warning">';
+                                else if($variant["status"] == "From SE")
+                                echo '<span class="badge rounded-pill bg-label-warning">';
+                                else if($variant["status"] == "From CE")
+                                echo '<span class="badge rounded-pill bg-label-warning">';
+                                else if($variant["status"] == "Dead")
+                                echo '<span class="badge rounded-pill bg-label-dark">';
+                                else if($variant["status"] == "Converted")
+                                echo '<span class="badge rounded-pill bg-label-success">';
+                                else
+                                echo '<span class="badge rounded-pill bg-label-secondary">';
+                                echo $variant["status"]; 
+                                echo '</span>';
+                            ?>
+                            <!-- <span class="badge rounded-pill bg-label-primary"><?php echo $variant['status']; ?></span> -->
+                            <!-- <span class="badge rounded-pill bg-label-success"><?php echo $variant['transfer_status']; ?></span> -->
                             <?php if(isset($data['transfer_employee_type'])) { ?>
-                            <span class="badge rounded-pill bg-label-info"><?php echo $data['transfer_employee_type']; ?></span>
+                            <!-- <span class="badge rounded-pill bg-label-info"><?php echo $data['transfer_employee_type']; ?></span> -->
                             <?php } ?>
                           </div>
                         </div>

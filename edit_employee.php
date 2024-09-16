@@ -17,7 +17,7 @@
 //   print_R($employee_id);
 //   exit();
 
-  if(isSet($_POST["subimt"]))
+  if(isSet($_POST["submit"]))
   { 
     // echo "<pre>";
     // print_R($_POST);
@@ -140,8 +140,8 @@
                           <div class="row g-4">
                           <div class="col-md-6">
                               <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-country">Role</label>
-                                <div class="col-sm-9 form-floating form-floating-outline">
+                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-country">Role</label> -->
+                                <div class="col-sm-12 form-floating form-floating-outline">
                                   <!-- <div class="position-relative"> -->
                                     <select id="formtabs-country"  name="login_role" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true">
                                       <option value="" data-select2-id="18">Select Employee Role</option>
@@ -157,8 +157,8 @@
                             </div>
                             <div class="col-md-6">
                               <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Name</label>
-                                <div class="col-sm-9 form-floating form-floating-outline">
+                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Name</label> -->
+                                <div class="col-sm-12 form-floating form-floating-outline">
                                   <input type="text" name="employee_name" id="formtabs-username" class="form-control" value="<?php echo $row_d['employee_name']; ?>">
                                   
                                   <label for="formtabs-username">Name</label>
@@ -167,8 +167,8 @@
                             </div>
                             <div class="col-md-6">
                               <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-email">Email</label>
-                                <div class="col-sm-9 form-floating form-floating-outline">
+                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-email">Email</label> -->
+                                <div class="col-sm-12 form-floating form-floating-outline">
                                   <!-- <div class="input-group input-group-merge"> -->
                                     <input type="text"  name="email_id"  id="formtabs-email" class="form-control" value="<?php echo $row_d['email_id']; ?>" aria-label="john.doe" aria-describedby="formtabs-email2">
                                     <!-- <span class="input-group-text" id="formtabs-email2">@example.com</span> -->
@@ -180,8 +180,8 @@
                             </div>
                             <div class="col-md-6">
                               <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-phone">Phone No</label>
-                                <div class="col-sm-9 form-floating form-floating-outline">
+                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-phone">Phone No</label> -->
+                                <div class="col-sm-12 form-floating form-floating-outline">
                                   <input type="text" name="cell_no"  id="formtabs-phone" class="form-control phone-mask" value="<?php echo $row_d['cell_no']; ?>" aria-label="658 799 8941">
                                   
                                   <label for="formtabs-phone">Phone No</label>
@@ -190,8 +190,8 @@
                             </div>
                             <div class="col-md-6" style="display:none;">
                               <div class="row">
-                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username">User ID</label>
-                                <div class="col-sm-9 form-floating form-floating-outline">
+                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username">User ID</label> -->
+                                <div class="col-sm-12 form-floating form-floating-outline">
                                   <input type="text" name="user_id"  id="formtabs-username" class="form-control" value="<?php echo $row_d['user_id']; ?>">
                                   
                                   <label for="formtabs-username">User ID</label>
@@ -201,8 +201,8 @@
 
                             <div class="col-md-6">
                               <div class="row form-password-toggle">
-                                <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-password">Password</label>
-                                <div class="col-sm-9 form-floating form-floating-outline">
+                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-password">Password</label> -->
+                                <div class="col-sm-12 form-floating form-floating-outline">
                                   <!-- <div class="input-group input-group-merge"> -->
                                     <input type="password" name="password"  id="formtabs-password" class="form-control" placeholder="*********" aria-describedby="formtabs-password2">
                                     <!-- <span class="input-group-text cursor-pointer" id="formtabs-password2"><i class="ri-eye-off-line"></i></span> -->
@@ -215,8 +215,8 @@
 
                             <div class="col-md-6">
                                 <div class="row form-password-toggle">
-                                    <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-password">Property Location</label>
-                                    <div class="col-sm-9 form-floating form-floating-outline">
+                                    <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-password">Property Location</label> -->
+                                    <div class="col-sm-12 form-floating form-floating-outline">
                                         <!-- <div class="input-group input-group-merge"> -->
                                             <select id="formtabs-location" name="_employeelocation" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
                                                 <option value="" data-select2-id="18">Select Property Location</option>
@@ -240,16 +240,25 @@
                           
 
                           </div>
-                          <div class="row mt-12">
+                          <!-- <div class="row mt-12">
                             <div class="col-md-12" style="justify-content: flex-end;display: flex;">
-                              <!-- <div class="row justify-content-end"> -->
-                                <!-- <div class="col-sm-4"> -->
-                                  <button type="submit" class="btn btn-success me-4 waves-effect waves-light" name="subimt">Submit</button>
+                              <div class="row justify-content-end">
+                                <div class="col-sm-4">
+                                  <button type="submit" class="btn btn-success me-4 waves-effect waves-light" name="submit">Submit</button>
                                   <button type="reset" class="btn btn-outline-secondary waves-effect">Cancel</button>
-                                <!-- </div> -->
-                              <!-- </div> -->
+                                </div>
+                              </div>
                             </div>
+                          </div> -->
+
+                          <div class="row mt-12 pt-4">
+                              <div class="col-md-12">
+                                    <button type="submit"  data-bs-toggle="tooltip" data-bs-placement="left"  class="btn btn-success waves-effect waves-light d-flex float-right" name="submit">Submit</button>
+                                    <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                              </div>
                           </div>
+
+
                         </form>
                         </div>
                     </div>

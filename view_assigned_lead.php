@@ -194,7 +194,7 @@
                             <div class="col-12">
                                 <div class="card mb-6">
                                 <div class="card-header header-elements">
-                                        <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
+                                        <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line1 ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
                                         <h5 class="card-action-title mb-0 underline">Lead Details</h5>
                                         
                                         <div class="card-header-elements ms-sm-auto">
@@ -264,12 +264,12 @@
                                 <div class="card mb-6" >
 
                                     <div class="card-header header-elements">
-                                        <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
-                                        <h5 class="card-action-title mb-0"><i class="ri-survey-line ri-24px me-2"></i>Add Follow Up Details</h5>
+                                        <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line1 ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
+                                        <h5 class="card-action-title mb-0"><i class="ri-survey-line1 ri-24px me-2"></i>Add Follow Up Details</h5>
                                         <div class="card-header-elements ms-sm-auto">
                                             <div class="btn-group">
-                                                <button type="button" class="btn btn-primary waves-effect waves-light">Update</button>
-                                                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split waves-effect waves-light" data-bs-toggle="dropdown" data-bs-reference="parent" aria-expanded="false"></button>
+                                                <button type="button" class="btn btn-success waves-effect waves-light">Update</button>
+                                                <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split waves-effect waves-light" data-bs-toggle="dropdown" data-bs-reference="parent" aria-expanded="false"></button>
                                                 <div class="dropdown-menu" style="">
                                                     <a class="dropdown-item waves-effect" href="view_leads_for_assigned_SE.php?assign_leads_id=<?php echo $row_assign["assign_leads_id"]; ?>">Assign Lead</a>
                                                     <a class="dropdown-item waves-effect" href="transfer_assigned_lead.php?assign_leads_id=<?php echo $row_assign["assign_leads_id"]; ?>">Transfer Lead</a>
@@ -287,16 +287,16 @@
                                         
                                         <div class="col-md-12 pt-6">
                                             <div class="card-body demo-vertical-spacing demo-only-element">
-                                                <div class="d-flex justify-content-between  align-items-center">
-                                                    <h6 class="w-max-content mb-0">1. Connection Status*</h6>
+                                                <div class="d-flex align-items-center">
+                                                    <h6 class="w-max-content mb-0">Connection Status*</h6>
                                                     <!-- <div class="mb-4"> -->
                                                         <!-- <label class="form-label">Connection Status</label> -->
-                                                        <div class="d-flex gap-4 ml-6">
-                                                            <div class="form-check form-check-inline form-check-success">
+                                                        <div  style="margin-left: 20px;">
+                                                            <div class="form-check form-check-inline form-check-success mb-0 ">
                                                                 <input name="connection_status" class="form-check-input" type="radio" value="connected" id="customRadioSuccess" checked>
                                                                 <label class="form-check-label" for="customRadioSuccess">Connected</label>
                                                             </div>
-                                                            <div class="form-check form-check-inline form-check-danger">
+                                                            <div class="form-check form-check-inline form-check-danger mb-0 ">
                                                                 <input name="connection_status" class="form-check-input" type="radio" value="not_connected" id="customRadioDanger">
                                                             <label class="form-check-label" for="customRadioDanger">Not Connected</label>
                                                         </div>
@@ -308,24 +308,37 @@
                                         </div>
 
                                         <div class="col-12">
-                                            <div class="card-body demo-vertical-spacing demo-only-element">
+                                            <div class="card-body demo-vertical-spacing demo-only-element pb-0">
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <h6 class="mt-0">2. Notes*</h6>
+                                                    <!-- <h6 class="mt-0">2. Notes*</h6> -->
+                                                    <div class="" style="width:100%">
                                                     <div class="mb-6 mt-1 form-floating form-floating-outline">
-                                                        <textarea class="form-control" required type="text" placeholder="Enter your notes" id="notes" name="notes" style="width: 400px;height: 100px;resize: none;"></textarea>
+                                                        <textarea class="form-control" required type="text" placeholder="Enter your notes" id="notes" name="notes" style="width: 100%;height: 100px;resize: none;"></textarea>
                                                         <label for="notes">Notes</label>
+                                                    </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         
                                         <div class="col-12">
-                                            <div class="card-body demo-vertical-spacing demo-only-element">
+                                            <div class="card-body demo-vertical-spacing demo-only-element pb-0">
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <h6 class="mt-0">3. Follow Up Date Time*</h6>
-                                                    <div class="mb-4 form-floating form-floating-outline">
-                                                    <input class="form-control" type="datetime-local" id="next_date" name="next_date" required style="width: 300px;">
-                                                    <label for="next_date">Next Follow Up Date Time</label>
+                                                    <!-- <h6 class="mt-0">3. Follow Up Date Time*</h6> -->   
+                                                    <div class="" style="width:100%">
+                                                        <div class="mb-4 form-floating form-floating-outline">
+                                                        <!-- <input class="form-control" type="datetime-local" id="next_date" name="next_date" required >
+                                                        <label for="next_date">Next Follow Up Date Time</label> -->
+                                                        <div class="form-floating form-floating-outline">
+                                                                <input
+                                                                name="next_date"
+                                                                type="text"
+                                                                class="form-control"
+                                                                placeholder="YYYY-MM-DD HH:MM"
+                                                                id="flatpickr-datetime" />
+                                                                <label for="flatpickr-datetime">Next Follow Up Date Time</label>
+                                                                </div>
+                                                    </div>        
                                                 </div>        
                                                 </div>
                                             </div>    
@@ -334,7 +347,7 @@
                                         <div class="col-12">
                                             <div class="card-body demo-vertical-spacing demo-only-element">
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <h6 class="mt-0">4. Lead Type*</h6>
+                                                    <h6 class="mt-0">Lead Type*</h6>
                                                     <div class="mb-4 d-flex gap-4">
                                                         <label class="switch switch-danger">
                                                             <input type="radio" class="switch-input" name="lead_type" checked="" value="hot">
@@ -399,7 +412,7 @@
 
                                         <div class="col-sm-12 text-right">
                                             <div class="card-body demo-vertical-spacing demo-only-element">
-                                                <div class="d-flex justify-content-end align-items-center">
+                                                <!-- <div class="d-flex justify-content-end align-items-center"> -->
                                                     <!-- <div class="mx-7 mb-0 alert text-danger alert-solid-success" id="successmessage" role="alert"> -->
                                                         <span class="d-none" class="" id="latitude"></span><span class="d-none" id="longitude"></span>
                                                         
@@ -407,9 +420,18 @@
                                                     <!-- <button type="button" id="successmessage" class="btn btn-warning"  style="display:none;" >
                                                         <span class="text-white"  data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Make sure this is below 100" id="accuracy"></span>
                                                     </button> -->
+                                                    
 
-                                                    <button type="submit" id="submit1" name="submit" class="btn btn-success">Submit</button>
-                                                </div>        
+                                                    <!-- <button type="submit" id="submit1" name="submit" class="btn btn-success float-right">Submit</button> -->
+                                                    
+                                                    <div class="row d-flex mt-0">
+                                                        <div class="col-md-12">
+                                                            <button type="submit" id="submit1"  data-bs-toggle="tooltip" data-bs-placement="left"  class="btn btn-success waves-effect waves-light d-flex float-right" name="submit">Submit</button>
+                                                            <button type="reset" class="btn btn-outline-secondary float-left" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                                                        </div>
+                                                    </div>
+
+                                                <!-- </div>         -->
                                             </div>    
                                         </div>
 
@@ -462,14 +484,20 @@
                                 </div>
                             </div>
 
-                            <div id="reasonBox" class="mb-4" style="display:none;">
+                            <!-- <div id="reasonBox" class="mb-4" >
                                 <label for="dead_reason" class="form-label">Remark For Mark Dead</label>
                                 <textarea class="form-control" id="dead_reason" placeholder="Write a remark here..." name="dead_reason"></textarea>
+                            </div> -->
+                            <div id="reasonBox" class="mb-4" style="display:none;">
+                                <div class="col-sm-12 form-floating form-floating-outline">
+                                    <textarea class="form-control" id="dead_reason" placeholder="Write a remark here..." name="dead_reason" style="height: 100px;"></textarea>
+                                    <label for="dead_reason" class="form-label">Remark For Mark Dead</label>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="col-12 d-flex flex-wrap justify-content-center gap-4 row-gap-4">
-                          <button type="submit" name="submit_dead" class="btn btn-primary">Submit</button>
+                        <div class="col-12 d-flex flex-wrap justify-content-center">
+                          <button type="submit" name="submit_dead" class="btn btn-success">Submit</button>
                           <button type="reset"  class="btn btn-outline-secondary btn-reset" data-bs-dismiss="modal" aria-label="Close"> Cancel </button>
                         </div>
                       </form>
