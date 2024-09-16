@@ -12,7 +12,7 @@ if(isset($_SESSION['login_id']))
 }
 
 $idAddress = $_SERVER['REMOTE_ADDR'];
-$allowedIps = array("223.185.41.36", "::1", "223.185.38.187", "150.129.168.103");
+$allowedIps = array("223.185.41.36", "::1", "223.185.38.187", "150.129.168.103", "157.119.204.227");
 
 if(!in_array($idAddress, $allowedIps)) {
   exit();
