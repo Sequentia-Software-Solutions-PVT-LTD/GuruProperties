@@ -51,7 +51,7 @@
 
     $next_date_time = $_POST['next_date'];
     // Split the datetime into date and time
-    $date_time_parts = explode('T', $next_date_time);
+    $date_time_parts = explode(' ', $next_date_time);
     $next_date = $date_time_parts[0];  // 2024-08-22
     $next_time = $date_time_parts[1];  // 02:26
     
@@ -369,7 +369,7 @@
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
       <!-- Footer -->
-        <?php //include 'layout/footer_js.php'; ?>
+        <?php include 'layout/footer_js.php'; ?>
       <!-- / Footer -->
 
       <script>
@@ -441,35 +441,7 @@ toggleReasonBox();
         }
         
 
-</script>    
-<!-- Core JS -->
-    <!-- build:js assets/vendor/js/core.js -->
-    <script src="assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="assets/vendor/libs/popper/popper.js"></script>
-    <script src="assets/vendor/js/bootstrap.js"></script>
-    <script src="assets/vendor/libs/node-waves/node-waves.js"></script>
-    <script src="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="assets/vendor/libs/hammer/hammer.js"></script>
-    <script src="assets/vendor/libs/i18n/i18n.js"></script>
-    <script src="assets/vendor/libs/typeahead-js/typeahead.js"></script>
-    <script src="assets/vendor/js/menu.js"></script>
-
-    <!-- endbuild -->
-
-    <!-- Vendors JS -->
-    <script src="assets/vendor/libs/select2/select2.js"></script>
-    <script src="assets/vendor/libs/tagify/tagify.js"></script>
-    <script src="assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
-    <script src="assets/vendor/libs/typeahead-js/typeahead.js"></script>
-    <script src="assets/vendor/libs/bloodhound/bloodhound.js"></script>
-
-    <!-- Main JS -->
-    <script src="assets/js/main.js"></script>
-
-    <!-- Page JS -->
-    <script src="assets/js/forms-selects.js"></script>
-    <script src="assets/js/forms-tagify.js"></script>
-    <script src="assets/js/forms-typeahead.js"></script>
+</script>   
 
   </body>
 </html>

@@ -12,16 +12,56 @@
   ini_set('display_startup_errors', 1);
   error_reporting(E_ALL);
   $isError = false;
+  
+  $sql = "select * from property ";
+  $q = $pdo->prepare($sql);
+  $q->execute(array());      
+  $row_d = $q->fetch(PDO::FETCH_ASSOC);
+
+
+  $sqlLocation = "SELECT * FROM  location order by name";
+  $qlocation = $pdo->prepare($sqlLocation);
+  $qlocation->execute(array());
+  $locationList = $qlocation->fetchAll(PDO::FETCH_ASSOC);
 
   if(isSet($_POST["submit"]))
   { 
-   
-
+    $login_role = $_POST['login_role'];
     $employee_name = $_POST['employee_name'];
-    $user_id1 = $_POST['user_id'];
-    $prefix = $_POST['prefix'];
+    $user_id = $_POST['user_id'];
     $_employeelocation = $_POST['_employeelocation'];
-    $user_id = $prefix.$user_id1;
+    $value = $_employeelocation[0];
+    $value = str_replace("{", "", $value);
+    $value = str_replace("}", "", $value);
+    $value = str_replace("[", "", $value);
+    $value = str_replace("]", "", $value);
+    $value = str_replace("\"", "", $value);
+    $locationNameArray = explode(",", $value);
+    // var_dump($locationNameArray);
+    $location_ids = "";
+    $locationIds = array();
+    if($login_role == "SALES EXECUTIVE"){
+          $locationCount = count($locationNameArray);
+          for ($i=0; $i < $locationCount; $i++) { 
+            $value = explode(":", $locationNameArray[$i])[1];
+            
+            $location_id = 0;
+            $locationId = $value;
+            $sql = "SELECT id FROM location WHERE name  = '$locationId'";
+            $q = $pdo->prepare($sql);
+            $q->execute(array());
+            $location_id = $q->fetch(PDO::FETCH_ASSOC);
+            if($location_id != false ){
+              $location_id  = $location_id['id'];
+              array_push($locationIds, $location_id);
+            }      
+          }
+
+          $location_ids = implode(",", $locationIds);
+    }
+    // $user_id1 = $_POST['user_id'];
+    // $prefix = $_POST['prefix'];
+    // $user_id = $prefix.$user_id1;
 
     // echo "<pre>";
     // print_r($_POST);
@@ -37,21 +77,21 @@
 
     $added_on = date('Y-m-d H-i-s');
     $status = "Active";
-    $login_role = $_POST['login_role'];
     // $login_photo = "default.png";
     $email_id = $_POST['email_id'];
     $cell_no = $_POST['cell_no'];
 
     $login_photo = $_POST['avatar'];
 
-    $_employeelocation_id = $_POST['_employeelocation'];
+    // $_employeelocation_id = $_POST['_employeelocation'];
 
-    $sql = "select * from location where id = $_employeelocation_id ";
-    $q = $pdo->prepare($sql);
-    $q->execute(array());      
-    $row_loc = $q->fetch(PDO::FETCH_ASSOC);
+    // $sql = "select * from location where id = $_employeelocation_id ";
+    // $q = $pdo->prepare($sql);
+    // $q->execute(array());      
+    // $row_loc = $q->fetch(PDO::FETCH_ASSOC);
 
-    $location_name = $row_loc['name'];
+    // $location_name = $row_loc['name'];
+    $location_name = "";
     // echo "<pre>";
     // print_r($_POST);
     // exit();
@@ -76,20 +116,22 @@
         // exit();
     
           $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-          $sql = "INSERT INTO `admin`(`login_name`, `login_password`, `login_role`, `login_id`, `status`,`type`, `login_photo`, `location`, location_id) VALUES (?,?,?,?,?,?,?,?,?)";
+          $sql = "INSERT INTO `admin`(`login_name`, `login_password`, `login_role`, `login_id`, `status`,`type`, `login_photo`, location_id) VALUES (?,?,?,?,?,?,?,?)";
           $q = $pdo->prepare($sql);
-          $q->execute(array($employee_name, $password, $login_role, $user_id, $status, $login_role, $login_photo, $location_name, $_employeelocation_id));
+          $q->execute(array($employee_name, $password, $login_role, $user_id, $status, $login_role, $login_photo, $location_ids));
           $lastInsertedId = $pdo->lastInsertId();
 
           $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-          $sql = "INSERT INTO employee(admin_id, employee_name, password, added_on, status, login_role,  cell_no, user_id, email_id, designation, `location`, location_id, login_photo) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+          $sql = "INSERT INTO employee(admin_id, employee_name, password, added_on, status, login_role,  cell_no, user_id, email_id, designation, location_id, login_photo) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
           $q = $pdo->prepare($sql);
-          $q->execute(array($lastInsertedId, $employee_name, $password, $added_on, 'Active', $login_role,  $cell_no, $user_id,$email_id,'Employee', $location_name, $_employeelocation_id, $login_photo,));
+          $q->execute(array($lastInsertedId, $employee_name, $password, $added_on, 'Active', $login_role,  $cell_no, $user_id,$email_id,'Employee', $location_ids, $login_photo,));
 
           $isError = true;
-          $error = "<span  style='color:green;'><b>Congrats:</b> New Employee with LOGIN ID ' ".$employee_name." ' added successfully..!!</span>";
+          $success = true;
+          $error = "<span  style='color:green;'><b>Congrats:</b> New Employee with LOGIN ID <b>'". $user_id."'</b> for ".$employee_name." added successfully..!!</span>";
       }
       else {
+        $success = false;
         $isError = true;
         $error = "<span  style='color:red;'><b>ERROR:</b> Password doesn't match, please try again with the correct password..!!</span>";
         
@@ -97,6 +139,7 @@
         // exit();
       }
     } else {
+      $success = false;
       $isError = true;
         $error = "<span  style='color:red;'><b>ERROR:</b> User ID already exist..!!</span>";
         // print_r($error);
@@ -221,8 +264,27 @@
                                 <!-- <div class="col-md-6"> -->
                                     <!-- <div class="row align-items-center justify-content-center"> -->
                                         <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
-                                        <div class="form-floating form-floating-outline mb-6">
-                                                <select id="formtabs-location" name="_employeelocation" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
+                                        <div class="form-floating form-floating-outline mb-6" id="se_locations" style="display:none;">
+                                                <!-- <select id="multipleLocations" name="_employeelocation" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" multiple="multiple" required> -->
+                                                    <input
+                                                        id="multipleLocations"
+                                                        name="_employeelocation[]"
+                                                        class="form-control h-auto"
+                                                        placeholder="select locations"
+                                                        value="" 
+                                                    />
+                                                      <?php
+                                                        // $sqlLocation = "SELECT * FROM  location order by name";
+                                                        // foreach ($pdo->query($sqlLocation) as $row) 
+                                                        // { 
+                                                        ?>
+                                                            <!-- <option value="<?php //echo $row['id']?>"><?php //echo $row['name']?></option>  -->
+                                                        <?php //} ?>
+                                                <!-- </select> -->
+                                                <label for="multipleLocations">Location</label>
+                                        </div>
+                                        <div class="form-floating form-floating-outline mb-6" id="ce_locations" style="display:none;">
+                                                <select id="formtabs-locationce" name="_employeelocation_ce" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country-ce" tabindex="-1" aria-hidden="true">
                                                     <option value="" data-select2-id="18">Select Property Location</option>
                                                     <?php
                                                         $sqlLocation = "SELECT * FROM  location order by name";
@@ -232,8 +294,19 @@
                                                             <option value="<?php echo $row['id']?>"><?php echo $row['name']?></option> 
                                                         <?php } ?>
                                                 </select>
-                                                <label for="formtabs-location">Location</label>
+                                                <label for="formtabs-locationce">Location</label>
                                         </div>
+                                        <!-- <div class="col-md-6 mb-6">
+                                          <div class="form-floating form-floating-outline">
+                                            <input
+                                              id="multipleLocations"
+                                              name="multipleLocations"
+                                              class="form-control h-auto"
+                                              placeholder="select locations"
+                                              value="" />
+                                            <label for="multipleLocations">Custom Inline Suggestions</label>
+                                          </div>
+                                        </div> -->
                                         <!-- </div> -->
                                     <!-- </div> -->
                                 <!-- </div> -->
@@ -243,16 +316,21 @@
                                       <label for="formtabs-password">Confirm Password</label>
                                     
 
-                                    <?php if($isError){ 
+                                    <?php 
+                                    
+                                    if($isError) { 
+
                                       // $error = 'fgds';?>
                                       <!-- <div class="form-floating form-floating-outline mb-6"> -->
-                                      <!-- <label for="formtabs-password" class="col-sm-12 text-center"><?php echo $error; ?></label> -->
+                                      <!-- <label for="formtabs-password" class="col-sm-12 text-center"><?php //echo $error; ?></label> -->
+                                       
                                       <span class="col-sm-12 text-center"><?php echo $error; ?></span>
                                     <!-- </div> -->
                                     <?php } ?>
                                     </div>
 
                                 </div>
+                                
 
                                 <div class="col-md-1 col-sm-6 align-self-center">
                                   <small class="text-light fw-medium">Select Avatar</small>
@@ -306,7 +384,6 @@
                <!-- *************** - /main containt in page write here - **********************  -->
             </div>
             <!-- / Content -->
-
             <!-- Footer -->
             <?php //include_once('layout/footer.php'); ?>
             <?php include 'layout/footer.php'; ?>
@@ -338,11 +415,16 @@
               $('#roleDropdown').change(function() {
                 var selectedRole = $(this).val();
                 var prefix = '';
-
+                selocations = document.getElementById("se_locations");
+                celocations = document.getElementById("ce_locations");
                 if (selectedRole === 'CUSTOMER EXECUTIVE') {
                     prefix = 'CE';
+                    selocations.style.display = "none";
+                    celocations.style.display = "none";
                 } else if (selectedRole === 'SALES EXECUTIVE') {
                     prefix = 'SE';
+                    selocations.style.display = "block";
+                    celocations.style.display = "none";
                 }
 
                 // Set the prefix in the input field
@@ -365,7 +447,70 @@
             }
           });
         }
+        var locationList = ["Aundh","Baner","Bavdhan","Hadapsar","Hinjewadi","Kalyani Nagar","Kharadi","Koregaon Park","Magarpatta City","Model Colony","NIBM Road","Shivaji Nagar","Viman Nagar","Wagholi","Wakad"];
+        $.ajax({
+            type: "POST",
+            url: 'locations.php',
+            data: ({ issession : 1}),
+            dataType: "html",
+            success: function(data) {
+              locationList = data;
+            },
+            error: function() {
+                alert('Error occured');
+            }
+        });
+
+        // setTimeout(
+          // function test() {
+
+            const multipleLocationsElement = document.querySelector('#multipleLocations');
+            // console.log(locationList);
+            const whitelist = locationList;
+            // Inline
+            let TagifyCustomInlineSuggestionLocations = new Tagify(multipleLocationsElement, {
+              whitelist: whitelist,
+              maxTags: 10,
+              dropdown: {
+                maxItems: 20,
+                classname: 'tags-inline',
+                enabled: 0,
+                closeOnSelect: false
+              }
+            });
+          // }
+        // , 2000);
+        
+
       </script>
+      
+    <script src="assets/js/forms-selects.js"></script>
+    <script src="assets/js/forms-tagify.js"></script>
+    <script src="assets/js/forms-typeahead.js"></script>
     
+    <?php if($success && isset($error)) { ?>
+      <!-- <div class="modal" id="modalCenter" tabindex="-1" aria-modal="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document"> 
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-body p-0">
+                  <div class="alert alert-success alert-dismissible mb-0" role="alert" style="padding: 50px;">
+                      <h4 class="alert-heading d-flex align-items-center">
+                        <span class="alert-icon rounded"><i class="ri-checkbox-circle-line ri-22px"></i></span>Well
+                        done :)
+                      </h4>
+                      <hr>
+                      <p class="mb-0">
+                        <?php echo $error; ?>
+                      </p>
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              </div>
+            </div>
+          </div>         
+        </div>
+      </div>
+      <script>$("#modalCenter").toggle();</script> -->
+      <?php } ?>
   </body>
 </html>

@@ -4,25 +4,25 @@ if(!class_exists('Database')){
 } 
 $pdo = Database::connect();
 
-// $range = ["min" => "3000000", "max" => "15000000"]
-// $highest_weight = max(array_column($details, 'Weight'));
-// var_dump($highest_weight);
-$budget_Values = [
-  16000000,
-  15000000,
-  14000000,
-  13000000,
-  12000000,
-  11000000,
-  10000000,
-  9000000,
-  8000000,
-  7000000,
-  6000000,
-  5000000,
-  4000000,
-  3000000
-];
+$maxRange = 20000000;
+$minRange = 3000000;
+$step = 500000;
+$range = array();
+for($stepper = $minRange; $stepper <= $maxRange; $stepper += $step) {
+    array_push($range,$stepper);
+}
+if($stepper > $maxRange) array_push($range, $maxRange);
+
+$rangeDivider = 0; 
+$budget_Values = array();
+foreach($range as $rangeElement) {
+  if($rangeDivider > 0 && $range[$rangeDivider-1] < $maxRange)
+  {
+    $budgetRange = [$range[$rangeDivider-1], $rangeElement];
+    array_push($budget_Values, $budgetRange);
+  }
+  $rangeDivider++;
+}
 ?>
 
                           <div class="row">
@@ -65,7 +65,7 @@ $budget_Values = [
                                 <select name="input5[]" id="form-repeater-3-9" class="form-control" placeholder="">
                                       <option selected disable value="">Select Budget</option>
                                       <?php foreach($budget_Values as $budgetValue) { ?>  
-                                          <option><?php echo $budgetValue; ?></option>
+                                          <option><?php echo $budgetValue[0] . " To " . $budgetValue[1]; ?></option>
                                       <?php } ?>
                                 </select>
                                 <!-- <input type="text" name="input5[]" id="form-repeater-3-9" class="form-control" placeholder=""> -->

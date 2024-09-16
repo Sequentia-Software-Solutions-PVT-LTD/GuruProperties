@@ -50,7 +50,7 @@
 
     $next_date_time = $_POST['next_date'];
     // Split the datetime into date and time
-    $date_time_parts = explode('T', $next_date_time);
+    $date_time_parts = explode(' ', $next_date_time);
     $next_date = $date_time_parts[0];  // 2024-08-22
     $next_time = $date_time_parts[1];  // 02:26
     
@@ -337,7 +337,7 @@
                                                                         data-show-subtext="true" required
                                                                     >
                                                                     <?php
-                                                                        $sql = "SELECT * FROM  employee where status='Active' and login_role='CUSTOMER EXECUTIVE' ";
+                                                                        $sql = "SELECT * FROM  employee where status='Active' and login_role='SALES EXECUTIVE' ";
                                                                         foreach ($pdo->query($sql) as $row) 
                                                                         { 
                                                                         ?>
@@ -365,7 +365,7 @@
                                                         <!-- <div class="d-flex gap-4" style="width: 72%;"> -->
                                                         <div class="d-flex gap-4" style="width: 100%;">
                                                             <div class="form-floating form-floating-outline" style="width: 100%;">
-                                                                <select id="propertyDropdown" name="property_name_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
+                                                                <select id="propertyDropdown" name="property_name_id" class=" form-select" data-allow-clear="true" required>
                                                                     <option value="">Select Property Name</option>
                                                                     <?php
                                                                         $sql = "SELECT * FROM property_name where status = 'Active'";
@@ -404,7 +404,7 @@
                                                         <!-- <div class="d-flex gap-4" style="width: 72%;"> -->
                                                         <div class="d-flex gap-4" style="width: 100%;">
                                                             <div class="form-floating form-floating-outline" style="width: 100%;">
-                                                                <select id="towerDropdown" name="property_tower_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
+                                                                <select id="towerDropdown" name="property_tower_id" class=" form-select" data-allow-clear="true" required>
                                                                     <option value="">Select Property Tower</option>
                                                                     <!-- Towers will be loaded here based on the selected property -->
                                                                 </select>
@@ -513,7 +513,7 @@
                                                     <div class="justify-content-end align-items-center mb-10">
                                                         <span class="d-none" class="" id="latitude"></span><span class="d-none" id="longitude"></span>
                                                         <button type="reset" class="btn btn-outline-secondary float-left" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                                                        <button type="submit" id="submit1"  data-bs-toggle="tooltip" data-bs-placement="left"  class="btn btn-success waves-effect waves-light d-flex float-right" name="submit1">Submit</button>
+                                                        <button type="submit" id="submit1"  data-bs-toggle="tooltip" data-bs-placement="left"  class="btn btn-success waves-effect waves-light d-flex float-right" name="submit">Submit</button>
                                                     </div>        
                                                 </div>    
                                             </div>

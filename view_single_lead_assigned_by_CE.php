@@ -42,9 +42,9 @@
 
   if(isSet($_POST["submit1"]))
   { 
-    // echo "<pre>";
-    // print_r($_POST);
-    // exit();
+    echo "<pre>";
+    print_r($_POST);
+    exit();
 
     $next_date_followup1 = "";
     $next_time_followup1 = "";
@@ -66,7 +66,7 @@
     $next_date_time = $_POST['next_date_visit'];
     if ($next_date_time) {
         // Split the datetime into date and time
-        $date_time_parts = explode('T', $next_date_time);
+        $date_time_parts = explode(' ', $next_date_time);
         
         // if (count($date_time_parts) === 2) {
             $next_date_visit1 = $date_time_parts[0];  // e.g., 2024-08-22
@@ -88,7 +88,7 @@
     $next_date_time_followup = $_POST['next_date_followup'];
     if ($next_date_time_followup) {
         // Split the datetime into date and time
-        $date_time_parts = explode('T', $next_date_time_followup);
+        $date_time_parts = explode(' ', $next_date_time_followup);
         
         // if (count($date_time_parts) === 2) {
             $next_date_followup1 = $date_time_parts[0];  // e.g., 2024-08-22
@@ -245,6 +245,14 @@
     <title> View Today's Leads Details  |  Guru Properties</title>
 
     <meta name="description" content="" />
+
+    
+    <link rel="stylesheet" href="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="assets/vendor/libs/typeahead-js/typeahead.css" />
+    <link rel="stylesheet" href="assets/vendor/libs/quill/typography.css" />
+    <link rel="stylesheet" href="assets/vendor/libs/quill/katex.css" />
+    <link rel="stylesheet" href="assets/vendor/libs/quill/editor.css" />
+
     <style>
    /* When either input is focused, apply border color to both */
     .prefix-class:focus,
@@ -653,8 +661,15 @@
                                                         <!-- <div class="d-flex gap-4" style="width: 72%;"> -->
                                                         <div class="d-flex gap-4" style="width: 100%;">
                                                             <div class="mb-6 mt-1 form-floating form-floating-outline" style="width: 100%;">
-                                                                <textarea class="form-control" type="text" placeholder="Enter your remark here.." id="today_visit_remark" name="today_visit_remark" required style="height: 100px;resize: none;"></textarea>
-                                                                <label for="today_visit_remark">Remark For Today's Visit</label>
+                                                                <!-- <textarea class="form-control" type="text" placeholder="Enter your remark here.." id="today_visit_remark" name="today_visit_remark" required style="height: 100px;resize: none;"></textarea>
+                                                                <label for="today_visit_remark">Remark For Today's Visit</label> -->
+                                                                <div id="full-editor">
+                                                                    <h6>Quill Rich Text Editor</h6>
+                                                                    <p>
+                                                                    Cupcake ipsum dolor sit amet. Halvah cheesecake chocolate bar gummi bears cupcake. Pie
+                                                                    macaroon bear claw. Soufflé I love candy canes I love cotton candy I love.
+                                                                    </p>
+                                                                </div>
                                                                 <!-- <label for="notes">Notes</label> -->
                                                             </div>
                                                         </div>
@@ -905,7 +920,7 @@
 
                                 <?php
                                     $leads_id = $leads_id_timeline;
-                                    include_once("timeline_showcase.php");
+                                    //include_once("timeline_showcase.php");
                                 ?>
 
                             </div>
@@ -917,37 +932,48 @@
 
                 <!-- Add New Credit Card Modal -->
               <div class="modal fade" id="addNewCCModal" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
-                    <div class="modal-content">
+                <div class="modal-dialog modal-dialog-centered modal-xl modal-add-new-cc">
+                    <div class="modal-content p-0">
                             <div class="modal-header">
                                 <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
-                                <button type="button" class="close" data-dismiss="modal" onclick="vidOff();" aria-label="Close">
+                                <button
+                                  type="button"
+                                  class="btn-close"
+                                  data-bs-dismiss="modal" onclick="vidOff();" 
+                                  aria-label="Close"></button>
+                                <!-- <button type="button" class="close" data-dismiss="modal" onclick="vidOff();" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
-                                </button>
+                                </button> -->
                             </div>
                             <div class="modal-body">
-                                <div class="container-fluid">
+                                <!-- <div class="container-fluid"> -->
 
-                                    <div class="row cameracss">
-                                        <div class="col-6">
+                                    <!-- <div class="row cameracss"> -->
+                                    <!-- <div class="row"> -->
+                                        <!-- <div class="col-6"> -->
+                                        <div class="d-flex justify-content-between">
+
                                             <div class="contentarea">
                                                 <div class="camera">
                                                     <video id="video">Video stream not available.</video>
                                                 </div>
                                             </div>
+                                        <!-- </div> -->
+                                        <!-- <div class="col-6 text-center"> -->
+                                            <div>
+                                                <canvas id="canvas"></canvas>
+                                                <div class="output">
+                                                    <img id="photo" alt="The screen capture will appear in this box.">
+                                                </div>	
+                                            </div>
                                         </div>
-                                        <div class="col-6">
-                                            <canvas id="canvas"></canvas>
-                                            <div class="output">
-                                                <img id="photo" alt="The screen capture will appear in this box.">
-                                            </div>	
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary submit-buttons" id="startbutton">Take photo</button>
-                                    <button type="button" class="btn btn-success submit-buttons" data-bs-dismiss="modal" aria-label="Close" onclick="vidOff();">Save</button>
-                                </div>
+                                        <!-- </div> -->
+                                    <!-- </div> -->
+                                <!-- </div> -->
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary submit-buttons start-0 position-absolute" id="startbutton">Take photo</button>
+                                <button type="button" class="btn btn-success submit-buttons" data-bs-dismiss="modal" aria-label="Close" onclick="vidOff();">Save</button>
                             </div>
                         </div>
                 </div>
@@ -1446,6 +1472,9 @@
 
 </script>    
 
+<script src="assets/vendor/libs/quill/katex.js"></script>
+    <script src="assets/vendor/libs/quill/quill.js"></script>
+<script src="assets/js/forms-editors.js"></script>
     
   </body>
 </html>

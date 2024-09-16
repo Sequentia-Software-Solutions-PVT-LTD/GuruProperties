@@ -45,7 +45,7 @@
 
     $next_date_time = $_POST['next_date'];
     // Split the datetime into date and time
-    $date_time_parts = explode('T', $next_date_time);
+    $date_time_parts = explode(' ', $next_date_time);
     $next_date = $date_time_parts[0];  // 2024-08-22
     $next_time = $date_time_parts[1];  // 02:26
 

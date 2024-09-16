@@ -46,7 +46,7 @@
 
     $next_date_time = $_POST['next_date'];
     // Split the datetime into date and time
-    $date_time_parts = explode('T', $next_date_time);
+    $date_time_parts = explode(' ', $next_date_time);
     $next_date = $date_time_parts[0];  // 2024-08-22
     $next_time = $date_time_parts[1];  // 02:26
     
@@ -109,7 +109,7 @@
     // exit();
 
     // Split the datetime into date and time
-    $date_time_parts = explode('T', $next_date_time);
+    $date_time_parts = explode(' ', $next_date_time);
     $next_date = $date_time_parts[0];  // 2024-08-22
     $next_time = $date_time_parts[1];  // 02:26
 
@@ -337,7 +337,7 @@
                                                                 placeholder="YYYY-MM-DD HH:MM"
                                                                 id="flatpickr-datetime" />
                                                                 <label for="flatpickr-datetime">Next Follow Up Date Time</label>
-                                                                </div>
+                                                        </div>
                                                     </div>        
                                                 </div>        
                                                 </div>
@@ -467,42 +467,44 @@
               <!-- Add New Credit Card Modal -->
               <div class="modal fade" id="addNewCCModal" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
-                  <div class="modal-content">
+                  <div class="modal-content px-10 py-8">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <div class="modal-body p-0">
-                      <div class="text-center mb-6">
-                        <h4 class="mb-2">Mark As Dead</h4>
-                        <p>Do you want to mark a lead as dead? </p>
-                      </div>
-                      <form id="addNewCCForm" class="row g-5"  method="POST" action="#">
-                        <input type="hidden" value="<?php echo $_REQUEST['assign_leads_id']; ?>" name="assign_leads_id">
-                        <div class="col-12">
-                            <div class="mb-4">
-                                <div class="form-check form-check-danger">
-                                    <input class="form-check-input" type="checkbox" value="yes" id="customCheckDanger" name="mark_dead" onchange="toggleReasonBox()">
-                                    <label class="form-check-label" for="customCheckDanger">Mark Dead</label>
-                                </div>
+                    <form id="addNewCCForm" class="row g-5"  method="POST" action="#">
+                        <div class="modal-body p-0">
+                            <div class="text-center mb-6">
+                                <h4 class="mb-2">Mark As Dead</h4>
+                                <p>Do you want to mark a lead as dead? </p>
                             </div>
+                            <input type="hidden" value="<?php echo $_REQUEST['assign_leads_id']; ?>" name="assign_leads_id">
+                            <div class="col-12 text-center">
+                                <div class="mb-4">
+                                    <div class="form-check form-check-danger">
+                                        <input class="form-check-input" type="checkbox" value="yes" id="customCheckDanger" name="mark_dead" onchange="toggleReasonBox()" style="left: 40%;">
+                                        <label class="form-check-label" for="customCheckDanger">Mark Dead</label>
+                                    </div>
+                                </div>
 
-                            <!-- <div id="reasonBox" class="mb-4" >
-                                <label for="dead_reason" class="form-label">Remark For Mark Dead</label>
-                                <textarea class="form-control" id="dead_reason" placeholder="Write a remark here..." name="dead_reason"></textarea>
-                            </div> -->
-                            <div id="reasonBox" class="mb-4" style="display:none;">
-                                <div class="col-sm-12 form-floating form-floating-outline">
-                                    <textarea class="form-control" id="dead_reason" placeholder="Write a remark here..." name="dead_reason" style="height: 100px;"></textarea>
+                                <!-- <div id="reasonBox" class="mb-4" >
                                     <label for="dead_reason" class="form-label">Remark For Mark Dead</label>
+                                    <textarea class="form-control" id="dead_reason" placeholder="Write a remark here..." name="dead_reason"></textarea>
+                                </div> -->
+                                <div id="reasonBox" class="mb-4" style="display:none;">
+                                    <div class="col-sm-12 form-floating form-floating-outline">
+                                        <textarea class="form-control" id="dead_reason" placeholder="Write a remark here..." name="dead_reason" style="height: 100px;"></textarea>
+                                        <label for="dead_reason" class="form-label">Remark For Mark Dead</label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-12 d-flex flex-wrap justify-content-center">
-                          <button type="submit" name="submit_dead" class="btn btn-success">Submit</button>
-                          <button type="reset"  class="btn btn-outline-secondary btn-reset" data-bs-dismiss="modal" aria-label="Close"> Cancel </button>
                         </div>
-                      </form>
-                    </div>
-                  </div>
+                        <div class="modal-footer position-relative">
+                            <!-- <div class="col-12 d-flex flex-wrap justify-content-center"> -->
+                                <button type="submit" name="submit_dead" class="btn btn-success position-absolute end-0">Submit</button>
+                                <button type="reset"  class="btn btn-outline-secondary btn-reset position-absolute start-0" data-bs-dismiss="modal" aria-label="Close"> Cancel </button>
+                            <!-- </div> -->
+                        </div>
+                    </form>
+                </div>
                 </div>
               </div>
               <!--/ Add New Credit Card Modal -->
