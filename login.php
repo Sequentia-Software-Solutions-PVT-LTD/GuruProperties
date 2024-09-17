@@ -15,9 +15,10 @@ $idAddress = $_SERVER['REMOTE_ADDR'];
 // Niranjan, localhost, Amol, Amol, Amol, Amol, Gayatri
 $allowedIps = array("223.185.41.36", "::1", "223.185.38.187", "150.129.168.103", "157.119.204.227", "157.119.204.196", "106.213.81.204");
 
-if(!in_array($idAddress, $allowedIps)) {
-  exit();
-}
+// Temp removing the this IP check
+// if(!in_array($idAddress, $allowedIps)) {
+//   exit();
+// }
 
 // on login form submit 
 if(isset($_POST["submit"]))
