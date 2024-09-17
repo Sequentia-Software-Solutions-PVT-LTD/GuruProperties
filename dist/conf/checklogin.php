@@ -93,7 +93,8 @@
 					"view_locations",
 					"export_pdf_property_details",
 					"reset_password",
-					"dashboard_CE"
+					"dashboard_CE",
+					"timeline_showcase_testing"
 				);
 
 				$SEAllowedPages = array(
@@ -135,14 +136,16 @@
 					"view_locations",
 					"export_pdf_property_details",
 					"reset_password",
-					"dashboard_SE"
+					"dashboard_SE",
+					"timeline_showcase_testing"
 				);
 
 				$LeadAllowedPages = array(
 					"add-leads",
 					"dashboard",
 					"lead_addmore",
-					"login"
+					"login",
+					"timeline_showcase_testing"
 				);
 
 				if(isset($_SESSION['login_role']) && $_SESSION['login_role'] == "ADMIN" ){
