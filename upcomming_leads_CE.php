@@ -49,7 +49,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>View Upcomming Leads |  Guru Properties</title>
+    <title>View Upcoming Leads |  Guru Properties</title>
 
     <meta name="description" content="" />
 
@@ -85,7 +85,7 @@
               <h5 class="card-header mar-bot-10">Leads Management</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
-                    <h5 class="card-header"> All Upcomming Leads are listed below</h5>
+                    <h5 class="card-header"> All Upcoming Leads are listed below</h5>
                     <div class="table-responsive text-nowrap">
                         <table class="table">
                         <caption class="ms-6">List of Leads</caption>
@@ -98,6 +98,7 @@
                             <th>Contact</th>
                             <!-- <th>Email ID</th> -->
                             <th>Budget</th>
+                            <th>Date</th>
                             <th>Actions</th>
                             </tr>
                         </thead>
@@ -117,6 +118,11 @@
                                 // exit();
                                 foreach ($pdo->query($sql) as $row1) 
                                 { 
+
+                                    // echo "<pre>";
+                                    // print_r($row1);
+                                    // exit();
+
                                     $assign_leads_id = $row1['assign_leads_id'];
                                     $leads_id = $row1['leads_id'];
                                     $admin_id = $row1['admin_id'];
@@ -148,6 +154,7 @@
                                     <td><?php echo $row_leads["phone_no"]; ?></td>
                                     <!-- <td><?php echo $row_leads["email_id"]; ?></td> -->
                                     <td><?php echo $row_leads["budget_range"]; ?></td>
+                                    <td><?php echo date('d-m-Y', strtotime($row1["next_date"])); ?></td>
                                     <td>
                                         <!-- <a class="dropdown-item waves-effect" href="view_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>"><i class="ri-eye-line me-1"></i> </a> -->
                                          <a class="dropdown-item" href="view_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>" style="overflow: visible;">

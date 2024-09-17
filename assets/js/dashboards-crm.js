@@ -27,7 +27,15 @@
       series2: '#fdb528cc',
       series3: '#fdb52899',
       series4: '#fdb52866',
-      series5: config.colors_label.warning
+      series5: config.colors_label.warning,
+
+      series11: '#666cff',
+      series21: '#72e128',
+      series31: '#6d788d',
+      series41: '#fdb528',
+      series51: '#26c6f9',
+      series61: '#ff4d49'
+
     }
   };
 
@@ -242,7 +250,8 @@
         parentHeightOffset: 0,
         offsetY: 0
       },
-      labels: ['USA', 'India', 'Canada', 'Japan', 'France'],
+      // labels: ['USA', 'India', 'Canada', 'Japan', 'France'],
+      labels: ['Total', 'Connected', 'Not connected', 'Transferred', 'Assigned', 'Dead'],
       tooltip: { enabled: false },
       dataLabels: { enabled: false },
       stroke: {
@@ -280,24 +289,24 @@
                 fontFamily: 'Inter',
                 color: headingColor,
                 formatter: function (val) {
-                  return parseInt(val) + 'K';
+                  return parseInt(val) + '';
                 }
               },
               total: {
                 show: true,
-                label: '2022',
+                label: 'Leads',
                 fontSize: '0.9375rem',
                 fontFamily: 'Inter',
                 color: bodyColor,
                 formatter: function (w) {
-                  return '89K';
+                  return g_total;
                 }
               }
             }
           }
         }
       },
-      series: [13, 18, 18, 24, 16],
+      series: g_series,
       tooltip: {
         enabled: false
       },
@@ -316,11 +325,12 @@
         }
       },
       colors: [
-        chartColors.donut.series1,
-        chartColors.donut.series2,
-        chartColors.donut.series3,
-        chartColors.donut.series4,
-        chartColors.donut.series5
+        chartColors.donut.series11,
+        chartColors.donut.series21,
+        chartColors.donut.series31,
+        chartColors.donut.series41,
+        chartColors.donut.series51,
+        chartColors.donut.series61
       ]
     };
   if (typeof organicSessionsEl !== undefined && organicSessionsEl !== null) {
@@ -561,12 +571,12 @@
       },
       yaxis: {
         min: 0,
-        max: 90,
+        max: 100,
         show: true,
-        tickAmount: 3,
+        tickAmount: 4,
         labels: {
           formatter: function (val) {
-            return parseInt(val) + 'K';
+            return parseInt(val) + '';
           },
           style: {
             fontSize: '13px',

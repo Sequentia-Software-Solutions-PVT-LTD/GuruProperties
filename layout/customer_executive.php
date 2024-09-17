@@ -38,7 +38,7 @@
           <ul class="menu-inner py-1">
             <!-- Dashboards -->
             <li class="menu-item">
-              <a href="Dashboard" class="menu-link">
+              <a href="dashboard_CE" class="menu-link">
                 <i class="menu-icon tf-icons ri-bill-line"></i>
                 <div data-i18nn="#">Dashboard</div>
               </a>
@@ -208,7 +208,7 @@
                 <li class="menu-item">
                   <a href="upcomming_leads_CE.php" class="menu-link">
                   <i class="menu-icon tf-icons ri-bill-line"></i>
-                    <div data-i18nn="List">Upcomming Leads</div>
+                    <div data-i18nn="List">Upcoming Leads</div>
                   </a>
                 </li>
                 <!-- <li class="menu-item">

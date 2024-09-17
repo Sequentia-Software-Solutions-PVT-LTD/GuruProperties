@@ -142,7 +142,8 @@
 					"add-leads",
 					"dashboard",
 					"lead_addmore",
-					"login"
+					"login",
+					"view_single_lead_assigned_by_CE"
 				);
 
 				if(isset($_SESSION['login_role']) && $_SESSION['login_role'] == "ADMIN" ){

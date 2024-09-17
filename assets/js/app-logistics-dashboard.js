@@ -25,8 +25,8 @@
   const chartColors = {
     donut: {
       series1: config.colors.success,
-      series2: '#8EE753',
-      series3: '#AAED7E',
+      series2: '#004040',
+      series3: '#f2be31',
       series4: '#C7F3A9'
     },
     line: {
@@ -228,13 +228,14 @@
         parentHeightOffset: 0,
         type: 'donut'
       },
-      labels: ['Incorrect address', 'Weather conditions', 'Federal Holidays', 'Damage during transit'],
-      series: [13, 25, 22, 40],
+      // labels: ['Incorrect address', 'Weather conditions', 'Federal Holidays', 'Damage during transit'],
+      labels: ['Fresh Leads', 'Assigned Leads'],
+      series: d_series,
       colors: [
-        chartColors.donut.series1,
         chartColors.donut.series2,
-        chartColors.donut.series3,
-        chartColors.donut.series4
+        chartColors.donut.series3
+        // chartColors.donut.series3,
+        // chartColors.donut.series4
       ],
       stroke: {
         width: 0
@@ -298,10 +299,10 @@
                 show: true,
                 fontSize: '15px',
                 fontFamily: 'Inter',
-                label: 'AVG. Exceptions',
+                label: 'Leads',
                 color: bodyColor,
                 formatter: function (w) {
-                  return '30%';
+                  return d_percentage;
                 }
               }
             }

@@ -126,7 +126,7 @@
                                 $i = 1;
                                 $today_date = date('Y-m-d');
                                 // $sql = "SELECT * FROM assign_leads where admin_id = $admin_id  ORDER BY leads_id";
-                                $sql = "SELECT * FROM assign_leads where admin_id = $admin_id  GROUP BY leads_id";
+                                $sql = "SELECT * FROM assign_leads where admin_id = $admin_id  GROUP BY leads_id ORDER BY edited_on, added_on";
                                 $q = $pdo->query($sql);
                                 // print_r($sql);
                                 // exit();

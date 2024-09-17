@@ -254,7 +254,7 @@
                           <div class="row mt-12 pt-4">
                               <div class="col-md-12">
                                     <button type="submit"  data-bs-toggle="tooltip" data-bs-placement="left"  class="btn btn-success waves-effect waves-light d-flex float-right" name="submit">Submit</button>
-                                    <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                                    <button type="button" class="btn btn-outline-secondary" onclick="history.back()">Cancel</button>
                               </div>
                           </div>
 

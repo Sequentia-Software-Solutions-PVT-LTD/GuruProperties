@@ -43,7 +43,7 @@
               </a>
             </li> -->
             <li class="menu-item">
-              <a href="Dashboard" class="menu-link">
+              <a href="dashboard_SE" class="menu-link">
                 <i class="menu-icon tf-icons ri-bill-line"></i>
                 <div data-i18nn="#">Dashboard</div>
               </a>
@@ -145,13 +145,13 @@
             <li class="menu-item">
               <a href="View_follow_up_leads_SE.php" class="menu-link">
               <i class="menu-icon tf-icons ri-bill-line"></i>
-                <div data-i18nn ="Preview"> Upcommimg Follow Up Leads</div>
+                <div data-i18nn ="Preview"> Upcoming Follow Up Leads</div>
               </a>
             </li>
             <li class="menu-item">
               <a href="upcomming_leads_SE.php" class="menu-link">
               <i class="menu-icon tf-icons ri-bill-line"></i>
-                <div data-i18nn="List">Upcomming Visit</div>
+                <div data-i18nn="List">Upcoming Visit</div>
               </a>
             </li>
             <li class="menu-item">

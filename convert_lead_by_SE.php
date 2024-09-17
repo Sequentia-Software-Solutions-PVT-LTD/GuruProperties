@@ -45,6 +45,10 @@
     $property_tower_id = $_POST['property_tower_id'];
     $property_tower_id = $_POST['property_tower_id'];
     // $property_variants = $_POST['property_variants'];
+
+    $contact_person_name = $_POST['contact_person_name'];
+    $contact_person_phone = $_POST['contact_person_phone'];
+
     $notes = $_POST['notes'];
     $agreement_value = $_POST['agreement_value'];
     $registrantion = $_POST['registrantion'];
@@ -88,9 +92,9 @@
 
     // ----------------------- Insert for new ffollowup ---------------------------------------------------------
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "INSERT INTO `converted_leads`(`assign_leads_sr_id`,`leads_id`, `admin_id`, `employee_id`, `employee_name`, `added_on`, `property_name_id`, `property_tower_id`, `property_variants`, `notes`, `agreement_value`, `registrantion`, `gst`, `stamp_duty`, `commission`, `quoted_price`, `sale_price`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    $sql = "INSERT INTO `converted_leads`(`assign_leads_sr_id`,`leads_id`, `admin_id`, `employee_id`, `employee_name`, `added_on`, `property_name_id`, `property_tower_id`, `property_variants`, `notes`, `agreement_value`, `registrantion`, `gst`, `stamp_duty`, `commission`, `quoted_price`, `sale_price`, `contact_person_name`,`contact_person_phone`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     $q = $pdo->prepare($sql);
-    $q->execute(array($assign_leads_sr_id, $leads_id, $admin_id, $employee_id, $employee_name, $added_on, $property_name_id, $property_tower_id, $property_variants, $notes, $agreement_value, $registrantion, $gst, $stamp_duty, $commission, $quoted_price, $sale_price));
+    $q->execute(array($assign_leads_sr_id, $leads_id, $admin_id, $employee_id, $employee_name, $added_on, $property_name_id, $property_tower_id, $property_variants, $notes, $agreement_value, $registrantion, $gst, $stamp_duty, $commission, $quoted_price, $sale_price, $contact_person_name, $contact_person_phone));
      // $lastInsertedId = $pdo->lastInsertId();
     
     header('location:assigned_leads.php');
@@ -383,6 +387,33 @@
                                                                         <option value="">Select Property Variants</option>
                                                                     </select>
                                                                     <label for="variantDropdown">Select Property Variants</label>
+                                                                </div>
+                                                            </div>  
+                                                    </div>      
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                            <div class="d-flex gap-4" style="width: 100%;">
+                                                                <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                                    <input class="form-control" type="text" placeholder="Contact Person Name" id="contact_person_name" name="contact_person_name">
+                                                                    <label for="stamp_duty"> Contact Person Name</label>
+                                                                </div>
+                                                            </div>  
+                                                    </div>      
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                            <div class="d-flex gap-4" style="width: 100%;">
+                                                                <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                                    <input class="form-control" type="tel" placeholder="+91-98789 87980" id="html5-tel-input" name="contact_person_phone">
+                                                                    <!-- <input class="form-control" type="tel" pattern="[0-9]{10}" placeholder="Contact Person Phone Number" id="contact_person_phone" name="contact_person_phone"> -->
+                                                                    <label for="stamp_duty"> Contact Person Phone Number</label>
                                                                 </div>
                                                             </div>  
                                                     </div>      

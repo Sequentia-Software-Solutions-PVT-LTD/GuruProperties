@@ -361,15 +361,15 @@
                                                 foreach ($variant_details as $variant) {
                                             ?>
                                             <li class="d-flex align-items-center mb-2" >
-                                                <span class="fw-medium mx-2">Variants:</span> 
+                                            <i class="ri-rectangle-line ri-24px"></i><span class="fw-medium mx-2">Variants:</span> 
                                                 <span class="fw-bold"><?php echo htmlspecialchars($variant['varients']); ?></span>
                                             </li>
                                             <li class="d-flex align-items-center mb-2">
-                                                <span class="fw-medium mx-2">Area:</span> 
+                                            <i class="ri-square-line ri-24px"></i><span class="fw-medium mx-2">Area:</span> 
                                                 <span class="fw-bold"><?php echo htmlspecialchars($variant['area']); ?></span>
                                             </li>
                                             <li class="d-flex align-items-center mb-2">
-                                                <span class="fw-medium mx-2">Price:</span> 
+                                            <i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Price:</span> 
                                                 <span class="fw-bold"><?php echo htmlspecialchars($variant['price']); ?></span>
                                             </li>
                                             <?php } }?>
@@ -408,6 +408,8 @@
                                               $row_assign1 = $q->fetch(PDO::FETCH_ASSOC);
                                         ?>
                                         <ul class="list-unstyled mb-3 my-3 py-1" style="">
+                                                <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Contact Person:</span> <span><?php echo $row_assign1['contact_person_name']; ?></span></li>
+                                                <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Contact Person Phone No:</span> <span><?php echo $row_assign1['contact_person_phone']; ?></span></li>
                                                 <li class="d-flex align-items-center mb-4"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Agreement Value:</span> <span><?php echo $row_assign1['agreement_value']; ?></span></li>
                                                 <li class="d-flex align-items-center mb-4"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Registration:</span> <span><?php echo $row_assign1['registrantion']; ?></span></li>
                                                 <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Stamp Duty:</span> <span><?php echo $row_assign1['stamp_duty']; ?></span></li>

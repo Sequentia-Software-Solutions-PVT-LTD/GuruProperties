@@ -38,6 +38,9 @@
         .mar-top {
             margin-top: -12px;
         }
+        .heading-text {
+            color:#000;
+        }
      </style>
     
   </head>
@@ -60,7 +63,7 @@
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
               <!-- *************** - main containt in page write here - **********************  -->
-              <h3 class="card-header mar-bot-10">Weekly Performance </h3>
+              <h3 class="card-header mar-bot-10 heading-text">Weekly Performance </h3>
               <h5 class="card-header mar-bot-10">Customer Executive Performance Weekly</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
@@ -241,7 +244,7 @@
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
               <!-- *************** - main containt in page write here - **********************  -->
-              <h3 class="card-header mar-bot-10">Today's Performance </h3>
+              <h3 class="card-header mar-bot-10 heading-text">Today's Performance </h3>
               <h5 class="card-header mar-bot-10">Customer Executive Performance Today's</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
@@ -419,7 +422,7 @@
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
               <!-- *************** - main containt in page write here - **********************  -->
-              <h3 class="card-header mar-bot-10">Yesterday's Performance </h3>
+              <h3 class="card-header mar-bot-10 heading-text">Yesterday's Performance </h3>
               <h5 class="card-header mar-bot-10">Customer Executive Performance Yesterday</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
@@ -597,7 +600,7 @@
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
               <!-- *************** - main containt in page write here - **********************  -->
-              <h3 class="card-header mar-bot-10">Last Month Performance </h3>
+              <h3 class="card-header mar-bot-10 heading-text">Last Month Performance </h3>
               <h5 class="card-header mar-bot-10">Customer Executive Performance Last Month</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">

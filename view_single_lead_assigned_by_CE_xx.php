@@ -588,15 +588,15 @@
                                                 foreach ($variant_details as $variant) {
                                             ?>
                                             <li class="d-flex align-items-center mb-2" >
-                                            <i class="ri-rectangle-line ri-24px"></i><span class="fw-medium mx-2">Variants:</span> 
+                                                <span class="fw-medium mx-2">Variants:</span> 
                                                 <span class="fw-bold"><?php echo htmlspecialchars($variant['varients']); ?></span>
                                             </li>
                                             <li class="d-flex align-items-center mb-2">
-                                            <i class="ri-square-line ri-24px"></i><span class="fw-medium mx-2">Area:</span> 
+                                                <span class="fw-medium mx-2">Area:</span> 
                                                 <span class="fw-bold"><?php echo htmlspecialchars($variant['area']); ?></span>
                                             </li>
                                             <li class="d-flex align-items-center mb-2">
-                                            <i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Price:</span> 
+                                                <span class="fw-medium mx-2">Price:</span> 
                                                 <span class="fw-bold"><?php echo htmlspecialchars($variant['price']); ?></span>
                                             </li>
                                             <?php } }?>
@@ -677,7 +677,7 @@
                                                 </div>
                                             </div>
                                             
-                                            <div class="col-12" id="next_date">
+                                            <div class="col-12">
                                                 <div class="card-body demo-vertical-spacing demo-only-element">
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         <!-- <h6 class="mt-0">3. Follow Up*</h6> -->
@@ -689,12 +689,11 @@
                                                             <div class="form-floating form-floating-outline" style="width: 100%;">
                                                                 <input
                                                                 name="next_date"
-                                                
                                                                 type="text"
                                                                 class="form-control"
                                                                 placeholder="YYYY-MM-DD HH:MM"
                                                                 id="flatpickr-datetime" />
-                                                                <label for="flatpickr-datetime">Next Follow Up Date Time For Visited Property</label>
+                                                                <label for="flatpickr-datetime">Next Follow Up Date Time</label>
                                                                 </div>
                                                         </div>  
                                                         </div>
@@ -740,14 +739,14 @@
                                                 </div>    
                                             </div>
                                             
-                                            <div class="col-12" id="takephotobtn">
+                                            <div class="col-12">
                                                 <div class="card-body demo-vertical-spacing demo-only-element">
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         <!-- <h6 class="mt-0">5. Visit Photo*</h6> -->
                                                         <!-- <div class="mb-4 d-flex align-items-center gap-2" style="width: 72%; height: 125px;"> -->
                                                         <div class="mb-4 d-flex align-items-center gap-2" style="width: 100%; height: 125px;">
                                                             <div class="col-sm-6" style="padding-right: 0px;">
-                                                                <button  type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addNewCCModal" onclick="startup();"> Take Photo </button>
+                                                                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addNewCCModal" onclick="startup();"> Take Photo </button>
                                                             </div>
                                                             <!-- Image display section -->
                                                             <div class="col-sm-6" style="padding: 0px;">
@@ -770,9 +769,8 @@
                                                             <div class="form-floating form-floating-outline" id="selectBox1" style="width: 100%;">
                                                                 <select id="roleDropdown" name="followup_or_another_property" class="form-select " data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
                                                                     <option value="" data-select2-id="18">Select One</option>
-                                                                    <option value="Follow Up">Next Visit <span class="text-muted">(For Same Property)</span></option>
+                                                                    <option value="Follow Up">Next Visit<span class="text-muted">(For Same Property)</span></option>
                                                                     <option value="Another Property">Another Property<span class="text-muted">(For New Property Visit)</span></option>
-                                                                    <option value="Not Applicable">Not Applicable</option>
                                                                 </select>
                                                                 <label for="roleDropdown">Select One Option</label>
                                                             </div>
@@ -840,7 +838,7 @@
                                                                 class="form-control"
                                                                 placeholder="YYYY-MM-DD HH:MM"
                                                                 id="flatpickr-datetime" />
-                                                                <label for="flatpickr-datetime">Visit Date-Time</label>
+                                                                <label for="flatpickr-datetime">Visit Date Time</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1128,6 +1126,17 @@
     // toggleReasonBox1();
 </script>
 
+<script>
+    // Function to toggle fields based on the radio button selection
+    function toggleFields(show) {
+        var extraFields = document.getElementById('extraFields');
+        if (show) {
+            extraFields.style.display = 'block';  // Show fields if "No" is selected
+        } else {
+            extraFields.style.display = 'none';   // Hide fields if "Yes" is selected
+        }
+    }
+</script>
 
 <script>
     document.getElementById('roleDropdown').addEventListener('change', function() {
@@ -1399,25 +1408,6 @@
             $("#next_date_followup").prop('required', true);
         }
     });
-
-
-    $('input[name="connection_status"]').click(function(){
-        var selectedValue = $(this).val();
-        if(selectedValue == 'not_connected') {
-            $('#takephotobtn').hide();
-            $('#next_date').hide();
-            $('#roleDropdown option:eq(1)').prop('selected', true);
-            $('#reasonBoxfollowup').show();
-        } else {
-            $('#takephotobtn').show();
-            $('#next_date').show();
-            $('#roleDropdown option:eq(0)').prop('selected', true);
-            $('#reasonBoxfollowup').hide();
-        }
-   
-    });
-
-
 </script>
 
 <!--  -->

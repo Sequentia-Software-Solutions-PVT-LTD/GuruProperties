@@ -49,7 +49,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title> View Upcomming Visits |  Guru Properties</title>
+    <title> View Upcoming Visits |  Guru Properties</title>
 
     <meta name="description" content="" />
 
@@ -85,7 +85,7 @@
               <h5 class="card-header mar-bot-10">Leads Management</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
-                    <h5 class="card-header"> All Upcomming Visits are listed below</h5>
+                    <h5 class="card-header"> All Upcoming Visits are listed below</h5>
                     <div class="table-responsive text-nowrap">
                         <table class="table">
                         <caption class="ms-6">List of Leads</caption>
