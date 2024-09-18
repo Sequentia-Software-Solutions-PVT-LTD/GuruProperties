@@ -42,3 +42,16 @@
 
     <!-- Page JS -->
     <script src="assets/js/forms-pickers.js"></script>
+
+    <script>
+      function makeActive() {
+         var path = window.location.pathname;
+         var page = path.split("/").pop();
+         console.log( page );
+         $('[href*="'+page+'"]').addClass('active');
+         $('[href*="'+page+'"]').parent().addClass('active');
+         $('[href*="'+page+'"]').parent().parent().parent().addClass('active');
+         $('[href*="'+page+'"]').parent().parent().parent().addClass('open');
+      }
+      makeActive();
+    </script>
