@@ -1,10 +1,12 @@
+
 <?php
 
     $i = 1;
     // $leads_id = $_REQUEST['leads_id'];
-    $leads_id = 24;
+    // $leads_id = 24;
     
-    
+    if(isset($leads_id) && $leads_id != 0) {
+
     $sqlleads = "select * from leads where id = $leads_id ";
     $qleads = $pdo->prepare($sqlleads);
     $qleads->execute(array());      
@@ -89,7 +91,7 @@
         // var_dump($leadsSingle['edited_on']);
         $timeline_date = null;
         $timeline_date = date("Y-m-d H:i:s", strtotime($leadsSingle['added_on']));
-        
+        $dbContent = $leadsSingle;
             array_push($AllData, array(
                 "table_name" => 'leads',
                 "id" => $leadsSingle['id'],
@@ -98,6 +100,7 @@
                 "timlinedate" => $timeline_date,
                 "added_on" => $leadsSingle['added_on'],
                 "edited_on" => $leadsSingle['edited_on'],
+                "dbContent" => $dbContent
             ));
     }
     foreach($CE_Leads_Array as $CE_Leads_Single) {
@@ -124,6 +127,7 @@
         // if($CE_Leads_Single['status'] == "From SE" && $CE_Leads_Single['transfer_status']== "Available"){
         //     $timeline_date = date("Y-m-d H:i:s", strtotime($leadsSingle['added_on']));
         // }
+        $dbContent = $CE_Leads_Single;
         $timeline_date_ce = null;
         if($CE_Leads_Single['status'] == "Active" && $CE_Leads_Single['transfer_status']== "Available"){
             $timeline_date_ce = date("Y-m-d H:i:s", strtotime($CE_Leads_Single['added_on']));
@@ -165,11 +169,13 @@
                 "timlinedate" => $timeline_date_ce,
                 "added_on" => $CE_Leads_Single['added_on'],
                 "edited_on" => $CE_Leads_Single['edited_on'],
+                "dbContent" => $dbContent,
             ));
     }
     foreach($SE_Leads_Array as $SE_Leads_Single) {
         $timeline_date_se = null;
 
+        $dbContent = $SE_Leads_Single;
         if($SE_Leads_Single['status'] == "Active" && $SE_Leads_Single['transfer_status']== "Available"){
             $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['added_on']));
         }
@@ -231,9 +237,12 @@
                 "timlinedate" => $timeline_date_se,
                 "added_on" => $SE_Leads_Single['added_on'],
                 "edited_on" => $SE_Leads_Single['edited_on'],
+                "dbContent" => $dbContent
             ));
     }
     foreach($Converted_Leads_Array as $Converted_Leads_Single) {
+      
+        $dbContent = $Converted_Leads_Single;
         $timeline_date_con = null;
         $timeline_date_con = date("Y-m-d H:i:s", strtotime($Converted_Leads_Single['added_on']));
         // var_dump($Converted_Leads_Single['converted_leads']);
@@ -250,6 +259,7 @@
                 "timlinedate" => $timeline_date_con,
                 "added_on" => $Converted_Leads_Single['added_on'],
                 "edited_on" => $Converted_Leads_Single['edited_on'],
+                "dbContent" => $dbContent
             ));
     }
     
@@ -296,6 +306,7 @@
                             $noteRemark = "";
                             $connectionStatus = "";
                             $employeeName = "";
+                            $dbData = "";
 
                             if($variant['table_name'] == "leads") {
                                 $sqlLE = "select * from leads where id = $id ";
@@ -337,7 +348,7 @@
                             } 
 
                             if($variant['table_name'] == "assign_leads") {
-
+                              $dbData = $variant["dbContent"];
                               if($variant['status'] == "Active" && $variant['transfer_status']== "Available"){
                                   $dateShowcase = date("Y-m-d H:i:s", strtotime($CEArray['added_on']));
                                   $message = "Waiting for CUSTOMER EXECUTIVE to take action.";
@@ -347,11 +358,17 @@
                                   $connectionStatus = "";
                                   $employeeName = $CEArray["employee_id"];
                                   
+                                  
                               }
                               if($variant['status'] == "Followup" && $variant['transfer_status']== "Not Available"){
                                 // why sales executive in the "transfer_employee_type"
                                   $dateShowcase = date("Y-m-d", strtotime($CEArray['next_date']))." ".date("H:i:s", strtotime($CEArray['next_time']));
-                                  $message = "Call Status - ".strtoupper(str_replace("_", " ", $CEArray["connection_status"]));
+                                  $callStatus = strtoupper(str_replace("_", " ", $CEArray["connection_status"]));
+                                    if($callStatus == 'CONNECTED')
+                                    $message = '<span class="badge rounded-pill bg-success">CONNECTED</span>';
+                                    if($callStatus == 'NOT CONNECTED')
+                                    $message = '<span class="badge rounded-pill bg-danger">NOT CONNECTED</span>';
+                                  // $message = "Call Status - ".strtoupper(str_replace("_", " ", $CEArray["connection_status"]));
                                   if(($CEArray["connection_status"]) != 'not_connected' ) {
                                     $leadType = $CEArray["lead_type"];
                                   } else {
@@ -404,10 +421,14 @@
                                   if($needle == 1) $needle = 0;
                                   else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
                                   if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                  $employeeName = $resultArray[$needle]["employee_name"];
+                                  $transferEmployeeName = $resultArray[$needle]["employee_name"];
 
-                                  $message .= $employeeName;
+                                  $message .= $transferEmployeeName."<br>";
 
+                                  if($CEArray["request_for_admin"] == "yes")
+                                      $message .= "Admin Approved";
+                                  else
+                                      $message .= "Admin Approval Pending";
                                   $leadType = $CEArray["lead_type"];
                                   $reason = $CEArray["transfer_reason"];
                                   // if($CEArray['request_for_admin'] == "") {
@@ -417,6 +438,15 @@
                                   // }
                                   $noteRemark = "";
                                   $connectionStatus = $CEArray["connection_status"];
+
+                                  $needle = $CEArray["employee_id"];
+                                  $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                    return $needle == $v['employee_id']; 
+                                  });
+                                  if($needle == 1) $needle = 0;
+                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
+                                  $employeeName = $resultArray[$needle]["employee_name"];
                                   
                               }
 
@@ -425,6 +455,7 @@
                                   // $message = "This lead is assigned to the ". $CEArray['assign_employee_type'] ." - ".$CEArray['transfer_employee_id'];
                                   $message = "This lead is assigned to the ". $CEArray['assign_employee_type'] ." - ";
                                   $needle = $CEArray["transfer_employee_id"];
+                                  
                                   $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                     return $needle == $v['employee_id']; 
                                   });
@@ -585,7 +616,7 @@
                             } 
 
                             if($variant['table_name'] == "assign_leads_sr") {
-                              
+                              $dbData = $variant["dbContent"];
                                   if($variant['status'] == "Active" && $variant['transfer_status']== "Available"){
                                       $dateShowcase = date("Y-m-d", strtotime($ALArray['visit_date']))." ".date("H:i:s", strtotime($ALArray['visit_time']));
                                       $message = "Property Details ".
@@ -1118,7 +1149,7 @@
                             } 
                             
                             if($variant['table_name'] == "converted_leads") {
-
+                              $dbData = $variant["dbContent"];
                                       $property_id = $CONArray['property_name_id'];
                                       $property_id_name = "";
                                       $sub_property_id = $CONArray['property_tower_id'];
@@ -1188,6 +1219,7 @@
                             }
 
                             if($variant['table_name'] == "leads") {
+                              $dbData = $variant["dbContent"];
                               // $dateShowcase = date("Y-m-d H:i:s", strtotime($LEArray['lead_gen_date']));
                               $dateShowcase = "";
                               $message = "This lead in added and assigned to CUSTOMER EXECUTIVE ";
@@ -1253,14 +1285,20 @@
                       <?php } ?>
 
                       <div class="timeline-event card p-0" data-aos="<?php echo $showside; ?>">
+                        
                         <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
                           <h6 class="card-title mb-0">
                             <?php //if($employeeName != "" ) echo $roleName." - ".$employeeName; else echo $roleName; ?>
                             <?php echo $roleName; ?>
+                            <?php if(isset($data['transfer_employee_type']) && ($data['transfer_employee_type'] != "")) { ?>
+                                <span class="badge rounded-pill bg-label-info">To </span>
+                                <span class="badge rounded-pill bg-label-info"><?php echo $data['transfer_employee_type']; ?></span>
+                            <?php } ?>
                           </h6>
                           <div class="meta">
                             <!-- <span class="badge rounded-pill bg-label-primary"><?php echo $variant['status']; ?></span> -->
                             <!-- <span class="badge rounded-pill bg-label-success"><?php echo $variant['transfer_status']; ?></span> -->
+                             
                             <?php
                                 if($variant["status"] == "Active")
                                 echo '<span class="badge rounded-pill bg-label-danger">';
@@ -1283,21 +1321,440 @@
                                 echo $variant["status"]; 
                                 echo '</span>';
                             ?>
-                            <?php if(isset($data['transfer_employee_type'])) { ?>
-                            <span class="badge rounded-pill bg-label-info"><?php echo $data['transfer_employee_type']; ?></span>
-                            <?php } ?>
                           </div>
                         </div>
+                        
                         <div class="card-body demo-vertical-spacing demo-only-element">
                           <p class="mb-2">
                             <?php //var_dump($data); ?>
                           </p>
                           <div class="d-flex justify-content-between align-items-center flex-wrap">
-                            <div>
+                            <div style="width: 100%;">
                                 <?php
-                                    echo $message."<br>";
-                                    echo $reason."<br>";
-                                    echo $noteRemark."<br>";
+                                    echo '<div class="card mb-6" style="background-color: #e9faff;">';
+                                    
+                                    if(
+                                      (isset($dbData['request_for_admin']) && $dbData['request_for_admin'] != "") ||
+                                      (isset($dbData['connection_status']) && $dbData['connection_status'] != "") ||
+                                      ((isset($dbData['lead_type']) && $dbData['lead_type'] != "")) ||
+                                      (isset($dbData['visit_done']) && $dbData['visit_done'] != "")
+                                    ) { 
+                                    echo '<div class="card-header d-flex justify-content-between cursor-move">
+                                        <div>';
+                                        
+                                        
+                                        if(isset($dbData['request_for_admin']) && $dbData['request_for_admin'] != "")
+                                        {
+
+                                          if($dbData['request_for_admin'] == "no")
+                                          echo '<span class=" badge rounded-pill bg-danger">'."Admin Pending".'</span>';
+                                          else if($dbData['request_for_admin'] == "yes")
+                                          echo '<span class=" badge rounded-pill bg-success">'."Admin Approved".'</span>';
+                                        }  
+
+                                        if(isset($dbData['connection_status']) && $dbData['connection_status'] != "")
+                                        {
+
+                                          if($dbData['connection_status'] == "not_connected")
+                                          echo '<span class=" badge rounded-pill bg-danger">'."Not Connected".'</span>';
+                                          else if($dbData['connection_status'] == "connected")
+                                          {
+                                            echo '<span class=" badge rounded-pill bg-success">'."Connected".'</span>';
+                                            if(isset($dbData['visit_done']))
+                                            {
+
+                                              if($dbData['visit_done'] == "")
+                                              echo '<span class=" badge rounded-pill bg-danger">'."Not Visited".'</span>';
+                                              else if($dbData['visit_done'] == "Visited")
+                                              echo '<span class=" badge rounded-pill bg-success">'."Visited".'</span>';
+                                            }
+                                          }
+                                        }                                        
+                                        
+                                        echo '</div>
+                                        <div>';
+                                    
+                                        
+                                        if(isset($dbData['lead_type']) && $dbData['lead_type'] != "")
+                                        {
+                                          if($dbData['lead_type'] == "hot")
+                                          echo '<span class="badge text-capitalize rounded-pill bg-label-danger">';
+                                          else if($dbData['lead_type'] == "warm")
+                                          echo '<span class="badge text-capitalize rounded-pill bg-label-info">';
+                                          else if($dbData['lead_type'] == "cold")
+                                          echo '<span class="badge text-capitalize rounded-pill bg-label-primary">';
+                                          echo $dbData['lead_type']; 
+                                          echo '</span>';
+                                        }
+                                        
+                                        echo '
+                                        </div>
+                                      </div>';
+                                      }
+                                      echo '
+                                      <div class="card-body">
+                                        <h5 class="card-title">';
+                                        
+                                        
+                                          if(isset($dbData['notes']) && $dbData['notes'] != ""){
+                                            echo '<p class="text-capitalize mt-2">Notes:- &nbsp;&nbsp;&nbsp;<span style="font-weight: 300;">'.$dbData['notes'].'</span></p>';
+                                          }
+                                          if(isset($dbData['transfer_employee_type']) && $dbData['transfer_employee_type'] != ""){
+                                            $showText = $message;
+                                            $showText = str_replace("Admin Approved", "", $showText);
+                                            $showText = str_replace("Admin Pending", "", $showText);
+                                            echo '<p class="mt-2" style="font-weight: 300;">'.$showText.'</span></p>';
+                                          }
+                                          
+                                          if(isset($dbData['transfer_reason']) && $dbData['transfer_reason'] != ""){
+                                            echo '<p class="text-capitalize mt-2">Transfer Reason:- &nbsp;&nbsp;&nbsp;<span style="font-weight: 300;">'.$dbData['transfer_reason'].'</span></p>';
+                                          }
+                                          
+
+                                          if(isset($dbData['status']) && $dbData['status'] == "Assigned"){
+                                            echo '<p class="mt-2" style="font-weight: 300;">'.$message.'</p>';
+                                          }
+                                          
+                                          if(isset($dbData['dead_reason']) && $dbData['dead_reason'] != ""){
+                                            echo '<p class="text-capitalize mt-2">Dead Reason:- &nbsp;&nbsp;&nbsp;<span style="font-weight: 300;">'.$dbData['dead_reason'].'</span></p>';
+                                          }
+
+                                          if(isset($dbData['status']) && $dbData['status'] == "Dead"){
+                                            echo '<p class="" style="line-height: 3;">Marked dead On:- <br>';
+
+                                            if(isset($dbData['edited_on']) && $dbData['edited_on'] != "0000-00-00 00:00:00") 
+                                        
+                                            echo "<span style='font-weight: 300;'>
+                                            <span style='line-height: 1;'>". 
+                                                date("d-M-Y",strtotime($dbData['edited_on'])).'<br>'.
+                                                date("H:i",strtotime($dbData['edited_on'])).
+                                            '</span>';
+
+                                            echo '</p>';
+                                          }
+                                        
+                                        echo '
+                                        </h5>
+                                        <p class="card-text" style="line-height: 3;">';
+
+
+                                        if(isset($dbData['next_date']) && $dbData['next_date'] != "0000-00-00") 
+                                        
+                                        echo "Next Follow up:- <br><span style='font-weight: 300;'><span style='line-height: 2;'>". date("d-M-Y",strtotime($dbData['next_date']));
+                                        
+                                        if(isset($dbData['next_time'])  && $dbData['next_time'] != "00:00:00") echo '<br>'.$dbData['next_time'].'</span>';
+
+                                        if(isset($dbData['visit_date']) && $dbData['visit_date'] != "0000-00-00") 
+                                        
+                                        echo "Next Follow up:- <br><span style='font-weight: 300;'><span style='line-height: 2;'>". date("d-M-Y",strtotime($dbData['visit_date']));
+                                        
+                                        if(isset($dbData['visit_time'])  && $dbData['visit_time'] != "00:00:00") echo '<br>'.$dbData['visit_time'].'</span>';
+                                        
+                                        echo '
+                                        </p>
+                                      </div>
+                                    </div>';
+                                    
+                                    if(isset($dbData["property_id"]) && $dbData["property_id"] != ""){
+                                        echo '<div class="timeline-event card p-0 aos-init aos-animate" data-aos="fade-left">
+                                                <div class="card-header d-flex justify-content-between">
+                                                  <h6 class="card-title mb-0">
+                                                    <span class="align-middle">Property Details</span>
+                                                  </h6>';
+                                                  if(isset($dbData["location1"]))
+                                                  {
+                                                    
+                                                    echo '<span class="badge rounded-pill bg-label-danger">';
+                                                    
+                                                    echo $dbData['location1'];
+                                                    
+                                                    echo '</span>';
+                                                  }
+                                                  
+                                                  echo'
+                                                </div>
+                                                <div class="card-body pb-2 pt-0">
+                                                  <ul class="list-group list-group-flush">
+                                                    
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center ps-0">
+                                                      <div>
+                                                        <span>Property Name</span>
+                                                      </div>
+                                                      <div>';                                                      
+
+                                                        $needle = $dbData["property_id"];;
+                                                        $resultArray = array_filter($property_Array, function ($v) use ($needle) {
+                                                          return $needle == $v['property_name_id']; 
+                                                        });
+                                                        if($needle == 1) $needle = 0;
+                                                        else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                                        if(isset($resultArray[$needle]["property_title"]) && $resultArray[$needle]["property_title"] != "") 
+                                                        $property_id_name = $resultArray[$needle]["property_title"];
+                                                        echo $property_id_name;
+                                                    
+                                                      echo'
+                                                      </div>
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center ps-0">
+                                                      <div>
+                                                        <span>Tower Name</span>
+                                                      </div>
+                                                      <div>';
+                                                      if(isset($dbData["sub_property_id"])){
+                                                          $needle = $dbData["sub_property_id"];
+                                                          $resultArray = array_filter($sub_property_Array, function ($v) use ($needle) {
+                                                            return $needle == $v['property_tower_id']; 
+                                                          });
+                                                          if($needle == 1) $needle = 0;
+                                                          else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                                          if(isset($resultArray[$needle]["property_tower_name"]) && $resultArray[$needle]["property_tower_name"] != "") 
+                                                          $sub_property_id_name = $resultArray[$needle]["property_tower_name"];
+                                                          echo $sub_property_id_name;
+                                                        }
+                                                      echo'
+                                                      </div>
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center ps-0">
+                                                      <div>
+                                                        <span>Variant</span>
+                                                      </div>
+                                                      <div>';
+                                                      
+                                                      if(isset($dbData["variant"])){
+                                                        $variant_id = $dbData["variant"];
+                                                        $variant_name_array = array();
+                                                        $variant_id = explode(",", $variant_id);
+                                                        foreach($variant_id as $variantelement) {
+                                                          $needle =  $variantelement;
+                                                          $resultArray = array_filter($varient_Array, function ($v) use ($needle) {
+                                                            return $needle == $v['property_varients_id']; 
+                                                          });
+                                                          if($needle == 1) $needle = 0;
+                                                          else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                                          if(isset($resultArray[$needle]["varients"]) && $resultArray[$needle]["varients"] != "") 
+                                                          $variant_name = $resultArray[$needle]["varients"];
+                                                          array_push($variant_name_array, $variant_name);
+                                                        }
+                                                        $variant_name = implode(", ", $variant_name_array);
+                                                        echo $variant_name;
+                                                      }
+                                                      echo'
+                                                      </div>
+                                                    </li>';
+
+                                                    if(isset($dbData["photo"]) && $dbData["photo"] != "") {
+                                                    echo'
+                                                            <li class="list-group-item d-flex justify-content-between align-items-center ps-0">
+                                                              <div>
+                                                                <span>Photo</span>
+                                                              </div>
+                                                              <div>';
+                                                              
+                                                                // echo '<img src="'.$dbData["photo"].'" alt="Visit Photo" ><br>';
+                                                                echo '<a class="text-dark" style="text-decoration: underline; font-weight: 600;" href="'.$dbData["photo"].'" target="_blank">View Photo</a>';
+                                                                
+                                                                echo'
+                                                                </div>
+                                                            </li>'; 
+                                                      }
+
+                                                  echo'  
+                                                  </ul>
+                                                </div>
+                                              
+                                              </div>';
+                                    }
+
+                                    if(isset($dbData["property_name_id"]) && $dbData["property_name_id"] != ""){
+                                      echo '<div class="timeline-event card p-0 aos-init aos-animate" data-aos="fade-left">
+                                              <div class="card-header d-flex justify-content-between">
+                                                <h6 class="card-title mb-0">
+                                                  <span class="align-middle">Property Details</span>
+                                                </h6>';
+                                                if(isset($dbData["location1"])){
+                                                  
+                                                  echo '<span class="badge rounded-pill bg-label-danger">';
+                                                  
+                                                  echo $dbData['location1'];
+                                                  
+                                                  echo '</span>';
+                                                }
+                                                
+                                                echo'
+                                              </div>
+                                              <div class="card-body pb-2 pt-0">
+                                                <ul class="list-group list-group-flush">
+                                                  
+                                                  <li class="list-group-item d-flex justify-content-between align-items-center ps-0">
+                                                    <div>
+                                                      <span>Property Name</span>
+                                                    </div>
+                                                    <div>';                                                      
+
+                                                      $needle = $dbData["property_name_id"];;
+                                                      $resultArray = array_filter($property_Array, function ($v) use ($needle) {
+                                                        return $needle == $v['property_name_id']; 
+                                                      });
+                                                      if($needle == 1) $needle = 0;
+                                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                                      if(isset($resultArray[$needle]["property_title"]) && $resultArray[$needle]["property_title"] != "") 
+                                                      $property_id_name = $resultArray[$needle]["property_title"];
+                                                      echo $property_id_name;
+                                                  
+                                                    echo'
+                                                    </div>
+                                                  </li>
+                                                  <li class="list-group-item d-flex justify-content-between align-items-center ps-0">
+                                                    <div>
+                                                      <span>Tower Name</span>
+                                                    </div>
+                                                    <div>';
+                                                    if(isset($dbData["property_tower_id"])){
+                                                        $needle = $dbData["property_tower_id"];
+                                                        $resultArray = array_filter($sub_property_Array, function ($v) use ($needle) {
+                                                          return $needle == $v['property_tower_id']; 
+                                                        });
+                                                        if($needle == 1) $needle = 0;
+                                                        else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                                        if(isset($resultArray[$needle]["property_tower_name"]) && $resultArray[$needle]["property_tower_name"] != "") 
+                                                        $sub_property_id_name = $resultArray[$needle]["property_tower_name"];
+                                                        echo $sub_property_id_name;
+                                                      }
+                                                    echo'
+                                                    </div>
+                                                  </li>
+                                                  <li class="list-group-item d-flex justify-content-between align-items-center ps-0">
+                                                    <div>
+                                                      <span>Variant</span>
+                                                    </div>
+                                                    <div>';
+                                                    
+                                                    if(isset($dbData["property_variants"])){
+                                                      $variant_id = $dbData["property_variants"];
+                                                      $variant_name_array = array();
+                                                      $variant_id = explode(",", $variant_id);
+                                                      foreach($variant_id as $variantelement) {
+                                                        $needle =  $variantelement;
+                                                        $resultArray = array_filter($varient_Array, function ($v) use ($needle) {
+                                                          return $needle == $v['property_varients_id']; 
+                                                        });
+                                                        if($needle == 1) $needle = 0;
+                                                        else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                                        if(isset($resultArray[$needle]["varients"]) && $resultArray[$needle]["varients"] != "") 
+                                                        $variant_name = $resultArray[$needle]["varients"];
+                                                        array_push($variant_name_array, $variant_name);
+                                                      }
+                                                      $variant_name = implode(", ", $variant_name_array);
+                                                      echo $variant_name;
+                                                    }
+                                                    echo'
+                                                    </div>
+                                                  </li>';
+                                                      
+                                                  if(isset($dbData["agreement_value"])){
+                                                    echo '
+                                                      <li class="list-group-item d-flex justify-content-between align-items-center ps-0">
+                                                          <div>
+                                                            <span>Agreement Value</span>
+                                                          </div>
+                                                          <div>';
+                                                          
+                                                          echo $dbData["agreement_value"];
+
+                                                          echo'
+                                                          </div>
+                                                        </li>';
+                                                    }
+
+                                                    if(isset($dbData["gst"])){
+                                                      echo '
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center ps-0">
+                                                            <div>
+                                                              <span>GST</span>
+                                                            </div>
+                                                            <div>';
+                                                            
+                                                            echo $dbData["gst"];
+  
+                                                            echo'
+                                                            </div>
+                                                          </li>';
+                                                    }
+  
+                                                    if(isset($dbData["stamp_duty"])){
+                                                        echo '
+                                                          <li class="list-group-item d-flex justify-content-between align-items-center ps-0">
+                                                              <div>
+                                                                <span>Stamp Duty</span>
+                                                              </div>
+                                                              <div>';
+                                                              
+                                                              echo $dbData["stamp_duty"];
+    
+                                                              echo'
+                                                              </div>
+                                                            </li>';
+                                                    }
+    
+                                                    if(isset($dbData["commission"])){
+                                                          echo '
+                                                            <li class="list-group-item d-flex justify-content-between align-items-center ps-0">
+                                                                <div>
+                                                                  <span>Commission</span>
+                                                                </div>
+                                                                <div>';
+                                                                
+                                                                echo $dbData["commission"];
+      
+                                                                echo'
+                                                                </div>
+                                                              </li>';
+                                                      }
+      
+                                                        if(isset($dbData["quoted_price"])){
+                                                        echo '
+                                                          <li class="list-group-item d-flex justify-content-between align-items-center ps-0">
+                                                              <div>
+                                                                <span>Quoted price</span>
+                                                              </div>
+                                                              <div>';
+                                                              
+                                                              echo $dbData["quoted_price"];
+
+                                                              echo'
+                                                              </div>
+                                                            </li>';
+                                                        }
+                                                        if(isset($dbData["sale_price"])){
+                                                        echo '
+                                                          <li class="list-group-item d-flex justify-content-between align-items-center ps-0">
+                                                              <div>
+                                                                <span>Sale Price</span>
+                                                              </div>
+                                                              <div>';
+                                                              
+                                                              echo $dbData["sale_price"];
+
+                                                              echo'
+                                                              </div>
+                                                            </li>';
+                                                        }
+
+                                                                    
+                                                echo'  
+                                                </ul>
+                                              </div>
+                                            
+                                            </div>';
+                                  }
+
+                                    
+
+
+
+                                    // echo $message."<br>";
+                                    // echo $reason."<br>";
+                                    // echo $noteRemark."<br>";
                                     // echo "message:- ".$message."<br><br>";
                                     // echo "reason:- ".$reason."<br><br>";
                                     // echo "noteRemark:- ".$noteRemark."<br><br>";
@@ -1306,18 +1763,39 @@
                                     // echo "noteRemark:- ".$noteRemark."<br><br>";
                                     // echo "connectionStatus:- ".$connectionStatus."<br><br>";
                                     // echo "employeeName:- ".$employeeName."<br><br>";
+                                    
+                                    
+                                    
+                                    // if(isset($dbData["property_id"])) echo $dbData['property_id'].'<br>';
+                                    // if(isset($dbData["sub_property_id"])) echo $dbData['sub_property_id'].'<br>';
+                                    // if(isset($dbData["variant"])) echo $dbData['variant'].'<br>';
+                                    // if(isset($dbData["area"])) echo $dbData['area'].'<br>';
+                                    // if(isset($dbData["location1"])) echo $dbData['location1'].'<br>';
+                                    
+                                    // if(isset($dbData["visit_done"])) if($dbData['visit_done'] != 0) echo "Visited".'<br>'; else echo "Not Visited".'<br>';
+                                    // if(isset($dbData["latitude"])) echo $dbData['latitude'].'<br>';
+                                    // if(isset($dbData["longitude"])) echo $dbData['longitude'].'<br>';
+                                    
+
+                                    // echo '<br> <br> <br>';
+                                    // echo "<pre>";
+                                    // var_dump($dbData);
                                 ?>
                             </div>
                             
                           </div>
+
+                          <?php if($employeeName != "") { ?>
                           <div>
-                            <p class="text-muted mb-2">Employee Name - <?php echo $employeeName; ?></p>
+                            <p class="text-muted mb-2">Executive Name - <?php echo $employeeName; ?></p>
                             <ul class="list-unstyled users-list d-flex align-items-center avatar-group">
                               <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" aria-label="Vinnie Mostowy" data-bs-original-title="Vinnie Mostowy">
                                 <img class="rounded-circle" src="assets/img/avatars/5.png" alt="Avatar">
                               </li>
                             </ul>
                           </div>
+                          <?php } ?>
+
                         </div>
                         <div class="timeline-event-time"><?php 
                         echo date("d-m-Y" , strtotime($variant['timlinedate']));
@@ -1329,3 +1807,4 @@
                       
                     </li>
                     <?php } ?>
+<?php } ?>

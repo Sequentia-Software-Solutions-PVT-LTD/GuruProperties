@@ -920,7 +920,7 @@
 
                                 <?php
                                     $leads_id = $leads_id_timeline;
-                                    //include_once("timeline_showcase.php");
+                                    include_once("timeline_showcase.php");
                                 ?>
 
                             </div>
