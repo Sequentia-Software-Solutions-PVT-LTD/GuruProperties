@@ -167,7 +167,7 @@
                                           $resultArray = array_filter($row_location, function ($v) use ($needle) {
                                             return $needle == $v['id']; 
                                           });
-                                          if($needle == 1) $needle = 1;
+                                          if($needle == 1) $needle = 0;
                                           else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
                                           if(isset($resultArray[$needle]["name"]) && $resultArray[$needle]["name"] != "") echo $resultArray[$needle]["name"]; 
                                           else echo "Not Found";
@@ -261,7 +261,7 @@
                                           $resultArray = array_filter($row_location, function ($v) use ($needle) {
                                             return $needle == $v['id']; 
                                           });
-                                          if($needle == 1) $needle = 1;
+                                          if($needle == 1) $needle = 0;
                                           else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
                                           if(isset($resultArray[$needle]["name"]) && $resultArray[$needle]["name"] != "") echo $resultArray[$needle]["name"]; 
                                           else echo "Not Found";

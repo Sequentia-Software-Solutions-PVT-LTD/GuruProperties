@@ -38,7 +38,12 @@
 					"dashboard",
 					"fetch_towers",
 					"fetch_variants",
-					"login"
+					"login",
+					"report_design_sample",
+					"report_lead",
+					"report_converted_all",
+					"report_converted_separated",
+					"report_sold_properties",
 				);
 
 				$superadminAllowedPages = array(
