@@ -2,10 +2,10 @@
 date_default_timezone_set("Asia/Kolkata");
 class Database {
 
-   private static $dbName = 'a1622dey_guru' ; 
+   private static $dbName = 'vgswvumy_guruproperties' ; 
    private static $dbHost = 'localhost' ;
-   private static $dbUsername = 'a1622dey_guru';
-   private static $dbUserPassword = 'mF%l4TD29rAS';
+   private static $dbUsername = 'vgswvumy_guruproperties';
+   private static $dbUserPassword = 'uLIO;seh;=Mn';
    private static $cont  = null;
   //  ------------------------------------------------------------
   
