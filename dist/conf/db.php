@@ -2,22 +2,22 @@
 date_default_timezone_set("Asia/Kolkata");
 class Database {
 
-  //  private static $dbName = 'a1622dey_guru' ; 
-  //  private static $dbHost = 'localhost' ;
-  //  private static $dbUsername = 'a1622dey_guru';
-  //  private static $dbUserPassword = 'mF%l4TD29rAS';
-  //  private static $cont  = null;
+   private static $dbName = 'a1622dey_guru' ; 
+   private static $dbHost = 'localhost' ;
+   private static $dbUsername = 'a1622dey_guru';
+   private static $dbUserPassword = 'mF%l4TD29rAS';
+   private static $cont  = null;
   //  ------------------------------------------------------------
   
 
   
-  private static $dbName = 'guru_seqpro'; 
+  // private static $dbName = 'guru_seqpro'; 
   // private static $dbName = 'guru_enterprises_gayatri'; 
   // private static $dbName = 'guru_enterprises'; 
-  private static $dbHost = 'localhost';
-  private static $dbUsername = 'root';
-  private static $dbUserPassword = '';
-  private static $cont  = null;
+  // private static $dbHost = 'localhost';
+  // private static $dbUsername = 'root';
+  // private static $dbUserPassword = '';
+  // private static $cont  = null;
 
  
     public function __construct() {

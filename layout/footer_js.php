@@ -39,6 +39,7 @@
     <script src="assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js"></script>
     <script src="assets/vendor/libs/jquery-timepicker/jquery-timepicker.js"></script>
     <script src="assets/vendor/libs/pickr/pickr.js"></script>
+    <script src="assets/vendor/libs/bs-stepper/bs-stepper.js"></script>
 
     <!-- Page JS -->
     <script src="assets/js/forms-pickers.js"></script>
