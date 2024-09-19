@@ -145,12 +145,14 @@ $row_total_dead = $qtotalD->fetch(PDO::FETCH_ASSOC);
 $total_dead_leads = $row_total_dead['total_count_dead'];
 
 // -------------------------- /Total Dead leads count -----------------------------------------------------------
+// these are dummy values- just comment them for geting real values
 $total_fresh_leads =20;
 $total_connected_leads =10; 
 $total_notconnected_leads =5; 
 $total_transferred_leads =12;
 $total_assigned_leads =15;
 $total_dead_leads=5;
+// these are dummy values- just comment them for geting real values
 
 $g_total = $total_fresh_leads + $total_connected_leads + $total_notconnected_leads + $total_transferred_leads +$total_assigned_leads + $total_dead_leads;
 
@@ -208,8 +210,96 @@ $row_total_ac = $qtotaac->fetch(PDO::FETCH_ASSOC);
 
 $total_assign_c = $row_total_ac['total_count_AC'];
 
-$d_percentage = 50;
+$d_percentage = '50%';
 // $d_percentage = ($row_total_ac / $total_fresh_c)*100;
+
+// ***************-----------/Total count for donut graph (total leads and assigned leads)--------------***************************************************
+
+// ==================== Weekly performance conected - notconected graph ==========================================================================================
+
+$sql_combinedCN = "
+    SELECT 
+        DATE(added_on) as lead_date,
+        COUNT(CASE WHEN connection_status = 'connected' THEN 1 END) AS total_connected_leads,
+        COUNT(CASE WHEN connection_status = 'not_connected' THEN 1 END) AS total_notconnected_leads
+    FROM assign_leads 
+    WHERE admin_id = :admin_id
+    AND DATE(added_on) BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND CURDATE()
+    GROUP BY DATE(added_on)
+    ORDER BY lead_date
+";
+
+$qtotal_CN = $pdo->prepare($sql_combinedCN);
+$qtotal_CN->execute([':admin_id' => $admin_id]);
+$row_totals = $qtotal_CN->fetchAll(PDO::FETCH_ASSOC);
+
+// Initialize arrays to store values by date
+$connected_leads_per_day = [];
+$notconnected_leads_per_day = [];
+
+// Loop through each day's result and store in arrays
+foreach ($row_totals as $row) {
+    $lead_date = $row['lead_date'];
+    $connected_leads_per_day[$lead_date] = $row['total_connected_leads'];
+    $notconnected_leads_per_day[$lead_date] = $row['total_notconnected_leads'];
+}
+
+// Define last week's days (Sunday to Saturday)
+$days_of_last_week = [
+    'Sunday' => date('Y-m-d', strtotime('last Sunday')),
+    'Monday' => date('Y-m-d', strtotime('last Monday')),
+    'Tuesday' => date('Y-m-d', strtotime('last Tuesday')),
+    'Wednesday' => date('Y-m-d', strtotime('last Wednesday')),
+    'Thursday' => date('Y-m-d', strtotime('last Thursday')),
+    'Friday' => date('Y-m-d', strtotime('last Friday')),
+    'Saturday' => date('Y-m-d', strtotime('last Saturday'))
+];
+
+// Assign values to variables for each day of the last week
+foreach ($days_of_last_week as $day => $date) {
+    ${"total_connected_leads_$day"} = $connected_leads_per_day[$date] ?? 0;
+    ${"total_notconnected_leads_$day"} = $notconnected_leads_per_day[$date] ?? 0;
+}
+
+// Example: Access specific values for last Sunday
+// echo "Sunday Connected Leads: " . $total_connected_leads_Sunday . ", Not Connected Leads: " . $total_notconnected_leads_Sunday . "<br>";
+// echo "Monday Connected Leads: " . $total_connected_leads_Monday . ", Not Connected Leads: " . $total_notconnected_leads_Monday . "<br>";
+// echo "Tuesday Connected Leads: " . $total_connected_leads_Tuesday . ", Not Connected Leads: " . $total_notconnected_leads_Tuesday . "<br>";
+// echo "Wednesday Connected Leads: " . $total_connected_leads_Wednesday . ", Not Connected Leads: " . $total_notconnected_leads_Wednesday . "<br>";
+// echo "Thursday Connected Leads: " . $total_connected_leads_Thursday . ", Not Connected Leads: " . $total_notconnected_leads_Thursday . "<br>";
+// echo "Friday Connected Leads: " . $total_connected_leads_Friday . ", Not Connected Leads: " . $total_notconnected_leads_Friday . "<br>";
+// echo "Saturday Connected Leads: " . $total_connected_leads_Saturday . ", Not Connected Leads: " . $total_notconnected_leads_Saturday . "<br>";
+// Repeat for other days
+
+$sunday_connected = $total_connected_leads_Sunday;
+$sunday_notconnected = $total_notconnected_leads_Sunday;
+
+$monday_connected = $total_connected_leads_Monday;
+$monday_notconnected = $total_notconnected_leads_Monday;
+
+$tuesday_connected = $total_connected_leads_Tuesday;
+$tuesday_notconnected = $total_notconnected_leads_Tuesday;
+
+$wednesday_connected = $total_connected_leads_Wednesday;
+$wednesday_notconnected = $total_notconnected_leads_Wednesday;
+
+$thursday_connected = $total_connected_leads_Thursday;
+$thursday_notconnected = $total_notconnected_leads_Thursday;
+
+$friday_connected = $total_connected_leads_Friday;
+$friday_notconnected = $total_notconnected_leads_Friday;
+
+$saturday_connected = $total_connected_leads_Saturday;
+$saturday_notconnected = $total_notconnected_leads_Saturday;
+
+$total_connected_value = $sunday_connected + $monday_connected + $tuesday_connected + $wednesday_connected + $thursday_connected + $friday_connected + $saturday_connected;
+$total_notconnected_value = $sunday_notconnected + $monday_notconnected + $tuesday_notconnected + $wednesday_notconnected + $thursday_notconnected + $friday_notconnected + $saturday_notconnected;
+
+$total_connected_percentage = ($total_connected_value / 7)*100;
+$total_notconnected_percentage = ($total_notconnected_value / 7)*100;
+
+
+
 
 // echo "<pre>";
 // print_r($sql_dead);
@@ -653,47 +743,77 @@ $d_percentage = 50;
                         </div>
                         <!--/ Reasons for delivery exceptions -->
 
-                        <!-- Weekly Overview Chart -->
-                        <div class="col-xxl-4 col-md-6">
-                        <div class="card h-100">
-                            <div class="card-header">
-                            <div class="d-flex justify-content-between">
-                                <h5 class="mb-0">Weekly Overview</h5>
-                                <div class="dropdown">
-                                <!-- <button
-                                    class="btn btn-text-secondary rounded-pill text-muted border-0 p-1"
-                                    type="button"
-                                    id="weeklyOverviewDropdown"
-                                    data-bs-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false">
-                                    <i class="ri-more-2-line ri-20px"></i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="weeklyOverviewDropdown">
-                                    <a class="dropdown-item" href="javascript:void(0);">Last 28 Days</a>
-                                    <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
-                                    <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
-                                </div> -->
+                        <!-- External Links Chart -->
+                            <div class="col-xxl-4 col-md-6">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                <div class="d-flex justify-content-between">
+                                    <!-- <h5 class="mb-1">External Links</h5> -->
+                                    <h5 class="mb-1">Weekly Overviews</h5>
+                                    <!-- <div class="dropdown">
+                                    <button
+                                        class="btn btn-text-secondary rounded-pill text-muted border-0 p-1"
+                                        type="button"
+                                        id="externalLinksDropdown"
+                                        data-bs-toggle="dropdown"
+                                        aria-haspopup="true"
+                                        aria-expanded="false">
+                                        <i class="ri-more-2-line ri-20px"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="externalLinksDropdown">
+                                        <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
+                                        <a class="dropdown-item" href="javascript:void(0);">Update</a>
+                                        <a class="dropdown-item" href="javascript:void(0);">Share</a>
+                                    </div>
+                                    </div> -->
+                                </div>
+                                </div>
+                                <div class="card-body">
+                                <div id="externalLinksChart"></div>
+                                <div class="table-responsive text-nowrap">
+                                    <table class="table table-borderless">
+                                    <tbody>
+                                        <tr>
+                                        <td class="text-start pb-0 ps-0">
+                                            <div class="d-flex align-items-center">
+                                            <i class="ri-circle-fill ri-14px text-primary me-2"></i>
+                                            <h6 class="mb-0 small">Connected Leads</h6>
+                                            </div>
+                                        </td>
+                                        <td class="pb-0">
+                                            <p class="mb-0 small"><?php echo $total_connected_value; ?></p>
+                                        </td>
+                                        <td class="pe-0 pb-0">
+                                            <div class="d-flex align-items-center justify-content-end">
+                                            <h6 class="mb-0 me-2 small"><?php echo intval($total_connected_percentage); ?>%</h6>
+                                            <!-- <i class="ri-arrow-down-s-line text-danger ri-24px"></i> -->
+                                            </div>
+                                        </td>
+                                        </tr>
+                                        <tr>
+                                        <td class="text-start pb-0 ps-0">
+                                            <div class="d-flex align-items-center">
+                                            <i class="ri-circle-fill ri-14px text-secondary me-2"></i>
+                                            <h6 class="mb-0 small">Not Connected Leads</h6>
+                                            </div>
+                                        </td>
+                                        <td class="pb-0">
+                                            <p class="mb-0 small"><?php echo $total_notconnected_value; ?></p>
+                                        </td>
+                                        <td class="pe-0 pb-0">
+                                            <div class="d-flex align-items-center justify-content-end">
+                                            <h6 class="mb-0 me-2 small"><?php echo intval($total_notconnected_percentage); ?>%</h6>
+                                            <!-- <i class="ri-arrow-up-s-line text-success ri-24px"></i> -->
+                                            </div>
+                                        </td>
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </div>
                                 </div>
                             </div>
                             </div>
-                            <div class="card-body">
-                            <div id="weeklyOverviewChart"></div>
-                            <div class="mt-6" style="display:none;">
-                                <div class="d-flex align-items-center gap-4">
-                                <h4 class="mb-0">62%</h4>
-                                <p class="mb-0">Your sales performance is 35% 😎 better compared to last month</p>
-                                </div>
-                                <div class="d-grid mt-6">
-                                <button class="btn btn-primary" type="button">Details</button>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        </div>
-                        <!--/ Weekly Overview Chart -->
-
-                    
+                        <!--/ External Links Chart -->
                 </div>
                 <!--  -->
 
@@ -736,8 +856,15 @@ $d_percentage = 50;
 
 
             // DONUT GRAPH - Total Leads And Assigned Leads
-            var d_percentage = <?php echo $d_percentage; ?>;
+            var d_percentage = '<?php echo $d_percentage; ?>';  
             var d_series = [<?php echo $total_fresh_c;?>, <?php echo $total_assign_c; ?>];
+
+            // var bar_data_connected = [<?php echo $sunday_connected; ?>,<?php echo $monday_connected; ?>,<?php echo $tuesday_connected; ?>,<?php echo $wednesday_connected; ?>,<?php echo $thursday_connected; ?>,<?php echo $friday_connected; ?>,<?php echo $saturday_connected; ?>];
+            // var bar_data_notconnected = [<?php echo $sunday_notconnected; ?>,<?php echo $monday_notconnected; ?>,<?php echo $tuesday_notconnected; ?>,<?php echo $wednesday_notconnected; ?>,<?php echo $thursday_notconnected; ?>,<?php echo $friday_notconnected; ?>,<?php echo $saturday_notconnected; ?>];
+
+            var bar_data_connected = [10, 20, 30, 40, 50, 60, 70];
+            var bar_data_notconnected = [110, 235, 125, 230, 215, 115, 200];
+            
 
       </script>
       <script src="assets/js/dashboards-crm.js"></script>

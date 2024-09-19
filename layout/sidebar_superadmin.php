@@ -132,17 +132,37 @@
             <li class="menu-item">
               <a href="#" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons ri-file-chart-line"></i>
-                <div data-i18nn="Invoice">Reports</div>
+                <div data-i18nn="Invoice">CE Reports</div>
               </a>
-              <ul class="menu-sub">
-                
-                <li class="menu-item">
-                  <a href="#" class="menu-link">
-                    <div data-i18nn="Preview">View Reports</div>
-                  </a>
-                </li>
+                <ul class="menu-sub">
+
+                      <li class="menu-item">
+                        <a href="#" class="menu-link">
+                          <div data-i18nn="Preview">Assigned</div>
+                        </a>
+                      </li>
+
+                      <li class="menu-item">
+                        <a href="#" class="menu-link">
+                          <div data-i18nn="Preview">Followup</div>
+                        </a>
+                      </li>
+
+                      <li class="menu-item">
+                        <a href="#" class="menu-link">
+                          <div data-i18nn="Preview">Transferred</div>
+                        </a>
+                      </li>
+
+                      <li class="menu-item">
+                        <a href="#" class="menu-link">
+                          <div data-i18nn="Preview">Dead</div>
+                        </a>
+                      </li>
+
               </ul>
             </li>
+
 
 
           </ul>

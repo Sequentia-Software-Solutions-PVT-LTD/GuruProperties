@@ -280,8 +280,8 @@
                                   <br>
                                     <h6>From,</h6>
                                     <p> <?php echo $_SESSION['login_name'] ?></p>
-                                    <p>401, Koyna, Mohan Nagar,</p>
-                                    <p>Baner, Pune, Maharashtra - 411045.</p>
+                                    <!-- <p>401, Koyna, Mohan Nagar,</p>
+                                    <p>Baner, Pune, Maharashtra - 411045.</p> -->
                                     <p>Contact No: <?php echo $contact; ?></p>
                                 </div>
 

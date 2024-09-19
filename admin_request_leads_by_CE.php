@@ -123,6 +123,10 @@
                                 $q = $pdo->query($sql);
                                 foreach ($pdo->query($sql) as $row1) 
                                 { 
+                                    // echo "<pre>";
+                                    // print_r($row1);
+                                    // exit(); 
+
                                     $assign_leads_id = $row1['assign_leads_id'];
                                     $leads_id = $row1['leads_id'];
                                     $admin_id = $row1['admin_id'];
@@ -136,12 +140,18 @@
                                     // echo "<pre>";
                                     // print_r($sqlex);
                                     // print_r($row_ex);
-                                    // exit();
+                                    // exit();  
 
                                     $sqlemp = "select * from employee where admin_id = $admin_id ";
                                     $q = $pdo->prepare($sqlemp);
                                     $q->execute(array());      
                                     $row_emp = $q->fetch(PDO::FETCH_ASSOC);
+
+                                    $emp_name = $row1["employee_name"];
+                                    $sqlempaa = "select * from employee where employee_name = '$emp_name' ";
+                                    $q = $pdo->prepare($sqlempaa);
+                                    $q->execute(array());      
+                                    $row_emp_assign = $q->fetch(PDO::FETCH_ASSOC);
 
                                     $sqlleads = "select * from leads where id = $leads_id ";
                                     $q = $pdo->prepare($sqlleads);
@@ -167,7 +177,20 @@
                                         </div>
                                       </div>
                                     </td>
-                                    <td><?php echo $row1["employee_name"]; ?></td>
+                                    <!-- <td><?php echo $row1["employee_name"]; ?></td> -->
+                                    <td>
+                                      <div class="d-flex justify-content-start align-items-center user-name">
+                                        <div class="avatar-wrapper">
+                                          <div class="avatar avatar-sm me-3">
+                                            <img src="assets/img/avatars/<?php echo $row_emp_assign["login_photo"];?>" alt="Avatar" class="rounded-circle">
+                                          </div>
+                                        </div>
+                                        <div class="d-flex flex-column">
+                                          <span class="name text-truncate h6 mb-0"><?php echo $row1["employee_name"]; ?></span>
+                                          <small class="user_name text-truncate"><?php echo $row_emp_assign["user_id"]; ?></small>
+                                        </div>
+                                      </div>
+                                    </td>
                                     <td style="text-wrap: wrap;"><?php echo $row_ex["transfer_reason"]; ?></td>
                                     <td><?php echo date('d-m-Y H:i A', strtotime($row1["admin_request_date"])); ?></td>
                                     <td>

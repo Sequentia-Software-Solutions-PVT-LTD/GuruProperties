@@ -820,12 +820,13 @@
       },
       series: [
         {
-          name: 'Google Analytics',
-          data: [155, 135, 320, 100, 150, 335, 160]
+          // name: 'Google Analytics',
+          name: 'Connected',
+          data: bar_data_connected
         },
         {
-          name: 'Facebook Ads',
-          data: [110, 235, 125, 230, 215, 115, 200]
+          name: 'Not Connected',
+          data: bar_data_notconnected
         }
       ],
       plotOptions: {

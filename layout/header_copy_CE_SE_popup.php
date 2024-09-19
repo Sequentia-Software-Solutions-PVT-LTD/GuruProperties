@@ -108,16 +108,6 @@
         .ri-survey-line1 {
           display: none;
         }
-        .menu-link.active {
-          background-color: #666cff !important;
-          color: #ffffff;
-        }
-
-        @media(max-width: 767px) {
-          .card-header.header-elements {
-            justify-content: space-between;
-          }
-        }
     </style>
     <style>
         .login-btn {
