@@ -7,47 +7,30 @@
 
   include ('dist/conf/db.php');
   $pdo = Database::connect();
-
-    $from_date_submit = "";
-    $to_date_submit = "";
-    $sr_id_submit = "";
-    $varients = "";
-    $location = "";
-    $builder_possession = "";
-
-	$sql_query = "SELECT * from attendance WHERE status='Active'";
-    // $sql_query = "SELECT * FROM attendance ";
-    $pdata = $pdo->prepare($sql_query);
-    $pdata->execute();
-    $results = $pdata->fetchAll(PDO::FETCH_ASSOC);
-
-  if(isSet($_POST["submit"]))
+  
+  if(isSet($_POST["pdf"]))
   { 
-   
-    // echo "<pre>";
-    // print_r($_POST);
-    // exit();
 
-    $year = $_POST['year'];
-    // $from_date = $_POST['from_date'];
-    // $to_date = $_POST['to_date'];
+    print_R($_POST);
+    exit();
 
-    $from_date = '2024-09-10';
-    $to_date = '2024-09-18';
+    $current_year = $_POST['year'];
 
+    $from_month = $_POST['from_month'];
+    $to_month = $_POST['from_month'];
     $employee_name = $_POST['employee_name'];
 
-    // echo "<pre>";
-    // print_r($_POST);
-    // exit();
+    // Convert month numbers to date strings (e.g., '02' -> '2024-02-01' and '09' -> '2024-09-30')
+    $from_date = "$current_year-$from_month-01";
+    $to_date = date("Y-m-t", strtotime("$current_year-$to_month-01")); // 'Y-m-t' gives the last day of the given month
 
-    // $sql_query = "SELECT * from attendance WHERE login_name = '$employee_name' and date =  $from_date to $to_date ";
-    // // $sql_query = "SELECT * FROM attendance ";
-    // $pdata = $pdo->prepare($sql_query);
-    // $pdata->execute();
-    // $results = $pdata->fetchAll(PDO::FETCH_ASSOC);
-
-    $sql_query = "SELECT * FROM attendance WHERE login_name = :employee_name AND date BETWEEN :from_date AND :to_date";
+    // SQL query with month filtering
+    $sql_query = "
+        SELECT * 
+        FROM attendance 
+        WHERE login_name = :employee_name 
+        AND date BETWEEN :from_date AND :to_date
+    ";
 
     // Prepare the statement
     $pdata = $pdo->prepare($sql_query);
@@ -62,13 +45,10 @@
     // Fetch the results
     $results = $pdata->fetchAll(PDO::FETCH_ASSOC);
 
-    
     // echo "<pre>";
     // print_r($sql);
     // exit();
-    
-    // header('location:attendance_report');
-     
+
   }
 
 ?>
@@ -107,7 +87,7 @@
     
   </head>
 
-  <body>
+  <body onload="window.print();">
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -128,81 +108,6 @@
               <!-- <hr class="my-12"> -->
                 
                 <div class="card">
-                    <!-- Filters -->
-                    <form class="my-10 pb-5" action="#" method="post" enctype="multipart/form-data">
-                        <div class="row justify-content-center align-items-center">
-                            
-                            <div class="col-md-4">
-                                <!-- <div class="form-floating form-floating-outline">
-                                    <div class="input-group input-daterange" id="bs-datepicker-daterange">
-                                        <input type="text" id="dateRangePicker" placeholder="MM/DD/YYYY" class="form-control" />
-                                        <span class="input-group-text">to</span>
-                                        <input type="text" placeholder="MM/DD/YYYY" class="form-control" />
-                                    </div>
-                                    
-                                </div> -->
-                                <label for="dateRangePicker" class="form-label">Date Range</label>
-                                <div class="input-group input-daterange" id="bs-datepicker-daterange">
-                                    <input type="text" id="dateRangePicker" placeholder="MM/DD/YYYY" class="form-control" />
-                                    <span class="input-group-text">to</span>
-                                    <input type="text" placeholder="MM/DD/YYYY" class="form-control" />
-                                </div>
-                                <!-- </div> -->
-                            </div>
-
-                            <?php 
-                                $current_year = date('Y');  // eg. 2024
-                                $last_year = date('Y') - 1; // eg. 2023
-                            ?>
-                            <div class="col-md-2">
-                                <div class="form-floating form-floating-outline">
-                                    <select id="form-repeater-1-3" class="form-select" name = "year">
-                                        <option value="">Select Year</option>
-                                        <option value="<?php echo $current_year; ?>"><?php echo $current_year; ?></option>
-                                        <option value="<?php echo $last_year; ?>"><?php echo $last_year; ?></option>
-                                    </select>
-                                    <label for="roleDropdown">Year</label>
-                                </div>
-                                <!-- </div> -->
-                            </div>
-
-                            <div class="col-md-2">
-                                <!-- <div class="row"> -->
-                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Builder Possession</label> -->
-                                <!-- <div class="col-sm-9 form-floating form-floating-outline"> -->
-                                <div class="form-floating form-floating-outline">
-                                        <select
-                                            name="employee_name"
-                                            id="selectpickerSubtext"
-                                            class="selectpicker w-100"
-                                            data-style="btn-default"
-                                            data-show-subtext="true" required
-                                        >
-                                        <option>Select Executive</option>
-                                        <?php
-                                            $sql = "SELECT * FROM  employee where status='Active' ";
-                                            foreach ($pdo->query($sql) as $row) 
-                                            { 
-                                            ?>
-                                            <option  value="<?php echo $row['employee_name']?>"><?php echo $row['employee_name']?></option> 
-                                        <?php } ?>
-                                        </select>
-                                    <label for="roleDropdown">Select Executive</label>
-                                </div>
-                                <!-- </div> -->
-                            </div>
-
-                            <div class="col-md-3">
-                                <button type="submit" name="submit" class="btn btn-success">Search</button>
-                                <?php if(isSet($_POST["submit"])) { ?>
-                                <button target="_blank" class="btn btn-danger" style="padding: 7px;" name="pdf" onclick="javascript: form.action='pdf_export_fromto_report';"><i class="ri-file-pdf-2-line" aria-hidden="true"></i></button>
-                                <button type="" name="xlsx" class="btn btn-warning"   style="padding: 7px;" onclick="javascript: form.action='xlsx_export_fromto_report';"><i class="ri-file-excel-line" aria-hidden="true"></i></button>
-                                <?php } ?>
-                            </div>
-                            
-                        </div>
-                    </form>
-                    <hr>
 
                     
                     <!-- /filters -->
