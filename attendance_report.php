@@ -29,30 +29,10 @@
     // exit();
 
     $current_year = $_POST['year'];
-    // $from_date = $_POST['from_date'];
-    // $to_date = $_POST['to_date'];
-
-    $from_date = '2024-09-10';
-    $to_date = '2024-09-18';
-
-    // [from_month] => 02
-    // [to_month] => 09
 
     $from_month = $_POST['from_month'];
     $to_month = $_POST['from_month'];
     $employee_name = $_POST['employee_name'];
-
-    // $sql_query = "SELECT * FROM attendance WHERE login_name = :employee_name AND date BETWEEN :from_date AND :to_date";
-    // $pdata = $pdo->prepare($sql_query);
-    // $pdata->execute([
-    //     ':employee_name' => $employee_name,
-    //     ':from_date' => $from_date,
-    //     ':to_date' => $to_date
-    // ]);
-    // $results = $pdata->fetchAll(PDO::FETCH_ASSOC);
-
-    // // 
-    // $current_year = date('Y');
 
     // Convert month numbers to date strings (e.g., '02' -> '2024-02-01' and '09' -> '2024-09-30')
     $from_date = "$current_year-$from_month-01";
@@ -79,12 +59,10 @@
     // Fetch the results
     $results = $pdata->fetchAll(PDO::FETCH_ASSOC);
 
-    
     // echo "<pre>";
     // print_r($sql);
     // exit();
-    
-    // header('location:attendance_report');
+
      
   }
 
@@ -122,7 +100,7 @@
     
   </head>
 
-  <body>
+  <body id="attendance_report">
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -144,26 +122,8 @@
                 
                 <div class="card">
                     <!-- Filters -->
-                    <form class="my-10 pb-5" action="#" method="post" enctype="multipart/form-data">
+                    <form class="my-10 pb-5" action="attendance_report" method="post" >
                         <div class="row justify-content-center align-items-center">
-                            
-                            <div class="col-md-4" style="display:none;">
-                                <div class="form-floating form-floating-outline">
-                                    <!-- <div class="input-group input-daterange" id="bs-datepicker-daterange">
-                                        <input type="text" id="dateRangePicker" placeholder="MM/DD/YYYY" class="form-control" />
-                                        <span class="input-group-text">to</span>
-                                        <input type="text" placeholder="MM/DD/YYYY" class="form-control" />
-                                    </div> -->
-                                    <!--  -->
-                                    <div class="input-group input-daterange" id="bs-datepicker-daterange">
-                                        <input type="text" id="dateRangePicker" placeholder="MM/DD/YYYY" class="form-control" />
-                                        <span class="input-group-text">to</span>
-                                        <input type="text" placeholder="MM/DD/YYYY" class="form-control" />
-                                    </div>
-
-
-                                </div>
-                            </div>
 
                             <!-- from Month  -->
                             <div class="col-md-3">
@@ -202,48 +162,6 @@
 
                                 </div>
                             </div>
-                            <!-- to Month -->
-                            <!-- <div class="col-md-2">
-                                <div class="form-floating form-floating-outline">
-                                   
-                                    <select name="to_month" id="monthDropdown" class="form-control" >
-                                        <option>Select Month</option>
-                                        <?php
-                                        // Array of month names
-                                        $months = [
-                                            "01" => "January", 
-                                            "02" => "February", 
-                                            "03" => "March", 
-                                            "04" => "April", 
-                                            "05" => "May", 
-                                            "06" => "June", 
-                                            "07" => "July", 
-                                            "08" => "August", 
-                                            "09" => "September", 
-                                            "10" => "October", 
-                                            "11" => "November", 
-                                            "12" => "December"
-                                        ];
-
-                                        $current_month = date('m');
-
-                                        foreach ($months as $key => $month) {
-                                            echo "<option value=\"$key\">$month</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                    <label for="roleDropdown">To Month</label>
-
-                                </div>
-                            </div> -->
-
-                            <!--  -->
-
-                                <!-- <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="YYYY-MM-DD to YYYY-MM-DD"
-                                  id="flatpickr-range" style=""/> -->
 
                             <?php 
                                 $current_year = date('Y');  // eg. 2024
@@ -290,8 +208,8 @@
                             <div class="col-md-3">
                                 <button type="submit" name="submit" class="btn btn-success">Search</button>
                                 <?php if(isSet($_POST["submit"])) { ?>
-                                <button target="_blank" class="btn btn-danger" style="padding: 7px;" name="pdf" onclick="javascript: form.action='pdf_export_fromto_report_attendance';"><i class="ri-file-pdf-2-line" aria-hidden="true"></i></button>
-                                <button type="" name="xlsx" class="btn btn-warning"   style="padding: 7px;" onclick="javascript: form.action='xlsx_export_fromto_report';"><i class="ri-file-excel-line" aria-hidden="true"></i></button>
+                                <button target="_blank" class="btn btn-danger" style="padding: 7px;" name="pdf" onclick="javascript: form.action='pdf_export_report_attendance';"><i class="ri-file-pdf-2-line" aria-hidden="true"></i></button>
+                                <!-- <button type="" name="xlsx" class="btn btn-warning"   style="padding: 7px;" onclick="javascript: form.action='xlsx_export_report_attendance';"><i class="ri-file-excel-line" aria-hidden="true"></i></button> -->
                                 <?php } ?>
                             </div>
                             
