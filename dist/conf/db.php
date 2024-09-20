@@ -7,18 +7,6 @@ class Database {
    private static $dbUsername = 'vgswvumy_guruproperties';
    private static $dbUserPassword = 'uLIO;seh;=Mn';
    private static $cont  = null;
-  //  ------------------------------------------------------------
-  
-
-  
-  // private static $dbName = 'guru_seqpro'; 
-  // private static $dbName = 'guru_enterprises_gayatri'; 
-  // private static $dbName = 'guru_enterprises'; 
-  // private static $dbHost = 'localhost';
-  // private static $dbUsername = 'root';
-  // private static $dbUserPassword = '';
-  // private static $cont  = null;
-
  
     public function __construct() {
         die('Init function is not allowed');

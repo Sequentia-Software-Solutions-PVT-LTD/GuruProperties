@@ -137,7 +137,7 @@
                 <ul class="menu-sub">
 
                       <li class="menu-item">
-                        <a href="#" class="menu-link">
+                        <a href="Ass" class="menu-link">
                           <div data-i18nn="Preview">Assigned</div>
                         </a>
                       </li>
@@ -163,6 +163,12 @@
               </ul>
             </li>
 
+            <li class="menu-item">
+              <a href="attendance_report" class="menu-link">
+              <i class="menu-icon tf-icons ri-file-chart-line"></i>
+                <div data-i18nn ="Preview">Attendance Report</div>
+              </a>
+            </li>
 
 
           </ul>
