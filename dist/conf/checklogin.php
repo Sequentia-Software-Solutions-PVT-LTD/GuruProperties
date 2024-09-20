@@ -58,7 +58,8 @@
 					"timeline",
 					"dashboard_superadmin",
 					"dashboard_CE",
-					"dashboard_SE"
+					"dashboard_SE",
+					"attendance_report"
 				);
 
 				$CEAllowedPages = array(
