@@ -39,11 +39,6 @@
 					"fetch_towers",
 					"fetch_variants",
 					"login",
-					"report_design_sample",
-					"report_lead",
-					"report_converted_all",
-					"report_converted_separated",
-					"report_sold_properties",
 				);
 
 				$superadminAllowedPages = array(
@@ -59,7 +54,12 @@
 					"dashboard_superadmin",
 					"dashboard_CE",
 					"dashboard_SE",
-					"attendance_report"
+					"attendance_report",
+					"report_design_sample",
+					"report_lead",
+					"report_converted_all",
+					"report_converted_separated",
+					"report_sold_properties",
 				);
 
 				$CEAllowedPages = array(
