@@ -55,11 +55,27 @@
 					"dashboard_CE",
 					"dashboard_SE",
 					"attendance_report",
+
 					"report_design_sample",
 					"report_lead",
 					"report_converted_all",
 					"report_converted_separated",
 					"report_sold_properties",
+
+					"report_summary",
+					"report_CE_freshleads",
+					"report_CE_assignedleads",
+					"report_CE_followupleads",
+					"report_CE_transferredleads",
+					"report_CE_deadleads",
+					"report_SE_dead",
+					"report_summary_SE",
+					"report_SE_converted",
+					"report_SE_received",
+					"report_SE_transferToCE",
+					"report_SE_transferToSE",
+					"report_SE_visited",
+					"pdf_export_report_attendance"
 				);
 
 				$CEAllowedPages = array(

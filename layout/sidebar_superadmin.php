@@ -129,6 +129,15 @@
               <span class="menu-header-text" data-i18nn="Apps & Pages">Reports</span>
             </li>
 
+            
+
+            <li class="menu-item">
+              <a href="report_summary" class="menu-link">
+              <i class="menu-icon tf-icons ri-file-chart-line"></i>
+                <div data-i18nn ="Preview">Summary Report - CE</div>
+              </a>
+            </li>
+
             <li class="menu-item">
               <a href="#" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons ri-file-chart-line"></i>
@@ -137,25 +146,84 @@
                 <ul class="menu-sub">
 
                       <li class="menu-item">
-                        <a href="Ass" class="menu-link">
+                        <a href="report_CE_freshleads" class="menu-link">
+                          <div data-i18nn="Preview">Received</div>
+                        </a>
+                      </li>
+
+                      <li class="menu-item">
+                        <a href="report_CE_assignedleads" class="menu-link">
                           <div data-i18nn="Preview">Assigned</div>
                         </a>
                       </li>
 
                       <li class="menu-item">
-                        <a href="#" class="menu-link">
+                        <a href="report_CE_followupleads" class="menu-link">
                           <div data-i18nn="Preview">Followup</div>
                         </a>
                       </li>
 
                       <li class="menu-item">
-                        <a href="#" class="menu-link">
+                        <a href="report_CE_transferredleads" class="menu-link">
                           <div data-i18nn="Preview">Transferred</div>
                         </a>
                       </li>
 
                       <li class="menu-item">
-                        <a href="#" class="menu-link">
+                        <a href="report_CE_deadleads" class="menu-link">
+                          <div data-i18nn="Preview">Dead</div>
+                        </a>
+                      </li>
+
+              </ul>
+            </li>
+
+            <li class="menu-item">
+              <a href="report_summary_SE" class="menu-link">
+              <i class="menu-icon tf-icons ri-file-chart-line"></i>
+                <div data-i18nn ="Preview">Summary Report - SE</div>
+              </a>
+            </li>
+
+            <li class="menu-item">
+              <a href="#" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons ri-file-chart-line"></i>
+                <div data-i18nn="Invoice">SE Reports</div>
+              </a>
+                <ul class="menu-sub">
+
+                      <li class="menu-item">
+                        <a href="report_SE_converted" class="menu-link">
+                          <div data-i18nn="Preview">Converted</div>
+                        </a>
+                      </li>
+
+                      <li class="menu-item">
+                        <a href="report_SE_received" class="menu-link">
+                          <div data-i18nn="Preview">Received</div>
+                        </a>
+                      </li>
+
+                      <li class="menu-item">
+                        <a href="report_SE_visited" class="menu-link">
+                          <div data-i18nn="Preview">Visited</div>
+                        </a>
+                      </li>
+
+                      <li class="menu-item">
+                        <a href="report_SE_transferToCE" class="menu-link">
+                          <div data-i18nn="Preview">Transferred To CE</div>
+                        </a>
+                      </li>
+
+                      <li class="menu-item">
+                        <a href="report_SE_transferToSE" class="menu-link">
+                          <div data-i18nn="Preview">Transferred To SE</div>
+                        </a>
+                      </li>
+
+                      <li class="menu-item">
+                        <a href="report_SE_dead" class="menu-link">
                           <div data-i18nn="Preview">Dead</div>
                         </a>
                       </li>
@@ -197,6 +265,7 @@
                 <div data-i18nn ="Preview">Sold Properties Report</div>
               </a>
             </li>
+
 
           </ul>
         </aside>
