@@ -170,6 +170,33 @@
               </a>
             </li>
 
+            <li class="menu-item">
+              <a href="report_lead.php" class="menu-link">
+              <i class="menu-icon tf-icons ri-file-chart-line"></i>
+                <div data-i18nn ="Preview">Lead Report</div>
+              </a>
+            </li>
+
+            <li class="menu-item">
+              <a href="report_converted_all.php" class="menu-link">
+              <i class="menu-icon tf-icons ri-file-chart-line"></i>
+                <div data-i18nn ="Preview">All Converted Report </div>
+              </a>
+            </li>
+
+            <li class="menu-item">
+              <a href="report_converted_separated.php" class="menu-link">
+              <i class="menu-icon tf-icons ri-file-chart-line"></i>
+                <div data-i18nn ="Preview">Separated Converted Report </div>
+              </a>
+            </li>
+
+            <li class="menu-item">
+              <a href="report_sold_properties.php" class="menu-link">
+              <i class="menu-icon tf-icons ri-file-chart-line"></i>
+                <div data-i18nn ="Preview">Sold Properties Report</div>
+              </a>
+            </li>
 
           </ul>
         </aside>

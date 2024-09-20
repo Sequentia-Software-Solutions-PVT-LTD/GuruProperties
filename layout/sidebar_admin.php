@@ -54,28 +54,7 @@
               </a>
               <ul class="menu-sub">
                 
-                <li class="menu-item">
-                  <a href="report_lead.php" class="menu-link">
-                    <div data-i18nn="Preview">Lead Report</div>
-                  </a>
-                </li>
                 
-                <li class="menu-item">
-                  <a href="report_converted_all.php" class="menu-link">
-                    <div data-i18nn="Preview">Converted Report All</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="report_converted_separated.php" class="menu-link">
-                    <div data-i18nn="Preview">Converted Report Separated</div>
-                  </a>
-                </li>
-                
-                <li class="menu-item">
-                  <a href="report_sold_properties.php" class="menu-link">
-                    <div data-i18nn="Preview">Sold Prorperties</div>
-                  </a>
-                </li>
 
 
               </ul>
