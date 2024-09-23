@@ -280,11 +280,20 @@
                                           data-style="btn-default"
                                           data-show-subtext="true" required>
                                           <?php
+                                            if(isset($_SESSION['login_user_id']) && $_SESSION['login_user_id'] != 0) {
+                                              $admin_id = $_SESSION['login_user_id'];
+                                              $sqlemployee = "SELECT * FROM employee WHERE admin_id = ?";
+                                              $qemployee = $pdo->prepare($sqlemployee);
+                                              $qemployee->execute(array($admin_id));
+                                              $employeeArray = $qemployee->fetch(PDO::FETCH_ASSOC);
+                                              $employeeID = $employeeArray['employee_id'];
+                                            }
+
                                             $sql = "SELECT * FROM  employee where status='Active' and login_role='CUSTOMER EXECUTIVE' ";
                                             foreach ($pdo->query($sql) as $row) 
-                                            { 
+                                            { $disabled = ""; if($row['employee_id'] == $employeeID) $disabled = "disabled";
                                             ?>
-                                              <option data-subtext="<?php echo $row['location']?>" value="<?php echo $row['employee_id']?>"><?php echo $row['employee_name']?></option> 
+                                              <option <?php echo $disabled; ?> data-subtext="<?php echo $row['location']?>" value="<?php echo $row['employee_id']; ?>"><?php echo $row['employee_name']?></option> 
                                           <?php } ?>
                                         </select>
                                         <label for="selectpickerSubtext">Select Customer Executive</label>
@@ -300,7 +309,7 @@
                                           name="next_date"
                                           type="text"
                                           class="form-control"
-                                          placeholder="YYYY-MM-DD HH:MM"
+                                          placeholder="DD-MM-YYYY HH:MM"
                                           id="flatpickr-datetime" />
                                           <label for="flatpickr-datetime">Visit Date-Time</label>
                                         </div>

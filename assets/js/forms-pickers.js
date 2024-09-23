@@ -37,19 +37,19 @@
   if (flatpickrDateTime) {
     flatpickrDateTime.flatpickr({
       enableTime: true,
-      dateFormat: 'Y-m-d H:i'
+      dateFormat: 'd-m-Y H:i'
     });
   }
   if (flatpickrDateTime1) {
     flatpickrDateTime1.flatpickr({
       enableTime: true,
-      dateFormat: 'Y-m-d H:i'
+      dateFormat: 'd-m-Y H:i'
     });
   }
   if (flatpickrDateTime2) {
     flatpickrDateTime2.flatpickr({
       enableTime: true,
-      dateFormat: 'Y-m-d H:i'
+      dateFormat: 'd-m-Y H:i'
     });
   }
 

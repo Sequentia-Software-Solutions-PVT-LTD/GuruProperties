@@ -1800,7 +1800,7 @@
                         <div class="timeline-event-time"><?php 
                         echo date("d-m-Y" , strtotime($variant['timlinedate']));
                         echo "<br>";
-                        echo date("H:i:s" , strtotime($variant['timlinedate']));
+                        echo date("H:i A" , strtotime($variant['timlinedate']));
                         ?>
                         </div>
                       </div>

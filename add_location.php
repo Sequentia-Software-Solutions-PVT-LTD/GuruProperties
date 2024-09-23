@@ -10,23 +10,37 @@
 
   if(isSet($_POST["submit"]))
   { 
+    
     $location = $_POST['location'];
+    $subCount= count($_POST['location']);
 
-    $added_on = date('Y-m-d H-i-s');
-    // $status = "Active";
+    for($i=0;$i<$subCount;$i++) 
+    {        
+        $added_on = date('Y-m-d H-i-s');
+        $locationSingle = $location[$i];
 
-    // echo "<pre>";
-    // print_r($_POST);
-    // exit();
-    
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "INSERT INTO `location`(`name`) VALUES (?)";
-    $q = $pdo->prepare($sql);
-    $q->execute(array($location));
-    // $lastInsertedId = $pdo->lastInsertId();
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sql = "INSERT INTO `location`(`name`) VALUES (?)";
+        $q = $pdo->prepare($sql);
+        $q->execute(array($locationSingle));
+    }
 
-    
     header('location:view_locations');
+
+    // $location = $_POST['location'];
+
+    // $added_on = date('Y-m-d H-i-s');
+    // // $status = "Active";
+
+    // // echo "<pre>";
+    // // print_r($_POST);
+    // // exit();
+    
+    // $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // $sql = "INSERT INTO `location`(`name`) VALUES (?)";
+    // $q = $pdo->prepare($sql);
+    // $q->execute(array($location));
+    // // $lastInsertedId = $pdo->lastInsertId();    
      
   }
 
@@ -88,9 +102,9 @@
                     <h5 class="card-header">Add Property Location </h5>
                     <div class="card-body demo-vertical-spacing demo-only-element">
                         <div class="d-flexz align-items-center1 justify-content-center1">
-                        <form action="#" method="post">
-                          <div class="row mt-2">
-                            <div class="col-md-12">
+                        <!-- <form action="#" method="post"> -->
+                          <!-- <div class="row mt-2"> -->
+                            <!-- <div class="col-md-12"> -->
                             <!-- <div class="row">
                                 <label class="col-sm-2 col-form-label text-sm-end" for="formtabs-username">Property Location</label>
                                 <div class="col-sm-6">
@@ -98,12 +112,12 @@
                                 </div>
                               </div>
                             </div> -->
-                            <div class="form-floating form-floating-outline mb-6">
+                            <!-- <div class="form-floating form-floating-outline mb-6">
                               <input type="text" name="location" id="formtabs-username" class="form-control" placeholder="Property Location" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required />
                               <label for="formtabs-username"> Property Location</label>
-                            </div>
-                          </div>
-                          </div>
+                            </div> -->
+                          <!-- </div> -->
+                          <!-- </div> -->
 
                           <!-- <div class="row">
                             <div class="col-md-11">
@@ -114,14 +128,52 @@
                               </div>
                             </div>
                           </div> -->
-                          <div class="row mt-10">
+                          <!-- <div class="row mt-10">
                             <div class="col-md-12 justify-content-end text-end">
                                   <button type="submit" class="btn btn-success me-4 waves-effect waves-light d-flex float-right" name="submit">Submit</button>
                                   <button type="reset" class="btn btn-outline-secondary waves-effect  d-flex float-left">Cancel</button>
                             </div>
-                          </div>
+                          </div> -->
 
-                        </form>
+                        <!-- </form> -->
+                        <form action="#" class="form-repeater" method="POST" enctype="multipart/form-data">
+                            <div data-repeater-list="group-a">
+                            <div data-repeater-item="" style=""  class="items" data-group="test">
+                                <div class="box-body" id="lead_addmore_div">
+                                <div class="row">
+
+                                    <div class="mb-6 col-lg-6 col-xl-2 col-12 mb-0">
+                                      <div class="form-floating form-floating-outline">
+                                        <input type="text" name="location[]" id="form-repeater-3-5" class="form-control" placeholder="Property Location" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required>
+                                        <label for="form-repeater-1-1">Property Location</label>
+                                      </div>
+                                    </div>
+                                    
+                                  </div>
+                                  <hr class="mt-0">
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-start">
+                                  <div class="col-4">
+                                    <!-- <button type="button" class="btn btn-primary mt-4" onclick="addVariant()">+ Add</button> -->
+                                    <button type="button" onclick="addMore();" class="btn btn-primary waves-effect waves-light repeater-add-btn">
+                                      <i class="ri-add-line me-1"></i>
+                                      <span class="align-middle">Add</span>
+                                    </button>
+                                  </div>
+                            </div>
+
+                            <div class="row mt-10">
+                                  <div class="col-md-12">
+                                        <button type="submit"  data-bs-toggle="tooltip" data-bs-placement="left"  class="btn btn-success me-4 waves-effect waves-light d-flex float-right" name="submit"  title="Click here to add above information">Submit</button>
+                                        <button type="reset" class="btn btn-outline-secondary waves-effect  d-flex float-left">Cancel</button>
+                                  </div>
+                            </div>
+
+                          </form>
+
+
                         </div>
                     </div>
                 </div>
@@ -154,23 +206,29 @@
       <!-- Footer -->
         <?php include 'layout/footer_js.php'; ?>
       <!-- / Footer -->
-
+      <script>
+          function addMore() {
+            // $("<DIV>").load("lead_addmore.php?exist", function() {
+                $("#lead_addmore_div").append('<div class="row"><div class="mb-6 col-lg-6 col-xl-2 col-12 mb-0"><div class="form-floating form-floating-outline"><input type="text" name="location[]" id="form-repeater-3-5" class="form-control" placeholder="Property Location" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, \'\')" required><label for="form-repeater-1-1">Property Location</label></div></div></div><hr class="mt-0">');
+            // }); 
+          }
+      </script>
       <script>
         $(document).ready(function() {
-    $('#roleDropdown').change(function() {
-        var selectedRole = $(this).val();
-        var prefix = '';
+            $('#roleDropdown').change(function() {
+                var selectedRole = $(this).val();
+                var prefix = '';
 
-        if (selectedRole === 'CUSTOMER EXECUTIVE') {
-            prefix = 'CE';
-        } else if (selectedRole === 'SALES EXECUTIVE') {
-            prefix = 'SE';
-        }
+                if (selectedRole === 'CUSTOMER EXECUTIVE') {
+                    prefix = 'CE';
+                } else if (selectedRole === 'SALES EXECUTIVE') {
+                    prefix = 'SE';
+                }
 
-        // Set the prefix in the input field
-        $('#prefixInput').val(prefix + '-');
-    });
-});
+                // Set the prefix in the input field
+                $('#prefixInput').val(prefix + '-');
+            });
+        });
       </script>
     
   </body>

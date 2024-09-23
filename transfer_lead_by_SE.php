@@ -412,7 +412,7 @@
                                                                         name="next_date"
                                                                         type="text"
                                                                         class="form-control"
-                                                                        placeholder="YYYY-MM-DD HH:MM"
+                                                                        placeholder="DD-MM-YYYY HH:MM"
                                                                         id="flatpickr-datetime" />
                                                                     <label for="flatpickr-datetime">Next Follow Up Date Time</label>
                                                                 </div>

@@ -162,11 +162,11 @@ if (isset($_POST["submit"])) {
     <style>
       .bs-stepper .step.active .bs-stepper-icon svg,
       .bs-stepper .step.crossed .step-trigger .bs-stepper-icon svg {
-        fill: red !important;
+        fill: #67e4e4 !important;
       }
       .bs-stepper.wizard-icons .step.crossed .bs-stepper-label, .bs-stepper.wizard-icons .step.active .bs-stepper-label,
       .bs-stepper .step.crossed + .line i {
-        color: red !important;
+        color: #67e4e4 !important;
       }
     </style>
   </head>
@@ -330,11 +330,11 @@ if (isset($_POST["submit"])) {
                                 </div>
                             </div>
                             <div class="col-12 d-flex justify-content-between">
-                              <button class="btn btn-outline-secondary btn-prev" disabled>
+                              <button type="button" class="btn btn-outline-secondary btn-prev" disabled>
                                 <i class="ri-arrow-left-line me-sm-1"></i>
                                 <span class="align-middle d-sm-inline-block d-none">Previous</span>
                               </button>
-                              <button class="btn btn-success btn-next">
+                              <button type="button" class="btn btn-success btn-next">
                                 <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span>
                                 <i class="ri-arrow-right-line"></i>
                               </button>
@@ -399,11 +399,11 @@ if (isset($_POST["submit"])) {
                             </div>
 
                             <div class="col-12 d-flex justify-content-between">
-                              <button class="btn btn-outline-secondary btn-prev">
+                              <button type="button" class="btn btn-outline-secondary btn-prev">
                                 <i class="ri-arrow-left-line me-sm-1"></i>
                                 <span class="align-middle d-sm-inline-block d-none">Previous</span>
                               </button>
-                              <button class="btn btn-success btn-next">
+                              <button type="button" class="btn btn-success btn-next">
                                 <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span>
                                 <i class="ri-arrow-right-line"></i>
                               </button>
@@ -429,11 +429,11 @@ if (isset($_POST["submit"])) {
                                       </div>
                                   <?php endfor; ?>
                             <div class="col-12 d-flex justify-content-between">
-                              <button class="btn btn-outline-secondary btn-prev">
+                              <button type="button" class="btn btn-outline-secondary btn-prev">
                                 <i class="ri-arrow-left-line me-sm-1"></i>
                                 <span class="align-middle d-sm-inline-block d-none">Previous</span>
                               </button>
-                              <button class="btn btn-success btn-next">
+                              <button type="button" class="btn btn-success btn-next">
                                 <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span>
                                 <i class="ri-arrow-right-line"></i>
                               </button>
@@ -460,11 +460,11 @@ if (isset($_POST["submit"])) {
                                       </div>
                                   <?php endfor; ?>
                             <div class="col-12 d-flex justify-content-between">
-                              <button class="btn btn-outline-secondary btn-prev">
+                              <button type="button" class="btn btn-outline-secondary btn-prev">
                                 <i class="ri-arrow-left-line me-sm-1"></i>
                                 <span class="align-middle d-sm-inline-block d-none">Previous</span>
                               </button>
-                              <button class="btn btn-success btn-next">
+                              <button type="button" class="btn btn-success btn-next">
                                 <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span>
                                 <i class="ri-arrow-right-line"></i>
                               </button>
