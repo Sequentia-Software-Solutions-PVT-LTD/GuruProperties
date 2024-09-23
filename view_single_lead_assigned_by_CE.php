@@ -40,6 +40,11 @@
     $qlocation->execute(array());      
     $row_location = $qlocation->fetchAll(PDO::FETCH_ASSOC);
 
+    $sqlemployee = "select * from employee ";
+    $qemployee = $pdo->prepare($sqlemployee);
+    $qemployee->execute(array());      
+    $row_employee = $qemployee->fetchAll(PDO::FETCH_ASSOC);
+
   if(isSet($_POST["submit1"]))
   { 
     // echo "<pre>";
@@ -466,7 +471,19 @@
                                         </ul>
                                         <!-- <small class="card-text text-uppercase text-muted small">Assigned Details</small> -->
                                         <h5 class="card-action-title  mb-0">Assigned By - <b>
-                                            <?php echo $row_assign['employee_name']; ?></b></h5>
+                                            <?php 
+                                                 $needle = $row_assign["assign_employee_id"];
+                                                 $resultArray = array_filter($row_employee, function ($v) use ($needle) {
+                                                     return $needle == $v['employee_id']; 
+                                                 });
+                                                 if($needle == 1) $needle = 0;
+                                                 else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                                 if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") echo $resultArray[$needle]["employee_name"]; 
+                                                 else echo "Not Found";
+                                                // echo $row_assign['assign_employee_id']; 
+                                            ?>
+                                            </b>
+                                        </h5>
                                         <!-- <hr class="mt-1">
                                         <ul class="list-unstyled my-3 py-1" style="">
                                             <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Employee Name:</span> <span><?php echo $row_assign['employee_name']; ?></span></li>
@@ -693,7 +710,7 @@
                                                 
                                                                 type="text"
                                                                 class="form-control"
-                                                                placeholder="YYYY-MM-DD HH:MM"
+                                                                placeholder="DD-MM-YYYY HH:MM"
                                                                 id="flatpickr-datetime" />
                                                                 <label for="flatpickr-datetime">Next Follow Up Date Time For Visited Property</label>
                                                                 </div>
@@ -839,7 +856,7 @@
                                                                 name="next_date_visit"
                                                                 type="text"
                                                                 class="form-control"
-                                                                placeholder="YYYY-MM-DD HH:MM"
+                                                                placeholder="DD-MM-YYYY HH:MM"
                                                                 id="flatpickr-datetime" />
                                                                 <label for="flatpickr-datetime">Visit Date-Time</label>
                                                                 </div>
@@ -857,7 +874,7 @@
                                                         name="next_date_followup"
                                                         type="text"
                                                         class="form-control"
-                                                        placeholder="YYYY-MM-DD HH:MM"
+                                                        placeholder="DD-MM-YYYY HH:MM"
                                                         id="flatpickr-datetime1" />
                                                         <label for="flatpickr-datetime1">Visit Date Time</label>
                                                         </div>

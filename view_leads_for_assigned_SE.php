@@ -10,7 +10,7 @@
 
     $i = 1;
     $assign_leads_id = $_REQUEST['assign_leads_id'];
-    
+    $leadLocationId = 0;
     $sqlemp = "SELECT * FROM assign_leads where assign_leads_id= $assign_leads_id ";
     $q = $pdo->prepare($sqlemp);
     $q->execute(array());      
@@ -28,6 +28,7 @@
     $q = $pdo->prepare($sqlleads);
     $q->execute(array());      
     $row_leads = $q->fetch(PDO::FETCH_ASSOC);
+    $leadLocationId = $row_leads['location'];
 
     $sqllocation = "select * from location ";
     $qlocation = $pdo->prepare($sqllocation);
@@ -337,7 +338,7 @@
                                                                         data-show-subtext="true" required
                                                                     >
                                                                     <?php
-                                                                        $sql = "SELECT * FROM  employee where status='Active' and login_role='SALES EXECUTIVE' ";
+                                                                        $sql = "SELECT * FROM  employee where status='Active' and login_role='SALES EXECUTIVE' AND location_id = $leadLocationId ";
                                                                         foreach ($pdo->query($sql) as $row) 
                                                                         { 
                                                                         ?>
@@ -365,7 +366,7 @@
                                                         <!-- <div class="d-flex gap-4" style="width: 72%;"> -->
                                                         <div class="d-flex gap-4" style="width: 100%;">
                                                             <div class="form-floating form-floating-outline" style="width: 100%;">
-                                                                <select id="propertyDropdown" name="property_name_id" class=" form-select" data-allow-clear="true" required>
+                                                                <select id="propertyDropdown" name="property_name_id" class=" selectpicker w-100"  data-style="btn-default" data-allow-clear="true" required>
                                                                     <option value="">Select Property Name</option>
                                                                     <?php
                                                                         $sql = "SELECT * FROM property_name where status = 'Active'";
@@ -416,15 +417,15 @@
                                                 </div>    
                                             </div>
 
-                                            <div class="col-12">
+                                            <!-- <div class="col-12">
                                                 <div class="card-body demo-vertical-spacing demo-only-element">
                                                     <div class="d-flex justify-content-between align-items-center">
-                                                        <!-- <h6 class="mt-0">4. Property Variants*</h6> -->
-                                                        <!-- <div class="mb-4 d-flex gap-4" style="width: 72%;"> -->
+                                                        <h6 class="mt-0">4. Property Variants*</h6>
+                                                        <div class="mb-4 d-flex gap-4" style="width: 72%;">
                                                         <div class="mb-4 d-flex gap-4" style="width: 100%;">
                                                             <div class="form-floating form-floating-outline" style="width: 100%;">
                                                                 <select id="variantDropdown" name="property_variants[]" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
-                                                                <!-- <select id="variantDropdown" name="property_variants[]" class="js-example-basic-single select2 form-select select2-hidden-accessiblee" multiple="multiple" data-allow-clear="true" required> -->
+                                                                <select id="variantDropdown" name="property_variants[]" class="js-example-basic-single select2 form-select select2-hidden-accessiblee" multiple="multiple" data-allow-clear="true" required>
                                                                     <option value="">Select Variants</option>
                                                                 </select>
                                                                 <label for="variantDropdown">Property Variants</label>
@@ -432,6 +433,14 @@
                                                         </div>        
                                                     </div>
                                                 </div>    
+                                            </div> -->
+                                            <div class="col-12">
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div class="mb-4 d-flex gap-4" style="width: 100%;" id="variantDropdown">
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             
                                             <div class="col-12">
@@ -453,7 +462,7 @@
                                                                 name="next_date"
                                                                 type="text"
                                                                 class="form-control"
-                                                                placeholder="YYYY-MM-DD HH:MM"
+                                                                placeholder="DD-MM-YYYY HH:MM"
                                                                 id="flatpickr-datetime" />
                                                                 <label for="flatpickr-datetime">Visit Date-Time</label>
                                                             </div>

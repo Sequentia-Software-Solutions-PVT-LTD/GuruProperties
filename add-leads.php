@@ -11,7 +11,7 @@
   
   if(isSet($_POST["submit"]))
   { 
-      
+    
       $input1 = $_POST['input1'];
       $input2 = $_POST['input2'];
       $input3 = $_POST['input3'];
@@ -307,7 +307,7 @@
     </script>
     <script>
         function addMore() {
-          $("<DIV>").load("lead_addmore.php", function() {
+          $("<DIV>").load("lead_addmore.php?exist", function() {
               $("#lead_addmore_div").append($(this).html());
           }); 
         }

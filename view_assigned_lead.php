@@ -268,7 +268,7 @@
                                         <h5 class="card-action-title mb-0"><i class="ri-survey-line1 ri-24px me-2"></i>Add Follow Up Details</h5>
                                         <div class="card-header-elements ms-sm-auto">
                                             <div class="btn-group">
-                                                <button type="button" class="btn btn-success waves-effect waves-light">Update</button>
+                                                <button type="button" class="btn btn-success waves-effect waves-light no-hover-effect">Update</button>
                                                 <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split waves-effect waves-light" data-bs-toggle="dropdown" data-bs-reference="parent" aria-expanded="false"></button>
                                                 <div class="dropdown-menu" style="">
                                                     <a class="dropdown-item waves-effect" href="view_leads_for_assigned_SE.php?assign_leads_id=<?php echo $row_assign["assign_leads_id"]; ?>">Assign Lead</a>
@@ -334,7 +334,7 @@
                                                                 name="next_date"
                                                                 type="text"
                                                                 class="form-control"
-                                                                placeholder="YYYY-MM-DD HH:MM"
+                                                                placeholder="DD-MM-YYYY HH:MM"
                                                                 id="flatpickr-datetime" />
                                                                 <label for="flatpickr-datetime">Next Follow Up Date Time</label>
                                                         </div>

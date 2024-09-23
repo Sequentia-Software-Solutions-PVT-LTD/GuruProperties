@@ -150,7 +150,7 @@
                                   <!-- <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Title</label> -->
                                   <!-- <label class="text-sm-end">Property Title</label> -->
                                   <div class="col-sm-12 form-floating form-floating-outline">
-                                      <select id="propertyDropdown" name="property_name_id" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" required>
+                                      <select id="propertyDropdown" name="property_name_id" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" onchange="getTowersInfo(this.value)" required>
                                           <option value="">Select Property Name</option>
                                           <?php
                                               $sql = "SELECT * FROM property_name  where status = 'Active'";
@@ -295,9 +295,22 @@
       </script>
 
 <script>
-    document.getElementById('propertyDropdown').addEventListener('change', function() {
-        var propertyId = this.value;
+    // document.getElementById('propertyDropdown').addEventListener('change', function() {
+    //     var propertyId = this.value;
 
+    //     var xhr = new XMLHttpRequest();
+    //     xhr.open('POST', 'fetch_towers.php', true);
+    //     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    //     xhr.onreadystatechange = function() {
+    //         if (xhr.readyState === 4 && xhr.status === 200) {
+    //             document.getElementById('towerDropdown').innerHTML = xhr.responseText;
+    //         }
+    //     };
+    //     xhr.send('property_id=' + encodeURIComponent(propertyId));
+    // });
+    function getTowersInfo (event) {
+      console.log(event);
+        var propertyId = event;
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'fetch_towers.php', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -307,7 +320,7 @@
             }
         };
         xhr.send('property_id=' + encodeURIComponent(propertyId));
-    });
+    }
 </script>
     
   </body>

@@ -32,9 +32,10 @@
             background-color: #00a65a;
             border-color: #008d4c;
         }
+
         .btn-success:hover, .btn-success:active, .btn-success.hover {
-            background-color: #008d4c !important;
-            border-color: #008d4c !important;
+            background-color: #008d4c ;
+            border-color: #008d4c ;
         }
         .form-floating > label {
           left: 15px;
@@ -56,10 +57,29 @@
         .w-max-content {
           width: max-content !important;
         }
+
+        .btn-group .btn-success, .input-group .btn-success {
+          border-left: 1px solid #ffffff !important;
+          border-right: 1px solid #ffffff !important;
+        }
+
         .btn-success {
           background: #004040;
-          border: 1px solid #004040;
+          border: 1px solid transparent;
         }
+        
+        .btn-success.no-hover-effect:hover,
+        .btn-success.no-hover-effect:active,
+        .btn-success.no-hover-effect:focus
+        {
+            background-color: #004040 !important;
+            border-color: transparent !important;
+            color: #fff !important;
+            border-left: 1px solid #ffffff !important;
+            border-right: 1px solid #ffffff !important;
+        }
+        
+
         .btn-success:hover {
             color: #b0810d !important;
             /* background-color: #5c61e6 !important; */
@@ -565,10 +585,14 @@
 
                 function success_signout(position)
                 {   
-                        document.getElementById('long_signout').value = position.coords.longitude;
-                        document.getElementById('lat_signout').value = position.coords.latitude;
-                        document.getElementById('accuracy_signout').value = position.coords.accuracy;
-                        document.getElementById('logout_button').disabled  = false;
+                  if( document.getElementById('long_signout') != null)
+                      document.getElementById('long_signout').value = position.coords.longitude;
+                  if( document.getElementById('lat_signout') != null)
+                      document.getElementById('lat_signout').value = position.coords.latitude;
+                  if( document.getElementById('accuracy_signout') != null)
+                      document.getElementById('accuracy_signout').value = position.coords.accuracy;
+                  if( document.getElementById('logout_button') != null)
+                      document.getElementById('logout_button').disabled  = false;
                 }
 
                 function fail_signout()
