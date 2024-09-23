@@ -691,7 +691,7 @@
                                                                 name="next_date"
                                                                 type="text"
                                                                 class="form-control"
-                                                                placeholder="YYYY-MM-DD HH:MM"
+                                                                placeholder="DD-MM-YYYY HH:MM"
                                                                 id="flatpickr-datetime" />
                                                                 <label for="flatpickr-datetime">Next Follow Up Date Time</label>
                                                                 </div>
@@ -836,7 +836,7 @@
                                                                 name="next_date_visit"
                                                                 type="text"
                                                                 class="form-control"
-                                                                placeholder="YYYY-MM-DD HH:MM"
+                                                                placeholder="DD-MM-YYYY HH:MM"
                                                                 id="flatpickr-datetime" />
                                                                 <label for="flatpickr-datetime">Visit Date Time</label>
                                                                 </div>
@@ -854,7 +854,7 @@
                                                         name="next_date_followup"
                                                         type="text"
                                                         class="form-control"
-                                                        placeholder="YYYY-MM-DD HH:MM"
+                                                        placeholder="DD-MM-YYYY HH:MM"
                                                         id="flatpickr-datetime1" />
                                                         <label for="flatpickr-datetime1">Visit Date Time</label>
                                                         </div>

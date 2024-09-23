@@ -1,30 +1,37 @@
 <?php
-if(!class_exists('Database')){
-  include ('dist/conf/db.php');
-} 
-$pdo = Database::connect();
+    if(!class_exists('Database')){
+      include ('dist/conf/db.php');
+    } 
+    $pdo = Database::connect();
 
-$maxRange = 20000000;
-$minRange = 3000000;
-$step = 500000;
-$range = array();
-for($stepper = $minRange; $stepper <= $maxRange; $stepper += $step) {
-    array_push($range,$stepper);
-}
-if($stepper > $maxRange) array_push($range, $maxRange);
+    if(isset($_REQUEST['exist'])) {
+      $rowLimit = 15;
+    } else {
+      $rowLimit = 20;
+    }
 
-$rangeDivider = 0; 
-$budget_Values = array();
-foreach($range as $rangeElement) {
-  if($rangeDivider > 0 && $range[$rangeDivider-1] < $maxRange)
-  {
-    $budgetRange = [$range[$rangeDivider-1], $rangeElement];
-    array_push($budget_Values, $budgetRange);
-  }
-  $rangeDivider++;
-}
-?>
+    $maxRange = 20000000;
+    $minRange = 3000000;
+    $step = 500000;
+    $range = array();
+    for($stepper = $minRange; $stepper <= $maxRange; $stepper += $step) {
+        array_push($range,$stepper);
+    }
+    if($stepper > $maxRange) array_push($range, $maxRange);
 
+    $rangeDivider = 0; 
+    $budget_Values = array();
+    foreach($range as $rangeElement) {
+      if($rangeDivider > 0 && $range[$rangeDivider-1] < $maxRange)
+      {
+        $budgetRange = [$range[$rangeDivider-1], $rangeElement];
+        array_push($budget_Values, $budgetRange);
+      }
+      $rangeDivider++;
+    }
+    for ($i=0; $i < $rowLimit; $i++) { 
+  ?>
+                      
                           <div class="row">
                             <div class="mb-6 col-lg-6 col-xl-2 col-12 mb-0">
                               <div class="form-floating form-floating-outline">
@@ -40,53 +47,44 @@ foreach($range as $rangeElement) {
                             </div>
                             <div class="mb-6 col-lg-6 col-xl-2 col-12 mb-0">
                               <div class="form-floating form-floating-outline">
+                                <input type="text" name="input4[]"  pattern="[7-9]{1}[0-9]{9}" id="form-repeater-3-8" class="form-control" placeholder="">
+                                <label for="form-repeater-1-4">Contact</label>
+                              </div>
+                            </div>
+                            <div class="mb-6 col-lg-6 col-xl-2 col-12 mb-0">
+                              <div class="form-floating form-floating-outline">
                                 <!-- <input type="text" name="input3[]" id="form-repeater-3-7" class="form-control" placeholder=""> -->
-                                <select name="input3[]" id="form-repeater-1-3" required class="form-control" placeholder="Select Location">
-                                      <option selected disable value="">Select Location</option>
+                                <select name="input3[]" id="form-repeater-1-3" class="selectpicker w-100"  data-style="btn-default" placeholder="Select Location">
+                                  <option selected disable value="">Select Location</option>
                                       <?php
                                           $sqlLocation = "SELECT * FROM location order by name";
                                           foreach($pdo->query($sqlLocation) as $LocationList) {
                                             echo "<option style='margin-bottom: 8px;' value='".$LocationList["id"]."'>".$LocationList["name"]."</option>";
                                           }
-                                      ?>
+                                          ?>
                                 </select>
                                 <label for="form-repeater-1-3">Location</label>
                               </div>
                             </div>
                             <div class="mb-6 col-lg-6 col-xl-2 col-12 mb-0">
                               <div class="form-floating form-floating-outline">
-                                <input type="text" name="input4[]"  pattern="[7-9]{1}[0-9]{9}" id="form-repeater-3-8" class="form-control" placeholder="">
-                                <label for="form-repeater-1-4">Contact</label>
-                              </div>
-                            </div>
-
-                            <div class="mb-6 col-lg-6 col-xl-2 col-12 mb-0">
-                              <div class="form-floating form-floating-outline">
-                                <select name="input5[]" id="form-repeater-3-9" class="form-control" placeholder="">
+                                <select name="input5[]" id="form-repeater-3-9" class="selectpicker w-100" data-style="btn-default"  placeholder="">
                                       <option selected disable value="">Select Budget</option>
                                       <?php foreach($budget_Values as $budgetValue) { ?>  
-                                          <option><?php echo $budgetValue[0] . " To " . $budgetValue[1]; ?></option>
+                                        <option><?php echo $budgetValue[0] . " To " . $budgetValue[1]; ?></option>
                                       <?php } ?>
                                 </select>
                                 <!-- <input type="text" name="input5[]" id="form-repeater-3-9" class="form-control" placeholder=""> -->
                                 <label for="form-repeater-1-5">Budget</label>
                               </div>
                             </div>
-
                             <div class="mb-6 col-lg-6 col-xl-2 col-12 mb-0">
                               <div class="form-floating form-floating-outline">
                                 <input type="text" name="input6[]" id="form-repeater-3-10" class="form-control" placeholder="">
                                 <label for="form-repeater-1-6">Source</label>
                               </div>
                             </div>
-
-                            <!-- <div class="mb-6 col-lg-12 col-xl-1 col-12 d-flex align-items-center mb-0">
-                              <button class="btn btn-outline-danger btn-xl waves-effect" data-repeater-delete="">
-                                <i class="ri-close-line ri-24px me-1"></i>
-                                <span class="align-middle"></span>
-                              </button>
-                            </div> -->
-
                           </div>
                           <hr class="mt-0">
-                        </div>
+                        <!-- </div> -->
+<?php } ?>
