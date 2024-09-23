@@ -97,7 +97,7 @@
     $q->execute(array($assign_leads_sr_id, $leads_id, $admin_id, $employee_id, $employee_name, $added_on, $property_name_id, $property_tower_id, $property_variants, $notes, $agreement_value, $registrantion, $gst, $stamp_duty, $commission, $quoted_price, $sale_price, $contact_person_name, $contact_person_phone));
      // $lastInsertedId = $pdo->lastInsertId();
     
-    header('location:assigned_leads.php');
+    header('location:view_todays_leads_SE.php');
     
   }
 

@@ -42,9 +42,9 @@
 
   if(isSet($_POST["submit1"]))
   { 
-    echo "<pre>";
-    print_r($_POST);
-    exit();
+    // echo "<pre>";
+    // print_r($_POST);
+    // exit();
 
     $next_date_followup1 = "";
     $next_time_followup1 = "";
@@ -402,14 +402,14 @@
                
               <!-- // -->
               <!-- <h5 class="card-header mar-bot-10">Leads Details </h5> -->
-                <div class="alert alert-solid-warning d-flex align-items-center alert-dismissible" role="alert">
+                <!-- <div class="alert alert-solid-warning d-flex align-items-center alert-dismissible" role="alert" style="">
                     <span class="alert-icon rounded">
                         <i class="ri-alert-line ri-22px"></i>
                     </span>
                     Scroll down to update visit details for this lead 
                     
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+                </div> -->
                 <div class="row">
                     <div class="col-xl-6 col-lg-6">
                         <div class="row  justify-content-between align-items-center">
@@ -465,7 +465,8 @@
                                             <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_leads['added_on'])); ?></span></li>
                                         </ul>
                                         <!-- <small class="card-text text-uppercase text-muted small">Assigned Details</small> -->
-                                        <h5 class="card-action-title  mb-0">Assigned By - <b><?php echo $row_assign['employee_name']; ?></b></h5>
+                                        <h5 class="card-action-title  mb-0">Assigned By - <b>
+                                            <?php echo $row_assign['employee_name']; ?></b></h5>
                                         <!-- <hr class="mt-1">
                                         <ul class="list-unstyled my-3 py-1" style="">
                                             <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Employee Name:</span> <span><?php echo $row_assign['employee_name']; ?></span></li>
@@ -768,7 +769,7 @@
                                                         <div class="d-flex align-items-center gap-2" style="width: 100%;">
                                                             <!-- <label for="next_date" class="form-label">Select One Option</label> -->
                                                             <div class="form-floating form-floating-outline" id="selectBox1" style="width: 100%;">
-                                                                <select id="roleDropdown" name="followup_or_another_property" class="form-select " data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
+                                                                <select id="roleDropdown" name="followup_or_another_property" class="form-select " data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" >
                                                                     <option value="" data-select2-id="18">Select One</option>
                                                                     <option value="Follow Up">Next Visit <span class="text-muted">(For Same Property)</span></option>
                                                                     <option value="Another Property">Another Property<span class="text-muted">(For New Property Visit)</span></option>
@@ -809,7 +810,7 @@
                                                     <div class="col-md-12">
                                                         <div class="card-body demo-vertical-spacing demo-only-element">
                                                             <div class="col-sm-12 form-floating form-floating-outline">
-                                                                <select id="towerDropdown" name="property_tower_id" class="form-select" data-allow-clear="true" required>
+                                                                <select id="towerDropdown" name="property_tower_id" class="form-select" data-allow-clear="true" >
                                                                     <option value="">Select Property Tower</option>
                                                                 </select>
                                                                 <label for="towerDropdown">Property Tower</label>
@@ -974,8 +975,11 @@
                                 <!-- </div> -->
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary submit-buttons start-0 position-absolute" id="startbutton">Take photo</button>
-                                <button type="button" class="btn btn-success submit-buttons" data-bs-dismiss="modal" aria-label="Close" onclick="vidOff();">Save</button>
+                                <!-- <button type="button" class="btn btn-primary submit-buttons start-0 position-absolute" id="startbutton">Take photo</button>
+                                <button type="button" class="btn btn-success submit-buttons" data-bs-dismiss="modal" aria-label="Close" onclick="vidOff();">Save</button> -->
+                                <!--  -->
+                                <button type="button" class="btn btn-primary submit-buttons start-0 position-absolute" id="startbutton" onclick="enableSaveButton()">Take photo</button>
+                                <button type="button" class="btn btn-success submit-buttons" data-bs-dismiss="modal" aria-label="Close" onclick="vidOff();" id="saveButton" disabled>Save</button>
                             </div>
                         </div>
                 </div>
@@ -1076,6 +1080,13 @@
                 $('.js-example-basic-single').select2();
             });
       </script>
+
+<script>
+    // Function to enable the save button
+    function enableSaveButton() {
+        document.getElementById('saveButton').disabled = false;
+    }
+</script>
 
 <script>
     // function toggleReasonBox12() {
@@ -1378,26 +1389,26 @@
         
         const roleDropdown = this.value;
 
-        if (roleDropdown == 'Follow Up') {
-            $("#next_date_followup").prop('required', true);
-            $("#propertyDropdown").prop('required', false);
-            $("#towerDropdown").prop('required', false);
-            $("#variantDropdown").prop('required', false);
-            $("#next_date_visit").prop('required', false); 
+        // if (roleDropdown == 'Follow Up') {
+        //     $("#next_date_followup").prop('required', true);
+        //     $("#propertyDropdown").prop('required', false);
+        //     $("#towerDropdown").prop('required', false);
+        //     $("#variantDropdown").prop('required', false);
+        //     $("#next_date_visit").prop('required', false); 
         
-        } else if(roleDropdown == "Another Property") {
-            $("#propertyDropdown").prop('required', true);
-            $("#towerDropdown").prop('required', true);
-            $("#variantDropdown").prop('required', true);
-            $("#next_date_visit").prop('required', true);    
-            $("#next_date_followup").prop('required', false);
-        } else {
-            $("#propertyDropdown").prop('required', true);
-            $("#towerDropdown").prop('required', true);
-            $("#variantDropdown").prop('required', true);
-            $("#next_date_visit").prop('required', true);    
-            $("#next_date_followup").prop('required', true);
-        }
+        // } else if(roleDropdown == "Another Property") {
+        //     $("#propertyDropdown").prop('required', true);
+        //     $("#towerDropdown").prop('required', true);
+        //     $("#variantDropdown").prop('required', true);
+        //     $("#next_date_visit").prop('required', true);    
+        //     $("#next_date_followup").prop('required', false);
+        // } else {
+        //     $("#propertyDropdown").prop('required', true);
+        //     $("#towerDropdown").prop('required', true);
+        //     $("#variantDropdown").prop('required', true);
+        //     $("#next_date_visit").prop('required', true);    
+        //     $("#next_date_followup").prop('required', true);
+        // }
     });
 
 

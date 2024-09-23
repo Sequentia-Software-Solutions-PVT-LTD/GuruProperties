@@ -172,7 +172,8 @@
                                     <!-- <td><?php echo $row_leads["email_id"]; ?></td>
                                     <td><?php echo $row_leads["budget_range"]; ?></td> -->
                                     <!-- <td><?php echo date('d-m-Y', strtotime($row1["visit_date"])); ?></td> -->
-                                    <td><?php echo $row1["visit_time"]; ?></td>
+                                    <!-- <td><?php echo $row1["visit_time"]; ?></td> -->
+                                    <td><?php echo date("g:i A", strtotime($row1["visit_time"])); ?></td>
                                     <td>
                                         <!-- <a class="dropdown-item waves-effect" href="view_single_lead_assigned_by_CE.php?assign_leads_sr_id=<?php echo $row1["assign_leads_sr_id"]; ?>"><i class="ri-eye-line me-1"></i> </a> -->
                                         <a class="dropdown-item" href="view_single_lead_assigned_by_CE.php?assign_leads_sr_id=<?php echo $row1["assign_leads_sr_id"]; ?>" style="overflow: visible;">

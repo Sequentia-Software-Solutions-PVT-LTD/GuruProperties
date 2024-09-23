@@ -290,7 +290,7 @@
                                             <input type="hidden" value="<?php echo $_REQUEST['assign_leads_id']; ?>" name="assign_leads_id">        
                                             <div class="card-header header-elements">
                                                 <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line1 ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
-                                                <h5 class="card-action-title mb-0">Form for assign Sales Executive to lead</h5>
+                                                <h5 class="card-action-title mb-0">Form for assigning leads to Sales Executive</h5>
                                                 <div class="card-header-elements ms-sm-auto">
                                                     <div class="btn-group">
                                                         <!-- <button type="submit" name="submit1" id="submit1"  class="btn btn-success waves-effect waves-light" style="border-right-color: inherit !important; border-left-color: inherit !important;">Update</button> -->
@@ -344,7 +344,7 @@
                                                                         <option data-subtext="<?php echo $row['location']?>" value="<?php echo $row['employee_id']?>"><?php echo $row['employee_name']?></option> 
                                                                     <?php } ?>
                                                                     </select>
-                                                                    <label for="selectpickerSubtext">Select Customer Executive</label>
+                                                                    <label for="selectpickerSubtext">Select Sales Executive</label>
 
                                                                 </div>
                                                             </div>

@@ -140,6 +140,7 @@
         $login_role = $_SESSION['login_role'];
         $login_photo = $_SESSION['login_photo'];
         $added_on = date('Y-m-d');
+        $today = date('Y-m-d');
         
         // ------------------------- Performance Calulation ---------------------------------
 
@@ -148,13 +149,19 @@
               $sqlsr = "SELECT COUNT(assign_leads_id) as total_count 
                         FROM assign_leads 
                         WHERE admin_id = $admin_id 
-                        AND added_on = '$added_on' 
+                        AND (added_on = '$added_on' OR edited_on = '$added_on' OR next_date = '$added_on')
                         AND connection_status = 'connected'";
               $q = $pdo->prepare($sqlsr);
               $q->execute(array());
               $row_assign1 = $q->fetch(PDO::FETCH_ASSOC);
 
               $count_assign_leads = $row_assign1['total_count'];
+
+              // echo "<pre>";
+              // print_r($sqlsr);
+              // print_r($row_assign1);
+              // exit();
+
               // --------------------------------------------------------
               if($count_assign_leads >= 50) {
                 $percentage = "Today's score is 100%";
@@ -190,7 +197,10 @@
                 SELECT COUNT(assign_leads_sr_id) AS total_count_converted
                 FROM assign_leads_sr 
                 WHERE admin_id = :admin_id
-                AND added_on BETWEEN :last_sunday AND :last_saturday
+                AND (
+                        added_on BETWEEN :last_sunday AND :last_saturday
+                        OR edited_on BETWEEN :last_sunday AND :last_saturday
+                    )
                 AND status = 'Converted'
             ";
 
@@ -203,20 +213,28 @@
 
             $row_convert = $q->fetch(PDO::FETCH_ASSOC);
             $count_converted_leads = $row_convert['total_count_converted'];
+
+            // echo "<pre>";
+            // print_r($last_sunday);
+            // print_r($last_saturday);
+            // print_r($sql_converted);
+            // print_r($count_converted_leads);
+            // exit();
+
             // ----------------Conditions----------------------------------------
             if($count_converted_leads >= 2) {
-              $percentage1 = "Last week score is 100%";
-              $performance1 = "Your performance was Excellent";
+              $percentage1 = "Last week's score is 100%";
+              $performance1 = "Your performance was excellent";
               $img1 = "alertsuccess.png";
             } 
-            elseif($count_converted_leads = 1) {
-                $percentage1 = "Last week score is 50%";
+            elseif($count_converted_leads == 1) {
+                $percentage1 = "Last week's score is 50%";
                 $performance1 = "Your performance was average";
                 $img1 = "alert-warning.png";
             } 
-            elseif($count_converted_leads = 0) {
-                $percentage1 = "Last week score is 0%";
-                $performance1 = "Your performance was Poor";
+            elseif($count_converted_leads == 0) {
+                $percentage1 = "Last week's score is 0%";
+                $performance1 = "Your performance was poor";
                 $img1 = "alertred.png";
             } 
             else {
@@ -227,37 +245,66 @@
             $count_print_converted = 'You have made '. $count_converted_leads .' converts.';
 
         // *************----------------- Weekly count for visits------------------------------
+            // $sql_visitedted = "
+            //   SELECT COUNT(assign_leads_sr_id) AS total_count_visited
+            //   FROM assign_leads_sr 
+            //   WHERE admin_id = :admin_id
+            //   AND (
+            //           added_on BETWEEN :last_sunday AND :last_saturday
+            //           OR edited_on BETWEEN :last_sunday AND :last_saturday
+            //       )
+            //   AND photo IS NOT NULL
+            // ";
+
+            // $q = $pdo->prepare($sql_visitedted);
+            // $q->execute([
+            //     ':admin_id' => $admin_id,
+            //     ':last_sunday' => $last_sunday,
+            //     ':last_saturday' => $last_saturday
+            // ]);
+
             $sql_visitedted = "
-              SELECT COUNT(assign_leads_sr_id) AS total_count_visited
-              FROM assign_leads_sr 
-              WHERE admin_id = :admin_id
-              AND added_on BETWEEN :last_sunday AND :last_saturday
-              AND photo IS NOT NULL
+                SELECT COUNT(assign_leads_sr_id) AS total_count_visited
+                FROM assign_leads_sr 
+                WHERE admin_id = :admin_id
+                AND (
+                    DATE(added_on) = :today
+                    OR DATE(edited_on) = :today
+                )
+                AND photo IS NOT NULL
             ";
 
             $q = $pdo->prepare($sql_visitedted);
             $q->execute([
                 ':admin_id' => $admin_id,
-                ':last_sunday' => $last_sunday,
-                ':last_saturday' => $last_saturday
+                ':today' => $today
             ]);
 
             $row_visited = $q->fetch(PDO::FETCH_ASSOC);
             $count_visited_leads = $row_visited['total_count_visited'];
+
+            // echo "<pre>";
+            // print_r($sql_visitedted);
+            // print_r($q);
+            // print_r($row_visited);
+            // // print_r($count_converted_leads);
+            // exit();
+
             // --------------- Conditions -----------------------------------------------
             // if($count_assign_leads >= 37 && $count_assign_leads <= 49) {
             if($count_visited_leads >= 20 && $count_visited_leads <= 25) {
-              $percentage2 = "Last week score is 100%";
-              $performance2 = "Your performance was Excellent";
+              $percentage2 = "Today's score is 100%";
+              $performance2 = "Your performance was excellent";
               $img2 = "alertsuccess.png";
             } 
             elseif($count_visited_leads >= 15 && $count_visited_leads <= 19) {
                 $percentage2 = "Last week score is 75%";
-                $performance2 = "Your last week performance was above average";
+                $performance2 = "Your performance was above average";
                 $img2 = "alert-warning.png";
             } 
-            elseif($count_visited_leads <= 12) {
-                $percentage2 = "Last week score is 50%";
+            elseif($count_visited_leads >= 1 && $count_visited_leads <= 12) {
+              // elseif($count_visited_leads <= 12) {
+                $percentage2 = "Today's score is 50%";
                 $performance2 = "Your performance was average";
                 $img2 = "alertred.png";
             } 
@@ -266,7 +313,7 @@
                 $performance2 = "Your performance was bad";
                 $img2 = "alertred.png";
             }
-            $count_print_visited = 'You have made '. $count_visited_leads .' Visit.';
+            $count_print_visited = 'You have made '. $count_visited_leads .' visit.';
 
 
             // print_r($sql_visitedted);

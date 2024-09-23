@@ -117,6 +117,7 @@
 					"reset_password",
 					"dashboard_CE",
 					"timeline_showcase_testing"
+					
 				);
 
 				$SEAllowedPages = array(

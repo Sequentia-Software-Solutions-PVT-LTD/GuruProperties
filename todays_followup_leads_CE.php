@@ -177,11 +177,11 @@
                                     <td>                                      
                                         <?php 
                                           if($row_asn_leads["lead_type"] == 'hot')
-                                          echo "<span class='badge rounded-pill bg-danger text-uppercase'>";
+                                          echo "<span class='badge rounded-pill bg-label-danger text-uppercase'>";
                                           if($row_asn_leads["lead_type"] == 'warm')
-                                          echo "<span class='badge rounded-pill bg-warning text-uppercase'>";
+                                          echo "<span class='badge rounded-pill bg-label-warning text-uppercase'>";
                                           if($row_asn_leads["lead_type"] == 'cold')
-                                          echo "<span class='badge rounded-pill bg-info text-uppercase'>";
+                                          echo "<span class='badge rounded-pill bg-label-info text-uppercase'>";
                                           echo $row_asn_leads["lead_type"]; 
                                           echo "</span>";
                                         ?>

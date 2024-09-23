@@ -74,7 +74,7 @@
                 </li>
                 <li class="menu-item">
                   <a href="view_properties_name.php" class="menu-link">
-                    <div data-i18nn   ="Preview">View Property</div>
+                    <div data-i18nn   ="Preview">View Properties</div>
                   </a>
                 </li>
               </ul>
@@ -93,7 +93,7 @@
                 </li>
                 <li class="menu-item">
                   <a href="view_properties_tower.php" class="menu-link">
-                    <div data-i18nn   ="Preview">View Property Tower</div>
+                    <div data-i18nn   ="Preview">View Property Towers</div>
                   </a>
                 </li>
               </ul>
@@ -106,12 +106,12 @@
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons ri-bill-line"></i>
-                <div data-i18nn="#"> Variants</div>
+                <div data-i18nn="#"> Variant</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
                   <a href="add_property_varients.php" class="menu-link">
-                    <div data-i18nn="List">Add Property Variants</div>
+                    <div data-i18nn="List">Add Property Variant</div>
                   </a>
                 </li>
                 <li class="menu-item">
