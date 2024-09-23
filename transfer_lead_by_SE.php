@@ -152,7 +152,7 @@
     // print_r($sql);
     // exit();
     // header('location:transfer_leads.php');
-    header('location:view_tomorrow_leads_SE.php');
+    header('location:view_todays_leads_SE.php');
      
   }
 

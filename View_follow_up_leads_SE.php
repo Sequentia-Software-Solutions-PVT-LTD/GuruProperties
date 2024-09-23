@@ -62,7 +62,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>View Upcoming Follow Up Leads |  Guru Properties</title>
+    <title>View Upcoming Followup Leads |  Guru Properties</title>
 
     <meta name="description" content="" />
 
@@ -173,7 +173,8 @@
                                     <!-- <td><?php echo $row_leads["email_id"]; ?></td> -->
                                     <!-- <td><?php echo $row_leads["budget_range"]; ?></td> -->
                                     <td><?php echo date('d-M-Y', strtotime($row1["next_date"])); ?></td>
-                                    <td><?php echo $row1["next_time"]; ?></td>
+                                    <!-- <td><?php echo $row1["next_time"]; ?></td> -->
+                                    <td><?php echo date("g:i A", strtotime($row1["next_time"])); ?></td>
                                     <!-- <td><?php echo $row_leads["status"]; ?></td> -->
                                     <!-- <td>
                                         <a class="dropdown-item waves-effect" href="view_single_lead_assigned_by_CE.php?assign_leads_sr_id=<?php echo $row1["assign_leads_sr_id"]; ?>"><i class="ri-eye-line me-1"></i> </a>
