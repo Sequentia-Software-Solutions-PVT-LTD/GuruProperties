@@ -4,7 +4,7 @@
   $pdo = Database::connect();
 
 
-  $sql = "SELECT count(*) as C_count, month(`added_on`) as Month, YEAR(`added_on`) as Year FROM converted_leads WHERE 1 GROUP BY month(`added_on`) LIMIT 0";
+  $sql = "SELECT count(*) as C_count, month(`added_on`) as Month, YEAR(`added_on`) as Year FROM converted_leads WHERE 1 GROUP BY month(`added_on`)";
 
   if(isset($_POST['submit']))
   {
@@ -92,7 +92,7 @@
 
             <div class="container-xxl flex-grow-1 container-p-y">
                <!-- *************** - main containt in page write here - **********************  -->
-              <form method="POST" action="#" enctype="multipart/form-data">
+              <form method="POST" name="formID" id="formID" action="#" enctype="multipart/form-data">
                 <!-- Users List Table -->
                 <div class="card">
                     <div class="card-header border-bottom">
@@ -100,23 +100,50 @@
                     <div class="d-flex justify-content-between align-items-center row gx-5 pt-4 gap-5 gap-md-0">
                         <div class="col-md-5 user_role mb-6">
                             <div class="form-floating form-floating-outline">
-                                <input class="form-control" type="month" name="fromMonth" id="html5-month-input" value="September 2024" />
+                                <input class="form-control" type="month" name="fromMonth" id="html5-month-input" value="September 2024" required />
                                 <label for="html5-month-input">From Month/Year</label>
                             </div>
                         </div>
                         <div class="col-md-5 user_plan mb-6">
                             <div class="form-floating form-floating-outline">
-                                <input class="form-control" type="month" name="toMonth" id="html5-month-input" />
+                                <input class="form-control" type="month" name="toMonth" id="html5-month-input" required />
                                 <label for="html5-month-input">To Month/Year</label>
                             </div>
                         </div>
                         <div class="col-md-2 user_plan mb-6 text-center">
-                                <button type="submit" class="btn btn-success me-4 waves-effect waves-light" name="submit">Submit</button>
-                                  
-                        </div>
+                                <button type="submit" class="btn btn-success me-4 waves-effect waves-light" name="submit">Submit</button>   
+                              </form>  
+                              <form style="display: inline;" method="POST" name="formID" id="formID" action="xlsx_export" enctype="multipart/form-data">
+                              <input type="hidden" id="postData" name="postData" value='<?php echo $reuestObejct; ?>' />
+                              <button type="submit" target="_blank" class="btn btn-success" style="padding: 7px;" name="xlsx"  onclick="javascript: exportXLSX(); form.action='xlsx_export'; "><i class="ri-file-excel-line" aria-hidden="true"></i></button>                              
+                            </form>
+                        </div>       
+                            
+                        <!-- </div> -->
+                        <?php //if(isSet($_POST["submit"])) { ?>
+                          <!-- <div class="col-md-2 user_plan mb-6 text-center"> -->
+                              <?php
+                                  Global $reuestObejct;
+                                  $excelData = array();
+                                  // $q = $pdo->prepare($sql);
+                                  // $q->execute(array());      
+                                  // $excelData = $q->fetchAll(PDO::FETCH_ASSOC);
+                                  // $columns = "Year, Month, Total No Of Leads, Converted Leads";
+                                  // $filename = "Leads_Data_";
+                                  // $reuestObejct = json_encode(array("excelData" => $excelData,"columns" => $columns,"filename" => $filename));
+                              ?>
+                              <!-- onclick="exportXLSX()" -->
+                              
+                              <!-- <button target="_blank" class="btn btn-success" style="padding: 7px;" name="pdf" onclick="javascript: form.action='xlsx_export';"><i class="ri-file-excel-line" aria-hidden="true"></i></button>                               -->
+                        
+                          
+                          
+                          <!-- <button target="_blank" class="btn btn-danger" name="pdf" onclick="javascript: form.action='daily_collection_pdf';"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button> -->
+                          <!-- <button type="" name="xlsx" class="btn btn-warning" onclick="javascript: form.action='daily_collection_xlsx';"><i class="fa fa-file-excel-o" aria-hidden="true"></i></button> -->
+                        <?php //} ?>
+                        
                     </div>
                     </div>
-                </form>
                 <div class="card-datatable table-responsive">
                 <table class="datatables-users table dataTable no-footer dtr-column">
                     <thead>
@@ -130,6 +157,7 @@
                     <tbody>
                         <?php 
                             foreach($pdo->query($sql) as $convertedLeads) {
+                                $excelDataRow = array();
                                 $cMonth = $convertedLeads['Month'];
                                 $cYear = $convertedLeads['Year'];
 
@@ -137,19 +165,42 @@
                                 $qALCount = $pdo->prepare($sqlALCount);
                                 $qALCount->execute(array());
                                 $TotalLeads = $qALCount->fetch(PDO::FETCH_ASSOC);
+                                if($TotalLeads == false) $TotalLeadsCount = 0; else $TotalLeadsCount = $TotalLeads['TotalLeads'];
                         ?>
                         <tr class="even">
-                            <td><?php echo $cYear; ?></td>
-                            <td><?php echo date("F", mktime(0, 0, 0, $cMonth, 10)); ?></td>
-                            <td><?php echo $TotalLeads['TotalLeads']; ?></td>
-                            <td><?php echo $convertedLeads['C_count']; ?></td>
+                            <td><?php array_push($excelDataRow, $cYear); echo $cYear; ?></td>
+                            <td><?php array_push($excelDataRow, date("F", mktime(0, 0, 0, $cMonth, 10))); echo date("F", mktime(0, 0, 0, $cMonth, 10)); ?></td>
+                            <td><?php array_push($excelDataRow, $TotalLeadsCount); echo $TotalLeadsCount; ?></td>
+                            <td><?php array_push($excelDataRow, $convertedLeads['C_count']); echo $convertedLeads['C_count']; ?></td>
                         </tr>                        
-                        <?php } ?>
+                        <?php 
+                            array_push($excelData, $excelDataRow);
+                          } ?>
+                        <?php
+                            $columns = "Year, Month, Total No Of Leads, Converted Leads";
+                            $filename = "Leads_Data_";
+                            $reuestObejct = (array("excelData" => $excelData,"columns" => $columns,"filename" => $filename));
+                        ?>
                     </tbody>
                     </table>
                 </div>
                 <!-- Offcanvas to add new user -->
-                
+                <script>
+                  function exportXLSX() {
+                    var data = <?php echo json_encode($reuestObejct); ?>;
+                    console.log(data);
+                    document.getElementById('postData').value = JSON.stringify(<?php echo json_encode($reuestObejct); ?>);                    
+                    // $.ajax("xlsx_export.php", {
+                    //   type: 'POST',
+                    //   data: {
+                    //     data: JSON.stringify(<?php echo json_encode($reuestObejct); ?>)
+                    //   },
+                    //   success: function(data){
+                    //   }
+                    // })
+
+                  }
+                </script>
               </div>
               
                <!-- *************** - /main containt in page write here - **********************  -->
