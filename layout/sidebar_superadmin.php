@@ -73,7 +73,7 @@
                 </li>
                 <li class="menu-item">
                   <a href="view-employees.php" class="menu-link">
-                    <div data-i18nn="Preview">View Employee</div>
+                    <div data-i18nn="Preview">View Employees</div>
                   </a>
                 </li>
               </ul>

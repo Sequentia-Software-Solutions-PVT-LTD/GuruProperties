@@ -128,7 +128,8 @@
 
           $isError = true;
           $success = true;
-          $error = "<span  style='color:green;'><b>Congrats:</b> New Employee with LOGIN ID <b>'". $user_id."'</b> for ".$employee_name." added successfully..!!</span>";
+          // $error = "<span  style='color:green;'><b>Congrats:</b> New Employee with LOGIN ID <b>'". $user_id."'</b> for ".$employee_name." added successfully..!!</span>";
+          header('location:add_employee');
       }
       else {
         $success = false;
@@ -219,7 +220,7 @@
                             <div class="col-md-6">
 
                                     <div class="form-floating form-floating-outline mb-6">
-                                        <select id="roleDropdown" name="login_role" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
+                                        <select id="roleDropdown" name="login_role" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" aria-hidden="true" required>
                                             <option selected hidden disable>Select Employee Role</option>
                                             <option value="CUSTOMER EXECUTIVE">Customer Executive</option>
                                             <option value="SALES EXECUTIVE">Sales Executive</option>
@@ -270,7 +271,7 @@
                                                         id="multipleLocations"
                                                         name="_employeelocation[]"
                                                         class="form-control h-auto"
-                                                        placeholder="select locations"
+                                                        placeholder="Select Locations"
                                                         value="" 
                                                     />
                                                       <?php
@@ -483,6 +484,24 @@
         
 
       </script>
+
+       <script>
+        // By deafult focuss on first field dropdown
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                document.getElementById('roleDropdown').focus();
+            }, 100); // Delays focus by 100ms
+        });
+      </script> 
+
+      <!-- <script>
+        $(document).ready(function() {
+          // Initialize Select2 with no search box
+          $('#roleDropdown').select2({
+            minimumResultsForSearch: Infinity // Disables the search box
+          });
+        });
+      </script> -->
       
     <script src="assets/js/forms-selects.js"></script>
     <script src="assets/js/forms-tagify.js"></script>

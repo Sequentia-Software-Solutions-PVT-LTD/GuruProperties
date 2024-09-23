@@ -90,7 +90,7 @@
     $q->execute(array($leads_id, $admin_id, $employee_id, $employee_name, $status, $transfer_status, $next_date, $next_time, $added_on));
      // $lastInsertedId = $pdo->lastInsertId();
     
-    // header('location:assigned_leads.php');
+    header('location:assigned_leads.php');
     
   }
 

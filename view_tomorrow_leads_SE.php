@@ -172,7 +172,8 @@
                                         ?></td>
                                     <td><?php echo $row_leads["phone_no"]; ?></td>
                                     <!-- <td><?php echo $row_leads["email_id"]; ?></td> -->
-                                    <td><?php echo $row1["visit_time"]; ?></td>
+                                    <!-- <td><?php echo $row1["visit_time"]; ?></td> -->
+                                    <td><?php echo date("g:i A", strtotime($row1["visit_time"])); ?></td>
                                     <td><?php echo $row_leads["budget_range"]; ?></td>
                                     <!-- <td><?php //echo $row_leads["status"]; ?></td> -->
                                     <!-- <td>
