@@ -2,6 +2,8 @@
   include_once ('dist/conf/checklogin.php'); 
   include ('dist/conf/db.php');
   $pdo = Database::connect();
+  Global  $reuestObejct;
+  $excelData = array();
 
 
 //   $sqlemp = "select * from employee";
