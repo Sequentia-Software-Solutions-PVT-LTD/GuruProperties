@@ -2,6 +2,8 @@
   include_once ('dist/conf/checklogin.php'); 
   include ('dist/conf/db.php');
   $pdo = Database::connect();
+  Global  $reuestObejct;
+  $excelData = array();
 
 
   $sqlemp = "select * from employee";
@@ -24,7 +26,7 @@
   $q->execute(array());      
   $row_variant = $q->fetchAll(PDO::FETCH_ASSOC);
 
-  $sql = "SELECT *, month(`added_on`) as Month, YEAR(`added_on`) as Year FROM converted_leads WHERE 1 LIMIT 10";
+  $sql = "SELECT *, month(`added_on`) as Month, YEAR(`added_on`) as Year FROM converted_leads WHERE 1";
   $overallCommision = 0;
 
   if(isset($_POST['submit']))
@@ -161,6 +163,7 @@
                     <tbody>
                         <?php 
                             foreach($pdo->query($sql) as $convertedLeads) {
+                              $excelDataRow = array();
                                     $employeeName = "";
                                     $needle = $convertedLeads['employee_id'];
                                     $resultArray = array_filter($row_emp, function ($v) use ($needle) {
@@ -204,21 +207,33 @@
                                     $overallCommision += $convertedLeads['commission'];
                         ?>
                         <tr class="even">
-                            <td><?php echo $convertedLeads['Year']; ?></td>
-                            <td><?php echo date("F", mktime(0, 0, 0, $convertedLeads['Month'], 10)); ?></td>
-                            <td><?php echo $employeeName; ?></td>
-                            <td><?php echo $propertyName; ?></td>
-                            <td><?php echo $towerName; ?></td>
-                            <td><?php echo $variantName; ?></td>
-                            <td><?php echo $convertedLeads['agreement_value']; ?></td>
-                            <td><?php echo $convertedLeads['registrantion']; ?></td>
-                            <td><?php echo $convertedLeads['gst']; ?></td>
-                            <td><?php echo $convertedLeads['stamp_duty']; ?></td>
-                            <td><?php echo $convertedLeads['commission']; ?></td>
-                            <td><?php echo $convertedLeads['quoted_price']; ?></td>
-                            <td><?php echo $convertedLeads['sale_price']; ?></td>
+                            <td><?php array_push($excelDataRow, $convertedLeads['Year']); echo $convertedLeads['Year']; ?></td>
+                            <td><?php array_push($excelDataRow, date("F", mktime(0, 0, 0, $convertedLeads['Month'], 10))); echo date("F", mktime(0, 0, 0, $convertedLeads['Month'], 10)); ?></td>
+                            <td><?php array_push($excelDataRow, $employeeName); echo $employeeName; ?></td>
+                            <td><?php array_push($excelDataRow, $propertyName); echo $propertyName; ?></td>
+                            <td><?php array_push($excelDataRow, $towerName); echo $towerName; ?></td>
+                            <td><?php array_push($excelDataRow, $variantName); echo $variantName; ?></td>
+                            <td><?php array_push($excelDataRow, $convertedLeads['agreement_value']); echo $convertedLeads['agreement_value']; ?></td>
+                            <td><?php array_push($excelDataRow, $convertedLeads['registrantion']); echo $convertedLeads['registrantion']; ?></td>
+                            <td><?php array_push($excelDataRow, $convertedLeads['gst']); echo $convertedLeads['gst']; ?></td>
+                            <td><?php array_push($excelDataRow, $convertedLeads['stamp_duty']); echo $convertedLeads['stamp_duty']; ?></td>
+                            <td><?php array_push($excelDataRow, $convertedLeads['commission']); echo $convertedLeads['commission']; ?></td>
+                            <td><?php array_push($excelDataRow, $convertedLeads['quoted_price']); echo $convertedLeads['quoted_price']; ?></td>
+                            <td><?php array_push($excelDataRow, $convertedLeads['sale_price']); echo $convertedLeads['sale_price']; ?></td>
                         </tr>                        
-                        <?php } ?>
+                        <?php array_push($excelData, $excelDataRow); } ?>
+                        <?php
+                            $columns = "Year,Month,Employee Name,Property Name,Tower,Variant,Agreement Value,Registration,GST,Stamp Duty,Commission,Quoted Price,Sale Price";
+                            $filename = "Report_Converted_Leads_";
+                            $reuestObejct = (array("excelData" => $excelData,"columns" => $columns,"filename" => $filename));
+                        ?>
+                        <script>
+                            function exportXLSX() {
+                              var data = <?php echo json_encode($reuestObejct); ?>;
+                              console.log(data);
+                              document.getElementById('postData').value = JSON.stringify(<?php echo json_encode($reuestObejct); ?>);
+                            }
+                        </script>
                     </tbody>
                     </table>
                 </div>

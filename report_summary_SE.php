@@ -2,8 +2,39 @@
   include_once ('dist/conf/checklogin.php'); 
   include ('dist/conf/db.php');
   $pdo = Database::connect();
+  Global  $reuestObejct;
+          $excelData = array();
 
-  $sql = "SELECT count(*) as C_count, month(`added_on`) as Month, YEAR(`added_on`) as Year FROM assign_leads_sr WHERE 1 GROUP BY month(`added_on`) LIMIT 0";
+  $sql = "
+    SELECT 
+        COUNT(*) AS C_count, 
+        MONTH(`added_on`) AS Month, 
+        YEAR(`added_on`) AS Year,
+
+        -- Count for fresh leads SE
+        COUNT(CASE WHEN status = 'Active' AND transfer_status = 'Available' THEN 1 END) AS fresh_leads_count,
+
+        -- Count for trnasferred to CE
+        COUNT(CASE WHEN status = 'Active' AND transfer_status = 'Transferred' AND transfer_employee_type = 'CUSTOMER EXECUTIVE' THEN 1 END) AS transfer_to_CE_count,
+
+        -- Count for trnasferred to SE
+        COUNT(CASE WHEN status = 'Active' AND transfer_status = 'Transferred' AND transfer_employee_type = 'SALES EXECUTIVE' THEN 1 END) AS transfer_to_SE_count,
+
+        -- Count for Converted
+        COUNT(CASE WHEN status = 'Converted' AND transfer_status = 'Converted' THEN 1 END) AS converted_count,
+
+        -- Count for visited 
+        -- COUNT(CASE WHEN status = 'Followup' AND transfer_status = 'Not Available' AND photo != '' THEN 1 END) AS visited_count,
+        COUNT(CASE WHEN photo != '' THEN 1 END) AS visited_count,
+
+        -- Count for dead leads
+        COUNT(CASE WHEN status = 'Dead' THEN 1 END) AS dead_count
+
+    FROM assign_leads_sr 
+    WHERE 1
+    GROUP BY YEAR(`added_on`), MONTH(`added_on`)
+    ORDER BY YEAR(`added_on`), MONTH(`added_on`)
+  ";
 
 
 if (isset($_POST['submit'])) {
@@ -149,11 +180,15 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="col-md-2 user_plan mb-6 text-center">
                                 <button type="submit" class="btn btn-success me-4 waves-effect waves-light" name="submit">Submit</button>
-                                  
+                                </form>  
+                                <form style="display: inline;" method="POST" name="formID" id="formID" action="xlsx_export" enctype="multipart/form-data">
+                                <input type="hidden" id="postData" name="postData" value='<?php echo $reuestObejct; ?>' />
+                                <button type="submit" target="_blank" class="btn btn-success" style="padding: 7px;" name="xlsx"  onclick="javascript: exportXLSX(); form.action='xlsx_export'; "><i class="ri-file-excel-line" aria-hidden="true"></i></button>                              
+                              </form> 
                         </div>
                     </div>
                     </div>
-                </form>
+                <!-- </form> -->
                 <div class="card-datatable table-responsive">
                 <table class="datatables-users table dataTable no-footer dtr-column">
                     <thead>
@@ -173,6 +208,7 @@ if (isset($_POST['submit'])) {
 
                             foreach($pdo->query($sql) as $convertedLeads) 
                             {
+                                $excelDataRow = array();
                                 $cMonth = $convertedLeads['Month'];
                                 $cYear = $convertedLeads['Year'];
 
@@ -182,16 +218,28 @@ if (isset($_POST['submit'])) {
                                 // $TotalLeads = $qALCount->fetch(PDO::FETCH_ASSOC);
                         ?>
                         <tr class="even">
-                            <td><?php echo $cYear; ?></td>
-                            <td><?php echo date("F", mktime(0, 0, 0, $cMonth, 10)); ?></td>
-                            <td><?php echo $convertedLeads['fresh_leads_count']; ?></td>
-                            <td><?php echo $convertedLeads['transfer_to_CE_count']; ?></td>
-                            <td><?php echo $convertedLeads['transfer_to_SE_count']; ?></td>
-                            <td><?php echo $convertedLeads['converted_count']; ?></td>
-                            <td><?php echo $convertedLeads['visited_count']; ?></td>
-                            <td><?php echo $convertedLeads['dead_count']; ?></td>
+                            <td><?php array_push($excelDataRow, $cYear); echo $cYear; ?></td>
+                            <td><?php array_push($excelDataRow, date("F", mktime(0, 0, 0, $cMonth, 10))); echo date("F", mktime(0, 0, 0, $cMonth, 10)); ?></td>
+                            <td><?php array_push($excelDataRow, $convertedLeads['fresh_leads_count']); echo $convertedLeads['fresh_leads_count']; ?></td>
+                            <td><?php array_push($excelDataRow, $convertedLeads['transfer_to_CE_count']); echo $convertedLeads['transfer_to_CE_count']; ?></td>
+                            <td><?php array_push($excelDataRow, $convertedLeads['transfer_to_SE_count']); echo $convertedLeads['transfer_to_SE_count']; ?></td>
+                            <td><?php array_push($excelDataRow, $convertedLeads['converted_count']); echo $convertedLeads['converted_count']; ?></td>
+                            <td><?php array_push($excelDataRow, $convertedLeads['visited_count']); echo $convertedLeads['visited_count']; ?></td>
+                            <td><?php array_push($excelDataRow, $convertedLeads['dead_count']); echo $convertedLeads['dead_count']; ?></td>
                         </tr>                        
-                        <?php } ?>
+                        <?php array_push($excelData, $excelDataRow); } ?>
+                        <?php
+                            $columns = "Year,Month,Received Leads,Transferred To CE,Transferred To SE,Converted Leads,Visited Leads,Dead Leads";
+                            $filename = "Report_Summary_SE_";
+                            $reuestObejct = (array("excelData" => $excelData,"columns" => $columns,"filename" => $filename));
+                        ?>
+                        <script>
+                            function exportXLSX() {
+                              var data = <?php echo json_encode($reuestObejct); ?>;
+                              console.log(data);
+                              document.getElementById('postData').value = JSON.stringify(<?php echo json_encode($reuestObejct); ?>);
+                            }
+                        </script>
                     </tbody>
                     </table>
                 </div>
