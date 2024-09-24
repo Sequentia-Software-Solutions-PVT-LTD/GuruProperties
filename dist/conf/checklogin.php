@@ -168,7 +168,8 @@
 					"dashboard",
 					"lead_addmore",
 					"login",
-					"timeline_showcase_testing"
+					"timeline_showcase_testing",
+					"upload"
 				);
 
 				if(isset($_SESSION['login_role']) && $_SESSION['login_role'] == "ADMIN" ){
