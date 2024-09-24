@@ -2,8 +2,21 @@
   include_once ('dist/conf/checklogin.php'); 
   include ('dist/conf/db.php');
   $pdo = Database::connect();
+  Global  $reuestObejct;
+  $excelData = array();
 
-  $sql = "SELECT count(*) as C_count, month(`added_on`) as Month, YEAR(`added_on`) as Year FROM assign_leads WHERE 1 GROUP BY month(`added_on`) LIMIT 0";
+  $sql = "SELECT 
+        COUNT(*) AS C_count, 
+        MONTH(`added_on`) AS Month, 
+        YEAR(`added_on`) AS Year,
+
+        -- Count for followup
+        COUNT(CASE WHEN status = 'Followup' AND transfer_status = 'Available' THEN 1 END) AS followup_to_SE_count
+
+    FROM assign_leads 
+    WHERE 1
+    GROUP BY YEAR(`added_on`), MONTH(`added_on`)
+    ORDER BY YEAR(`added_on`), MONTH(`added_on`)";
 
 
 if (isset($_POST['submit'])) {
@@ -133,6 +146,11 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="col-md-2 user_plan mb-6 text-center">
                                 <button type="submit" class="btn btn-success me-4 waves-effect waves-light" name="submit">Submit</button>
+                                </form>  
+                                <form style="display: inline;" method="POST" name="formID" id="formID" action="xlsx_export" enctype="multipart/form-data">
+                                <input type="hidden" id="postData" name="postData" value='<?php echo $reuestObejct; ?>' />
+                                <button type="submit" target="_blank" class="btn btn-success" style="padding: 7px;" name="xlsx"  onclick="javascript: exportXLSX(); form.action='xlsx_export'; "><i class="ri-file-excel-line" aria-hidden="true"></i></button>                              
+                              </form> 
                                   
                         </div>
                     </div>
@@ -156,6 +174,7 @@ if (isset($_POST['submit'])) {
 
                             foreach($pdo->query($sql) as $convertedLeads) 
                             {
+                                $excelDataRow = array();
                                 $cMonth = $convertedLeads['Month'];
                                 $cYear = $convertedLeads['Year'];
 
@@ -165,15 +184,23 @@ if (isset($_POST['submit'])) {
                                 // $TotalLeads = $qALCount->fetch(PDO::FETCH_ASSOC);
                         ?>
                         <tr class="even">
-                            <td><?php echo $cYear; ?></td>
-                            <td><?php echo date("F", mktime(0, 0, 0, $cMonth, 10)); ?></td>
-                            <!-- <td><?php //echo $convertedLeads['fresh_leads_count']; ?></td> -->
-                            <!-- <td><?php //echo $convertedLeads['assigned_to_SE_count']; ?></td> -->
-                            <td><?php echo $convertedLeads['followup_to_SE_count']; ?></td>
-                            <!-- <td><?php //echo $convertedLeads['transferred_to_CE_count']; ?></td> -->
-                            <!-- <td><?php //echo $convertedLeads['dead_count']; ?></td> -->
+                            <td><?php array_push($excelDataRow, $cYear); echo $cYear; ?></td>
+                            <td><?php array_push($excelDataRow, date("F", mktime(0, 0, 0, $cMonth, 10))); echo date("F", mktime(0, 0, 0, $cMonth, 10)); ?></td>
+                            <td><?php array_push($excelDataRow, $convertedLeads['followup_to_SE_count']); echo $convertedLeads['followup_to_SE_count']; ?></td>
                         </tr>                        
-                        <?php } ?>
+                        <?php array_push($excelData, $excelDataRow); } ?>
+                        <?php
+                            $columns = "Year,Month,Followup Leads";
+                            $filename = "Report_Followup_Leads_CE_";
+                            $reuestObejct = (array("excelData" => $excelData,"columns" => $columns,"filename" => $filename));
+                        ?>
+                        <script>
+                            function exportXLSX() {
+                              var data = <?php echo json_encode($reuestObejct); ?>;
+                              console.log(data);
+                              document.getElementById('postData').value = JSON.stringify(<?php echo json_encode($reuestObejct); ?>);
+                            }
+                        </script>
                     </tbody>
                     </table>
                 </div>

@@ -2,6 +2,8 @@
   include_once ('dist/conf/checklogin.php'); 
   include ('dist/conf/db.php');
   $pdo = Database::connect();
+  Global  $reuestObejct;
+  $excelData = array();
 
 
 //   $sqlemp = "select * from employee";
@@ -24,7 +26,7 @@
   $q->execute(array());      
   $row_variant = $q->fetchAll(PDO::FETCH_ASSOC);
 
-  $sql = "SELECT *,count(*) as SoldCount, month(`added_on`) as Month, YEAR(`added_on`) as Year FROM converted_leads WHERE 1 GROUP BY property_variants";
+  $sql = "SELECT *,count(*) as SoldCount, month(`added_on`) as Month, YEAR(`added_on`) as Year FROM converted_leads WHERE 1";
 
   if(isset($_POST['submit']))
   {
@@ -146,6 +148,7 @@
                         <?php
                             foreach($pdo->query($sql) as $convertedLeads) {
                                     
+                                $excelDataRow = array();
                                     
                                     $propertyName = "";
                                     $needle = $convertedLeads['property_name_id'];
@@ -166,7 +169,11 @@
                                     else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
                                     if(isset($resultArray[$needle]["varients"]) && $resultArray[$needle]["varients"] != "") 
                                     $variantName = $resultArray[$needle]["varients"]; 
-
+                                    array_push($excelDataRow, $convertedLeads['Year']);
+                                    array_push($excelDataRow, date("F", mktime(0, 0, 0, $convertedLeads['Month'], 10)));
+                                    array_push($excelDataRow, $propertyName);
+                                    array_push($excelDataRow, $variantName);
+                                    array_push($excelDataRow, $convertedLeads['SoldCount']);
                         ?>
                         <tr class="even">
                             <?php echo'
@@ -178,7 +185,19 @@
                                 <td> <a href="link_to_view_what">What Needs to be viewed</a></td>';
                             ?>
                         </tr>                        
-                        <?php } ?>
+                        <?php array_push($excelData, $excelDataRow); } ?>
+                        <?php
+                            $columns = "Year,Month,Propertie Name,Variant,Variants Sold";
+                            $filename = "Report_Sold_Properties_";
+                            $reuestObejct = (array("excelData" => $excelData,"columns" => $columns,"filename" => $filename));
+                        ?>
+                        <script>
+                            function exportXLSX() {
+                              var data = <?php echo json_encode($reuestObejct); ?>;
+                              console.log(data);
+                              document.getElementById('postData').value = JSON.stringify(<?php echo json_encode($reuestObejct); ?>);
+                            }
+                        </script>
                     </tbody>
                     </table>
                 </div>
