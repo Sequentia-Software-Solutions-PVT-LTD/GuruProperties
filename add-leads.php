@@ -88,8 +88,9 @@ include ('dist/conf/db.php');
                                 <!-- New code for add leads by uploading excel -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
-                                        <label for="formFileMultiple" class="form-label">Choose Excel file:</label>
-                                        <input class="form-control" type="file" name="file" id="file" accept=".xlsx, .xls" required>
+                                        <label for="formFileMultiple" class="form-label">Choose CSV File</label>
+                                        <input class="form-control" type="file" name="file" id="file" accept=".csv" required>
+                                        <span style="color:red; float: right;">Please Upload CSV File Only..</span>
                                     </div>
                                 </div>
                                 <!-- /New code for add leads by uploading excel -->
