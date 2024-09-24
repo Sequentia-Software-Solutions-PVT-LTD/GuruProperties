@@ -92,16 +92,16 @@
         $timeline_date = null;
         $timeline_date = date("Y-m-d H:i:s", strtotime($leadsSingle['added_on']));
         $dbContent = $leadsSingle;
-            array_push($AllData, array(
-                "table_name" => 'leads',
-                "id" => $leadsSingle['id'],
-                "status" => "Fresh Lead",
-                "transfer_status" => "Fresh Lead",
-                "timlinedate" => $timeline_date,
-                "added_on" => $leadsSingle['added_on'],
-                "edited_on" => $leadsSingle['edited_on'],
-                "dbContent" => $dbContent
-            ));
+            // array_push($AllData, array(
+            //     "table_name" => 'leads',
+            //     "id" => $leadsSingle['id'],
+            //     "status" => "Fresh Lead",
+            //     "transfer_status" => "Fresh Lead",
+            //     "timlinedate" => $timeline_date,
+            //     "added_on" => $leadsSingle['added_on'],
+            //     "edited_on" => $leadsSingle['edited_on'],
+            //     "dbContent" => $dbContent
+            // ));
     }
     foreach($CE_Leads_Array as $CE_Leads_Single) {
         // var_dump($CE_Leads_Single['assign_leads']);
