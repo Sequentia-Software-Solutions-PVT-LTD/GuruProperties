@@ -33,10 +33,11 @@
             border-color: #008d4c;
         }
 
-        .btn-success:hover, .btn-success:active, .btn-success.hover {
+        /* .btn-success:hover, .btn-success:active, .btn-success.hover {
             background-color: #008d4c ;
             border-color: #008d4c ;
-        }
+        } */
+
         .form-floating > label {
           left: 15px;
         }
@@ -79,14 +80,30 @@
             border-right: 1px solid #ffffff !important;
         }
         
+        html:not([dir=rtl]) .btn-group > .btn-group:last-child > .btn:not([class*=btn-outline-]):last-of-type, html:not([dir=rtl]) .input-group > .btn:not([class*=btn-outline-]):last-of-type, html:not([dir=rtl]) :not(.btn-group):not(.input-group) > .btn-group > .btn:not([class*=btn-outline-]):last-of-type, html:not([dir=rtl]) .input-group > .btn-group:last-child > .btn:not([class*=btn-outline-]):last-of-type {
+          border-right-color: #b0810d !important;
+        }
 
-        .btn-success:hover {
+        .btn-success:hover,
+        .btn-success:active,
+        .btn-check:active + .btn-success,
+        .btn-check:checked + .btn-success,
+        .btn-success.show.dropdown-toggle,
+        .show > .btn-success.dropdown-toggle,
+        .btn-success.active,
+        .btn-success.hover {
             color: #b0810d !important;
             /* background-color: #5c61e6 !important; */
             /* border-color: #5c61e6 !important; */
             background: transparent !important;
             border: 1px solid #b0810d !important;
         }
+
+        .bs-stepper.wizard-icons .bs-stepper-header .step .step-trigger {
+          padding: 0.50rem !important;
+          font-size: 16px;
+        }
+
         a,
         .menu-toggle::after,
         .app-brand .layout-menu-toggle svg path,
@@ -94,6 +111,17 @@
           color: #d7d8ee;
           fill: #d7d8ee;
         }
+
+        
+        .bs-stepper .step.active .bs-stepper-icon i,
+        .bs-stepper .step.crossed .step-trigger .bs-stepper-icon i {
+          color: #67e4e4 !important;
+        }
+
+        .bs-stepper.wizard-icons .bs-stepper-header .step-trigger .bs-stepper-icon i {
+          font-size: 2.5rem;
+        }
+
         .menu-vertical .menu-item .menu-link:hover {
             background-color: #000000;
         }

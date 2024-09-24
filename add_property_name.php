@@ -18,7 +18,7 @@ if (isset($_POST["submit"])) {
     // Collect other form data
     $property_title = $_POST['property_title'];
     $builder_name = $_POST['builder_name'];
-    $property_location_id = $_POST['property_location_id'];
+    $location_name = $_POST['property_location_id'];
     $google_location_lat = $_POST['google_location_lat'];
     $google_location_long = $_POST['google_location_long'];
     
@@ -29,13 +29,13 @@ if (isset($_POST["submit"])) {
 
     // `car_parking` , `furnishing` ,  `amenities` , `USP`
     // $car_parking , $furnishing ,  $amenities , $USP
-
+    $property_location_id = 0;
     // Get location name based on location_id
-    $sql = "SELECT * FROM location WHERE id = ?";
+    $sql = "SELECT * FROM location WHERE name = ?";
     $q = $pdo->prepare($sql);
-    $q->execute(array($property_location_id));
+    $q->execute(array($location_name));
     $row_loc = $q->fetch(PDO::FETCH_ASSOC);
-    $location_name = $row_loc['name'];
+    $property_location_id = $row_loc['id'];
 
     $added_on = date('Y-m-d H:i:s');
 
@@ -196,9 +196,11 @@ if (isset($_POST["submit"])) {
                       <div class="step" data-target="#account-details">
                         <button type="button" class="step-trigger">
                           <span class="bs-stepper-icon">
-                            <svg viewBox="0 0 54 54">
+                            <!-- <svg viewBox="0 0 54 54">
                               <use xlink:href="assets/svg/icons/form-wizard-account.svg#wizardAccount"></use>
-                            </svg>
+                              <use xlink:href="assets/svg/icons/wizard-checkout-confirmation.svg#wizardConfirm"></use>
+                            </svg> -->
+                            <i class="ri-building-line"></i>
                           </span>
                           <span class="bs-stepper-label">Property Information</span>
                         </button>
@@ -209,9 +211,10 @@ if (isset($_POST["submit"])) {
                       <div class="step" data-target="#personal-info">
                         <button type="button" class="step-trigger">
                           <span class="bs-stepper-icon">
-                            <svg viewBox="0 0 58 54">
-                              <use xlink:href="assets/svg/icons/form-wizard-personal.svg#wizardPersonal"></use>
-                            </svg>
+                            <!-- <svg viewBox="0 0 58 54">
+                              <use xlink:href="assets/svg/icons/wizard-checkout-payment.svg#wizardPayment"></use>
+                            </svg> -->
+                            <i class="ri-community-line"></i>
                           </span>
                           <span class="bs-stepper-label">Other Details</span>
                         </button>
@@ -222,9 +225,10 @@ if (isset($_POST["submit"])) {
                       <div class="step" data-target="#address">
                         <button type="button" class="step-trigger">
                           <span class="bs-stepper-icon">
-                            <svg viewBox="0 0 54 54">
+                            <!-- <svg viewBox="0 0 54 54">
                               <use xlink:href="assets/svg/icons/form-wizard-address.svg#wizardAddress"></use>
-                            </svg>
+                            </svg> -->
+                            <i class="ri-file-pdf-2-line"></i>
                           </span>
                           <span class="bs-stepper-label">Property PDF Files</span>
                         </button>
@@ -235,10 +239,11 @@ if (isset($_POST["submit"])) {
                       <div class="step" data-target="#social-links">
                         <button type="button" class="step-trigger">
                           <span class="bs-stepper-icon">
-                            <svg viewBox="0 0 54 54">
+                            <!-- <svg viewBox="0 0 54 54">
                               <use
                                 xlink:href="assets/svg/icons/form-wizard-social-link.svg#wizardSocialLink"></use>
-                            </svg>
+                            </svg> -->
+                            <i class="ri-video-chat-line"></i>
                           </span>
                           <span class="bs-stepper-label">Property Videos</span>
                         </button>
@@ -249,9 +254,10 @@ if (isset($_POST["submit"])) {
                       <div class="step" data-target="#review-submit">
                         <button type="button" class="step-trigger">
                           <span class="bs-stepper-icon">
-                            <svg viewBox="0 0 54 54">
+                            <!-- <svg viewBox="0 0 54 54">
                               <use xlink:href="assets/svg/icons/form-wizard-submit.svg#wizardSubmit"></use>
-                            </svg>
+                            </svg> -->
+                            <i class="ri-edit-2-line"></i>
                           </span>
                           <span class="bs-stepper-label">Review & Submit</span>
                         </button>
@@ -270,7 +276,7 @@ if (isset($_POST["submit"])) {
                               <div class="row">
                                 <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Property Title</label> -->
                                 <div class="col-sm-12 form-floating form-floating-outline">
-                                    <input type="text" name="property_title" id="formtabs-username" class="form-control" placeholder="Property Title" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required>
+                                    <input type="text" name="property_title" id="formtabs-username" class="form-control" placeholder="Property Title" onchange="showValue(this.value, 'show_property_title')" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required>
                                     <label for="formtabs-username"> Property Title* </label>
                                 </div>
                               </div>
@@ -280,7 +286,7 @@ if (isset($_POST["submit"])) {
                               <div class="row">
                                 <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Builder Name</label> -->
                                 <div class="col-sm-12 form-floating form-floating-outline">
-                                  <input type="text" name="builder_name" id="formtabs-username" class="form-control" placeholder=" Builder Name" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required>
+                                  <input type="text" name="builder_name"  onchange="showValue(this.value, 'show_builder_name')" id="formtabs-username" class="form-control" placeholder=" Builder Name" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required>
                                   <label for="formtabs-username"> Builder Name* </label>
                                 </div>
                               </div>
@@ -291,14 +297,14 @@ if (isset($_POST["submit"])) {
                                 <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Property Location</label> -->
                                 <div class="col-sm-12 form-floating form-floating-outline">
                                     <!-- <input type="text" name="location" id="formtabs-username" class="form-control" placeholder="Location" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required> -->
-                                    <select id="formtabs-location" name="property_location_id" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
+                                    <select id="formtabs-location" onchange="showValue(this.value, 'show_property_location_id')" name="property_location_id" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
                                         <option value="" data-select2-id="18">Select Property Location</option>
                                         <?php
                                             $sqlLocation = "SELECT * FROM location ORDER BY name";
                                             foreach ($pdo->query($sqlLocation) as $row) {
                                                 $selected = ($row['id'] == $row_d['location_id']) ? 'selected' : '';
                                                 ?>
-                                                <option value="<?php echo $row['id']; ?>" <?php echo $selected; ?>><?php echo $row['name']; ?></option>
+                                                <option <?php echo $selected; ?>><?php echo $row['name']; ?></option>
                                                 <?php
                                             }
                                         ?>
@@ -313,7 +319,7 @@ if (isset($_POST["submit"])) {
                                     <!-- <label class="col-sm-3 col-form-label text-sm-end" for="google-location-lat">Google Location</label> -->
                                     <div class="col-sm-6 form-floating form-floating-outline">
                                         <!-- Latitude Input Field -->
-                                        <input type="text" name="google_location_lat" id="google-location-lat" class="form-control" placeholder="Latitude" 
+                                        <input type="text" name="google_location_lat" id="google-location-lat" class="form-control" placeholder="Latitude"
                                             pattern="^(\+|-)?(?:90(?:\.0+)?|\d{1,2}(?:\.\d+)?)$" 
                                             title="Please enter a valid latitude (-90 to 90)" 
                                             required>
@@ -352,7 +358,7 @@ if (isset($_POST["submit"])) {
                               <div class="row">
                                 <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Car Parking</label> -->
                                 <div class="col-sm-12 form-floating form-floating-outline">
-                                  <select id="defaultSelect" class="form-select" name="car_parking">
+                                  <select id="defaultSelect" class="form-select" name="car_parking" onchange="showValue(this.value, 'show_car_parking')">
                                     <option>Select Parking Type</option>
                                     <option value="Open">Open</option>
                                     <option value="Covered">Covered</option>
@@ -367,7 +373,7 @@ if (isset($_POST["submit"])) {
                               <div class="row">
                                 <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Furnishing </label> -->
                                 <div class="col-sm-12 form-floating form-floating-outline">
-                                  <select id="defaultSelect" class="form-select" name="furnishing">
+                                  <select id="defaultSelect" class="form-select" name="furnishing" onchange="showValue(this.value, 'show_furnishing')">
                                     <option>Select Furnishing Type</option>
                                     <option value="Furnished">Furnished</option>
                                     <option value="Semi-Furnished">Semi-Furnished</option>
@@ -381,8 +387,8 @@ if (isset($_POST["submit"])) {
                             <div class="col-md-6">
                               <div class="row">
                                 <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Amenities  </label> -->
-                                <div class="col-sm-12 form-floating form-floating-outline">
-                                  <textarea class="form-control h-px-100" name="amenities" id="exampleFormControlTextarea1" placeholder="Write amenities here..."></textarea>
+                                <div class="col-sm-12 form-floating form-floating-outline" >
+                                  <textarea class="form-control h-px-100" name="amenities" id="exampleFormControlTextarea1" placeholder="Write amenities here..." onchange="showValue(this.value, 'show_amenities')"></textarea>
                                   <label for="formtabs-username"> Amenities  </label>
                                 </div>
                               </div>
@@ -391,8 +397,8 @@ if (isset($_POST["submit"])) {
                             <div class="col-md-6">
                               <div class="row">
                                 <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> USP  </label> -->
-                                <div class="col-sm-12 form-floating form-floating-outline">
-                                  <textarea class="form-control h-px-100" name="USP" id="exampleFormControlTextarea1" placeholder="Write USP here..."></textarea>
+                                <div class="col-sm-12 form-floating form-floating-outline" >
+                                  <textarea class="form-control h-px-100" name="USP" id="exampleFormControlTextarea1" placeholder="Write USP here..." onchange="showValue(this.value, 'show_USP')"></textarea>
                                   <label for="formtabs-username"> USP  </label>
                                 </div>
                               </div>
@@ -473,29 +479,29 @@ if (isset($_POST["submit"])) {
                         </div>
                         <!-- Review -->
                         <div id="review-submit" class="content">
-                          <p class="fw-medium mb-2">Property Information</p>
-                          <ul class="list-unstyled">
-                            <li>Property Title:- <span id="show_property_title"></span> </li>
-                            <li>Builder Name:- <span id="show_builder_name"></span></li>
-                            <li>Property Location:- <span id="show_property_location_id"></span></li>
-                            <!-- <li>Google Location:- <b>Latitude</b>-<span id="show_google_location_lat"></span> <b>Longitude</b>-<span id="show_google_location_long"></span></li> -->
+                          <p class="fw-medium mb-4">Property Information</p>
+                          <ul class="list-unstyled" style="margin-left: 10px;">
+                            <li class="mb-3">Property Title:- <b><span id="show_property_title"></span></b> </li>
+                            <li class="mb-3">Builder Name:- <b><span id="show_builder_name"></span></b></li>
+                            <li class="mb-3">Property Location:- <b><span id="show_property_location_id"></span></b></li>
+                            <!-- <li class="mb-3">Google Location:- <b>Latitude</b>-<b><span id="show_google_location_lat"></span></b> <b>Longitude</b>-<b><span id="show_google_location_long"></span></b></li> -->
                           </ul>
                           <hr />
-                          <p class="fw-medium mb-2">Other Details</p>
-                          <ul class="list-unstyled">
-                            <li>Car Parking:- <span id="show_car_parking"></span> </li>
-                            <li>Furnishing:- <span id="show_furnishing"></span></li>
-                            <li>Amenities:- <span id="show_amenities"></span></li>
-                            <li>USP:- <span id="show_USP"></span></li>
+                          <p class="fw-medium mb-4">Other Details</p>
+                          <ul class="list-unstyled" style="margin-left: 10px;">
+                            <li class="mb-3">Car Parking:- <b><span id="show_car_parking"></span></b> </li>
+                            <li class="mb-3">Furnishing:- <b><span id="show_furnishing"></span></b></li>
+                            <li class="mb-3">Amenities:- <b><span id="show_amenities"></span></b></li>
+                            <li class="mb-3">USP:- <b><span id="show_USP"></span></b></li>
                           </ul>
                           <hr />
-                          <p class="fw-medium mb-2">Property PDF Files</p>
+                          <!-- <p class="fw-medium mb-2">Property PDF Files</p>
                           <ul class="list-unstyled">
                           </ul>
                           <hr />
                           <p class="fw-medium mb-2">Property Videos</p>
                           <ul class="list-unstyled">
-                          </ul>
+                          </ul> -->
                           <div class="col-12 d-flex justify-content-between">
                             <button class="btn btn-outline-secondary btn-prev">
                               <i class="ri-arrow-left-line me-sm-1"></i>
@@ -550,20 +556,24 @@ if (isset($_POST["submit"])) {
     <script src="assets/js/form-wizard-icons.js"></script>
       <script>
         $(document).ready(function() {
-    $('#roleDropdown').change(function() {
-        var selectedRole = $(this).val();
-        var prefix = '';
+            $('#roleDropdown').change(function() {
+                var selectedRole = $(this).val();
+                var prefix = '';
 
-        if (selectedRole === 'CUSTOMER EXECUTIVE') {
-            prefix = 'CE';
-        } else if (selectedRole === 'SALES EXECUTIVE') {
-            prefix = 'SE';
+                if (selectedRole === 'CUSTOMER EXECUTIVE') {
+                    prefix = 'CE';
+                } else if (selectedRole === 'SALES EXECUTIVE') {
+                    prefix = 'SE';
+                }
+
+                // Set the prefix in the input field
+                $('#prefixInput').val(prefix + '-');
+            });
+        });
+        function showValue(value, shocaseID) {
+          console.log(value);
+          document.getElementById(shocaseID).innerHTML = value;
         }
-
-        // Set the prefix in the input field
-        $('#prefixInput').val(prefix + '-');
-    });
-});
       </script>
     
   </body>
