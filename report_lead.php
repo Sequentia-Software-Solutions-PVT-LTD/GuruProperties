@@ -98,25 +98,31 @@
                     <div class="card-header border-bottom">
                     <h5 class="card-title mb-0">Filters</h5>
                     <div class="d-flex justify-content-between align-items-center row gx-5 pt-4 gap-5 gap-md-0">
-                        <div class="col-md-5 user_role mb-6">
+                        <div class="col-md-4 user_role mb-6">
                             <div class="form-floating form-floating-outline">
                                 <input class="form-control" type="month" name="fromMonth" id="html5-month-input" value="September 2024" required />
                                 <label for="html5-month-input">From Month/Year</label>
                             </div>
                         </div>
-                        <div class="col-md-5 user_plan mb-6">
+                        <div class="col-md-4 user_plan mb-6">
                             <div class="form-floating form-floating-outline">
                                 <input class="form-control" type="month" name="toMonth" id="html5-month-input" required />
                                 <label for="html5-month-input">To Month/Year</label>
                             </div>
                         </div>
-                        <div class="col-md-2 user_plan mb-6 text-center">
+                        <div class="col-md-4 user_plan mb-6 d-flex">
                                 <button type="submit" class="btn btn-success me-4 waves-effect waves-light" name="submit">Submit</button>   
                               </form>  
-                              <form style="display: inline;" method="POST" name="formID" id="formID" action="xlsx_export" enctype="multipart/form-data">
-                              <input type="hidden" id="postData" name="postData" value='<?php echo $reuestObejct; ?>' />
-                              <button type="submit" target="_blank" class="btn btn-success" style="padding: 7px;" name="xlsx"  onclick="javascript: exportXLSX(); form.action='xlsx_export'; "><i class="ri-file-excel-line" aria-hidden="true"></i></button>                              
-                            </form>
+                              <div class="d-flex" style="margin-left: 30px;">
+                                <form style="display: inline;" method="POST" name="formID" id="formID" action="xlsx_export" enctype="multipart/form-data">
+                                  <input type="hidden" id="postData" name="postData" value='<?php echo $reuestObejct; ?>' />
+                                  <button type="submit" target="_blank" class="btn btn-success" style="padding: 7px;" name="xlsx"  onclick="javascript: exportXLSX(); form.action='xlsx_export'; "><i class="ri-file-excel-line" aria-hidden="true"></i></button>  
+                                </form>
+                                <form style="display: inline; margin-left: 10px;" method="POST" name="formID" id="formID" action="pdf_export" enctype="multipart/form-data">
+                                  <input type="hidden" id="postDataPDF" name="postData" value='<?php echo $reuestObejct; ?>' />
+                                  <button type="submit" target="_blank" class="btn btn-danger" style="padding: 7px;" name="xlsx"  onclick="javascript: exportPDF(); form.action='pdf_export'; "><i class="ri-file-pdf-2-line" aria-hidden="true"></i></button>                              
+                                </form>
+                              </div>
                         </div>       
                             
                         <!-- </div> -->
@@ -179,7 +185,8 @@
                         <?php
                             $columns = "Year, Month, Total No Of Leads, Converted Leads";
                             $filename = "Report_Leads_Data_";
-                            $reuestObejct = (array("excelData" => $excelData,"columns" => $columns,"filename" => $filename));
+                            $FileTitle = "Report Leads Data ";
+                            $reuestObejct = (array("excelData" => $excelData,"columns" => $columns,"filename" => $filename,"FileTitle" => $FileTitle));
                         ?>
                     </tbody>
                     </table>
@@ -199,6 +206,10 @@
                     //   }
                     // })
 
+                  }
+                  function exportPDF() {
+                    var data = <?php echo json_encode($reuestObejct); ?>;
+                    document.getElementById('postDataPDF').value = JSON.stringify(<?php echo json_encode($reuestObejct); ?>);                    
                   }
                 </script>
               </div>
