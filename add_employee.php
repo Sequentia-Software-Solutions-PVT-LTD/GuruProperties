@@ -220,7 +220,7 @@
                             <div class="col-md-6">
 
                                     <div class="form-floating form-floating-outline mb-6">
-                                        <select id="roleDropdown" name="login_role" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" aria-hidden="true" required>
+                                        <select id="roleDropdown" name="login_role" data-minimum-results-for-search="Infinity" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" aria-hidden="true" required>
                                             <option selected hidden disable>Select Employee Role</option>
                                             <option value="CUSTOMER EXECUTIVE">Customer Executive</option>
                                             <option value="SALES EXECUTIVE">Sales Executive</option>
