@@ -11,7 +11,7 @@
     }
 
     $maxRange = 20000000;
-    $minRange = 4000000;
+    $minRange = 3000000;
     $step = 500000;
     $range = array();
     for($stepper = $minRange; $stepper <= $maxRange; $stepper += $step) {
@@ -24,16 +24,11 @@
     foreach($range as $rangeElement) {
       if($rangeDivider > 0 && $range[$rangeDivider-1] < $maxRange)
       {
-        $budgetRange = [$range[$rangeDivider-1]+1, $rangeElement];
+        $budgetRange = [$range[$rangeDivider-1], $rangeElement];
         array_push($budget_Values, $budgetRange);
       }
       $rangeDivider++;
     }
-    // echo "<pre>";
-    // print_r($budgetRange);
-    // print_r($rangeDivider);
-    // exit();
-
     for ($i=0; $i < $rowLimit; $i++) { 
   ?>
                       
