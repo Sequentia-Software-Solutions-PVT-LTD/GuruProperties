@@ -41,6 +41,7 @@
               <a href="dashboard_CE" class="menu-link">
                 <i class="menu-icon tf-icons ri-bill-line"></i>
                 <div data-i18nn="#">Dashboard</div>
+                <!-- <div class="badge bg-danger rounded-pill ms-auto">5</div> -->
               </a>
             </li>
 
@@ -176,6 +177,12 @@
                   <a href="assigned_leads.php" class="menu-link">
                   <i class="menu-icon tf-icons ri-bill-line"></i>
                     <div data-i18nn="List">Today's New Leads</div>
+                    <?php 
+                      // echo "5";
+                      // exit();
+
+                    ?>
+                    <!-- <div class="badge bg-danger rounded-pill ms-auto"><?php echo '10'; ?></div> -->
                   </a>
                 </li>
                 <li class="menu-item">

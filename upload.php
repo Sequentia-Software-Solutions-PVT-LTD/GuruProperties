@@ -178,9 +178,9 @@ if (isset($_POST['submit']))
                                 foreach($employeewiseLeadIds as $employeewiseLeadId) {
                                     $lead_id = $employeewiseLeadId['lead_id'];
                                     $location_id = $employeewiseLeadId['location_id'];
-                                    $sql = "INSERT INTO `assign_leads`(`leads_id`, `admin_id`, `employee_id`, `location_id`, `employee_name`, `status`, `added_on`) VALUES (?,?,?,?,?,?,?)";
+                                    $sql = "INSERT INTO `assign_leads`(`leads_id`, `admin_id`, `employee_id`, `location_id`, `employee_name`, `status`,`transfer_status`, `added_on`) VALUES (?,?,?,?,?,?,?,?)";
                                     $q = $pdo->prepare($sql);
-                                    $q->execute(array($lead_id, $admin_id, $employee_id, $location_id, $employee_name, 'Active', $added_on));
+                                    $q->execute(array($lead_id, $admin_id, $employee_id, $location_id, $employee_name, 'Active', 'Available', $added_on));
                                     $leadsAssigned++;
                                 }
                             }
@@ -202,9 +202,9 @@ if (isset($_POST['submit']))
                                                         
                                     $lead_id = $employeewiseLeadId['lead_id'];
                                     $location_id = $employeewiseLeadId['location_id'];
-                                    $sql = "INSERT INTO `assign_leads`(`leads_id`, `admin_id`, `employee_id`, `location_id`, `employee_name`, `status`, `added_on`) VALUES (?,?,?,?,?,?,?)";
+                                    $sql = "INSERT INTO `assign_leads`(`leads_id`, `admin_id`, `employee_id`, `location_id`, `employee_name`, `status`,`transfer_status`, `added_on`) VALUES (?,?,?,?,?,?,?,?)";
                                     $q = $pdo->prepare($sql);
-                                    $q->execute(array($lead_id, $admin_id, $employee_id,  $location_id, $employee_name, 'Active', $added_on));
+                                    $q->execute(array($lead_id, $admin_id, $employee_id,  $location_id, $employee_name, 'Active','Available', $added_on));
                                     $i1++;
                                     $leadsAssigned++;
                                     $remainingLeadsForLoop--;
@@ -238,9 +238,9 @@ if (isset($_POST['submit']))
                                     
                                     $lead_id = $employeewiseLeadId['lead_id'];
                                     $location_id = $employeewiseLeadId['location_id'];
-                                    $sql = "INSERT INTO `assign_leads`(`leads_id`, `admin_id`, `employee_id`, `location_id`, `employee_name`, `status`, `added_on`) VALUES (?,?,?,?,?,?,?)";
+                                    $sql = "INSERT INTO `assign_leads`(`leads_id`, `admin_id`, `employee_id`, `location_id`, `employee_name`, `status`,`transfer_status`, `added_on`) VALUES (?,?,?,?,?,?,?,?)";
                                     $q = $pdo->prepare($sql);
-                                    $q->execute(array($lead_id, $admin_id, $employee_id, $location_id, $employee_name, 'Active', $added_on));
+                                    $q->execute(array($lead_id, $admin_id, $employee_id, $location_id, $employee_name, 'Active','Available', $added_on));
                                     $i1++;
                                     $leadsAssigned++;
                                     $remainingLeadsForLoop--;
