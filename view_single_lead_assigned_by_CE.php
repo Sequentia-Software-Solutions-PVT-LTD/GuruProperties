@@ -928,7 +928,7 @@
                     </div>
 
                     <!-- Timeline code -->
-                    <div class="col-xl-6 col-lg-6 col-md-6">
+                    <div class="col-xl-12 col-lg-12 col-md-12">
                         <div class="card">
                             <!-- <h5 class="card-header">Timeline For &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info"><?php //echo $row_leads['lead_name']; ?></span></h5> -->
                             <h5 class="card-header text-center">Timeline</h5>
