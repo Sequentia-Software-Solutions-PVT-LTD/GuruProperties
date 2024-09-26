@@ -414,7 +414,7 @@
                                                                         type="text"
                                                                         class="form-control"
                                                                         placeholder="DD-MM-YYYY HH:MM"
-                                                                        id="flatpickr-datetime" />
+                                                                        id="flatpickr-datetime" required />
                                                                     <label for="flatpickr-datetime">Next Follow Up Date Time</label>
                                                                 </div>
                                                                 

@@ -74,8 +74,11 @@
         $date_time_parts = explode(' ', $next_date_time);
         
         // if (count($date_time_parts) === 2) {
-            $next_date_visit1 = $date_time_parts[0];  // e.g., 2024-08-22
-            $next_time_visit1 = $date_time_parts[1];  // e.g., 02:26
+            // $next_date_visit1 = $date_time_parts[0];  // e.g., 2024-08-22
+            // $next_time_visit1 = $date_time_parts[1];  // e.g., 02:26
+            $next_date_visit1 = date('Y-m-d', strtotime($next_date_time));  // e.g., 2024-08-22
+            $next_time_visit1 = date('H:i:s', strtotime($next_date_time));  // e.g., 02:26
+
         } else {
             // Handle the case where the datetime is not in the expected format
             $next_date_visit1 = '';
@@ -96,8 +99,10 @@
         $date_time_parts = explode(' ', $next_date_time_followup);
         
         // if (count($date_time_parts) === 2) {
-            $next_date_followup1 = $date_time_parts[0];  // e.g., 2024-08-22
-            $next_time_followup1 = $date_time_parts[1];  // e.g., 02:26
+            // $next_date_followup1 = $date_time_parts[0];  // e.g., 2024-08-22
+            // $next_time_followup1 = $date_time_parts[1];  // e.g., 02:26
+            $next_date_followup1 = date('Y-m-d', strtotime($next_date_time_followup));  // e.g., 2024-08-22
+            $next_time_followup1 = date('H:i:s', strtotime($next_date_time_followup));  // e.g., 02:26
         } else {
             // Handle the case where the datetime is not in the expected format
             $next_date_followup1 = '';
@@ -468,7 +473,7 @@
                                         
                                         <ul class="list-unstyled my-3 py-1" style="">
                                             <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Source:</span> <span><?php echo $row_leads['source']; ?></span></li>
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_leads['added_on'])); ?></span></li>
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_assign['added_on'])); ?></span></li>
                                         </ul>
                                         <!-- <small class="card-text text-uppercase text-muted small">Assigned Details</small> -->
                                         <h5 class="card-action-title  mb-0">Assigned By - <b>
@@ -680,16 +685,8 @@
                                                         <!-- <div class="d-flex gap-4" style="width: 72%;"> -->
                                                         <div class="d-flex gap-4" style="width: 100%;">
                                                             <div class="mb-6 mt-1 form-floating form-floating-outline" style="width: 100%;">
-                                                                <!-- <textarea class="form-control" type="text" placeholder="Enter your remark here.." id="today_visit_remark" name="today_visit_remark" required style="height: 100px;resize: none;"></textarea>
-                                                                <label for="today_visit_remark">Remark For Today's Visit</label> -->
-                                                                <div id="full-editor">
-                                                                    <h6>Quill Rich Text Editor</h6>
-                                                                    <p>
-                                                                    Cupcake ipsum dolor sit amet. Halvah cheesecake chocolate bar gummi bears cupcake. Pie
-                                                                    macaroon bear claw. Soufflé I love candy canes I love cotton candy I love.
-                                                                    </p>
-                                                                </div>
-                                                                <!-- <label for="notes">Notes</label> -->
+                                                                <textarea class="form-control" type="text" placeholder="Enter your remark here.." id="today_visit_remark" name="today_visit_remark" required style="height: 100px;resize: none;"></textarea>
+                                                                <label for="today_visit_remark">Remark For Today's Visit</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -707,12 +704,11 @@
                                                             <label for="next_date">Next Follow Up Date Time</label> -->
                                                             <div class="form-floating form-floating-outline" style="width: 100%;">
                                                                 <input
-                                                                name="next_date"
-                                                
+                                                                name="next_date"                                                
                                                                 type="text"
                                                                 class="form-control"
                                                                 placeholder="DD-MM-YYYY HH:MM"
-                                                                id="flatpickr-datetime" />
+                                                                id="flatpickr-datetime" required />
                                                                 <label for="flatpickr-datetime">Next Follow Up Date Time For Visited Property</label>
                                                                 </div>
                                                         </div>  
@@ -858,8 +854,8 @@
                                                                 type="text"
                                                                 class="form-control"
                                                                 placeholder="DD-MM-YYYY HH:MM"
-                                                                id="flatpickr-datetime" />
-                                                                <label for="flatpickr-datetime">Visit Date-Time</label>
+                                                                id="flatpickr-datetime2" />
+                                                                <label for="flatpickr-datetime2">Visit Date-Time</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1161,21 +1157,32 @@
 <script>
     document.getElementById('roleDropdown').addEventListener('change', function() {
         var selectedValue = this.value;
-        
-        // Hide both sections initially
-        // document.getElementById('reasonBoxvisit').style.display = 'none';
-        document.getElementById('reasonBoxfollowup').style.display = 'none';
-        document.getElementById('property_details_box').style.display = 'none';
-        // property_details_box
-        
         // Show the appropriate section based on the selected value
         if (selectedValue === 'Follow Up') {
             document.getElementById('reasonBoxfollowup').style.display = 'block';
             document.getElementById('property_details_box').style.display = 'none';
 
+            document.getElementById('flatpickr-datetime2').removeAttribute("required");
+            document.getElementById('propertyDropdown').removeAttribute("required");
+            document.getElementById('towerDropdown').removeAttribute("required");
+            document.getElementById('variantDropdown').removeAttribute("required");
+            document.getElementById('flatpickr-datetime1').setAttribute("required","required");
         } else if (selectedValue === 'Another Property') {
-            // document.getElementById('reasonBoxvisit').style.display = 'block';
+            document.getElementById('reasonBoxfollowup').style.display = 'none';
             document.getElementById('property_details_box').style.display = 'block';
+            document.getElementById('flatpickr-datetime2').setAttribute("required","required");
+            document.getElementById('propertyDropdown').setAttribute("required","required");
+            document.getElementById('towerDropdown').setAttribute("required","required");
+            document.getElementById('variantDropdown').setAttribute("required","required");
+            document.getElementById('flatpickr-datetime1').removeAttribute("required");
+        } else {
+            document.getElementById('reasonBoxfollowup').style.display = 'none';
+            document.getElementById('property_details_box').style.display = 'none';
+            document.getElementById('flatpickr-datetime2').removeAttribute("required");
+            document.getElementById('propertyDropdown').removeAttribute("required");
+            document.getElementById('towerDropdown').removeAttribute("required");
+            document.getElementById('variantDropdown').removeAttribute("required");
+            document.getElementById('flatpickr-datetime1').removeAttribute("required");
         }
     });
 </script>
@@ -1432,16 +1439,27 @@
 
     $('input[name="connection_status"]').click(function(){
         var selectedValue = $(this).val();
+
+        $('#flatpickr-datetime1').removeAttr("required");
+        
         if(selectedValue == 'not_connected') {
             $('#takephotobtn').hide();
             $('#next_date').hide();
             $('#roleDropdown option:eq(1)').prop('selected', true);
             $('#reasonBoxfollowup').show();
+
+            $('#flatpickr-datetime1').attr("required", "required");
+            $('#flatpickr-datetime').removeAttr("required");
+
+            
         } else {
             $('#takephotobtn').show();
             $('#next_date').show();
             $('#roleDropdown option:eq(0)').prop('selected', true);
             $('#reasonBoxfollowup').hide();
+
+            $('#flatpickr-datetime').attr("required", "required");
+            $('#flatpickr-datetime1').removeAttr("required");
         }
    
     });
