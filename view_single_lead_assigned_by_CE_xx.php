@@ -183,6 +183,7 @@
 
 
     // ----------------------- Insert for new ffollowup ---------------------------------------------------------
+    $added_on = date('Y-m-d H:i:s', strtotime('+20 seconds'));
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "INSERT INTO `assign_leads_sr`(`assign_leads_id`,`leads_id`, `admin_id`, `employee_id`,`employee_name`, `status`, `transfer_status`,`next_date`,`next_time`,`visit_date`,`visit_time`,`followup_or_another_property`,`variant`, `property_id`, `sub_property_id`, `added_on`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     $q = $pdo->prepare($sql);

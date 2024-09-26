@@ -123,7 +123,7 @@
     // VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?)";
     // $q = $pdo->prepare($sql);
     // $q->execute(array($assign_leads_id, $leads_id, '$next_date', '$next_time', $status, $admin_id, $employee_id, $employee_name, $assign_employee_type, $property_name_id, $property_tower_id, $property_varients_id, $location, $area, $price, $notes, $assign_employee_type, $added_on));
-
+    $added_on = date('Y-m-d H:i:s', strtotime('+20 seconds'));
     $sql = "INSERT INTO `assign_leads_sr`(`assign_leads_id`, `leads_id`, `visit_date`, `visit_time`, `status`,`transfer_status`, `admin_id`, `employee_id`, `employee_name`, `employee_type`, `property_id`, `sub_property_id`, `variant`, `location1`, `notes`, `assign_employee_type`,`assign_employee_id`, `added_on`) 
     VALUES ($assign_leads_id, $leads_id, '$next_date', '$next_time', '$se_status', '$se_transfer_status', $admin_id, $t_employee_id, '$employee_name', '$se_assign_employee_type', $property_name_id, $property_tower_id, '$property_variants_string', '$location', '$notes', '$ce_assign_employee_type','$assign_employee_id', '$added_on')";
     $q = $pdo->prepare($sql);
@@ -338,7 +338,12 @@
                                                                         data-show-subtext="true" required
                                                                     >
                                                                     <?php
-                                                                        $sql = "SELECT * FROM  employee where status='Active' and login_role='SALES EXECUTIVE' AND location_id = $leadLocationId ";
+                                                                        $sql = "SELECT * FROM  employee where status='Active' and login_role='SALES EXECUTIVE' AND (
+                                                                        location_id LIKE ('%$leadLocationId,%') OR
+                                                                        location_id LIKE ('%,$leadLocationId,%') OR
+                                                                        location_id LIKE ('%,$leadLocationId%') OR
+                                                                        location_id =  $leadLocationId
+                                                                        )";
                                                                         foreach ($pdo->query($sql) as $row) 
                                                                         { 
                                                                         ?>

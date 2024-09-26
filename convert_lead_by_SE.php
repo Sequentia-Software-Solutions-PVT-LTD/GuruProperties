@@ -89,12 +89,12 @@
 
     $q = $pdo->prepare($sql);
     $q->execute(array($added_on, $status, $transfer_status, $assign_leads_sr_id));
-
+    $d_added_on = date('Y-m-d H:i:s', strtotime('+20 seconds'));
     // ----------------------- Insert for new ffollowup ---------------------------------------------------------
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "INSERT INTO `converted_leads`(`assign_leads_sr_id`,`leads_id`, `admin_id`, `employee_id`, `employee_name`, `added_on`, `property_name_id`, `property_tower_id`, `property_variants`, `notes`, `agreement_value`, `registrantion`, `gst`, `stamp_duty`, `commission`, `quoted_price`, `sale_price`, `contact_person_name`,`contact_person_phone`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     $q = $pdo->prepare($sql);
-    $q->execute(array($assign_leads_sr_id, $leads_id, $admin_id, $employee_id, $employee_name, $added_on, $property_name_id, $property_tower_id, $property_variants, $notes, $agreement_value, $registrantion, $gst, $stamp_duty, $commission, $quoted_price, $sale_price, $contact_person_name, $contact_person_phone));
+    $q->execute(array($assign_leads_sr_id, $leads_id, $admin_id, $employee_id, $employee_name, $d_added_on, $property_name_id, $property_tower_id, $property_variants, $notes, $agreement_value, $registrantion, $gst, $stamp_duty, $commission, $quoted_price, $sale_price, $contact_person_name, $contact_person_phone));
      // $lastInsertedId = $pdo->lastInsertId();
     
     header('location:view_todays_leads_SE.php');

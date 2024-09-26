@@ -276,7 +276,7 @@ if (isset($_POST["submit"])) {
                               <div class="row">
                                 <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Property Title</label> -->
                                 <div class="col-sm-12 form-floating form-floating-outline">
-                                    <input type="text" name="property_title" id="formtabs-username" class="form-control" placeholder="Property Title" onchange="showValue(this.value, 'show_property_title')" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required>
+                                    <input tabindex="1" type="text" name="property_title" id="formtabs-username" class="form-control" placeholder="Property Title" onchange="showValue(this.value, 'show_property_title')" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required>
                                     <label for="formtabs-username"> Property Title* </label>
                                 </div>
                               </div>
@@ -286,7 +286,7 @@ if (isset($_POST["submit"])) {
                               <div class="row">
                                 <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Builder Name</label> -->
                                 <div class="col-sm-12 form-floating form-floating-outline">
-                                  <input type="text" name="builder_name"  onchange="showValue(this.value, 'show_builder_name')" id="formtabs-username" class="form-control" placeholder=" Builder Name" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required>
+                                  <input tabindex="2" type="text" name="builder_name"  onchange="showValue(this.value, 'show_builder_name')" id="formtabs-username" class="form-control" placeholder=" Builder Name" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required>
                                   <label for="formtabs-username"> Builder Name* </label>
                                 </div>
                               </div>
@@ -297,7 +297,7 @@ if (isset($_POST["submit"])) {
                                 <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Property Location</label> -->
                                 <div class="col-sm-12 form-floating form-floating-outline">
                                     <!-- <input type="text" name="location" id="formtabs-username" class="form-control" placeholder="Location" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required> -->
-                                    <select id="formtabs-location" onchange="showValue(this.value, 'show_property_location_id')" name="property_location_id" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
+                                    <select  tabindex="3" id="formtabs-location" onchange="showValue(this.value, 'show_property_location_id')" name="property_location_id" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
                                         <option value="" data-select2-id="18">Select Property Location</option>
                                         <?php
                                             $sqlLocation = "SELECT * FROM location ORDER BY name";
@@ -319,7 +319,7 @@ if (isset($_POST["submit"])) {
                                     <!-- <label class="col-sm-3 col-form-label text-sm-end" for="google-location-lat">Google Location</label> -->
                                     <div class="col-sm-6 form-floating form-floating-outline">
                                         <!-- Latitude Input Field -->
-                                        <input type="text" name="google_location_lat" id="google-location-lat" class="form-control" placeholder="Latitude"
+                                        <input  tabindex="4" type="text" name="google_location_lat" id="google-location-lat" class="form-control" placeholder="Latitude"
                                             pattern="^(\+|-)?(?:90(?:\.0+)?|\d{1,2}(?:\.\d+)?)$" 
                                             title="Please enter a valid latitude (-90 to 90)" 
                                             required>
@@ -327,7 +327,7 @@ if (isset($_POST["submit"])) {
                                     </div>
                                     <div class="col-sm-6 form-floating form-floating-outline">
                                         <!-- Longitude Input Field -->
-                                        <input type="text" name="google_location_long" id="google-location-long" class="form-control" placeholder="Longitude" 
+                                        <input tabindex="5" type="text" name="google_location_long" id="google-location-long" class="form-control" placeholder="Longitude" 
                                             pattern="^(\+|-)?(?:180(?:\.0+)?|(?:1[0-7]\d|\d{1,2})(?:\.\d+)?)$" 
                                             title="Please enter a valid longitude (-180 to 180)" 
                                             required>
@@ -358,7 +358,7 @@ if (isset($_POST["submit"])) {
                               <div class="row">
                                 <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Car Parking</label> -->
                                 <div class="col-sm-12 form-floating form-floating-outline">
-                                  <select id="defaultSelect" class="form-select" name="car_parking" onchange="showValue(this.value, 'show_car_parking')">
+                                  <select tabindex="6" id="defaultSelect" class="form-select" name="car_parking" onchange="showValue(this.value, 'show_car_parking')">
                                     <option>Select Parking Type</option>
                                     <option value="Open">Open</option>
                                     <option value="Covered">Covered</option>
@@ -373,7 +373,7 @@ if (isset($_POST["submit"])) {
                               <div class="row">
                                 <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Furnishing </label> -->
                                 <div class="col-sm-12 form-floating form-floating-outline">
-                                  <select id="defaultSelect" class="form-select" name="furnishing" onchange="showValue(this.value, 'show_furnishing')">
+                                  <select tabindex="7" id="defaultSelect" class="form-select" name="furnishing" onchange="showValue(this.value, 'show_furnishing')">
                                     <option>Select Furnishing Type</option>
                                     <option value="Furnished">Furnished</option>
                                     <option value="Semi-Furnished">Semi-Furnished</option>
@@ -388,7 +388,7 @@ if (isset($_POST["submit"])) {
                               <div class="row">
                                 <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Amenities  </label> -->
                                 <div class="col-sm-12 form-floating form-floating-outline" >
-                                  <textarea class="form-control h-px-100" name="amenities" id="exampleFormControlTextarea1" placeholder="Write amenities here..." onchange="showValue(this.value, 'show_amenities')"></textarea>
+                                  <textarea  tabindex="8" class="form-control h-px-100" name="amenities" id="exampleFormControlTextarea1" placeholder="Write amenities here..." onchange="showValue(this.value, 'show_amenities')"></textarea>
                                   <label for="formtabs-username"> Amenities  </label>
                                 </div>
                               </div>
@@ -398,7 +398,7 @@ if (isset($_POST["submit"])) {
                               <div class="row">
                                 <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> USP  </label> -->
                                 <div class="col-sm-12 form-floating form-floating-outline" >
-                                  <textarea class="form-control h-px-100" name="USP" id="exampleFormControlTextarea1" placeholder="Write USP here..." onchange="showValue(this.value, 'show_USP')"></textarea>
+                                  <textarea tabindex="9" class="form-control h-px-100" name="USP" id="exampleFormControlTextarea1" placeholder="Write USP here..." onchange="showValue(this.value, 'show_USP')"></textarea>
                                   <label for="formtabs-username"> USP  </label>
                                 </div>
                               </div>

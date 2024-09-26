@@ -51,11 +51,13 @@
 
     $next_date_time = $_POST['next_date'];
     // Split the datetime into date and time
-    $date_time_parts = explode(' ', $next_date_time);
-    $next_date = $date_time_parts[0];  // 2024-08-22
-    $next_time = $date_time_parts[1];  // 02:26
+    // $date_time_parts = explode(' ', $next_date_time);
+    // $next_date = $date_time_parts[0];  // 2024-08-22
+    // $next_time = $date_time_parts[1];  // 02:26
     
-
+    $next_date = date("Y-m-d", strtotime($next_date_time));
+    $next_time = date("Y-m-d", strtotime($next_date_time));
+    
     $sqlemp = "SELECT * FROM employee where employee_id= $transfer_employee_id ";
     $q = $pdo->prepare($sqlemp);
     $q->execute(array());      
@@ -89,11 +91,11 @@
     $q->execute(array($added_on, $Transferred, $transfer_reason, $transfer_employee_id, $transfer_employee_type, $Active, $latitude, $longitude, $assign_leads_id));
 
     // ---------------------- Insert query for trasfered employee-------------------------------------------------------------------------------------------
-    
+    $d_added_on = date('Y-m-d H:i:s', strtotime('+20 seconds'));
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "INSERT INTO `assign_leads`(`leads_id`, `admin_id`, `employee_id`,`employee_name`, `status`, `transfer_status`,`next_date`,`next_time`, `added_on`,`admin_request_date`,`request_for_admin`) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
     $q = $pdo->prepare($sql);
-    $q->execute(array($leads_id, $admin_id, $transfer_employee_id, $employee_name, $Transferred, $Admin_Pending, $next_date, $next_time, $added_on, $added_on, 'no'));
+    $q->execute(array($leads_id, $admin_id, $transfer_employee_id, $employee_name, $Transferred, $Admin_Pending, $next_date, $next_time, $added_on, $d_added_on, 'no'));
      
     // $lastInsertedId = $pdo->lastInsertId();
 
@@ -289,7 +291,7 @@
                                               $employeeID = $employeeArray['employee_id'];
                                             }
 
-                                            $sql = "SELECT * FROM  employee where status='Active' and login_role='CUSTOMER EXECUTIVE' ";
+                                            $sql = "SELECT * FROM employee where status='Active' and login_role='CUSTOMER EXECUTIVE'";
                                             foreach ($pdo->query($sql) as $row) 
                                             { $disabled = ""; if($row['employee_id'] == $employeeID) $disabled = "disabled";
                                             ?>
@@ -310,14 +312,14 @@
                                           type="text"
                                           class="form-control"
                                           placeholder="DD-MM-YYYY HH:MM"
-                                          id="flatpickr-datetime" />
+                                          id="flatpickr-datetime" required />
                                           <label for="flatpickr-datetime">Visit Date-Time</label>
                                         </div>
                                     </div>
 
                                     <!-- <label for="notes" class="form-label">Reason For Transfer</label> -->
                                     <div class="mb-4 form-floating form-floating-outline">
-                                        <textarea class="form-control" id="transfer_reason" placeholder="Write Reason here..." name="transfer_reason" style="height: 100px;"></textarea>
+                                        <textarea class="form-control" id="transfer_reason" placeholder="Write Reason here..." name="transfer_reason" style="height: 100px;" required ></textarea>
                                         <label for="transfer_reason">Reason For Transfer</label>
                                     </div>
                                     <div class="row justify-content-center">

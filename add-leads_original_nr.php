@@ -91,7 +91,13 @@
                 $location_id = $employeewiseLeadId['location_id'];
                 $sql = "INSERT INTO `assign_leads`(`leads_id`, `admin_id`, `employee_id`, `location_id`, `employee_name`, `status`, `added_on`) VALUES (?,?,?,?,?,?,?)";
                 $q = $pdo->prepare($sql);
-                $q->execute(array($lead_id, $admin_id, $employee_id, $location_id, $employee_name, 'Active', $added_on));
+                $q->execute(array($lead_id, $admin_id, $employee_id, $location_id, $employee_name, 'Active','Available', $added_on, 1));
+
+                $assign_lead = $pdo->lastInsertId();
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $sql = "UPDATE leads set status='Assigned', assign_lead_id = ? WHERE id = ?";
+                $q = $pdo->prepare($sql);
+                $q->execute(array($assign_lead, $lead_id));
                 $leadsAssigned++;
               }
         }
@@ -115,7 +121,13 @@
                   $location_id = $employeewiseLeadId['location_id'];
                   $sql = "INSERT INTO `assign_leads`(`leads_id`, `admin_id`, `employee_id`, `location_id`, `employee_name`, `status`, `added_on`) VALUES (?,?,?,?,?,?,?)";
                   $q = $pdo->prepare($sql);
-                  $q->execute(array($lead_id, $admin_id, $employee_id,  $location_id, $employee_name, 'Active', $added_on));
+                  $q->execute(array($lead_id, $admin_id, $employee_id, $location_id, $employee_name, 'Active','Available', $added_on, 1));
+
+                  $assign_lead = $pdo->lastInsertId();
+                  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                  $sql = "UPDATE leads set status='Assigned', assign_lead_id = ? WHERE id = ?";
+                  $q = $pdo->prepare($sql);
+                  $q->execute(array($assign_lead, $lead_id));
                   $i1++;
                   $leadsAssigned++;
                   $remainingLeadsForLoop--;
@@ -151,7 +163,13 @@
                   $location_id = $employeewiseLeadId['location_id'];
                   $sql = "INSERT INTO `assign_leads`(`leads_id`, `admin_id`, `employee_id`, `location_id`, `employee_name`, `status`, `added_on`) VALUES (?,?,?,?,?,?,?)";
                   $q = $pdo->prepare($sql);
-                  $q->execute(array($lead_id, $admin_id, $employee_id, $location_id, $employee_name, 'Active', $added_on));
+                  $q->execute(array($lead_id, $admin_id, $employee_id, $location_id, $employee_name, 'Active','Available', $added_on, 1));
+
+                  $assign_lead = $pdo->lastInsertId();
+                  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                  $sql = "UPDATE leads set status='Assigned', assign_lead_id = ? WHERE id = ?";
+                  $q = $pdo->prepare($sql);
+                  $q->execute(array($assign_lead, $lead_id));
                   $i1++;
                   $leadsAssigned++;
                   $remainingLeadsForLoop--;
