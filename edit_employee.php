@@ -8,11 +8,35 @@
   include ('dist/conf/db.php');
   $pdo = Database::connect();
 
+  $locationNameArray = array();
+  
   $employee_id = $_REQUEST['employee_id'];
   $sql = "select * from employee where employee_id= $employee_id ";
   $q = $pdo->prepare($sql);
   $q->execute(array());      
   $row_d = $q->fetch(PDO::FETCH_ASSOC);
+
+  if($row_d['login_role'] == "SALES EXECUTIVE"){
+    
+    $locationsIdString = $row_d['location_id'];
+    $locationsIdArray = explode( ',', $locationsIdString);
+
+    $locationCount = count($locationsIdArray);
+    for ($i=0; $i < $locationCount; $i++) { 
+      $locationId = $locationsIdArray[$i];
+      
+      $sql = "SELECT name FROM location WHERE id = '$locationId'";
+      $q = $pdo->prepare($sql);
+      $q->execute(array());
+      $location_name = $q->fetch(PDO::FETCH_ASSOC);
+      if($location_name != false ){
+        $location_name  = $location_name['name'];
+        array_push($locationNameArray, $location_name);
+      }      
+    }
+
+    // $locationName = implode(",", $locationNameArray);
+}
 
 //   print_R($employee_id);
 //   exit();
@@ -24,27 +48,53 @@
     //   exit();
 
     $employee_name = $_POST['employee_name'];
-    // $user_id = $_POST['user_id'];
-    // $password_post = $_POST['password'];
-    // $password = password_hash($password_post, PASSWORD_BCRYPT);
-    // $assistant_login_id = $_POST['assistant_login_id'];
     $added_on = date('Y-m-d H-i-s');
     $status = "Active";
     $login_role = $_POST['login_role'];
-    $login_photo = "default.png";
+    // $login_photo = "default.png";
     $email_id = $_POST['email_id'];
     $cell_no = $_POST['cell_no'];
-
+    $login_photo = $_POST['avatar'];
     $employee_id = $_POST['employee_id'];
 
-    $_employeelocation_id = $_POST['_employeelocation'];
+    $_employeelocation = $_POST['_employeelocation'];
+    $value = $_employeelocation[0];
+    $value = str_replace("{", "", $value);
+    $value = str_replace("}", "", $value);
+    $value = str_replace("[", "", $value);
+    $value = str_replace("]", "", $value);
+    $value = str_replace("\"", "", $value);
+    $locationNameArray = explode(",", $value);
+    // var_dump($locationNameArray);
+    $location_ids = "";
+    $locationIds = array();
+    if($login_role == "SALES EXECUTIVE"){
+          $locationCount = count($locationNameArray);
+          for ($i=0; $i < $locationCount; $i++) { 
+            $value = explode(":", $locationNameArray[$i])[1];
+            
+            $location_id = 0;
+            $locationId = $value;
+            $sql = "SELECT id FROM location WHERE name  = '$locationId'";
+            $q = $pdo->prepare($sql);
+            $q->execute(array());
+            $location_id = $q->fetch(PDO::FETCH_ASSOC);
+            if($location_id != false ){
+              $location_id  = $location_id['id'];
+              array_push($locationIds, $location_id);
+            }      
+          }
 
-    $sql = "select * from location where id = $_employeelocation_id ";
-    $q = $pdo->prepare($sql);
-    $q->execute(array());      
-    $row_loc = $q->fetch(PDO::FETCH_ASSOC);
+          $location_ids = implode(",", $locationIds);
+    }
 
-    $location_name = $row_loc['name'];
+
+    // $sql = "select * from location where id = $_employeelocation_id ";
+    // $q = $pdo->prepare($sql);
+    // $q->execute(array());      
+    // $row_loc = $q->fetch(PDO::FETCH_ASSOC);
+
+    // $location_name = $row_loc['name'];
 
     $sql = "select * from employee where employee_id = $employee_id ";
     $q = $pdo->prepare($sql);
@@ -70,14 +120,14 @@
     }
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "UPDATE  admin set login_name=?, login_password=?, login_role=?, type=?, location=?, location_id=? WHERE admin_id =?";
+    $sql = "UPDATE  admin set login_name=?, login_password=?,type=?, location=?, location_id=?, login_photo =? WHERE admin_id =?";
     $q = $pdo->prepare($sql);
-    $q->execute(array($employee_name, $password, $login_role, $login_role, $location_name, $_employeelocation_id, $admin_id));
+    $q->execute(array($employee_name, $password, $login_role, $location_name, $location_ids, $login_photo, $admin_id));
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "UPDATE employee set employee_name=?, password=?, login_role=?, cell_no=?, email_id=?, location=?, location_id=?, edited_on=? WHERE admin_id =?";
+    $sql = "UPDATE employee set employee_name=?, password=?,cell_no=?, email_id=?, location=?, location_id=?, edited_on=?, login_photo = ? WHERE admin_id =?";
     $q = $pdo->prepare($sql);
-    $q->execute(array($employee_name, $password, $login_role, $cell_no, $email_id, $location_name, $_employeelocation_id, $added_on, $admin_id));
+    $q->execute(array($employee_name, $password, $cell_no, $email_id, $location_name, $location_ids, $added_on, $login_photo, $admin_id));
     // echo "<pre>";
     // print_r($sql);
     // exit();
@@ -134,130 +184,137 @@
                 <div class="card">
                     <h5 class="card-header">Edit Employee</h5>
                     <div class="card-body demo-vertical-spacing demo-only-element">
-                        <div class="d-flex align-items-center1 justify-content-center h-px-300">
-                        <form action="#" method="post">
+                        <div class="align-items-center1 justify-content-center h-px-260">
+                        <form action="#" method="post" enctype="multipart/form-data">
                           <input type="hidden" value="<?php echo $row_d['employee_id']; ?>" name="employee_id">
                           <div class="row g-4">
-                          <div class="col-md-6">
-                              <div class="row">
-                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-country">Role</label> -->
-                                <div class="col-sm-12 form-floating form-floating-outline">
-                                  <!-- <div class="position-relative"> -->
-                                    <select id="formtabs-country"  name="login_role" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true">
-                                      <option value="" data-select2-id="18">Select Employee Role</option>
-                                      <option value="CUSTOMER EXECUTIVE" <?php if($row_d['login_role']=="CUSTOMER EXECUTIVE"){echo"Selected = 'selected'";}?>>Customer Executive</option>
-                                      <option value="SALES EXECUTIVE" <?php if($row_d['login_role']=="SALES EXECUTIVE"){echo"Selected = 'selected'";}?>>Sales Executive</option>
-                                      <option value="LEADS GENERATOR" <?php if($row_d['login_role']=="LEADS GENERATOR"){echo"Selected = 'selected'";}?>>Leads Generator</option>
-                                    </select>
-                                    <label for="formtabs-country">Role</label>
-                                  <!-- <span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="17" style="width: 383.9px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-formtabs-country-container"><span class="select2-selection__rendered" id="select2-formtabs-country-container" role="textbox" aria-readonly="true"><span class="select2-selection__placeholder">Select value</span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span> -->
-                                <!-- </div> -->
-                                </div>
-                              </div>
-                            </div>
+                            
                             <div class="col-md-6">
-                              <div class="row">
-                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username"> Name</label> -->
-                                <div class="col-sm-12 form-floating form-floating-outline">
-                                  <input type="text" name="employee_name" id="formtabs-username" class="form-control" value="<?php echo $row_d['employee_name']; ?>">
-                                  
-                                  <label for="formtabs-username">Name</label>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                              <div class="row">
-                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-email">Email</label> -->
-                                <div class="col-sm-12 form-floating form-floating-outline">
-                                  <!-- <div class="input-group input-group-merge"> -->
-                                    <input type="text"  name="email_id"  id="formtabs-email" class="form-control" value="<?php echo $row_d['email_id']; ?>" aria-label="john.doe" aria-describedby="formtabs-email2">
-                                    <!-- <span class="input-group-text" id="formtabs-email2">@example.com</span> -->
-                                     
-                                  <label for="formtabs-email">Email</label>
-                                  <!-- </div> -->
-                                </div>
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                              <div class="row">
-                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-phone">Phone No</label> -->
-                                <div class="col-sm-12 form-floating form-floating-outline">
-                                  <input type="text" name="cell_no"  id="formtabs-phone" class="form-control phone-mask" value="<?php echo $row_d['cell_no']; ?>" aria-label="658 799 8941">
-                                  
-                                  <label for="formtabs-phone">Phone No</label>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="col-md-6" style="display:none;">
-                              <div class="row">
-                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-username">User ID</label> -->
-                                <div class="col-sm-12 form-floating form-floating-outline">
-                                  <input type="text" name="user_id"  id="formtabs-username" class="form-control" value="<?php echo $row_d['user_id']; ?>">
-                                  
-                                  <label for="formtabs-username">User ID</label>
-                                </div>
-                              </div>
-                            </div>
 
-                            <div class="col-md-6">
-                              <div class="row form-password-toggle">
-                                <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-password">Password</label> -->
-                                <div class="col-sm-12 form-floating form-floating-outline">
-                                  <!-- <div class="input-group input-group-merge"> -->
-                                    <input type="password" name="password"  id="formtabs-password" class="form-control" placeholder="*********" aria-describedby="formtabs-password2">
-                                    <!-- <span class="input-group-text cursor-pointer" id="formtabs-password2"><i class="ri-eye-off-line"></i></span> -->
-                                    
-                                  <label for="formtabs-password">Password</label>
-                                  <!-- </div> -->
-                                </div>
-                              </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="row form-password-toggle">
-                                    <!-- <label class="col-sm-3 col-form-label text-sm-end" for="formtabs-password">Property Location</label> -->
-                                    <div class="col-sm-12 form-floating form-floating-outline">
-                                        <!-- <div class="input-group input-group-merge"> -->
-                                            <select id="formtabs-location" name="_employeelocation" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
-                                                <option value="" data-select2-id="18">Select Property Location</option>
-                                                <?php
-                                                    $sqlLocation = "SELECT * FROM location ORDER BY name";
-                                                    foreach ($pdo->query($sqlLocation) as $row) {
-                                                        $selected = ($row['id'] == $row_d['location_id']) ? 'selected' : '';
-                                                        ?>
-                                                        <option value="<?php echo $row['id']; ?>" <?php echo $selected; ?>><?php echo $row['name']; ?></option>
-                                                        <?php
-                                                    }
-                                                ?>
-                                            </select>
-                                            
-                                            <label for="formtabs-location">Property Location</label>
-                                        <!-- </div> -->
+                                    <div class="form-floating form-floating-outline mb-6">
+                                        <select id="roleDropdown" name="login_role" data-minimum-results-for-search="Infinity" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" aria-hidden="true" required>
+                                            <!-- <option selected hidden disable>Select Employee Role</option> -->
+                                            <option value="CUSTOMER EXECUTIVE" <?php if($row_d['login_role']=="CUSTOMER EXECUTIVE"){echo"Selected = 'selected'";} ?>
+                                             >Customer Executive</option>
+                                            <option value="SALES EXECUTIVE" <?php if($row_d['login_role']=="SALES EXECUTIVE"){echo"Selected = 'selected'";} ?>
+                                             >Sales Executive</option>
+                                        </select>
+                                        <label for="roleDropdown">Role</label>
                                     </div>
-                                </div>
+
+                                    <div class="form-floating form-floating-outline mb-6">
+                                      <input type="text" value="<?php echo $row_d['employee_name']; ?>" name="employee_name" id="formtabs-username" class="form-control" placeholder="john doe" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required />
+                                      <label for="formtabs-username"> Name</label>
+                                    </div>
+                                   
+                                    <div class="form-floating form-floating-outline mb-6">
+                                      <input type="text" value="<?php echo $row_d['user_id']; ?>" name="user_id"  id="prefixInput" class="form-control" placeholder="" required>
+                                      <label for="prefixInput">User ID</label>
+                                    </div>
+
+                                    <div class="form-floating form-floating-outline mb-6">
+                                      <input type="text"  name="password"  id="password" class="form-control" aria-describedby="formtabs-password2">
+                                      <label for="formtabs-password">Password</label>
+                                      <span id='message'></span>
+                                    </div>
                             </div>
 
-                          
+                            <div class="col-md-6">
 
-                          </div>
-                          <!-- <div class="row mt-12">
-                            <div class="col-md-12" style="justify-content: flex-end;display: flex;">
-                              <div class="row justify-content-end">
-                                <div class="col-sm-4">
-                                  <button type="submit" class="btn btn-success me-4 waves-effect waves-light" name="submit">Submit</button>
-                                  <button type="reset" class="btn btn-outline-secondary waves-effect">Cancel</button>
+                                      <div class="form-floating form-floating-outline mb-6">
+                                        <input type="email"  value="<?php echo $row_d['email_id']; ?>" name="email_id"  id="formtabs-email" class="form-control" placeholder="@example.com"  required>
+                                        <label for="formtabs-email"> Email</label>
+                                      </div>
+                                     
+                                      <div class="form-floating form-floating-outline mb-6">
+                                        <input type="text" value="<?php echo $row_d['cell_no']; ?>"  name="cell_no"  id="formtabs-phone" class="form-control phone-mask" placeholder="658 799 8941" aria-label="658 799 8941"  maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 10);">
+                                        <label for="formtabs-phone"> Phone No</label>
+                                      </div>
+                                      
+                                      <div class="form-floating form-floating-outline mb-6" id="se_locations" <?php echo $row_d['login_role'] != "SALES EXECUTIVE" ?  'style="display:none;"' : ""; ?> >
+                                              <!-- <select id="multipleLocations" name="_employeelocation" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" multiple="multiple" required> -->
+                                                  <input
+                                                      id="multipleLocations"
+                                                      name="_employeelocation[]"
+                                                      class="form-control h-auto"
+                                                      placeholder="Select Locations"
+                                                      value="<?php echo implode(",", $locationNameArray) ?>" 
+                                                  />
+                                                    <?php
+                                                      // $sqlLocation = "SELECT * FROM  location order by name";
+                                                      // foreach ($pdo->query($sqlLocation) as $row) 
+                                                      // { 
+                                                      ?>
+                                                          <!-- <option value="<?php //echo $row['id']?>"><?php //echo $row['name']?></option>  -->
+                                                      <?php //} ?>
+                                              <!-- </select> -->
+                                              <label for="multipleLocations">Location</label>
+                                      </div>
+                                      <div class="form-floating form-floating-outline mb-6" id="ce_locations" style="display:none;">
+                                                <select id="formtabs-locationce" name="_employeelocation_ce" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country-ce" tabindex="-1" aria-hidden="true">
+                                                    <option value="" data-select2-id="18">Select Property Location</option>
+                                                    <?php
+                                                        $sqlLocation = "SELECT * FROM  location order by name";
+                                                        foreach ($pdo->query($sqlLocation) as $row) 
+                                                        { 
+                                                        ?>
+                                                            <option value="<?php echo $row['id']?>"><?php echo $row['name']?></option> 
+                                                        <?php } ?>
+                                                </select>
+                                                <label for="formtabs-locationce">Location</label>
+                                      </div>
+
+                                        <div class="form-floating form-floating-outline mb-6">
+                                            <?php                                     
+                                            if(isset($isError) && $isError != "") { ?>                                       
+                                              <span class="col-sm-12 text-center"><?php echo $error; ?></span>
+                                            <?php } ?>
+                                        </div>
                                 </div>
-                              </div>
-                            </div>
-                          </div> -->
 
-                          <div class="row mt-12 pt-4">
-                              <div class="col-md-12">
-                                    <button type="submit"  data-bs-toggle="tooltip" data-bs-placement="left"  class="btn btn-success waves-effect waves-light d-flex float-right" name="submit">Submit</button>
-                                    <button type="button" class="btn btn-outline-secondary" onclick="history.back()">Cancel</button>
-                              </div>
+                                <div class="col-md-1 col-sm-6 align-self-center">
+                                  <small class="text-light fw-medium">Select Avatar</small>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                  <div class="d-flex avatar-group my-4">
+                                    <!-- Avatar 1 -->
+                                    <div class="avatar d-flex" style="width: 100px;">
+                                      <input type="radio" name="avatar" id="avatar1" <?php echo $row_d['login_photo'] == "5.png" ? 'checked' : ''; ?> value="5.png" required>
+                                      <label for="avatar1" style="margin-left: 10px;">
+                                        <img src="assets/img/avatars/5.png" alt="Avatar 1" class="rounded-circle pull-up" style="cursor:pointer;">
+                                      </label>
+                                    </div>
+                                    <!-- Avatar 2 -->
+                                    <div class="avatar d-flex" style="width: 100px;">
+                                      <input type="radio" name="avatar" id="avatar2" <?php echo $row_d['login_photo'] == "12.png" ? 'checked' : ''; ?> value="12.png" required>
+                                      <label for="avatar2" style="margin-left: 10px;">
+                                        <img src="assets/img/avatars/12.png" alt="Avatar 2" class="rounded-circle pull-up" style="cursor:pointer;">
+                                      </label>
+                                    </div>
+                                    <!-- Avatar 3 -->
+                                    <div class="avatar d-flex" style="width: 100px;">
+                                      <input type="radio" name="avatar" id="avatar3" <?php echo $row_d['login_photo'] == "6.png" ? 'checked' : ''; ?> value="6.png" required>
+                                      <label for="avatar3" style="margin-left: 10px;">
+                                        <img src="assets/img/avatars/6.png" alt="Avatar 3" class="rounded-circle pull-up" style="cursor:pointer;">
+                                      </label>
+                                    </div>
+                                    <!-- Avatar 4 -->
+                                    <div class="avatar d-flex" style="width: 100px;">
+                                      <input type="radio" name="avatar" id="avatar4" <?php echo $row_d['login_photo'] == "10.png" ? 'checked' : ''; ?> value="10.png" required>
+                                      <label for="avatar4" style="margin-left: 10px;">
+                                        <img src="assets/img/avatars/10.png" alt="Avatar 4" class="rounded-circle pull-up" style="cursor:pointer;">
+                                      </label>
+                                    </div>
+                                  </div>
+                                </div>
+                            
                           </div>
-
+                          <div class="row mt-10">
+                            <div class="col-md-12 justify-content-end text-end">
+                                  <button type="submit" class="btn btn-success me-4 waves-effect waves-light d-flex float-right" name="submit">Submit</button>
+                                  <button type="button" onlclick="" class="btn btn-outline-secondary waves-effect  d-flex float-left">Cancel</button>
+                            </div>
+                          </div>
 
                         </form>
                         </div>
@@ -292,6 +349,60 @@
       <!-- Footer -->
         <?php include 'layout/footer_js.php'; ?>
       <!-- / Footer -->
-    
+      <script>
+        $(document).ready(function() {
+              $('#roleDropdown').change(function() {
+                var selectedRole = $(this).val();
+                var prefix = '';
+                selocations = document.getElementById("se_locations");
+                celocations = document.getElementById("ce_locations");
+                if (selectedRole === 'CUSTOMER EXECUTIVE') {
+                    prefix = 'CE';
+                    selocations.style.display = "none";
+                    celocations.style.display = "none";
+                } else if (selectedRole === 'SALES EXECUTIVE') {
+                    prefix = 'SE';
+                    selocations.style.display = "block";
+                    celocations.style.display = "none";
+                }
+
+                // Set the prefix in the input field
+                $('#prefixInput').val(prefix + '-');
+            });
+        });
+        var locationList = ["Aundh","Baner","Bavdhan","Hadapsar","Hinjewadi","Kalyani Nagar","Kharadi","Koregaon Park","Magarpatta City","Model Colony","NIBM Road","Shivaji Nagar","Viman Nagar","Wagholi","Wakad"];
+        $.ajax({
+            type: "POST",
+            url: 'locations.php',
+            data: ({ issession : 1}),
+            dataType: "html",
+            success: function(data) {
+              locationList = data;
+            },
+            error: function() {
+                alert('Error occured');
+            }
+        });
+
+        // setTimeout(
+          // function test() {
+
+            const multipleLocationsElement = document.querySelector('#multipleLocations');
+            // console.log(locationList);
+            const whitelist = locationList;
+            // Inline
+            let TagifyCustomInlineSuggestionLocations = new Tagify(multipleLocationsElement, {
+              whitelist: whitelist,
+              maxTags: 10,
+              dropdown: {
+                maxItems: 20,
+                classname: 'tags-inline',
+                enabled: 0,
+                closeOnSelect: false
+              }
+            });
+          // }
+        // , 2000);
+      </script>
   </body>
 </html>

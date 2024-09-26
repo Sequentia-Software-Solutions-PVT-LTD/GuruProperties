@@ -83,17 +83,21 @@ include ('dist/conf/db.php');
                     <hr>
                     <div class="card-body demo-vertical-spacing demo-only-element">
                         <form action="upload.php" class="form-repeater" method="POST" enctype="multipart/form-data">
-                            <div data-repeater-list="group-a">
-                                
+                            <div class="row align-items-center" data-repeater-list="group-a">
                                 <!-- New code for add leads by uploading excel -->
                                 <div class="col-md-6">
                                     <div class="mb-4">
                                         <label for="formFileMultiple" class="form-label">Choose CSV File</label>
                                         <input class="form-control" type="file" name="file" id="file" accept=".csv" required>
                                         <span style="color:red; float: right;">Please Upload CSV File Only..</span>
+                                        <span style="color:red; float: left;"><a href="Leads_sample_upload.csv" style="color:red; text-decoration: underline;" href="">Download the sample upload file</a></span>
                                     </div>
                                 </div>
                                 <!-- /New code for add leads by uploading excel -->
+
+                                <!-- <div class="col-md-6">
+                                    <p>Click Here to download the sample upload file</p>
+                                </div> -->
 
                             </div>
 

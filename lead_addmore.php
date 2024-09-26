@@ -40,26 +40,26 @@
                           <div class="row">
                             <div class="mb-6 col-lg-6 col-xl-2 col-12 mb-0">
                               <div class="form-floating form-floating-outline">
-                                <input type="text" name="input1[]" id="form-repeater-3-5" class="form-control" placeholder="">
+                                <input type="text" name="input1[]" id="form-repeater-3-5" class="form-control" placeholder="" required>
                                 <label for="form-repeater-1-1">Lead Name</label>
                               </div>
                             </div>
                             <div class="mb-6 col-lg-6 col-xl-2 col-12 mb-0">
                               <div class="form-floating form-floating-outline">
-                                <input type="text" name="input2[]" id="form-repeater-3-6" class="form-control" placeholder="">
+                                <input type="text" name="input2[]" id="form-repeater-3-6" class="form-control" placeholder="" required>
                                 <label for="form-repeater-1-2">Email ID</label>
                               </div>
                             </div>
                             <div class="mb-6 col-lg-6 col-xl-2 col-12 mb-0">
                               <div class="form-floating form-floating-outline">
-                                <input type="text" name="input4[]"  pattern="[7-9]{1}[0-9]{9}" id="form-repeater-3-8" class="form-control" placeholder="">
+                                <input type="text" name="input4[]"  pattern="[7-9]{1}[0-9]{9}" id="form-repeater-3-8" class="form-control" placeholder="" required>
                                 <label for="form-repeater-1-4">Contact</label>
                               </div>
                             </div>
                             <div class="mb-6 col-lg-6 col-xl-2 col-12 mb-0">
                               <div class="form-floating form-floating-outline">
                                 <!-- <input type="text" name="input3[]" id="form-repeater-3-7" class="form-control" placeholder=""> -->
-                                <select name="input3[]" id="form-repeater-1-3" class="selectpicker w-100"  data-style="btn-default" placeholder="Select Location">
+                                <select name="input3[]" id="form-repeater-1-3" class="selectpicker w-100"  data-style="btn-default" placeholder="Select Location" required>
                                   <option selected disable value="">Select Location</option>
                                       <?php
                                           $sqlLocation = "SELECT * FROM location order by name";

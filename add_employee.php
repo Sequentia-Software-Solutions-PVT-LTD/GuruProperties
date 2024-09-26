@@ -59,6 +59,7 @@
 
           $location_ids = implode(",", $locationIds);
     }
+
     // $user_id1 = $_POST['user_id'];
     // $prefix = $_POST['prefix'];
     // $user_id = $prefix.$user_id1;
@@ -221,7 +222,6 @@
 
                                     <div class="form-floating form-floating-outline mb-6">
                                         <select id="roleDropdown" name="login_role" data-minimum-results-for-search="Infinity" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" aria-hidden="true" required>
-                                            <option selected hidden disable>Select Employee Role</option>
                                             <option value="CUSTOMER EXECUTIVE">Customer Executive</option>
                                             <option value="SALES EXECUTIVE">Sales Executive</option>
                                         </select>
@@ -234,7 +234,7 @@
                                     </div>
                                    
                                     <div class="form-floating form-floating-outline mb-6">
-                                      <input type="text"  name="user_id"  id="prefixInput" class="form-control" placeholder="" required>
+                                      <input type="text"  name="user_id"  id="prefixInput" class="form-control" placeholder="" required value="CE-">
                                       <label for="prefixInput">User ID</label>
                                     </div>
                                    
@@ -252,7 +252,7 @@
                             <div class="col-md-6">
 
                                       <div class="form-floating form-floating-outline mb-6">
-                                        <input type="email"  name="email_id"  id="formtabs-email" class="form-control" placeholder="@example.com">
+                                        <input type="email"  name="email_id"  id="formtabs-email" class="form-control" placeholder="@example.com"  required>
                                         <label for="formtabs-email"> Email</label>
                                       </div>
                                      

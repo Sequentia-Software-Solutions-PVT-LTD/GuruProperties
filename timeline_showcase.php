@@ -92,16 +92,16 @@
         $timeline_date = null;
         $timeline_date = date("Y-m-d H:i:s", strtotime($leadsSingle['added_on']));
         $dbContent = $leadsSingle;
-            // array_push($AllData, array(
-            //     "table_name" => 'leads',
-            //     "id" => $leadsSingle['id'],
-            //     "status" => "Fresh Lead",
-            //     "transfer_status" => "Fresh Lead",
-            //     "timlinedate" => $timeline_date,
-            //     "added_on" => $leadsSingle['added_on'],
-            //     "edited_on" => $leadsSingle['edited_on'],
-            //     "dbContent" => $dbContent
-            // ));
+            array_push($AllData, array(
+                "table_name" => 'leads',
+                "id" => $leadsSingle['id'],
+                "status" => "Fresh Lead",
+                "transfer_status" => "Fresh Lead",
+                "timlinedate" => $timeline_date,
+                "added_on" => $leadsSingle['added_on'],
+                "edited_on" => $leadsSingle['edited_on'],
+                "dbContent" => $dbContent
+            ));
     }
     foreach($CE_Leads_Array as $CE_Leads_Single) {
         // var_dump($CE_Leads_Single['assign_leads']);
@@ -160,7 +160,7 @@
             $timeline_date_ce = date("Y-m-d H:i:s", strtotime($CE_Leads_Single['edited_on']));
         }
         
-
+          if($timeline_date_ce != "") {
             array_push($AllData, array(
                 "table_name" => 'assign_leads',
                 "id" => $CE_Leads_Single['assign_leads_id'],
@@ -171,6 +171,7 @@
                 "edited_on" => $CE_Leads_Single['edited_on'],
                 "dbContent" => $dbContent,
             ));
+          }            
     }
     foreach($SE_Leads_Array as $SE_Leads_Single) {
         $timeline_date_se = null;
@@ -425,10 +426,10 @@
 
                                   $message .= $transferEmployeeName."<br>";
 
-                                  if($CEArray["request_for_admin"] == "yes")
-                                      $message .= "Admin Approved";
-                                  else
-                                      $message .= "Admin Approval Pending";
+                                  // if($CEArray["request_for_admin"] == "yes")
+                                  //     $message .= "Admin Approved";
+                                  // else
+                                  //     $message .= "Admin Approval Pending";
                                   $leadType = $CEArray["lead_type"];
                                   $reason = $CEArray["transfer_reason"];
                                   // if($CEArray['request_for_admin'] == "") {
@@ -1331,7 +1332,8 @@
                           <div class="d-flex justify-content-between align-items-center flex-wrap">
                             <div style="width: 100%;">
                                 <?php
-                                    echo '<div class="card mb-6" style="background-color: #e9faff;">';
+                                    // echo '<div class="card mb-6" style="background-color: #e9faff;">';
+                                    echo '<div class="card mb-6">';
                                     
                                     if(
                                       (isset($dbData['request_for_admin']) && $dbData['request_for_admin'] != "") ||
@@ -1391,32 +1393,32 @@
                                         </div>
                                       </div>';
                                       }
+                                      // <h5 class="card-title">';
                                       echo '
-                                      <div class="card-body">
-                                        <h5 class="card-title">';
+                                      <div class="card-body">';
                                         
                                         
                                           if(isset($dbData['notes']) && $dbData['notes'] != ""){
-                                            echo '<p class="text-capitalize mt-2">Notes:- &nbsp;&nbsp;&nbsp;<span style="font-weight: 300;">'.$dbData['notes'].'</span></p>';
+                                            echo '<h5 class="card-title"><p class="text-capitalize mt-2 mb-6">Notes:- &nbsp;&nbsp;&nbsp;<span style="font-weight: 300;">'.$dbData['notes'].'</span></p>';
                                           }
                                           if(isset($dbData['transfer_employee_type']) && $dbData['transfer_employee_type'] != ""){
                                             $showText = $message;
                                             $showText = str_replace("Admin Approved", "", $showText);
                                             $showText = str_replace("Admin Pending", "", $showText);
-                                            echo '<p class="mt-2" style="font-weight: 300;">'.$showText.'</span></p>';
+                                            echo '<h5 class="card-title"><p class="mt-2 mb-6" style="font-weight: 300;">'.$showText.'</span></p>';
                                           }
                                           
                                           if(isset($dbData['transfer_reason']) && $dbData['transfer_reason'] != ""){
-                                            echo '<p class="text-capitalize mt-2">Transfer Reason:- &nbsp;&nbsp;&nbsp;<span style="font-weight: 300;">'.$dbData['transfer_reason'].'</span></p>';
+                                            echo '<p class="text-capitalize mt-2 mb-6">Transfer Reason:- &nbsp;&nbsp;&nbsp;<span style="font-weight: 300;">'.$dbData['transfer_reason'].'</span></p>';
                                           }
                                           
 
                                           if(isset($dbData['status']) && $dbData['status'] == "Assigned"){
-                                            echo '<p class="mt-2" style="font-weight: 300;">'.$message.'</p>';
+                                            echo '<p class="mt-2 mb-6" style="font-weight: 300;">'.$message.'</p>';
                                           }
                                           
                                           if(isset($dbData['dead_reason']) && $dbData['dead_reason'] != ""){
-                                            echo '<p class="text-capitalize mt-2">Dead Reason:- &nbsp;&nbsp;&nbsp;<span style="font-weight: 300;">'.$dbData['dead_reason'].'</span></p>';
+                                            echo '<h5 class="card-title"><p class="text-capitalize mt-2 mb-6">Dead Reason:- &nbsp;&nbsp;&nbsp;<span style="font-weight: 300;">'.$dbData['dead_reason'].'</span></p>';
                                           }
 
                                           if(isset($dbData['status']) && $dbData['status'] == "Dead"){
@@ -1435,20 +1437,20 @@
                                         
                                         echo '
                                         </h5>
-                                        <p class="card-text" style="line-height: 3;">';
+                                        <p class="card-text" style="line-height: 2;">';
 
 
                                         if(isset($dbData['next_date']) && $dbData['next_date'] != "0000-00-00") 
                                         
-                                        echo "Next Follow up:- <br><span style='font-weight: 300;'><span style='line-height: 2;'>". date("d-M-Y",strtotime($dbData['next_date']));
+                                        echo "Next Follow up:- <br><span style='font-weight: 300;'><span style='line-height: 1;'>". date("d-M-Y",strtotime($dbData['next_date']));
                                         
-                                        if(isset($dbData['next_time'])  && $dbData['next_time'] != "00:00:00") echo '<br>'.$dbData['next_time'].'</span>';
+                                        if(isset($dbData['next_time'])  && $dbData['next_time'] != "00:00:00") echo '&nbsp;&nbsp;&nbsp;'. date("H:i:s A", strtotime($dbData['next_time'])).'</span>';
 
                                         if(isset($dbData['visit_date']) && $dbData['visit_date'] != "0000-00-00") 
                                         
-                                        echo "Next Follow up:- <br><span style='font-weight: 300;'><span style='line-height: 2;'>". date("d-M-Y",strtotime($dbData['visit_date']));
+                                        echo "Next Follow up:- <br><span style='font-weight: 300;'><span style='line-height: 1;'>". date("d-M-Y",strtotime($dbData['visit_date']));
                                         
-                                        if(isset($dbData['visit_time'])  && $dbData['visit_time'] != "00:00:00") echo '<br>'.$dbData['visit_time'].'</span>';
+                                        if(isset($dbData['visit_time'])  && $dbData['visit_time'] != "00:00:00") echo '&nbsp;&nbsp;&nbsp;'. date("H:i:s A", strtotime($dbData['visit_time'])).'</span>';
                                         
                                         echo '
                                         </p>
@@ -1800,7 +1802,7 @@
                         <div class="timeline-event-time"><?php 
                         echo date("d-m-Y" , strtotime($variant['timlinedate']));
                         echo "<br>";
-                        echo date("H:i A" , strtotime($variant['timlinedate']));
+                        echo date("H:i:s A" , strtotime($variant['timlinedate']));
                         ?>
                         </div>
                       </div>

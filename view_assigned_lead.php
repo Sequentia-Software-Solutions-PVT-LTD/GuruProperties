@@ -34,7 +34,6 @@
   if(isSet($_POST["submit"]))
   { 
    
-
     $connection_status = $_POST['connection_status'];
     $notes = $_POST['notes'];
     $lead_type = $_POST['lead_type'];
@@ -47,8 +46,8 @@
     $next_date_time = $_POST['next_date'];
     // Split the datetime into date and time
     $date_time_parts = explode(' ', $next_date_time);
-    $next_date = $date_time_parts[0];  // 2024-08-22
-    $next_time = $date_time_parts[1];  // 02:26
+    $next_date = date("Y-m-d", strtotime($date_time_parts[0]));  // 2024-08-22
+    $next_time = date("H:i", strtotime($date_time_parts[1]));    // 02:26
     
     $assign_leads_id = $_POST['assign_leads_id'];
 
@@ -82,12 +81,12 @@
 
     $q = $pdo->prepare($sql);
     $q->execute(array($connection_status, $notes, $next_date, $next_time, $lead_type, $added_on, $status, $t_status_ce, $longitude, $latitude, $assign_leads_id));
-    
     // ----------------------- Insert for new ffollowup ---------------------------------------------------------
+    $d_added_on = date('Y-m-d H:i:s', strtotime('+20 seconds'));
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "INSERT INTO `assign_leads`(`leads_id`, `admin_id`, `employee_id`,`employee_name`, `status`, `transfer_status`,`next_date`,`next_time`, `added_on`) VALUES (?,?,?,?,?,?,?,?,?)";
     $q = $pdo->prepare($sql);
-    $q->execute(array($leads_id, $admin_id, $employee_id, $employee_name, $status, $transfer_status, $next_date, $next_time, $added_on));
+    $q->execute(array($leads_id, $admin_id, $employee_id, $employee_name, $status, $transfer_status, $next_date, $next_time, $d_added_on));
      // $lastInsertedId = $pdo->lastInsertId();
     
     header('location:assigned_leads.php');
@@ -240,7 +239,7 @@
                                         
                                         <ul class="list-unstyled my-3 py-1" style="">
                                             <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Source:</span> <span><?php echo $row_leads['source']; ?></span></li>
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_leads['added_on'])); ?></span></li>
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_assign['added_on'])); ?></span></li>
                                         </ul>
 
                                         <!-- <ul class="list-unstyled my-3 py-1" style="">
@@ -331,11 +330,11 @@
                                                         <label for="next_date">Next Follow Up Date Time</label> -->
                                                         <div class="form-floating form-floating-outline">
                                                                 <input
-                                                                name="next_date"
                                                                 type="text"
+                                                                name="next_date"
                                                                 class="form-control"
                                                                 placeholder="DD-MM-YYYY HH:MM"
-                                                                id="flatpickr-datetime" />
+                                                                id="flatpickr-datetime" required />
                                                                 <label for="flatpickr-datetime">Next Follow Up Date Time</label>
                                                         </div>
                                                     </div>        

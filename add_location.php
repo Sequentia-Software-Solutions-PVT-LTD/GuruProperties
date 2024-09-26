@@ -142,7 +142,7 @@
                                 <div class="box-body" id="lead_addmore_div">
                                 <div class="row">
 
-                                    <div class="mb-6 col-lg-6 col-xl-2 col-12 mb-0">
+                                    <div class="mb-6 col-lg-12 col-xl-12 col-12 mb-0">
                                       <div class="form-floating form-floating-outline">
                                         <input type="text" name="location[]" id="form-repeater-3-5" class="form-control" placeholder="Property Location" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required>
                                         <label for="form-repeater-1-1">Property Location</label>
@@ -209,7 +209,7 @@
       <script>
           function addMore() {
             // $("<DIV>").load("lead_addmore.php?exist", function() {
-                $("#lead_addmore_div").append('<div class="row"><div class="mb-6 col-lg-6 col-xl-2 col-12 mb-0"><div class="form-floating form-floating-outline"><input type="text" name="location[]" id="form-repeater-3-5" class="form-control" placeholder="Property Location" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, \'\')" required><label for="form-repeater-1-1">Property Location</label></div></div></div><hr class="mt-0">');
+                $("#lead_addmore_div").append('<div class="row"><div class="mb-6 col-lg-12 col-xl-12 col-12 mb-0"><div class="form-floating form-floating-outline"><input type="text" name="location[]" id="form-repeater-3-5" class="form-control" placeholder="Property Location" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, \'\')" required><label for="form-repeater-1-1">Property Location</label></div></div></div><hr class="mt-0">');
             // }); 
           }
       </script>
