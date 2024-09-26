@@ -51,9 +51,11 @@
 
     $next_date_time = $_POST['next_date'];
     // Split the datetime into date and time
-    $date_time_parts = explode(' ', $next_date_time);
-    $next_date = $date_time_parts[0];  // 2024-08-22
-    $next_time = $date_time_parts[1];  // 02:26
+    // $date_time_parts = explode(' ', $next_date_time);
+    // $next_date = $date_time_parts[0];  // 2024-08-22
+    // $next_time = $date_time_parts[1];  // 02:26
+    $next_date = date("Y-m-d", strtotime($next_date_time));
+    $next_time = date("H:i:s", strtotime($next_date_time));
     
     $added_on = date('Y-m-d H-i-s');
     // $status = "Active";
@@ -442,7 +444,13 @@
                                             <div class="col-12">
                                                 <div class="card-body demo-vertical-spacing demo-only-element">
                                                     <div class="d-flex justify-content-between align-items-center">
-                                                        <div class="mb-4 d-flex gap-4" style="width: 100%;" id="variantDropdown">
+                                                        <div class="mb-4 d-flex gap-4" style="width: 100%;">
+                                                        <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                            <select id="variantDropdown" name="property_variants[]" class=" form-select" data-allow-clear="true" required>
+                                                                <option value="">Select Property Variant</option>
+                                                            </select>
+                                                            <label for="variantDropdown">Property Variant</label>
+                                                        </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -468,7 +476,7 @@
                                                                 type="text"
                                                                 class="form-control"
                                                                 placeholder="DD-MM-YYYY HH:MM"
-                                                                id="flatpickr-datetime" />
+                                                                id="flatpickr-datetime" required />
                                                                 <label for="flatpickr-datetime">Visit Date-Time</label>
                                                             </div>
                                                         </div>        
