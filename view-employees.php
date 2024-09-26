@@ -8,10 +8,9 @@
   include ('dist/conf/db.php');
   $pdo = Database::connect();
 
-  if(isSet($_POST["submit"]))
-  { 
-   
 
+  if(isSet($_POST["submit"]))
+  {
     $property_title = $_POST['property_title'];
     $builder_name = $_POST['builder_name'];
     $added_on = date('Y-m-d H-i-s');
@@ -92,7 +91,7 @@
               <h5 class="card-header mar-bot-10">Employee Management</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
-                    <h5 class="card-header"> All employees are listed below</h5>
+                    <h5 class="card-header"> All employees are listed below <small class="text-success">(Hover on the location to see full list of locations)</small> </h5>
                     <div class="table-responsive text-nowrap">
                         <table class="table">
                         <caption class="ms-6">List of Employees</caption>
@@ -103,7 +102,7 @@
                             <th>Property Location</th>
                             <th>Phone No</th>
                             <th>Email ID</th>
-                            <!-- <th>Login ID</th> -->
+                            <th>Login ID</th>
                             <th>Role</th>
                             <th>Status</th>
                             <th>Actions</th>
@@ -112,7 +111,7 @@
                         <tbody>
                             <?php 
                                 $i = 1;
-                                $sql = "SELECT * FROM employee ";
+                                $sql = "SELECT * FROM employee e INNER JOIN admin a ON e.admin_id = a.admin_id";
                                 // $sql = "SELECT * FROM admin where login_role = 'ASSISTANT' OR login_role = 'RECEPTIONIST' OR login_role = 'TECHNICIAN' ";
                                 $q = $pdo->query($sql);
                                 foreach ($pdo->query($sql) as $row) 
@@ -141,10 +140,25 @@
                                     <i class="ri-user-line ri-22px text-primary me-4"></i>
                                     <?php //echo $row["employee_name"]; ?>
                                 </td> -->
-                                <td><?php echo $row["location"]; ?></td>
+                                <td>
+                                    <?php 
+                                      $locationsId = $row["location_id"];
+                                      if($locationsId != "")
+                                      $locationsId = $row["location_id"];
+                                      else
+                                      $locationsId = 0;
+                                      $sqlLocationName = "SELECT name FROM location WHERE id IN ($locationsId) ORDER BY name";
+                                      $qLocationName = $pdo->prepare($sqlLocationName);
+                                      $qLocationName->execute(array());
+                                      $locationNames = $qLocationName->fetchAll(PDO::FETCH_COLUMN);
+                                    ?>
+                                  <div data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip" data-bs-original-title="<?php echo implode("\n",$locationNames); ?>" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 150px; cursor: pointer;">
+                                    <?php if($locationsId != "") echo implode(", ",$locationNames); ?>
+                                  </div>
+                                </td>
                                 <td><?php echo $row["cell_no"]; ?></td>
                                 <td><?php echo $row["email_id"]; ?></td>
-                                <!-- <td><?php echo $row["user_id"]; ?></td> -->
+                                <td><?php echo $row["user_id"]; ?></td>
                                 <!-- <td>
                                     <?php
                                           if($row["login_role"] == "CUSTOMER EXECUTIVE"){

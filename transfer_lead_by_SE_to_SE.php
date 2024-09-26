@@ -19,9 +19,8 @@
     // print_r($_POST);
     // exit();
 
-    $added_on = date('Y-m-d H-i-s');
     $t_status = "Available";
-
+    $added_on = date('Y-m-d H:i:s', strtotime('-20 seconds'));
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "UPDATE `assign_leads_sr` SET  

@@ -20,7 +20,6 @@
                   JOIN property_tower pt ON pn.property_name_id = pt.property_name_id
                   JOIN property_varients pv ON pn.property_name_id = pv.property_name_id
                   WHERE 1
-                  GROUP BY pn.property_name_id
                   ORDER BY pn.property_title";
     // $sql_query = "SELECT * FROM property_name ";
     $pdata = $pdo->prepare($sql_query);

@@ -154,7 +154,7 @@ if(isset($_POST["submit"]))
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>Login Cover - Pages | Guru Properties</title>
+    <title>Login | Guru Properties</title>
 
     <meta name="description" content="" />
 
