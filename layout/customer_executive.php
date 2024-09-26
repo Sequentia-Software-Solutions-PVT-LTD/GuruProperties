@@ -4,6 +4,48 @@
 <?php
 //  echo "customeer exec sidebar";
 //   exit();
+    $newLeads = 0;
+    $receivedLeads = 0;
+    $todaysfollowupLeads = 0;
+    $upcomingLeads = 0;
+    $deadLeads = 0;
+    $allLeads = 0;
+    $admin_id = $_SESSION['login_user_id'];
+    
+    $sql = "SELECT count(*) FROM assign_leads where admin_id= $admin_id and status='Active' and transfer_status='Available' and	mark_dead=''"; 
+    $result = $pdo->prepare($sql); 
+    $result->execute(); 
+    $newLeads = $result->fetchColumn(); 
+    
+    $sql = "SELECT count(*) FROM assign_leads where admin_id= $admin_id and status = 'Transferred'  and transfer_status='Available' and mark_dead='' "; 
+    $result = $pdo->prepare($sql); 
+    $result->execute(); 
+    $receivedLeads = $result->fetchColumn(); 
+    
+    $today_date = date('Y-m-d');
+    $sql = "SELECT count(*) FROM assign_leads WHERE admin_id = $admin_id and status = 'Followup' And transfer_status='Available' and mark_dead='' AND DATE(next_date) = '$today_date'";
+    $result = $pdo->prepare($sql); 
+    $result->execute(); 
+    $todaysfollowupLeads = $result->fetchColumn(); 
+
+    $today_date = date('Y-m-d');
+    $sql = "SELECT count(*) FROM assign_leads WHERE admin_id = $admin_id and status = 'Followup' And transfer_status='Available' AND DATE(next_date) > '$today_date'";
+    $q = $pdo->query($sql);
+    $result = $pdo->prepare($sql); 
+    $result->execute(); 
+    $upcomingLeads = $result->fetchColumn(); 
+
+    $sql = "SELECT count(*) FROM assign_leads WHERE admin_id = $admin_id AND mark_dead = 'Yes'";
+    $result = $pdo->prepare($sql); 
+    $result->execute(); 
+    $deadLeads = $result->fetchColumn(); 
+
+    $sql = "SELECT * FROM assign_leads where admin_id = $admin_id  GROUP BY leads_id ORDER BY edited_on, added_on";                                
+    $result = $pdo->prepare($sql); 
+    $result->execute(); 
+    $allLeads = $result->fetchAll(PDO::FETCH_ASSOC); 
+    $allLeads = count($allLeads);
+
 ?>
 <!-- <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme-bg-dark text-white bg-secondary"> -->
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme-bg-dark text-white bg-dark-custom">
@@ -177,18 +219,14 @@
                   <a href="assigned_leads.php" class="menu-link">
                   <i class="menu-icon tf-icons ri-bill-line"></i>
                     <div data-i18nn="List">Today's New Leads</div>
-                    <?php 
-                      // echo "5";
-                      // exit();
-
-                    ?>
-                    <!-- <div class="badge bg-danger rounded-pill ms-auto"><?php echo '10'; ?></div> -->
+                  <div class="badge bg-danger rounded-pill ms-auto"><?php echo $newLeads; ?></div>
                   </a>
                 </li>
                 <li class="menu-item">
                   <a href="received_leads.php" class="menu-link">
                   <i class="menu-icon tf-icons ri-bill-line"></i>
                     <div data-i18nn ="Preview">Received Leads</div>
+                    <div class="badge bg-danger rounded-pill ms-auto"><?php echo $receivedLeads; ?></div>
                   </a>
                 </li>
                 <!-- <li class="menu-item">
@@ -210,12 +248,14 @@
                   <a href="todays_followup_leads_CE.php" class="menu-link">
                   <i class="menu-icon tf-icons ri-bill-line"></i>
                     <div data-i18nn   ="Preview">Today's Followup Leads</div>
+                    <div class="badge bg-danger rounded-pill ms-auto"><?php echo $todaysfollowupLeads; ?></div>
                   </a>
                 </li>
                 <li class="menu-item">
                   <a href="upcomming_leads_CE.php" class="menu-link">
                   <i class="menu-icon tf-icons ri-bill-line"></i>
                     <div data-i18nn="List">Upcoming Leads</div>
+                    <div class="badge bg-danger rounded-pill ms-auto"><?php echo $upcomingLeads; ?></div>
                   </a>
                 </li>
                 <!-- <li class="menu-item">
@@ -227,6 +267,7 @@
                   <a href="dead_leads_CE.php" class="menu-link">
                   <i class="menu-icon tf-icons ri-bill-line"></i>
                     <div data-i18nn="List">Dead Leads</div>
+                    <div class="badge bg-danger rounded-pill ms-auto"><?php echo $deadLeads; ?></div>
                   </a>
                 </li>
                 <!-- <li class="menu-item">
@@ -244,6 +285,7 @@
                 <a href="all_leads_CE.php" class="menu-link">
                 <i class="menu-icon tf-icons ri-bill-line"></i>
                   <div data-i18nn ="Preview">All Leads</div>
+                  <div class="badge bg-danger rounded-pill ms-auto"><?php echo $allLeads; ?></div>
                 </a>
               </li>
 

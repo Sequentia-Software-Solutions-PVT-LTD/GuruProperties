@@ -35,7 +35,7 @@ if(isset($_POST["submit"]))
 
   if($valid)
   {
-      $sql = "select * from admin where status = 'Active' AND login_id=?";
+      $sql = "select * from admin where login_id=?";
       $q = $pdo->prepare($sql);
       $q->execute(array($login_id));      
       $data = $q->fetch(PDO::FETCH_ASSOC);
@@ -46,6 +46,7 @@ if(isset($_POST["submit"]))
       else 
       {
         $loginError = "Please enter correct login_id !";
+        $warning ="";
         $valid = false;
       }
 
@@ -53,87 +54,94 @@ if(isset($_POST["submit"]))
 
   if ($valid)
   { 
-    $sql = "select * from admin where status = 'Active' AND login_id=?";
+    $sql = "select * from admin where login_id=?";
     $q = $pdo->prepare($sql);
     $q->execute(array($login_id));      
     $data = $q->fetch(PDO::FETCH_ASSOC);
     if($data)
     {
-      if (password_verify($_POST['password'], $data['login_password']))
-      {
-          //if($data['login_role'] == 'ADMIN')
-          //{
-          
-          if(1) {
-
-            $_SESSION['login_user_id'] = $data['admin_id'];
-            $_SESSION['login_name'] = $data['login_name'];
-            $_SESSION['login_id'] = $data['login_id'];
-            $_SESSION['login_status'] = $data['status'];
-            $_SESSION['login_photo'] = $data['login_photo'];
-            $_SESSION['login_role'] = $data['login_role'];
-            $_SESSION['login_type'] = $data['type'];
-          }
-              
-          //}
-          $_SESSION['login_time'] = time();
-
-           // ------------- add atendence ----------------------
-
-           
-                $login_name = $_SESSION['login_name'];
-                $login_role = $_SESSION['login_role'];
-                $login_user_id = $_SESSION['login_user_id'];
-                $date = date('Y-m-d');
-                $time = date('H:i:s');
-                $added_on = date('Y-m-d H-i-s'); 
-                // $status = "Logged OUT";
-                $status="Logged In";
-                if($login_role == 'CUSTOMER EXECUTIVE' || $login_role == 'SALES EXECUTIVE')
-                {
-
-                    //  print_r($_SESSION);
-                    //  exit();
-
-                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    $sql = "INSERT INTO `attendance`(`login_id`,`login_name`,`date`,`time`,`status`, `added_on`, `latitude`, `longitude`, `accuracy`) VALUES (?,?,?,?,?,?,?,?,?)";
-                    $q = $pdo->prepare($sql);
-                    $q->execute(array($login_user_id, $login_name, $date, $time, $status, $added_on, $latitude, $longitude, $accuracy));
+      if($data['status'] != 'Active') {
+        $loginError = "";
+        $warning ="Your account is suspended";
+      } else {
+        if (password_verify($_POST['password'], $data['login_password']))
+        {
+            //if($data['login_role'] == 'ADMIN')
+            //{
             
-                }
+            if(1) {
+
+              $_SESSION['login_user_id'] = $data['admin_id'];
+              $_SESSION['login_name'] = $data['login_name'];
+              $_SESSION['login_id'] = $data['login_id'];
+              $_SESSION['login_status'] = $data['status'];
+              $_SESSION['login_photo'] = $data['login_photo'];
+              $_SESSION['login_role'] = $data['login_role'];
+              $_SESSION['login_type'] = $data['type'];
+            }
+                
+            //}
+            $_SESSION['login_time'] = time();
+
             // ------------- add atendence ----------------------
 
-          // echo "<pre>";
-          // // print_r($_SESSION);
-          // print_r($data);
-          // exit();
+            
+                  $login_name = $_SESSION['login_name'];
+                  $login_role = $_SESSION['login_role'];
+                  $login_user_id = $_SESSION['login_user_id'];
+                  $date = date('Y-m-d');
+                  $time = date('H:i:s');
+                  $added_on = date('Y-m-d H-i-s'); 
+                  // $status = "Logged OUT";
+                  $status="Logged In";
+                  if($login_role == 'CUSTOMER EXECUTIVE' || $login_role == 'SALES EXECUTIVE')
+                  {
 
-          if($data['login_role'] == "LEAD GENERATOR") {
-            header("Location:add-leads");
-          }
-          else if($data['type'] == "SUPERADMIN") {
-            header("Location:dashboard_superadmin");
-          }
-          else if($data['login_role'] == "CUSTOMER EXECUTIVE") {
-            header("Location:dashboard_CE");
-          }
-          else if($data['login_role'] == "SALES EXECUTIVE") {
-            header("Location:dashboard_SE");
-          }
-          else {
-            header("Location:dashboard");                    
-          }
-          // header("Location:index.php");                    
-      }
-      else
-      {
-          $loginError = "Please enter correct password !";
+                      //  print_r($_SESSION);
+                      //  exit();
+
+                      $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                      $sql = "INSERT INTO `attendance`(`login_id`,`login_name`,`date`,`time`,`status`, `added_on`, `latitude`, `longitude`, `accuracy`) VALUES (?,?,?,?,?,?,?,?,?)";
+                      $q = $pdo->prepare($sql);
+                      $q->execute(array($login_user_id, $login_name, $date, $time, $status, $added_on, $latitude, $longitude, $accuracy));
+              
+                  }
+              // ------------- add atendence ----------------------
+
+            // echo "<pre>";
+            // // print_r($_SESSION);
+            // print_r($data);
+            // exit();
+
+            if($data['login_role'] == "LEAD GENERATOR") {
+              header("Location:add-leads");
+            }
+            else if($data['type'] == "SUPERADMIN") {
+              header("Location:dashboard_superadmin");
+            }
+            else if($data['login_role'] == "CUSTOMER EXECUTIVE") {
+              header("Location:dashboard_CE");
+            }
+            else if($data['login_role'] == "SALES EXECUTIVE") {
+              header("Location:dashboard_SE");
+            }
+            else {
+              header("Location:dashboard");                    
+            }
+            // header("Location:index.php");                    
+        }
+        else
+        {
+            $loginError = "Please enter correct password !";
+        }
       }
     }
     else 
     {
-      $loginError = "Please enter correct password !";
+      $loginError = "Userid not found !";
     }
+  } else {
+    $loginError = "User ID not found !";
   }
 }
 ?>
@@ -269,6 +277,15 @@ if(isset($_POST["submit"]))
               <button class="btn btn-primary d-grid w-100 login-btn" type="submit" name="submit">Sign in</button>
             </form>
 
+            <?php if((isset($loginError)) && $loginError != "") { ?>
+            <div class="alert alert-solid-danger" role="alert">
+              <?php echo $loginError; ?>
+            </div>
+            <?php } else if((isset($warning)) && $warning != "") { ?>
+              <div class="alert alert-solid-warning" role="alert">
+                  <?php echo $warning; ?>
+              </div>
+              <?php } ?>
           </div>
         </div>
         <!-- /Login -->

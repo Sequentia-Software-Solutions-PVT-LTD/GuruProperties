@@ -176,12 +176,14 @@
                   <a href="assigned_leads.php" class="menu-link">
                   <i class="menu-icon tf-icons ri-bill-line"></i>
                     <div data-i18nn="List">Today's New Leads</div>
+                    <div class="badge bg-danger rounded-pill ms-auto">5</div>
                   </a>
                 </li>
                 <li class="menu-item">
                   <a href="received_leads.php" class="menu-link">
                   <i class="menu-icon tf-icons ri-bill-line"></i>
                     <div data-i18nn ="Preview">Received Leads</div>
+                    <div class="badge bg-danger rounded-pill ms-auto">5</div>
                   </a>
                 </li>
                 <!-- <li class="menu-item">
@@ -203,12 +205,14 @@
                   <a href="todays_followup_leads_CE.php" class="menu-link">
                   <i class="menu-icon tf-icons ri-bill-line"></i>
                     <div data-i18nn   ="Preview">Today's Followup Leads</div>
+                    <div class="badge bg-danger rounded-pill ms-auto">5</div>
                   </a>
                 </li>
                 <li class="menu-item">
                   <a href="upcomming_leads_CE.php" class="menu-link">
                   <i class="menu-icon tf-icons ri-bill-line"></i>
                     <div data-i18nn="List">Upcomming Leads</div>
+                    <div class="badge bg-danger rounded-pill ms-auto">5</div>
                   </a>
                 </li>
                 <!-- <li class="menu-item">
@@ -220,6 +224,7 @@
                   <a href="dead_leads_CE.php" class="menu-link">
                   <i class="menu-icon tf-icons ri-bill-line"></i>
                     <div data-i18nn="List">Dead Leads</div>
+                    <div class="badge bg-danger rounded-pill ms-auto">5</div>
                   </a>
                 </li>
                 <!-- <li class="menu-item">
@@ -237,6 +242,7 @@
                 <a href="all_leads_CE.php" class="menu-link">
                 <i class="menu-icon tf-icons ri-bill-line"></i>
                   <div data-i18nn ="Preview">All Leads</div>
+                  <div class="badge bg-danger rounded-pill ms-auto">5</div>
                 </a>
               </li>
 
