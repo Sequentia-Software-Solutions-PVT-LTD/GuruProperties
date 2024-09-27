@@ -55,8 +55,6 @@
     $next_time_followup1 = "";
     $next_date_visit1 = "";
     $next_time_visit1 = "";
-    $next_datett1 = "";
-    $next_timett1 = "";
 
     $connection_status = $_POST['connection_status'];
     // $notes = $_POST['notes'];
@@ -113,55 +111,34 @@
             // Optionally, log an error or handle it accordingly
         // }
     }
-
-    // for next date
-    $next_datett = $_POST['next_date'];
-    if ($next_datett) {
-        // Split the datetime into date and time
-        $date_time_parts = explode(' ', $next_datett);
-
-            $next_datett1 = date('Y-m-d', strtotime($next_datett));  // e.g., 2024-08-22
-            $next_timett1 = date('H:i:s', strtotime($next_datett));  // e.g., 02:26
-        } else {
-            // Handle the case where the datetime is not in the expected format
-            $next_datett1 = '';
-            $next_timett1 = '';
-            
-            // Optionally, log an error or handle it accordingly
-        // }
-    }
-
-    
-
-    // [next_date] => 27-09-2024 12:00
     
     $assign_leads_sr_id = $_POST['assign_leads_sr_id'];
 
     $followup_or_another_property = $_POST['followup_or_another_property'];
 
-    // if($followup_or_another_property == 'Follow Up')
-    // {
-    //     $sqlleads_sr = "select * from assign_leads_sr where assign_leads_sr_id = $assign_leads_sr_id ";
-    //     $q = $pdo->prepare($sqlleads_sr);
-    //     $q->execute(array());      
-    //     $row_leads_sr = $q->fetch(PDO::FETCH_ASSOC);
+    if($followup_or_another_property == 'Follow Up')
+    {
+        $sqlleads_sr = "select * from assign_leads_sr where assign_leads_sr_id = $assign_leads_sr_id ";
+        $q = $pdo->prepare($sqlleads_sr);
+        $q->execute(array());      
+        $row_leads_sr = $q->fetch(PDO::FETCH_ASSOC);
 
-    //     // echo "<pre>";
-    //     // print_r($row_leads_sr);
-    //     // exit();
+        // echo "<pre>";
+        // print_r($row_leads_sr);
+        // exit();
 
-    //     $property_name_id = $row_leads_sr['property_id'];
-    //     $property_tower_id = $row_leads_sr['sub_property_id'];
-    //     $property_variants = $row_leads_sr['variant'];
-    // }
-    // else{
-    //     $property_name_id = $_POST['property_name_id'];
-    //     $property_tower_id = $_POST['property_tower_id'];
+        $property_name_id = $row_leads_sr['property_id'];
+        $property_tower_id = $row_leads_sr['sub_property_id'];
+        $property_variants = $row_leads_sr['variant'];
+    }
+    else{
+        $property_name_id = $_POST['property_name_id'];
+        $property_tower_id = $_POST['property_tower_id'];
 
-    //     $property_variants_string = $_POST['property_variants']; // This is the array of selected variant IDs
-    //     // Convert the array to a comma-separated string
-    //     $property_variants = implode(',', $property_variants_string);
-    // }
+        $property_variants_string = $_POST['property_variants']; // This is the array of selected variant IDs
+        // Convert the array to a comma-separated string
+        $property_variants = implode(',', $property_variants_string);
+    }
 
     // -----------upload photo script(by select pic)-----------
     $photo_capture1 = $_POST['photo_capture1'];
@@ -193,8 +170,6 @@
     $latitude = $_POST['latitude'];
     $longitude = $_POST['longitude'];
 
-    // Exit();
-
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $sql = "UPDATE `assign_leads_sr` SET 
@@ -216,88 +191,14 @@
     $q = $pdo->prepare($sql);
     $q->execute(array($connection_status, $today_visit_remark, $next_date_followup1, $next_time_followup1, $next_date_visit1, $next_time_visit1, $lead_type, $added_on, $status, $photo1, $t_status_ce, $latitude, $longitude, $assign_leads_sr_id));
 
-    // echo "<pre>";
-    // print_R($_POST);
-    // // print_R($next_date_visit1);
-    // exit();
 
-    // $next_folloup_visit = 'next_visit';
-    // $followup_or_another_property = 'Another Property';
-
-    if($_POST['next_folloup_visit'] == 'next_visit' &&  $_POST['followup_or_another_property'] == 'Another Property')
-    // if(!($next_folloup_visit)  &&  !($followup_or_another_property) )
-    {
-
-        // echo "<pre>";
-        // print_R($_POST);
-        // print_R($next_date_visit1);
-        // exit();
-
-        // if( next_folloup_visit == 'next_visit')
-        // {
-            $sqlleads_sr = "select * from assign_leads_sr where assign_leads_sr_id = $assign_leads_sr_id ";
-            $q = $pdo->prepare($sqlleads_sr);
-            $q->execute(array());      
-            $row_leads_sr = $q->fetch(PDO::FETCH_ASSOC);
-
-            $property_name_id = $row_leads_sr['property_id'];
-            $property_tower_id = $row_leads_sr['sub_property_id'];
-            $property_variants = $row_leads_sr['variant'];
-
-            // ----------------------- Insert for new ffollowup ---------------------------------------------------------
-            $added_on = date('Y-m-d H:i:s', strtotime('+20 seconds'));
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sql = "INSERT INTO `assign_leads_sr`(`assign_leads_id`,`leads_id`, `admin_id`, `employee_id`,`employee_name`, `status`, `transfer_status`,`next_date`,`next_time`,`visit_date`,`visit_time`,`followup_or_another_property`,`variant`, `property_id`, `sub_property_id`, `added_on`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-            $q = $pdo->prepare($sql);
-            $q->execute(array($assign_leads_id, $leads_id, $admin_id, $employee_id, $employee_name, $status, $transfer_status, $next_date_followup1, $next_time_followup1, $next_datett1, $next_timett1, $followup_or_another_property, $property_variants, $property_name_id, $property_tower_id, $added_on));
-        
-        // }
-        // if(followup_or_another_property == 'Another Property')
-        // {
-            $property_name_id = $_POST['property_name_id'];
-            $property_tower_id = $_POST['property_tower_id'];
-
-            $property_variants_string = $_POST['property_variants']; // This is the array of selected variant IDs
-            // Convert the array to a comma-separated string
-            $property_variants = implode(',', $property_variants_string);
-             // ----------------------- Insert for new ffollowup ---------------------------------------------------------
-             $added_on = date('Y-m-d H:i:s', strtotime('+20 seconds'));
-             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-             $sql = "INSERT INTO `assign_leads_sr`(`assign_leads_id`,`leads_id`, `admin_id`, `employee_id`,`employee_name`, `status`, `transfer_status`,`next_date`,`next_time`,`visit_date`,`visit_time`,`followup_or_another_property`,`variant`, `property_id`, `sub_property_id`, `added_on`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-             $q = $pdo->prepare($sql);
-             $q->execute(array($assign_leads_id, $leads_id, $admin_id, $employee_id, $employee_name, 'Active', 'Available', $next_date_followup1, $next_time_followup1, $next_date_visit1, $next_time_visit1, $followup_or_another_property, $property_variants, $property_name_id, $property_tower_id, $added_on));
-        
-       //}
-
-    }
-    else{
-
-        echo "<pre>";
-        echo "else condition";
-        print_r($_POST);
-        exit();
-
-        $sqlleads_sr = "select * from assign_leads_sr where assign_leads_sr_id = $assign_leads_sr_id ";
-        $q = $pdo->prepare($sqlleads_sr);
-        $q->execute(array());      
-        $row_leads_sr = $q->fetch(PDO::FETCH_ASSOC);
-
-        $property_name_id = $row_leads_sr['property_id'];
-        $property_tower_id = $row_leads_sr['sub_property_id'];
-        $property_variants = $row_leads_sr['variant'];
-
-        // ----------------------- Insert for new ffollowup ---------------------------------------------------------
-        $added_on = date('Y-m-d H:i:s', strtotime('+20 seconds'));
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "INSERT INTO `assign_leads_sr`(`assign_leads_id`,`leads_id`, `admin_id`, `employee_id`,`employee_name`, `status`, `transfer_status`,`next_date`,`next_time`,`visit_date`,`visit_time`,`followup_or_another_property`,`variant`, `property_id`, `sub_property_id`, `added_on`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        $q = $pdo->prepare($sql);
-        $q->execute(array($assign_leads_id, $leads_id, $admin_id, $employee_id, $employee_name, $status, $transfer_status, $next_date_followup1, $next_time_followup1, $next_date_visit1, $next_time_visit1, $followup_or_another_property, $property_variants, $property_name_id, $property_tower_id, $added_on));
-        // $lastInsertedId = $pdo->lastInsertId();
-      
-    }
-    // -------------------------------------------------------------------------
-
-
+    // ----------------------- Insert for new ffollowup ---------------------------------------------------------
+    $added_on = date('Y-m-d H:i:s', strtotime('+20 seconds'));
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sql = "INSERT INTO `assign_leads_sr`(`assign_leads_id`,`leads_id`, `admin_id`, `employee_id`,`employee_name`, `status`, `transfer_status`,`next_date`,`next_time`,`visit_date`,`visit_time`,`followup_or_another_property`,`variant`, `property_id`, `sub_property_id`, `added_on`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    $q = $pdo->prepare($sql);
+    $q->execute(array($assign_leads_id, $leads_id, $admin_id, $employee_id, $employee_name, $status, $transfer_status, $next_date_followup1, $next_time_followup1, $next_date_visit1, $next_time_visit1, $followup_or_another_property, $property_variants, $property_name_id, $property_tower_id, $added_on));
+    // $lastInsertedId = $pdo->lastInsertId();
     
     header('location:view_todays_leads_SE.php');
     
@@ -352,7 +253,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title> View Lead Details  |  Guru Properties</title>
+    <title> View Today's Leads Details  |  Guru Properties</title>
 
     <meta name="description" content="" />
 
@@ -785,28 +686,9 @@
                                                         <div class="d-flex gap-4" style="width: 100%;">
                                                             <div class="mb-6 mt-1 form-floating form-floating-outline" style="width: 100%;">
                                                                 <textarea class="form-control" type="text" placeholder="Enter your remark here.." id="today_visit_remark" name="today_visit_remark" required style="height: 100px;resize: none;"></textarea>
-                                                                <label for="today_visit_remark">Remark For Today's Visit*</label>
+                                                                <label for="today_visit_remark">Remark For Today's Visit</label>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-12" id="radiorb12">
-                                                <div class="card-body demo-vertical-spacing demo-only-element">
-                                                    <div class="d-flex justify-content-between  align-items-center">
-                                                        <h6 class="w-max-content mb-0">Choose Option</h6>
-                                                            <div class="d-flex gap-4" style="width:62%">
-                                                                <div class="form-check form-check-success mb-0">
-                                                                    <input required name="next_folloup_visit" class="form-check-input" type="radio" value="next_folloup" id="nxtfolloup">
-                                                                    <label class="form-check-label" for="nxtfolloup">Next Followup For Visited Property </label>
-                                                                </div>
-                                                                <div class="form-check form-check-danger mb-0">
-                                                                    <input name="next_folloup_visit" class="form-check-input" type="radio" value="next_visit" id="nxtvisit">
-                                                                    <label class="form-check-label" for="nxtvisit">Next Visit For Same Property</label>
-                                                                </div>
-                                                            </div>
-                                                        <!-- </div> -->
                                                     </div>
                                                 </div>
                                             </div>
@@ -822,36 +704,18 @@
                                                             <label for="next_date">Next Follow Up Date Time</label> -->
                                                             <div class="form-floating form-floating-outline" style="width: 100%;">
                                                                 <input
-                                                                name="next_date_followup"                                                
+                                                                name="next_date"                                                
                                                                 type="text"
                                                                 class="form-control"
                                                                 placeholder="DD-MM-YYYY HH:MM"
                                                                 id="flatpickr-datetime" required />
-                                                                <label for="flatpickr-datetime">Next Follow Up Date Time For Visited Property*</label>
+                                                                <label for="flatpickr-datetime">Next Follow Up Date Time For Visited Property</label>
                                                                 </div>
                                                         </div>  
                                                         </div>
                                                             
                                                     </div>
                                                 </div>    
-                                            </div>
-
-                                            <div id="reasonBoxfollowup" style="display:none;">
-                                                <div class="card-body demo-vertical-spacing demo-only-element">
-                                                    <div class="col-sm-12 form-floating form-floating-outline" >
-                                                        <!-- <input class="form-control" type="datetime-local" id="next_date_followup" name="next_date_followup" required>
-                                                        <label for="next_date_followup">Next Follow Up Date Time</label> -->
-                                                        <div class="form-floating form-floating-outline" style="width: 100%;">
-                                                        <input
-                                                        name="next_date"
-                                                        type="text"
-                                                        class="form-control"
-                                                        placeholder="DD-MM-YYYY HH:MM"
-                                                        id="flatpickr-datetime1" />
-                                                        <label for="flatpickr-datetime1">Visit Date Time*</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </div>
 
                                             <div class="col-12">
@@ -911,7 +775,7 @@
                                                 </div>    
                                             </div>
                                             
-                                            <div class="col-12" id="selectdrop">
+                                            <div class="col-12">
                                                 <div class="card-body demo-vertical-spacing demo-only-element">
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         <!-- <h6 class="my-0">5. Update For*</h6> -->
@@ -919,9 +783,9 @@
                                                         <div class="d-flex align-items-center gap-2" style="width: 100%;">
                                                             <!-- <label for="next_date" class="form-label">Select One Option</label> -->
                                                             <div class="form-floating form-floating-outline" id="selectBox1" style="width: 100%;">
-                                                                <select required id="roleDropdown" name="followup_or_another_property" class="form-select " data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" >
+                                                                <select id="roleDropdown" name="followup_or_another_property" class="form-select " data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" >
                                                                     <option value="" data-select2-id="18">Select One</option>
-                                                                    <!-- <option value="Follow Up">Next Visit <span class="text-muted">(For Same Property)</span></option> -->
+                                                                    <option value="Follow Up">Next Visit <span class="text-muted">(For Same Property)</span></option>
                                                                     <option value="Another Property">Another Property<span class="text-muted">(For New Property Visit)</span></option>
                                                                     <option value="Not Applicable">Not Applicable</option>
                                                                 </select>
@@ -991,13 +855,29 @@
                                                                 class="form-control"
                                                                 placeholder="DD-MM-YYYY HH:MM"
                                                                 id="flatpickr-datetime2" />
-                                                                <label for="flatpickr-datetime2">Visit Date-Time*</label>
+                                                                <label for="flatpickr-datetime2">Visit Date-Time</label>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                             </div>
-                                            
+                                            <div id="reasonBoxfollowup" style="display:none;">
+                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                    <div class="col-sm-12 form-floating form-floating-outline" >
+                                                        <!-- <input class="form-control" type="datetime-local" id="next_date_followup" name="next_date_followup" required>
+                                                        <label for="next_date_followup">Next Follow Up Date Time</label> -->
+                                                        <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                        <input
+                                                        name="next_date_followup"
+                                                        type="text"
+                                                        class="form-control"
+                                                        placeholder="DD-MM-YYYY HH:MM"
+                                                        id="flatpickr-datetime1" />
+                                                        <label for="flatpickr-datetime1">Visit Date Time</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
 
                                             <div class="col-sm-12 text-center">
                                                     <div class="form-floating form-floating-outline">
@@ -1279,7 +1159,7 @@
         var selectedValue = this.value;
         // Show the appropriate section based on the selected value
         if (selectedValue === 'Follow Up') {
-            //document.getElementById('reasonBoxfollowup').style.display = 'block';
+            document.getElementById('reasonBoxfollowup').style.display = 'block';
             document.getElementById('property_details_box').style.display = 'none';
 
             document.getElementById('flatpickr-datetime2').removeAttribute("required");
@@ -1288,7 +1168,7 @@
             document.getElementById('variantDropdown').removeAttribute("required");
             document.getElementById('flatpickr-datetime1').setAttribute("required","required");
         } else if (selectedValue === 'Another Property') {
-            //document.getElementById('reasonBoxfollowup').style.display = 'none';
+            document.getElementById('reasonBoxfollowup').style.display = 'none';
             document.getElementById('property_details_box').style.display = 'block';
             document.getElementById('flatpickr-datetime2').setAttribute("required","required");
             document.getElementById('propertyDropdown').setAttribute("required","required");
@@ -1296,7 +1176,7 @@
             document.getElementById('variantDropdown').setAttribute("required","required");
             document.getElementById('flatpickr-datetime1').removeAttribute("required");
         } else {
-            //document.getElementById('reasonBoxfollowup').style.display = 'none';
+            document.getElementById('reasonBoxfollowup').style.display = 'none';
             document.getElementById('property_details_box').style.display = 'none';
             document.getElementById('flatpickr-datetime2').removeAttribute("required");
             document.getElementById('propertyDropdown').removeAttribute("required");
@@ -1556,22 +1436,6 @@
         // }
     });
 
-    $('#next_date').hide(); // on load hide div
-    $('input[name="next_folloup_visit"]').click(function(){
-        var selectedValue = $(this).val();
-        if(selectedValue == 'next_folloup') {
-            $('#next_date').show();
-            $('#reasonBoxfollowup').hide();
-            
-            $('#flatpickr-datetime').prop('required', true);
-            document.getElementById('flatpickr-datetime1').removeAttribute("required");
-        } else {
-            $('#next_date').hide();
-            $('#reasonBoxfollowup').show();
-            $('#flatpickr-datetime1').prop('required', true);
-            document.getElementById('flatpickr-datetime').removeAttribute("required");
-        }
-    });
 
     $('input[name="connection_status"]').click(function(){
         var selectedValue = $(this).val();
@@ -1580,35 +1444,22 @@
         
         if(selectedValue == 'not_connected') {
             $('#takephotobtn').hide();
-            //$('#next_date').hide();
-
-            //$('#roleDropdown option:eq(1)').prop('selected', true);
-            
-            document.getElementById('roleDropdown').removeAttribute("required");
-            $("#selectdrop").hide();
-            
-            //$('#reasonBoxfollowup').show();
+            $('#next_date').hide();
+            $('#roleDropdown option:eq(1)').prop('selected', true);
+            $('#reasonBoxfollowup').show();
 
             $('#flatpickr-datetime1').attr("required", "required");
-            //$('#flatpickr-datetime').removeAttr("required");
-
-            $('#nxtfolloup').prop('disabled', true);
-            $('#nxtvisit').click();
+            $('#flatpickr-datetime').removeAttr("required");
 
             
         } else {
-            $("#reasonBoxfollowup").hide();
             $('#takephotobtn').show();
-            $("#selectdrop").show();
-            //$('#next_date').show();
+            $('#next_date').show();
             $('#roleDropdown option:eq(0)').prop('selected', true);
-            //$('#reasonBoxfollowup').hide();
+            $('#reasonBoxfollowup').hide();
 
-            // $('#flatpickr-datetime').attr("required", "required");
+            $('#flatpickr-datetime').attr("required", "required");
             $('#flatpickr-datetime1').removeAttr("required");
-
-            $('#nxtfolloup').prop('disabled', false);
-            $('#nxtvisit').prop('checked', false);
         }
    
     });

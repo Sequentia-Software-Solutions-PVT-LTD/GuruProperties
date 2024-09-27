@@ -99,7 +99,7 @@
                             <tr>
                             <th>#</th>
                             <th>Employee Name</th>
-                            <th>Property Location</th>
+                            <th>Assigned Location</th>
                             <th>Phone No</th>
                             <th>Email ID</th>
                             <th>Login ID</th>
