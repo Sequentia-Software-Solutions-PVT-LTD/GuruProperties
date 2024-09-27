@@ -114,7 +114,8 @@
                                 $i = 1;
                                 $today_date = date('Y-m-d');
                                 // $sql = "SELECT * FROM assign_leads where admin_id= $admin_id and status='Active' and transfer_status='Available' and mark_dead=''";
-                                $sql = "SELECT * FROM assign_leads_sr WHERE admin_id = $admin_id and status = 'Active' And transfer_status='Available' AND DATE(visit_date) > '$today_date'";
+                                // $sql = "SELECT * FROM assign_leads_sr WHERE admin_id = $admin_id and status = 'Active' And transfer_status='Available' AND DATE(visit_date) > '$today_date'";
+                                $sql = "SELECT * FROM assign_leads_sr WHERE admin_id = $admin_id  AND DATE(visit_date) > '$today_date'";
                                 $q = $pdo->query($sql);
                                 // print_r($sql);
                                 // exit();

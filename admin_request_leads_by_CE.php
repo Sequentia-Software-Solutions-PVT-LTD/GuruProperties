@@ -136,16 +136,27 @@
                                     $q = $pdo->prepare($sqlex);
                                     $q->execute(array());      
                                     $row_ex = $q->fetch(PDO::FETCH_ASSOC);
+                                    $emp_name_row_ex = $row_ex["employee_name"];
+
+                                    $sqlempaaw = "select * from employee where employee_name = '$emp_name_row_ex' ";
+                                    $q = $pdo->prepare($sqlempaaw);
+                                    $q->execute(array());      
+                                    $row_emp_assign_ex = $q->fetch(PDO::FETCH_ASSOC);
+
+
+
+
+
 
                                     // echo "<pre>";
-                                    // print_r($sqlex);
                                     // print_r($row_ex);
+                                    // print_r($row_emp_assign_ex);
                                     // exit();  
 
-                                    $sqlemp = "select * from employee where admin_id = $admin_id ";
-                                    $q = $pdo->prepare($sqlemp);
-                                    $q->execute(array());      
-                                    $row_emp = $q->fetch(PDO::FETCH_ASSOC);
+                                    // $sqlemp = "select * from employee where admin_id = $admin_id ";
+                                    // $q = $pdo->prepare($sqlemp);
+                                    // $q->execute(array());      
+                                    // $row_emp = $q->fetch(PDO::FETCH_ASSOC);
 
                                     $emp_name = $row1["employee_name"];
                                     $sqlempaa = "select * from employee where employee_name = '$emp_name' ";
@@ -168,12 +179,13 @@
                                         <div class="avatar-wrapper">
                                           <div class="avatar avatar-sm me-3">
                                             <!-- <img src="assets/img/avatars/2.png" alt="Avatar" class="rounded-circle"> -->
-                                            <img src="assets/img/avatars/<?php echo $row_emp["login_photo"];?>" alt="Avatar" class="rounded-circle">
+                                            <img src="assets/img/avatars/<?php echo $row_emp_assign_ex["login_photo"];?>" alt="Avatar" class="rounded-circle">
                                           </div>
                                         </div>
                                         <div class="d-flex flex-column">
                                           <span class="name text-truncate h6 mb-0"><?php echo $row_ex["employee_name"]; ?></span>
-                                          <small class="user_name text-truncate"><?php echo $row_emp["user_id"]; ?></small>
+                                          <small class="user_name text-truncate"><?php echo $row_emp_assign_ex["user_id"]; ?>
+                                          </small>
                                         </div>
                                       </div>
                                     </td>
