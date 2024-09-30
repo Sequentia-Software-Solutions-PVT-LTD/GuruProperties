@@ -109,6 +109,9 @@
                             <th>Property Name</th>
                             <th>Location</th>
                             <th>Contact</th>
+                            <th>Property Name</th>
+                            <th>Tower Name</th>
+                            <th>Variants</th>
                             <!-- <th>Email ID</th> -->
                             <!-- <th>Budget</th> -->
                             <th>Visit Time</th>
@@ -133,6 +136,11 @@
                                 // exit();
                                 foreach ($pdo->query($sql) as $row1) 
                                 { 
+
+                                  // echo "<pre>";
+                                  // print_r($row1);
+                                  // exit();
+
                                     $assign_leads_id = $row1['assign_leads_id'];
                                     $leads_id = $row1['leads_id'];
                                     $admin_id = $row1['admin_id'];
@@ -147,11 +155,42 @@
                                     $q->execute(array());      
                                     $row_leads = $q->fetch(PDO::FETCH_ASSOC);
 
+                                    // Property details
                                     $property_id = $row1['property_id'];
                                     $sqllprop = "select * from property_name where property_name_id = $property_id ";
                                     $q = $pdo->prepare($sqllprop);
                                     $q->execute(array());      
                                     $row_pro = $q->fetch(PDO::FETCH_ASSOC);
+                                    $property_name = $row_pro['property_title'];
+
+                                    $property_tower_id = $row1['sub_property_id'];
+                                    $sqlltower = "select * from property_tower where property_tower_id = $property_tower_id ";
+                                    $q = $pdo->prepare($sqlltower);
+                                    $q->execute(array());      
+                                    $row_tow = $q->fetch(PDO::FETCH_ASSOC);
+                                    $property_tower_name = $row_tow['property_tower_name'];
+
+                                    // $variant_id = $row1['variant'];
+                                    // $sqllvar = "select * from property_varients where property_varients_id = $variant_id ";
+                                    // $q = $pdo->prepare($sqllvar);
+                                    // $q->execute(array());      
+                                    // $row_var = $q->fetch(PDO::FETCH_ASSOC);
+                                    // $property_varients = $row_var['varients'];
+
+                                    $variant_id = $row1['variant'];  // Example: "2,4,6,7"
+                                    $variant_ids_array = explode(',', $variant_id);
+                                    $placeholders = implode(',', array_fill(0, count($variant_ids_array), '?'));
+
+                                    $sqllvar = "SELECT * FROM property_varients WHERE property_varients_id IN ($placeholders)";
+                                    $q = $pdo->prepare($sqllvar);
+                                    $q->execute($variant_ids_array);    
+                                    $variants = $q->fetchAll(PDO::FETCH_ASSOC);
+
+                                    // Loop through each variant and print the name
+                                    // foreach ($variants as $row_var) {
+                                    //     echo $row_var['varients'] . "<br>";  // Assuming 'varients' is the column containing the variant names
+                                    // }
+
                             ?>
                             <tr>
                                     <td><i class="ri-building-2-line ri-22px text-primary me-4"></i><span class="fw-medium"><?php echo $i; ?></span></td>
@@ -173,6 +212,13 @@
                                     <td><?php echo $row_leads["budget_range"]; ?></td> -->
                                     <!-- <td><?php echo date('d-m-Y', strtotime($row1["visit_date"])); ?></td> -->
                                     <!-- <td><?php echo $row1["visit_time"]; ?></td> -->
+
+                                    <td><?php echo $property_name; ?></td>
+                                    <td><?php echo $property_tower_name; ?></td>
+                                    <td><?php  foreach ($variants as $row_var) {
+                                        echo $row_var['varients'];  // Assuming 'varients' is the column containing the variant names
+                                      } ?></td>
+
                                     <td><?php echo date("g:i A", strtotime($row1["visit_time"])); ?></td>
                                     <td>
                                         <!-- <a class="dropdown-item waves-effect" href="view_single_lead_assigned_by_CE.php?assign_leads_sr_id=<?php echo $row1["assign_leads_sr_id"]; ?>"><i class="ri-eye-line me-1"></i> </a> -->

@@ -272,10 +272,10 @@
     }
     else{
 
-        echo "<pre>";
-        echo "else condition";
-        print_r($_POST);
-        exit();
+        // echo "<pre>";
+        // echo "else condition";
+        // print_r($_POST);
+        // exit();
 
         $sqlleads_sr = "select * from assign_leads_sr where assign_leads_sr_id = $assign_leads_sr_id ";
         $q = $pdo->prepare($sqlleads_sr);
@@ -521,116 +521,83 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div> -->
                 <div class="row">
-                    <div class="col-xl-6 col-lg-6">
+                    <div class="col-xl-12 col-lg-12">
                         <div class="row  justify-content-between align-items-center">
                             <div class="col-12">
                                 <div class="card mb-6">
                                     <div class="card-header header-elements">
                                         <!-- <h5 class="mb-0 me-2"><i class="ri-survey-line1 ri-24px text-body me-2"></i>Add Follow Up Details</h5> -->
                                         <h5 class="card-action-title mb-0 underline">Lead Details</h5>
-                                        
-                                        <!-- <div class="card-header-elements ms-sm-auto">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-primary waves-effect waves-light" style="visibility:hidden;">Update</button>
-                                            </div>
-                                        </div> -->
                                     </div>
                                     
                                     <hr class="m-0">
                                     <div class="card-body demo-vertical-spacing demo-only-element">
                                         <!-- <small class="card-text text-uppercase text-muted small">About</small> -->
-                                        <h5 class="card-action-title  mb-0">About</h5>
-                                        <hr class="mt-1">
-                                        <ul class="list-unstyled my-3 py-1" style="">
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Lead Name:</span> <span><?php echo $row_leads['lead_name']; ?></span></li>
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span><?php 
-                                                $needle = $row_leads["location"];
-                                                $resultArray = array_filter($row_location, function ($v) use ($needle) {
-                                                    return $needle == $v['id']; 
-                                                });
-                                                if($needle == 1) $needle = 0;
-                                                else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                                if(isset($resultArray[$needle]["name"]) && $resultArray[$needle]["name"] != "") echo $resultArray[$needle]["name"]; 
-                                                else echo "Not Found";
-                                            ?></span></li>
-                                            <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li>
-                                            <!-- <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li> -->
-                                        </ul>
-                                        <!-- <small class="card-text text-uppercase text-muted small" >Contacts</small> -->
-                                        <!-- <hr> -->
-                                        <h5 class="card-action-title  mb-0">Contacts</h5>
-                                        <hr class="mt-1">
-                                        <ul class="list-unstyled my-3 py-1" style="">
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Contact:</span> <span><?php echo $row_leads['phone_no']; ?></span></li>
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Email ID:</span> <span><?php echo $row_leads['email_id']; ?></span></li>
-                                        
-                                        </ul>
-                                        <!-- <small class="card-text text-uppercase text-muted small">Other</small> -->
-                                        <!-- <hr> -->
-                                        <h5 class="card-action-title  mb-0">Other</h5>
-                                        <hr class="mt-1">
-                                        
-                                        <ul class="list-unstyled my-3 py-1" style="">
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Source:</span> <span><?php echo $row_leads['source']; ?></span></li>
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_assign['added_on'])); ?></span></li>
-                                        </ul>
-                                        <!-- <small class="card-text text-uppercase text-muted small">Assigned Details</small> -->
-                                        <h5 class="card-action-title  mb-0">Assigned By - <b>
-                                            <?php 
-                                                 $needle = $row_assign["assign_employee_id"];
-                                                 $resultArray = array_filter($row_employee, function ($v) use ($needle) {
-                                                     return $needle == $v['employee_id']; 
-                                                 });
-                                                 if($needle == 1) $needle = 0;
-                                                 else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                                 if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") echo $resultArray[$needle]["employee_name"]; 
-                                                 else echo "Not Found";
-                                                // echo $row_assign['assign_employee_id']; 
-                                            ?>
-                                            </b>
-                                        </h5>
-                                        <!-- <hr class="mt-1">
-                                        <ul class="list-unstyled my-3 py-1" style="">
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Employee Name:</span> <span><?php echo $row_assign['employee_name']; ?></span></li>
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Visit Date Time:</span> <span>
-                                                <?php
-                                                    if($row_assign['visit_date'] == "0000-00-00") {
-                                                        echo date("d-M-Y" , strtotime($row_assign['next_date'])); 
-                                                    } else {
-                                                        echo date("d-M-Y" , strtotime($row_assign['visit_date'])); 
-                                                    }
-                                                ?>
-                                                </span> &nbsp;&nbsp; <span>
-                                                <?php 
-                                                    if($row_assign['visit_time'] == "00:00:00") {
-                                                        echo date("H:i A" , strtotime($row_assign['next_time'])); 
-                                                    } else {
-                                                        echo date("H:i A" , strtotime($row_assign['visit_time'])); 
-                                                    }
-                                                ?>
-                                                </span></li>
-                                        </ul> -->
-
-                                        <!-- <div class="col-md-12" style="text-align: right;">
-                                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#addNewCCModald"> Mark Dead </button>
-                                            <a class="btn btn-success" href="convert_lead_by_SE.php?assign_leads_sr_id=<?php echo $row_assign["assign_leads_sr_id"]; ?>">Convert </a>
-                                            <a class="btn btn-success" href="transfer_lead_by_SE.php?assign_leads_sr_id=<?php echo $row_assign["assign_leads_sr_id"]; ?>">Transfer </a>
-                                        </div> -->
-                                        <!-- <ul class="list-unstyled my-3 py-1" style="">
-                                            <a href="javascript:void(0)" class="btn btn-primary waves-effect waves-light">
-                                                <i class="ri-user-follow-line ri-16px me-2"></i>Add Followup
-                                            </a>
-                                            <a href="javascript:void(0)" class="btn btn-primary waves-effect waves-light">
-                                                <i class="ri-user-follow-line ri-16px me-2"></i>Transfer Leads
-                                            </a>
-                                        </ul> -->
+                                        <div style="display:flex; justify-content: space-around;">
+                                            <div>
+                                                <h5 class="card-action-title  mb-0">About</h5>
+                                                <hr class="mt-1">
+                                                <ul class="list-unstyled my-3 py-1" style="">
+                                                    <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Lead Name:</span> <span><?php echo $row_leads['lead_name']; ?></span></li>
+                                                    <li class="d-flex align-items-center mb-4"><i class="ri-map-pin-line ri-24px"></i><span class="fw-medium mx-2">Location:</span> <span><?php 
+                                                        $needle = $row_leads["location"];
+                                                        $resultArray = array_filter($row_location, function ($v) use ($needle) {
+                                                            return $needle == $v['id']; 
+                                                        });
+                                                        if($needle == 1) $needle = 0;
+                                                        else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                                        if(isset($resultArray[$needle]["name"]) && $resultArray[$needle]["name"] != "") echo $resultArray[$needle]["name"]; 
+                                                        else echo "Not Found";
+                                                    ?></span></li>
+                                                    <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li>
+                                                    <!-- <li class="d-flex align-items-center mb-2"><i class="ri-money-rupee-circle-line ri-24px"></i><span class="fw-medium mx-2">Budget Range:</span> <span><?php echo $row_leads['budget_range']; ?></span></li> -->
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <!-- <small class="card-text text-uppercase text-muted small" >Contacts</small> -->
+                                                <!-- <hr> -->
+                                                <h5 class="card-action-title  mb-0">Contacts</h5>
+                                                <hr class="mt-1">
+                                                <ul class="list-unstyled my-3 py-1" style="">
+                                                    <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Contact:</span> <span><?php echo $row_leads['phone_no']; ?></span></li>
+                                                    <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Email ID:</span> <span><?php echo $row_leads['email_id']; ?></span></li>
+                                                
+                                                </ul>
+                                                <!-- <small class="card-text text-uppercase text-muted small">Other</small> -->
+                                                <!-- <hr> -->
+                                            </div>
+                                            <div>
+                                            
+                                                <h5 class="card-action-title  mb-0">Other</h5>
+                                                <hr class="mt-1">
+                                                
+                                                <ul class="list-unstyled my-3 py-1" style="">
+                                                    <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Source:</span> <span><?php echo $row_leads['source']; ?></span></li>
+                                                    <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_assign['added_on'])); ?></span></li>
+                                                    <li class="d-flex align-items-center mb-4"><i class="ri-user-3-line ri-24px"></i><span class="fw-medium mx-2">Assigned By:</span> <span> <?php 
+                                                        $needle = $row_assign["assign_employee_id"];
+                                                        $resultArray = array_filter($row_employee, function ($v) use ($needle) {
+                                                            return $needle == $v['employee_id']; 
+                                                        });
+                                                        if($needle == 1) $needle = 0;
+                                                        else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                                        if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") echo $resultArray[$needle]["employee_name"]; 
+                                                        else echo "Not Found";
+                                                        // echo $row_assign['assign_employee_id']; 
+                                                    ?></span></li>
+                                                </ul>
+                                               
+                                            </div>
+                                        </div>
+                                            
                                     </div>
                                 </div>
                             </div>
                         </div>                        
                     </div>
 
-                    <div class="col-xl-6 col-lg-6">
+                    <!-- Property Details  -->
+                    <div class="col-xl-6 col-lg-6" style="display:none;">
                         <div class="row  justify-content-between align-items-center">
                             <div class="col-12">
                                 <div class="card mb-6">
@@ -731,8 +698,10 @@
                             </div>
                         </div>                        
                     </div>
-                    
-                    <div class="col-xl-6 col-lg-6 col-md-6">
+                    <!-- /Property Details  -->
+
+                    <!-- Forms -->
+                    <div class="col-xl-12 col-lg-6 col-md-12">
                         <div class="row justify-content-between align-items-center">
                             <div class="col-12">
                                 <div class="card mb-6" >
@@ -755,275 +724,361 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <hr class="m-0">                                        
-                                            
-                                            
-                                            <div class="col-md-12 pt-6">
-                                                <div class="card-body demo-vertical-spacing demo-only-element">
-                                                    <div class="d-flex justify-content-between  align-items-center">
-                                                        <h6 class="w-max-content mb-0">Is Customer Visited?*</h6>
-                                                            <div class="d-flex gap-4" style="width:62%">
-                                                                <div class="form-check form-check-success mb-0">
-                                                                    <input name="connection_status" class="form-check-input" type="radio" value="connected" id="customRadioSuccess" checked>
-                                                                    <label class="form-check-label" for="customRadioSuccess">Yes</label>
-                                                                </div>
-                                                                <div class="form-check form-check-danger mb-0">
-                                                                    <input name="connection_status" class="form-check-input" type="radio" value="not_connected" id="customRadioDanger">
-                                                                    <label class="form-check-label" for="customRadioDanger">No</label>
-                                                                </div>
-                                                            </div>
-                                                        <!-- </div> -->
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <hr class="m-0">   
 
                                             <div class="col-12">
-                                                <div class="card-body demo-vertical-spacing demo-only-element">
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <!-- <h6 class="mt-0">2. Remark*</h6> -->
-                                                        <!-- <div class="d-flex gap-4" style="width: 72%;"> -->
-                                                        <div class="d-flex gap-4" style="width: 100%;">
-                                                            <div class="mb-6 mt-1 form-floating form-floating-outline" style="width: 100%;">
-                                                                <textarea class="form-control" type="text" placeholder="Enter your remark here.." id="today_visit_remark" name="today_visit_remark" required style="height: 100px;resize: none;"></textarea>
-                                                                <label for="today_visit_remark">Remark For Today's Visit*</label>
+                                                <h5 class="card-action-title  mb-0" style="margin-left: 20px;margin-top:20px;">Property Details</h5>
+                                                <!-- <hr class="mt-1"> -->
+                                                <?php 
+                                                        // Property details
+                                                        $property_id = $row_assign['property_id'];
+                                                        $sqllprop = "select * from property_name where property_name_id = $property_id ";
+                                                        $q = $pdo->prepare($sqllprop);
+                                                        $q->execute(array());      
+                                                        $row_pro = $q->fetch(PDO::FETCH_ASSOC);
+                                                        $property_name = $row_pro['property_title'];
+
+                                                        $property_tower_id = $row_assign['sub_property_id'];
+                                                        $sqlltower = "select * from property_tower where property_tower_id = $property_tower_id ";
+                                                        $q = $pdo->prepare($sqlltower);
+                                                        $q->execute(array());      
+                                                        $row_tow = $q->fetch(PDO::FETCH_ASSOC);
+                                                        $property_tower_name = $row_tow['property_tower_name'];
+
+                                                        $variant_id = $row_assign['variant'];  // Example: "2,4,6,7"
+                                                        $variant_ids_array = explode(',', $variant_id);
+                                                        $placeholders = implode(',', array_fill(0, count($variant_ids_array), '?'));
+
+                                                        $sqllvar = "SELECT * FROM property_varients WHERE property_varients_id IN ($placeholders)";
+                                                        $q = $pdo->prepare($sqllvar);
+                                                        $q->execute($variant_ids_array);    
+                                                        $variants = $q->fetchAll(PDO::FETCH_ASSOC);
+
+                                                        // $property_name, $property_tower_name, $property_varients
+                                                        // / Property details
+                                                ?>
+                                                <ul class="list-unstyled my-3 py-1" style="display:flex; justify-content: space-around;">
+                                                <!-- <div style="display : flex; gap: 20px; margin-top:20px;"> -->
+                                                    <li class="d-flex align-items-center mb-2" >
+                                                    <i class="ri-building-line ri-24px" style="color:#000;"></i><span class="fw-medium mx-2" style="color:#000;">Property Name:</span> 
+                                                        <span class="fw-bold1" style="color:#3b4056;"><?php echo htmlspecialchars($property_name); ?></span>
+                                                    </li>
+                                                    <li class="d-flex align-items-center mb-2">
+                                                    <i class="ri-home-smile-line ri-24px" style="color:#000;"></i><span class="fw-medium mx-2" style="color:#000;">Tower Name:</span> 
+                                                        <span class="fw-bold1" style="color:#3b4056;"><?php echo htmlspecialchars($property_tower_name); ?></span>
+                                                    </li>
+                                                    <li class="d-flex align-items-center mb-2">
+                                                    <i class="ri-building-3-line ri-24px" style="color:#000;"></i><span class="fw-medium mx-2" style="color:#000;">Variant:</span> 
+                                                        <span class="fw-bold1" style="color:#3b4056;"><?php  foreach ($variants as $row_var) {
+                                                                echo htmlspecialchars($row_var['varients']);  // Assuming 'varients' is the column containing the variant names
+                                                            }  ?>
+                                                        </span>
+                                                    </li>
+                                                <!-- </div> -->
+                                                </ul>
+                                            </div>
+
+                                            <hr class="m-0">  
+
+                                            <div class="col-12" style="margin-top:30px;"></div>
+                                            
+                                            <div class="col-12" style="display:flex;">
+                                                <!-- 2 Col-6 Div -->
+
+                                                <div class="col-6" style="border-right: 1px solid #e9ecec;">
+                                                    <!--  -->
+                                                    <div class="col-md-12 pt-6">
+                                                        <div class="card-body demo-vertical-spacing demo-only-element">
+                                                            <div class="d-flex justify-content-between  align-items-center">
+                                                                <h6 class="w-max-content mb-0">Is Customer Visited?*</h6>
+                                                                <!-- <label for="is_visit">Is Customer Visited?<span style="margin-top:-5px">*<span></label> -->
+                                                                    <div class="d-flex gap-4" style="width:62%">
+                                                                        <div class="form-check form-check-success mb-0">
+                                                                            <input name="connection_status" class="form-check-input" type="radio" value="connected" id="customRadioSuccess" checked>
+                                                                            <label class="form-check-label" for="customRadioSuccess">Yes</label>
+                                                                        </div>
+                                                                        <div class="form-check form-check-danger mb-0">
+                                                                            <input name="connection_status" class="form-check-input" type="radio" value="not_connected" id="customRadioDanger">
+                                                                            <label class="form-check-label" for="customRadioDanger">No</label>
+                                                                        </div>
+                                                                    </div>
+                                                                <!-- </div> -->
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
 
-                                            <div class="col-md-12" id="radiorb12">
-                                                <div class="card-body demo-vertical-spacing demo-only-element">
-                                                    <div class="d-flex justify-content-between  align-items-center">
-                                                        <h6 class="w-max-content mb-0">Choose Option</h6>
-                                                            <div class="d-flex gap-4" style="width:62%">
-                                                                <div class="form-check form-check-success mb-0">
-                                                                    <input required name="next_folloup_visit" class="form-check-input" type="radio" value="next_folloup" id="nxtfolloup">
-                                                                    <label class="form-check-label" for="nxtfolloup">Next Followup For Visited Property </label>
-                                                                </div>
-                                                                <div class="form-check form-check-danger mb-0">
-                                                                    <input name="next_folloup_visit" class="form-check-input" type="radio" value="next_visit" id="nxtvisit">
-                                                                    <label class="form-check-label" for="nxtvisit">Next Visit For Same Property</label>
-                                                                </div>
-                                                            </div>
-                                                        <!-- </div> -->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="col-12" id="next_date">
-                                                <div class="card-body demo-vertical-spacing demo-only-element">
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <!-- <h6 class="mt-0">3. Follow Up*</h6> -->
-                                                        <!-- <div class="d-flex gap-4" style="width: 72%;"> -->
-                                                        <div class="d-flex gap-4" style="width: 100%;">
-                                                            <div class="mb-4 form-floating form-floating-outline" style="width: 100%;">
-                                                            <!-- <input class="form-control" type="datetime-local" id="next_date" name="next_date" required>
-                                                            <label for="next_date">Next Follow Up Date Time</label> -->
-                                                            <div class="form-floating form-floating-outline" style="width: 100%;">
-                                                                <input
-                                                                name="next_date_followup"                                                
-                                                                type="text"
-                                                                class="form-control"
-                                                                placeholder="DD-MM-YYYY HH:MM"
-                                                                id="flatpickr-datetime" required />
-                                                                <label for="flatpickr-datetime">Next Follow Up Date Time For Visited Property*</label>
-                                                                </div>
-                                                        </div>  
-                                                        </div>
-                                                            
-                                                    </div>
-                                                </div>    
-                                            </div>
-
-                                            <div id="reasonBoxfollowup" style="display:none;">
-                                                <div class="card-body demo-vertical-spacing demo-only-element">
-                                                    <div class="col-sm-12 form-floating form-floating-outline" >
-                                                        <!-- <input class="form-control" type="datetime-local" id="next_date_followup" name="next_date_followup" required>
-                                                        <label for="next_date_followup">Next Follow Up Date Time</label> -->
-                                                        <div class="form-floating form-floating-outline" style="width: 100%;">
-                                                        <input
-                                                        name="next_date"
-                                                        type="text"
-                                                        class="form-control"
-                                                        placeholder="DD-MM-YYYY HH:MM"
-                                                        id="flatpickr-datetime1" />
-                                                        <label for="flatpickr-datetime1">Visit Date Time*</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12">
-                                                <div class="card-body demo-vertical-spacing demo-only-element">
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <h6 class="mt-0">Lead Type*</h6>
-                                                        <div class="mb-4 d-flex gap-4" style="width: 78%;">
-                                                        <!-- <div class="mb-4 d-flex gap-4" style="width: 100%;"> -->
-                                                            <label class="switch switch-danger">
-                                                                <input type="radio" class="switch-input" name="lead_type" checked="" value="hot">
-                                                                <span class="switch-toggle-slider">
-                                                                    <span class="switch-on"></span>
-                                                                    <span class="switch-off"></span>
-                                                                </span>
-                                                                <span class="switch-label">Hot</span>
-                                                            </label>
-
-                                                            <label class="switch switch-warning">
-                                                                <input type="radio" class="switch-input" name="lead_type" value="warm">
-                                                                <span class="switch-toggle-slider">
-                                                                    <span class="switch-on"></span>
-                                                                    <span class="switch-off"></span>
-                                                                </span>
-                                                                <span class="switch-label">Warm</span>
-                                                            </label>
-
-                                                            <label class="switch switch-info">
-                                                                <input type="radio" class="switch-input" name="lead_type" value="cold">
-                                                                <span class="switch-toggle-slider">
-                                                                    <span class="switch-on"></span>
-                                                                    <span class="switch-off"></span>
-                                                                </span>
-                                                                <span class="switch-label">Cold</span>
-                                                            </label>
-                                                        </div>        
-                                                    </div>
-                                                </div>    
-                                            </div>
-                                            
-                                            <div class="col-12" id="takephotobtn">
-                                                <div class="card-body demo-vertical-spacing demo-only-element">
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <!-- <h6 class="mt-0">5. Visit Photo*</h6> -->
-                                                        <!-- <div class="mb-4 d-flex align-items-center gap-2" style="width: 72%; height: 125px;"> -->
-                                                        <div class="mb-4 d-flex align-items-center gap-2" style="width: 100%; height: 125px;">
-                                                            <div class="col-sm-6" style="padding-right: 0px;">
-                                                                <button  type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addNewCCModal" onclick="startup();"> Take Photo </button>
-                                                            </div>
-                                                            <!-- Image display section -->
-                                                            <div class="col-sm-6" style="padding: 0px;">
-                                                                <!-- <img id="captured_photo_preview" src="" alt="Captured Photo" style="max-width: 150px; display: none;" /> -->
-                                                                <img id="captured_photo_preview" src="" alt="Captured Photo" style="max-width: 150px; display: none;" />
-                                                                <input type="hidden" class="form-control" name="photo_capture1" id="photo_capture1" readonly />
-                                                            </div>    
-                                                        </div>        
-                                                    </div>
-                                                </div>    
-                                            </div>
-                                            
-                                            <div class="col-12" id="selectdrop">
-                                                <div class="card-body demo-vertical-spacing demo-only-element">
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <!-- <h6 class="my-0">5. Update For*</h6> -->
-                                                        <!-- <div class="d-flex align-items-center gap-2" style="width: 72%;"> -->
-                                                        <div class="d-flex align-items-center gap-2" style="width: 100%;">
-                                                            <!-- <label for="next_date" class="form-label">Select One Option</label> -->
-                                                            <div class="form-floating form-floating-outline" id="selectBox1" style="width: 100%;">
-                                                                <select required id="roleDropdown" name="followup_or_another_property" class="form-select " data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" >
-                                                                    <option value="" data-select2-id="18">Select One</option>
-                                                                    <!-- <option value="Follow Up">Next Visit <span class="text-muted">(For Same Property)</span></option> -->
-                                                                    <option value="Another Property">Another Property<span class="text-muted">(For New Property Visit)</span></option>
-                                                                    <option value="Not Applicable">Not Applicable</option>
-                                                                </select>
-                                                                <label for="roleDropdown">Select One Option</label>
-                                                            </div>
-                                                        </div>        
-                                                    </div>
-                                                </div>    
-                                            </div>
-                                            <div id="property_details_box" style="display:none;">
-                                                    <div class="col-12" >
+                                                    <div class="col-12">
                                                         <div class="card-body demo-vertical-spacing demo-only-element">
                                                             <div class="d-flex justify-content-between align-items-center">
-                                                                <h5 class="card-header pb-0" style="padding-top: 0px;"> Property Details </h5>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                                
-                                                    <div class="col-md-12">
-                                                        <div class="card-body demo-vertical-spacing demo-only-element">
-                                                            <div class="col-sm-12  form-floating form-floating-outline">
-                                                                <select id="propertyDropdown" name="property_name_id" class="form-select">
-                                                                    <option value="">Select Property Name</option>
-                                                                    <?php
-                                                                        $sql = "SELECT * FROM property_name where status = 'Active'";
-                                                                        foreach ($pdo->query($sql) as $row) { 
-                                                                            echo '<option value="'.$row['property_name_id'].'">'.$row['property_title'].'</option>';
-                                                                        }
-                                                                    ?>
-                                                                </select>
-                                                                <label for="propertyDropdown">Property</label>
+                                                                <!-- <h6 class="mt-0">2. Remark*</h6> -->
+                                                                <!-- <div class="d-flex gap-4" style="width: 72%;"> -->
+                                                                <div class="d-flex gap-4" style="width: 100%;">
+                                                                    <div class="mb-6 mt-1 form-floating form-floating-outline" style="width: 100%;">
+                                                                        <textarea class="form-control" type="text" placeholder="Enter your remark here.." id="today_visit_remark" name="today_visit_remark" required style="height: 100px;resize: none;"></textarea>
+                                                                        <label for="today_visit_remark">Remark For Today's Visit*</label>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-12">
+                                                    <div class="col-12">
                                                         <div class="card-body demo-vertical-spacing demo-only-element">
-                                                            <div class="col-sm-12 form-floating form-floating-outline">
-                                                                <select id="towerDropdown" name="property_tower_id" class="form-select" data-allow-clear="true" >
-                                                                    <option value="">Select Property Tower</option>
-                                                                </select>
-                                                                <label for="towerDropdown">Property Tower</label>
+                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                <h6 class="mt-0">Lead Type*</h6>
+                                                                <div class="mb-4 d-flex gap-4" style="width: 78%;">
+                                                                <!-- <div class="mb-4 d-flex gap-4" style="width: 100%;"> -->
+                                                                    <label class="switch switch-danger">
+                                                                        <input type="radio" class="switch-input" name="lead_type" checked="" value="hot">
+                                                                        <span class="switch-toggle-slider">
+                                                                            <span class="switch-on"></span>
+                                                                            <span class="switch-off"></span>
+                                                                        </span>
+                                                                        <span class="switch-label">Hot</span>
+                                                                    </label>
+
+                                                                    <label class="switch switch-warning">
+                                                                        <input type="radio" class="switch-input" name="lead_type" value="warm">
+                                                                        <span class="switch-toggle-slider">
+                                                                            <span class="switch-on"></span>
+                                                                            <span class="switch-off"></span>
+                                                                        </span>
+                                                                        <span class="switch-label">Warm</span>
+                                                                    </label>
+
+                                                                    <label class="switch switch-info">
+                                                                        <input type="radio" class="switch-input" name="lead_type" value="cold">
+                                                                        <span class="switch-toggle-slider">
+                                                                            <span class="switch-on"></span>
+                                                                            <span class="switch-off"></span>
+                                                                        </span>
+                                                                        <span class="switch-label">Cold</span>
+                                                                    </label>
+                                                                </div>        
+                                                            </div>
+                                                        </div>    
+                                                    </div>
+
+                                                    <div class="col-12" id="takephotobtn">
+                                                        <div class="card-body demo-vertical-spacing demo-only-element">
+                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                <!-- <h6 class="mt-0">5. Visit Photo*</h6> -->
+                                                                <!-- <div class="mb-4 d-flex align-items-center gap-2" style="width: 72%; height: 125px;"> -->
+                                                                <div class="mb-4 d-flex align-items-center gap-2" style="width: 100%; height: 20px;">
+                                                                    <div class="col-sm-6" style="padding-right: 0px;">
+                                                                        <button  type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addNewCCModal" onclick="startup();"> Take Photo </button>
+                                                                    </div>
+                                                                    <!-- Image display section -->
+                                                                    <div class="col-sm-6" style="padding: 0px;">
+                                                                        <!-- <img id="captured_photo_preview" src="" alt="Captured Photo" style="max-width: 150px; display: none;" /> -->
+                                                                        <img id="captured_photo_preview" src="" alt="Captured Photo" style="max-width: 150px; display: none;" />
+                                                                        <input type="hidden" class="form-control" name="photo_capture1" id="photo_capture1" readonly />
+                                                                    </div>    
+                                                                </div>        
+                                                            </div>
+                                                        </div>    
+                                                    </div>
+
+                                                </div>
+                                                <!-- / 1st col-6 div -->
+                                                <div class="col-6">
+
+                                                    
+
+                                                    <div class="col-md-12 pt-6" id="radiorb12" >
+                                                        
+                                                        <div class="card-body demo-vertical-spacing demo-only-element">
+                                                        <h6 class="w-max-content mb-0">Choose Option*</h6>
+                                                            <div class="d-flex justify-content-between  align-items-center">
+                                                                <!-- <h6 class="w-max-content mb-0">Choose Option*</h6> -->
+                                                                    <div class="d-flex gap-4" style="width:92%">
+                                                                        <div class="form-check form-check-success mb-0">
+                                                                            <input required name="next_folloup_visit" class="form-check-input" type="radio" value="next_folloup" id="nxtfolloup">
+                                                                            <label class="form-check-label" for="nxtfolloup">Next Followup For Visited Property </label>
+                                                                        </div>
+                                                                        <div class="form-check form-check-danger mb-0">
+                                                                            <input name="next_folloup_visit" class="form-check-input" type="radio" value="next_visit" id="nxtvisit">
+                                                                            <label class="form-check-label" for="nxtvisit">Next Visit For Same Property</label>
+                                                                        </div>
+                                                                    </div>
+                                                                <!-- </div> -->
                                                             </div>
                                                         </div>
                                                     </div>
                                                     
-                                                    <div class="col-md-12">
+                                                    <div class="col-12" id="next_date">
                                                         <div class="card-body demo-vertical-spacing demo-only-element">
-                                                            <div class="col-sm-12 form-floating form-floating-outline">
-                                                                <select id="variantDropdown" name="property_variants[]" class="form-select" data-allow-clear="true">
-                                                                    <option value="">Select Variants</option>
-                                                                </select>
-                                                                <label for="variantDropdown">Variants</label>
+                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                <!-- <h6 class="mt-0">3. Follow Up*</h6> -->
+                                                                <!-- <div class="d-flex gap-4" style="width: 72%;"> -->
+                                                                <div class="d-flex gap-4" style="width: 100%;">
+                                                                    <div class="mb-4 form-floating form-floating-outline" style="width: 100%;">
+                                                                    <!-- <input class="form-control" type="datetime-local" id="next_date" name="next_date" required>
+                                                                    <label for="next_date">Next Follow Up Date Time</label> -->
+                                                                    <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                                        <input
+                                                                        name="next_date_followup"                                                
+                                                                        type="text"
+                                                                        class="form-control"
+                                                                        placeholder="DD-MM-YYYY HH:MM"
+                                                                        id="flatpickr-datetime" required />
+                                                                        <label for="flatpickr-datetime">Next Follow Up Date Time For Visited Property*</label>
+                                                                        </div>
+                                                                </div>  
+                                                                </div>
+                                                                    
                                                             </div>
-                                                        </div>
+                                                        </div>    
                                                     </div>
 
-                                                    <div class="col-md-12">
+                                                    <div id="reasonBoxfollowup" style="display:none;">
                                                         <div class="card-body demo-vertical-spacing demo-only-element">
-                                                            <div class="col-sm-12 form-floating form-floating-outline" id="reasonBoxvisit">
-                                                                <!-- <input class="form-control" type="datetime-local" id="next_date_visit" name="next_date_visit">
-                                                                <label for="next_date_visit">Visit Date Time</label> -->
+                                                            <div class="col-sm-12 form-floating form-floating-outline" >
+                                                                <!-- <input class="form-control" type="datetime-local" id="next_date_followup" name="next_date_followup" required>
+                                                                <label for="next_date_followup">Next Follow Up Date Time</label> -->
                                                                 <div class="form-floating form-floating-outline" style="width: 100%;">
                                                                 <input
-                                                                name="next_date_visit"
+                                                                name="next_date"
                                                                 type="text"
                                                                 class="form-control"
                                                                 placeholder="DD-MM-YYYY HH:MM"
-                                                                id="flatpickr-datetime2" />
-                                                                <label for="flatpickr-datetime2">Visit Date-Time*</label>
+                                                                id="flatpickr-datetime1" />
+                                                                <label for="flatpickr-datetime1">Visit Date Time*</label>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
+
+                                                    <div class="col-12" id="selectdrop">
+                                                        <div class="card-body demo-vertical-spacing demo-only-element">
+                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                <!-- <h6 class="my-0">5. Update For*</h6> -->
+                                                                <!-- <div class="d-flex align-items-center gap-2" style="width: 72%;"> -->
+                                                                <div class="d-flex align-items-center gap-2" style="width: 100%;">
+                                                                    <!-- <label for="next_date" class="form-label">Select One Option</label> -->
+                                                                    <div class="form-floating form-floating-outline" id="selectBox1" style="width: 100%;">
+                                                                        <select required id="roleDropdown" name="followup_or_another_property" class="form-select " data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" >
+                                                                            <option value="" data-select2-id="18">Select One</option>
+                                                                            <!-- <option value="Follow Up">Next Visit <span class="text-muted">(For Same Property)</span></option> -->
+                                                                            <option value="Another Property">Another Property<span class="text-muted">(For New Property Visit)</span></option>
+                                                                            <option value="Not Applicable">Not Applicable</option>
+                                                                        </select>
+                                                                        <label for="roleDropdown">Select One Option</label>
+                                                                    </div>
+                                                                </div>        
+                                                            </div>
+                                                        </div>    
+                                                    </div>
+                                                    <div id="property_details_box" style="display:none;">
+                                                            <div class="col-12" >
+                                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                                    <div class="d-flex justify-content-between align-items-center">
+                                                                        <h5 class="card-header pb-0" style="padding-top: 0px;"> Property Details </h5>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                                        
+                                                            <div class="col-md-12">
+                                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                                    <div class="col-sm-12  form-floating form-floating-outline">
+                                                                        <select id="propertyDropdown" name="property_name_id" class="form-select">
+                                                                            <option value="">Select Property Name</option>
+                                                                            <?php
+                                                                                $sql = "SELECT * FROM property_name where status = 'Active'";
+                                                                                foreach ($pdo->query($sql) as $row) { 
+                                                                                    echo '<option value="'.$row['property_name_id'].'">'.$row['property_title'].'</option>';
+                                                                                }
+                                                                            ?>
+                                                                        </select>
+                                                                        <label for="propertyDropdown">Property</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12">
+                                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                                    <div class="col-sm-12 form-floating form-floating-outline">
+                                                                        <select id="towerDropdown" name="property_tower_id" class="form-select" data-allow-clear="true" >
+                                                                            <option value="">Select Property Tower</option>
+                                                                        </select>
+                                                                        <label for="towerDropdown">Property Tower</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="col-md-12">
+                                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                                    <div class="col-sm-12 form-floating form-floating-outline">
+                                                                        <select id="variantDropdown" name="property_variants[]" class="form-select" data-allow-clear="true">
+                                                                            <option value="">Select Variants</option>
+                                                                        </select>
+                                                                        <label for="variantDropdown">Variants</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12">
+                                                                <div class="card-body demo-vertical-spacing demo-only-element">
+                                                                    <div class="col-sm-12 form-floating form-floating-outline" id="reasonBoxvisit">
+                                                                        <!-- <input class="form-control" type="datetime-local" id="next_date_visit" name="next_date_visit">
+                                                                        <label for="next_date_visit">Visit Date Time</label> -->
+                                                                        <div class="form-floating form-floating-outline" style="width: 100%;">
+                                                                        <input
+                                                                        name="next_date_visit"
+                                                                        type="text"
+                                                                        class="form-control"
+                                                                        placeholder="DD-MM-YYYY HH:MM"
+                                                                        id="flatpickr-datetime2" />
+                                                                        <label for="flatpickr-datetime2">Visit Date-Time*</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                    
+
+                                                    <div class="col-sm-12 text-center">
+                                                            <div class="form-floating form-floating-outline">
+                                                                <input class="form-control" type="hidden" id="lat" readonly name="latitude">
+                                                                <!-- <span>Current Latitude:- </span> -->
+                                                                <!-- <span class="text-danger" id="latitude"></span>  -->
+                                                                <!-- <br> -->
+                                                                <input class="form-control" type="hidden" id="long" readonly name="longitude">
+                                                                <!-- <span>Current Longitude:- </span> -->
+                                                                <!-- <span class="text-danger" id="longitude"></span> -->
+                                                                <!-- <br> -->
+                                                                <!-- <span>Accuracy:- </span> -->
+                                                                <!-- <span class="text-danger" id="accuracy"></span> -->
+                                                                <div class="mx-7 alert alert-solid-warning" id="warningMessage" role="alert" style="display:none;">
+                                                                    Make sure your location is enabled before submitting this form
+                                                                </div>
+                                                                <div class="mx-7 alert alert-solid-danger" id="errormessage" role="alert" style="display:none;">
+                                                                    Please turn on location to submit this form!
+                                                                </div>
+                                                                <div class="mx-7 mb-0 alert text-danger alert-solid-success" id="successmessage" role="alert" style="display:none; width:max-content">
+                                                                    <span class="d-none" class="" id="latitude"></span><span class="d-none" id="longitude"></span>
+                                                                    <span class="text-white"  data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Make sure this is below 100" id="accuracy"></span>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                    </div>
+
+                                                </div>
+                                                <!-- / 2nd Col-6 Div -->
+                                                                        
+                                                <!-- 2 Col-6 Div -->
                                             </div>
                                             
+                                            <div class="col-12" style="margin-bottom:30px;"></div>
+                                            
 
-                                            <div class="col-sm-12 text-center">
-                                                    <div class="form-floating form-floating-outline">
-                                                        <input class="form-control" type="hidden" id="lat" readonly name="latitude">
-                                                        <!-- <span>Current Latitude:- </span> -->
-                                                        <!-- <span class="text-danger" id="latitude"></span>  -->
-                                                        <!-- <br> -->
-                                                        <input class="form-control" type="hidden" id="long" readonly name="longitude">
-                                                        <!-- <span>Current Longitude:- </span> -->
-                                                        <!-- <span class="text-danger" id="longitude"></span> -->
-                                                        <!-- <br> -->
-                                                        <!-- <span>Accuracy:- </span> -->
-                                                        <!-- <span class="text-danger" id="accuracy"></span> -->
-                                                        <div class="mx-7 alert alert-solid-warning" id="warningMessage" role="alert" style="display:none;">
-                                                            Make sure your location is enabled before submitting this form
-                                                        </div>
-                                                        <div class="mx-7 alert alert-solid-danger" id="errormessage" role="alert" style="display:none;">
-                                                            Please turn on location to submit this form!
-                                                        </div>
-                                                        <div class="mx-7 mb-0 alert text-danger alert-solid-success" id="successmessage" role="alert" style="display:none; width:max-content">
-                                                            <span class="d-none" class="" id="latitude"></span><span class="d-none" id="longitude"></span>
-                                                            <span class="text-white"  data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Make sure this is below 100" id="accuracy"></span>
-                                                        </div>
-                                                        
-                                                    </div>
-                                            </div>
+                                            
+
+                                           
+                                            
+                                            
+                                            
+                                           
                         
                                             <div class="col-sm-12 text-right">
                                                 <hr class="m-0">
