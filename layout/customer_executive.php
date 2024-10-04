@@ -12,7 +12,8 @@
     $allLeads = 0;
     $admin_id = $_SESSION['login_user_id'];
     
-    $sql = "SELECT count(*) FROM assign_leads where admin_id= $admin_id and status='Active' and transfer_status='Available' and	mark_dead=''"; 
+                                $today_date = date('Y-m-d');
+    $sql = "SELECT count(*) FROM assign_leads where admin_id= $admin_id and status='Active' and transfer_status='Available' and	mark_dead='' and DATE(added_on) = '$today_date' "; 
     $result = $pdo->prepare($sql); 
     $result->execute(); 
     $newLeads = $result->fetchColumn(); 

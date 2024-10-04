@@ -29,36 +29,45 @@
     $login_role = $_POST['login_role'];
     $employee_name = $_POST['employee_name'];
     $user_id = $_POST['user_id'];
-    $_employeelocation = $_POST['_employeelocation'];
-    $value = $_employeelocation[0];
-    $value = str_replace("{", "", $value);
-    $value = str_replace("}", "", $value);
-    $value = str_replace("[", "", $value);
-    $value = str_replace("]", "", $value);
-    $value = str_replace("\"", "", $value);
-    $locationNameArray = explode(",", $value);
-    // var_dump($locationNameArray);
-    $location_ids = "";
-    $locationIds = array();
-    if($login_role == "SALES EXECUTIVE"){
-          $locationCount = count($locationNameArray);
-          for ($i=0; $i < $locationCount; $i++) { 
-            $value = explode(":", $locationNameArray[$i])[1];
-            
-            $location_id = 0;
-            $locationId = $value;
-            $sql = "SELECT id FROM location WHERE name  = '$locationId'";
-            $q = $pdo->prepare($sql);
-            $q->execute(array());
-            $location_id = $q->fetch(PDO::FETCH_ASSOC);
-            if($location_id != false ){
-              $location_id  = $location_id['id'];
-              array_push($locationIds, $location_id);
-            }      
-          }
-
-          $location_ids = implode(",", $locationIds);
+    
+    $location_name = "";
+    if(isset($_POST['_employeelocation'])) {
+        $location_ids = implode(",", $_POST['_employeelocation']);
+    } else {
+        $location_ids ="";
     }
+    
+    // $_employeelocation = $_POST['_employeelocation'];
+    // $value = $_employeelocation[0];
+    // $value = str_replace("{", "", $value);
+    // $value = str_replace("}", "", $value);
+    // $value = str_replace("[", "", $value);
+    // $value = str_replace("]", "", $value);
+    // $value = str_replace("\"", "", $value);
+    // $locationNameArray = explode(",", $value);
+    
+    
+    // $location_ids = "";
+    // $locationIds = array();
+    // if($login_role == "SALES EXECUTIVE"){
+    //       $locationCount = count($locationNameArray);
+    //       for ($i=0; $i < $locationCount; $i++) { 
+    //         $value = explode(":", $locationNameArray[$i])[1];
+            
+    //         $location_id = 0;
+    //         $locationId = $value;
+    //         $sql = "SELECT id FROM location WHERE name  = '$locationId'";
+    //         $q = $pdo->prepare($sql);
+    //         $q->execute(array());
+    //         $location_id = $q->fetch(PDO::FETCH_ASSOC);
+    //         if($location_id != false ){
+    //           $location_id  = $location_id['id'];
+    //           array_push($locationIds, $location_id);
+    //         }      
+    //       }
+
+    //       $location_ids = implode(",", $locationIds);
+    // }
 
     // $user_id1 = $_POST['user_id'];
     // $prefix = $_POST['prefix'];
@@ -221,8 +230,8 @@
                             <div class="col-md-6">
 
                                     <div class="form-floating form-floating-outline mb-6">
-                                        <select id="roleDropdown" name="login_role" data-minimum-results-for-search="Infinity" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" aria-hidden="true" required>
-                                            <option value="CUSTOMER EXECUTIVE">Customer Executive</option>
+                                        <select id="roleDropdown" name="login_role" class="select2 form-select select2-hidden-accessible" required>
+                                            <option value="CUSTOMER EXECUTIVE" selected>Customer Executive</option>
                                             <option value="SALES EXECUTIVE">Sales Executive</option>
                                         </select>
                                         <label for="roleDropdown">Role</label>
@@ -267,13 +276,13 @@
                                         <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
                                         <div class="form-floating form-floating-outline mb-6" id="se_locations" style="display:none;">
                                                 <!-- <select id="multipleLocations" name="_employeelocation" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" multiple="multiple" required> -->
-                                                    <input
-                                                        id="multipleLocations"
-                                                        name="_employeelocation[]"
-                                                        class="form-control h-auto"
-                                                        placeholder="Select Locations"
-                                                        value="" 
-                                                    />
+                                                    <!--<input-->
+                                                    <!--    id="multipleLocations"-->
+                                                    <!--    name="_employeelocation[]"-->
+                                                    <!--    class="form-control h-auto"-->
+                                                    <!--    placeholder="Select Locations"-->
+                                                    <!--    value="" -->
+                                                    <!--/>-->
                                                       <?php
                                                         // $sqlLocation = "SELECT * FROM  location order by name";
                                                         // foreach ($pdo->query($sqlLocation) as $row) 
@@ -282,10 +291,21 @@
                                                             <!-- <option value="<?php //echo $row['id']?>"><?php //echo $row['name']?></option>  -->
                                                         <?php //} ?>
                                                 <!-- </select> -->
-                                                <label for="multipleLocations">Location</label>
+                                                <!--<label for="multipleLocations">Location</label>-->
+                                                <select id="formtabs-locationse" name="_employeelocation[]" multiple class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country-ce" tabindex="-1" aria-hidden="true">
+                                                    <option value="" data-select2-id="18">Select Property Location</option>
+                                                    <?php
+                                                        $sqlLocation = "SELECT * FROM  location order by name";
+                                                        foreach ($pdo->query($sqlLocation) as $row) 
+                                                        { 
+                                                        ?>
+                                                            <option value="<?php echo $row['id']?>"><?php echo $row['name']?></option> 
+                                                        <?php } ?>
+                                                </select>
+                                                <label for="formtabs-locationse">Location</label>
                                         </div>
                                         <div class="form-floating form-floating-outline mb-6" id="ce_locations" style="display:none;">
-                                                <select id="formtabs-locationce" name="_employeelocation_ce" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country-ce" tabindex="-1" aria-hidden="true">
+                                                <select id="formtabs-locationce" name="_employeelocationce[]" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country-ce" tabindex="-1" aria-hidden="true">
                                                     <option value="" data-select2-id="18">Select Property Location</option>
                                                     <?php
                                                         $sqlLocation = "SELECT * FROM  location order by name";
@@ -418,14 +438,22 @@
                 var prefix = '';
                 selocations = document.getElementById("se_locations");
                 celocations = document.getElementById("ce_locations");
+                
+                locationse = document.getElementById("formtabs-locationse");
+                locationce = document.getElementById("formtabs-locationce");
+                
                 if (selectedRole === 'CUSTOMER EXECUTIVE') {
                     prefix = 'CE';
                     selocations.style.display = "none";
                     celocations.style.display = "none";
+                    locationce.required = false;
+                    locationse.required = false;
                 } else if (selectedRole === 'SALES EXECUTIVE') {
                     prefix = 'SE';
                     selocations.style.display = "block";
                     celocations.style.display = "none";
+                    locationce.required = false;
+                    locationse.required = true;
                 }
 
                 // Set the prefix in the input field
