@@ -126,7 +126,7 @@ if (isset($_POST['submit']))
                             else
                                 $input3Single = 0; 
                             
-                            $added_on = date("d-m-Y H:i:s");
+                            $added_on = date("Y-m-d H:i:s");
                             $todays_date = date("d-m-Y");
 
                             $sql = "INSERT INTO leads(lead_name, email_id, location, phone_no, budget_range, Source, status, added_on, lead_gen_date) values(?,?,?,?,?,?,?,?,?)";

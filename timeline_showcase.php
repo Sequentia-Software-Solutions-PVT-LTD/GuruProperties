@@ -1726,17 +1726,20 @@
                                           }
 
                                           if(isset($dbData['status']) && $dbData['status'] == "Dead"){
-                                            echo '<p class="" style="line-height: 3;">Marked dead On: <br>';
+                                            echo '<p>Marked dead On: <br>';
 
                                             if(isset($dbData['edited_on']) && $dbData['edited_on'] != "0000-00-00 00:00:00") 
-                                        
-                                            echo "<span style='font-weight: 300;'>
-                                            <span style='line-height: 1;'>". 
-                                                date("d-M-Y",strtotime($dbData['edited_on'])).'<br>'.
-                                                date("H:i",strtotime($dbData['edited_on'])).
-                                            '</span>';
+                                            
+                                            echo "<span style='font-weight: 300; line-height: 1;'>". date("d-M-Y",strtotime($dbData['edited_on'])).'&nbsp;&nbsp;&nbsp;'. date("H:i A",strtotime($dbData['edited_on'])).'</span></p>';
 
-                                            echo '</p>';
+
+                                            // echo "<span style='font-weight: 300;'>
+                                            // <span style='line-height: 1;'>". 
+                                            //     date("d-M-Y",strtotime($dbData['edited_on'])).'<br>'.
+                                            //     date("H:i",strtotime($dbData['edited_on'])).
+                                            // '</span>';
+
+                                            // echo '</p>';
                                           }
                                         
                                         echo '
@@ -2011,6 +2014,21 @@
                                                           <div>';
                                                           
                                                           echo $dbData["agreement_value"];
+
+                                                          echo'
+                                                          </div>
+                                                        </li>';
+                                                    }
+
+                                                    if(isset($dbData["registrantion"])){
+                                                    echo '
+                                                      <li class="list-group-item d-flex justify-content-between align-items-center ps-0">
+                                                          <div>
+                                                            <span>Registrantion</span>
+                                                          </div>
+                                                          <div>';
+                                                          
+                                                          echo $dbData["registrantion"];
 
                                                           echo'
                                                           </div>

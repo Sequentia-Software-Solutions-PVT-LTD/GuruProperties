@@ -548,8 +548,6 @@
                                             <input type="hidden" id="long_signout" name="longitude_signout" />
                                             <input type="hidden" id="lat_signout" name="latitude_signout" />
                                             <input type="hidden" id="accuracy_signout" name="accuracy_signout" />
-                                            <!-- <button type="submit" name="logout" id="logout_button" class="btn btn-success">Submit Today's Report & Logout</button> -->
-                                        <!-- </form> -->
                                     </div>
                                 </div>
                                 <!--  -->
@@ -562,10 +560,6 @@
                                     
                                     <div class="d-flex justify-content-center gap-3">
                                         <!-- <form action="dist/conf/signout.php" method="POST"> -->
-                                            <input type="hidden" id="long_signout" name="longitude_signout" />
-                                            <input type="hidden" id="lat_signout" name="latitude_signout" />
-                                            <input type="hidden" id="accuracy_signout" name="accuracy_signout" />
-                                            <!-- <button type="submit" name="logout" id="logout_button" class="btn btn-success">Submit Today's Report & Logout</button> -->
                                         
                                     </div>
                                     

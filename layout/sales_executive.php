@@ -44,7 +44,7 @@ $sql = "SELECT count(*) FROM assign_leads_sr where admin_id= $admin_id and statu
     $result->execute(); 
     $tdf = $result->fetchColumn(); 
 
-    $sql = "SELECT count(*) FROM assign_leads_sr where admin_id = $admin_id and status = 'Active' and transfer_status='Available' and mark_dead='' 
+    $sql = "SELECT count(*) FROM assign_leads_sr where admin_id = $admin_id and status = 'Active' and transfer_status='Available' and mark_dead='' And assign_employee_type = 'CUSTOMER EXECUTIVE'  
     UNION
     SELECT count(*) FROM assign_leads_sr where admin_id = $admin_id and status = 'Transferred' and transfer_status='Available' and mark_dead=''";
     $result = $pdo->prepare($sql); 

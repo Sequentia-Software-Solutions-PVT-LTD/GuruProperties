@@ -32,6 +32,10 @@ date_default_timezone_set('Asia/Kolkata'); // Set to your timezone
         $latitude = $_POST['latitude_signout'];
         $longitude = $_POST['longitude_signout'];
         $accuracy = $_POST['accuracy_signout'];
+        
+        // print_r($_SESSION);
+        // print_R($_POST);
+        // exit();
     
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "INSERT INTO `attendance`(`login_id`,`login_name`,`date`,`time`,`status`, `added_on`, `latitude`, `longitude`, `accuracy`) VALUES (?,?,?,?,?,?,?,?,?)";
@@ -67,6 +71,10 @@ header("location: ../../login" );
 
 ?>
 
+<!--<input type="hidden" id="long" name="longitude" />-->
+<!--<input type="hidden" id="lat" name="latitude" />-->
+<!--<input type="hidden" id="accuracy" name="accuracy" />-->
+                    
 <input type="hidden" id="long_footer" name="longitude_footer" />
 <input type="hidden" id="lat_footer" name="latitude_footer" />
 <input type="hidden" id="accuracy_footer" name="accuracy_footer" />

@@ -41,6 +41,9 @@
     // print_r($_POST);
     // exit();
 
+    $latitude = $_POST['latitude'];
+    $longitude = $_POST['longitude'];
+    
     $property_name_id = $_POST['property_name_id'];
     $property_tower_id = $_POST['property_tower_id'];
     $property_tower_id = $_POST['property_tower_id'];
@@ -84,11 +87,13 @@
     $sql = "UPDATE `assign_leads_sr` SET 
             `edited_on` = ?, 
             `status` = ?,
-            `transfer_status` = ?
+            `transfer_status` = ?,
+            `latitude` = ?, 
+            `longitude` = ?
             WHERE `assign_leads_sr_id` = ?";
 
     $q = $pdo->prepare($sql);
-    $q->execute(array($added_on, $status, $transfer_status, $assign_leads_sr_id));
+    $q->execute(array($added_on, $status, $transfer_status, $latitude, $longitude, $assign_leads_sr_id));
     $d_added_on = date('Y-m-d H:i:s', strtotime('+20 seconds'));
     // ----------------------- Insert for new ffollowup ---------------------------------------------------------
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -210,7 +215,7 @@
                                         
                                         <ul class="list-unstyled my-3 py-1" style="">
                                             <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Source:</span> <span><?php echo $row_leads['source']; ?></span></li>
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_leads['added_on'])); ?></span></li>
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_assign['added_on'])); ?></span></li>
                                         </ul>
 
                                         <!-- <hr class="m-0"> -->
@@ -340,7 +345,8 @@
                                                                     <!-- <label class="col-sm-3 col-form-label text-sm-end mar-top">Property Title</label> -->
                                                                     <!-- <div class="col-sm-12 form-floating form-floating-outline"> -->
                                                                     <div class="form-floating form-floating-outline" style="width: 100%;">
-                                                                        <select id="propertyDropdown" name="property_name_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
+                                                                        <!--<select id="propertyDropdown" name="property_name_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>-->
+                                                                        <select id="propertyDropdown" name="property_name_id" class="form-select" data-allow-clear="true" required>
                                                                             <option value="">Select Property Name</option>
                                                                             <?php
                                                                                 $sql = "SELECT * FROM property_name";
@@ -365,7 +371,8 @@
                                                         <!-- <div class="d-flex gap-4" style="width: 72%;"> -->
                                                         <div class="d-flex gap-4" style="width: 100%;">
                                                             <div class="form-floating form-floating-outline" style="width: 100%;">
-                                                                <select id="towerDropdown" name="property_tower_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>
+                                                                <!--<select id="towerDropdown" name="property_tower_id" class="select2 form-select select2-hidden-accessiblee" data-allow-clear="true" required>-->
+                                                                <select id="towerDropdown" name="property_tower_id" class="form-select" data-allow-clear="true" required>
                                                                     <option value="">Select Property Tower</option>
                                                                     <!-- Towers will be loaded here based on the selected property -->
                                                                 </select>
@@ -549,7 +556,7 @@
                                                 <div class="card-body demo-vertical-spacing demo-only-element">
                                                     <div class="d-flex justify-content-end align-items-center">
                                                         <span class="d-none" class="" id="latitude"></span><span class="d-none" id="longitude"></span>
-                                                        <button type="submit" name="submit1" id="submit1" class="btn btn-success">Submit</button>
+                                                        <button type="submit" name="submit" id="submit1" class="btn btn-success">Submit</button>
                                                         
                                                     </div>        
                                                 </div>    
@@ -637,5 +644,41 @@
 
 </script>
     
+<script type="text/javascript">
+        initGeolocation();
+        function prepareForm(event) {
+                event.preventDefault();
+                // Do something you need
+                initGeolocation();
+                document.getElementById("myForm").requestSubmit();
+        }
+        function initGeolocation()
+        {
+            window.setInterval(function(){
+                navigator.geolocation.getCurrentPosition( success, fail );
+            }, 1000);
+        }
+
+        function success(position)
+        {   
+                document.getElementById('long').value = position.coords.longitude;
+                document.getElementById('longitude').innerHTML = position.coords.longitude;
+                document.getElementById('lat').value = position.coords.latitude;
+                document.getElementById('latitude').innerHTML = position.coords.latitude;
+                document.getElementById('accuracy').innerHTML = position.coords.accuracy;
+                document.getElementById('submit1').disabled  = false;
+        }
+
+        function fail()
+        {
+            // alert("Please enable your location and refresh the page, to submit this form.");
+            // alert("Sorry, your browser does not support geolocation services.");
+            document.getElementById('long').value = "00.0000000";
+            document.getElementById('lat').value = "00.0000000";
+            document.getElementById('submit1').disabled  = true;
+        }
+        
+
+</script> 
   </body>
 </html>

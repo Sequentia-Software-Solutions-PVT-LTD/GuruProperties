@@ -1,2 +1,6 @@
-Lead Name*,Email Id*,Location*,Phone No*,Budget Range,Source
-Name 1,sample@sample.com,Location,xxxxxxxxxx,1000000,Test
+lead_name,email_id,location,phone_no,budget_range,Source
+Parvati,test@gmail.com,Baner,7387414778,4000000 To 4500000,Facebook
+Lakshmi,test@gmail.com,Baner,7387414345,4000000 To 4500000,Instagram
+Saraswati,test@gmail.com,Baner,7387414345,4000000 To 4500000,Facebook
+Renuka,test@gmail.com,Baner,7387414345,4000000 To 4500000,Facebook
+Tulaja,test@gmail.com,Baner,7387414345,4000000 To 4500000,Facebook
