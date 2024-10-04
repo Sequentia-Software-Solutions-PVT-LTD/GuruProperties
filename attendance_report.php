@@ -154,7 +154,12 @@
 
                                         // Generate dropdown options
                                         foreach ($months as $key => $month) {
-                                            echo "<option value=\"$key\">$month</option>";
+                                            $selected ="";
+                                            if(isset($_POST['from_month']) && $_POST['from_month'] == $key) 
+                                            {
+                                              $selected = "selected";
+                                            }
+                                            echo "<option ".$selected." value=\"$key\">$month</option>";
                                         }
                                         ?>
                                     </select>
@@ -171,8 +176,8 @@
                                 <div class="form-floating form-floating-outline">
                                     <select id="form-repeater-1-3" class="form-select" name = "year">
                                         <option value="">Select Year</option>
-                                        <option value="<?php echo $current_year; ?>"><?php echo $current_year; ?></option>
-                                        <option value="<?php echo $last_year; ?>"><?php echo $last_year; ?></option>
+                                        <option <?php if(isset($_POST['year']) && $_POST['year'] == $current_year) echo "selected"; ?> value="<?php echo $current_year; ?>"><?php echo $current_year; ?></option>
+                                        <option <?php if(isset($_POST['year']) && $_POST['year'] == $last_year) echo "selected"; ?> value="<?php echo $last_year; ?>"><?php echo $last_year; ?></option>
                                     </select>
                                     <label for="roleDropdown">Year</label>
                                 </div>
@@ -195,9 +200,13 @@
                                         <?php
                                             $sql = "SELECT * FROM  employee where status='Active' ";
                                             foreach ($pdo->query($sql) as $row) 
-                                            { 
+                                            { $selected ="";
+                                              if(isset($_POST['employee_name']) && $_POST['employee_name'] ==$row['employee_name']) 
+                                              {
+                                                $selected = "selected";
+                                              }
                                             ?>
-                                            <option  value="<?php echo $row['employee_name']?>"><?php echo $row['employee_name']?></option> 
+                                            <option <?php echo $selected; ?> value="<?php echo $row['employee_name']; ?>"><?php echo $row['employee_name']?></option> 
                                         <?php } ?>
                                         </select>
                                     <label for="roleDropdown">Select Executive</label>
@@ -208,8 +217,9 @@
                             <div class="col-md-3">
                                 <button type="submit" name="submit" class="btn btn-success">Search</button>
                                 <?php if(isSet($_POST["submit"])) { ?>
-                                <!--<button target="_blank" class="btn btn-danger" style="padding: 7px;" name="pdf" onclick="javascript: form.action='pdf_export_report_attendance';"><i class="ri-file-pdf-2-line" aria-hidden="true"></i></button>-->
-                                <!-- <button type="" name="xlsx" class="btn btn-warning"   style="padding: 7px;display:none;" onclick="javascript: form.action='xlsx_export_report_attendance';"><i class="ri-file-excel-line" aria-hidden="true"></i></button> -->
+                                <!-- <button target="_blank" class="btn btn-danger" style="padding: 7px;" name="pdf" onclick="javascript: form.action='pdf_export_report_attendance';"><i class="ri-file-pdf-2-line" aria-hidden="true"></i></button> -->
+                                <button type="" name="xlsx"  class="btn btn-success waves-effect waves-light" style="padding: 7px;" onclick="javascript: form.action='xlsx_export_report_attendance';"><i class="ri-file-excel-line" aria-hidden="true"></i></button>
+                                <!-- <button type="" name="xlsx" class="btn btn-warning"   style="padding: 7px;" onclick="javascript: form.action='xlsx_export_report_attendance';"><i class="ri-file-excel-line" aria-hidden="true"></i></button> -->
                                 <?php } ?>
                             </div>
                             

@@ -457,6 +457,7 @@
                                             COUNT(CASE WHEN status = 'Dead' THEN 1 END) AS dead_leads
                                         FROM assign_leads
                                         WHERE added_on >= CURDATE() - INTERVAL 1 DAY          -- Last 7 days logic   
+                                        AND added_on < CURDATE()   
                                         -- WHERE YEARWEEK(added_on, 1) = YEARWEEK(CURDATE(), 1)     -- and this is sunday to saturday week logic
                                         GROUP BY employee_name
                                     ";
@@ -545,7 +546,8 @@
                                             COUNT(CASE WHEN status = 'Converted'  THEN 1 END) AS converted_leads,
                                             COUNT(CASE WHEN status = 'Dead' THEN 1 END) AS dead_leads
                                         FROM assign_leads_sr
-                                        WHERE added_on >= CURDATE() - INTERVAL 1 DAY       
+                                        WHERE added_on >= CURDATE() - INTERVAL 1 DAY 
+                                        AND added_on < CURDATE()  
                                         GROUP BY employee_name
                                     ";
                                 // $sql = "SELECT * FROM assign_leads ";

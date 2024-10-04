@@ -36,7 +36,7 @@
 
   if(isSet($_POST["submit"]))
   { 
-    echo "<pre>";
+    // echo "<pre>";
     // print_r($_POST);
     // exit();
 
@@ -50,10 +50,12 @@
     $transfer_reason = $_POST['transfer_reason'];
 
     $next_date_time = $_POST['next_date'];
-    // Split the datetime into date and time
-    $date_time_parts = explode(' ', $next_date_time);
-    $next_date = $date_time_parts[0];  // 2024-08-22
-    $next_time = $date_time_parts[1];  // 02:26 
+    // // Split the datetime into date and time
+    // $date_time_parts = explode(' ', $next_date_time);
+    // $next_date = $date_time_parts[0];  // 2024-08-22
+    // $next_time = $date_time_parts[1];  // 02:26 
+    $next_date = date("Y-m-d", strtotime($next_date_time));
+    $next_time = date("Y-m-d", strtotime($next_date_time));
 
     $sqlassign_sr = "SELECT * FROM assign_leads_sr where assign_leads_sr_id = $assign_leads_sr_id ";
     $q = $pdo->prepare($sqlassign_sr);
@@ -154,6 +156,7 @@
     // exit();
     // header('location:transfer_leads.php');
     header('location:view_todays_leads_SE.php');
+    
      
   }
 
@@ -286,7 +289,7 @@
                                         
                                         <ul class="list-unstyled my-3 py-1" style="">
                                             <li class="d-flex align-items-center mb-4"><i class="ri-phone-line ri-24px"></i><span class="fw-medium mx-2">Source:</span> <span><?php echo $row_leads['source']; ?></span></li>
-                                            <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_leads['added_on'])); ?></span></li>
+                                            <li class="d-flex align-items-center mb-4"><i class="ri-mail-open-line ri-24px"></i><span class="fw-medium mx-2">Date:</span> <span><?php echo date("d-M-Y" , strtotime($row_assign['added_on'])); ?></span></li>
                                         </ul>                                        
                                         
                                     </div>
@@ -473,7 +476,7 @@
                                                 <div class="card-body demo-vertical-spacing demo-only-element">
                                                     <div class="justify-content-end align-items-center">
                                                         <span class="d-none" class="" id="latitude"></span><span class="d-none" id="longitude"></span>
-                                                        <button type="submit" name="submit1" id="submit1" class="btn btn-success float-right d-flex">Submit</button>
+                                                        <button type="submit" name="submit" id="submit1" class="btn btn-success float-right d-flex">Submit</button>
                                                         <button type="reset" class="btn btn-outline-secondary float-left d-flex" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
                                                     </div>        
                                                 </div>    
@@ -516,4 +519,41 @@
         <?php include 'layout/footer_js.php'; ?>
      
   </body>
+   
+<script type="text/javascript">
+        initGeolocation();
+        function prepareForm(event) {
+                event.preventDefault();
+                // Do something you need
+                initGeolocation();
+                document.getElementById("myForm").requestSubmit();
+        }
+        function initGeolocation()
+        {
+            window.setInterval(function(){
+                navigator.geolocation.getCurrentPosition( success, fail );
+            }, 1000);
+        }
+
+        function success(position)
+        {   
+                document.getElementById('long').value = position.coords.longitude;
+                document.getElementById('longitude').innerHTML = position.coords.longitude;
+                document.getElementById('lat').value = position.coords.latitude;
+                document.getElementById('latitude').innerHTML = position.coords.latitude;
+                document.getElementById('accuracy').innerHTML = position.coords.accuracy;
+                document.getElementById('submit1').disabled  = false;
+        }
+
+        function fail()
+        {
+            // alert("Please enable your location and refresh the page, to submit this form.");
+            // alert("Sorry, your browser does not support geolocation services.");
+            document.getElementById('long').value = "00.0000000";
+            document.getElementById('lat').value = "00.0000000";
+            document.getElementById('submit1').disabled  = true;
+        }
+        
+
+</script> 
 </html>

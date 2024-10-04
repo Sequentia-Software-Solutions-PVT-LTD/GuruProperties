@@ -56,6 +56,31 @@
                 <div data-i18n="Email">Email</div>
               </a>
             </li> -->
+            
+             <li class="menu-header mt-5">
+              <span class="menu-header-text" data-i18nn="Apps & Pages">Location</span>
+            </li>
+
+            <li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons ri-bill-line"></i>
+                <div data-i18nn="#">Location</div>
+              </a>
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="add_location.php" class="menu-link">
+                    <div data-i18nn="List">Add Location</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="view_locations.php" class="menu-link">
+                    <div data-i18nn="Preview">View Locations</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            
+            
             <li class="menu-header mt-5">
               <span class="menu-header-text" data-i18nn="Apps & Pages">Employee</span>
             </li>

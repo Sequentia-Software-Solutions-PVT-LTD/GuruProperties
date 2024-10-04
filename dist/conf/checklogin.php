@@ -76,7 +76,10 @@
 					"report_SE_transferToSE",
 					"report_SE_visited",
 					"pdf_export_report_attendance",
-					"pdf_export"
+					"pdf_export",
+					"xlsx_export_report_attendance",
+					"add_location",
+					"view_locations",
 				);
 
 				$CEAllowedPages = array(

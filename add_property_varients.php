@@ -193,7 +193,8 @@
                                 <div class="col-md-4 form-floating form-floating-outline">
                                   <!-- <label>Variants</label> -->
                                   <!-- <input type="text" name="varients[]" class="form-control" placeholder="Variant" required> -->
-                                  <select id="formtabs-country"  name="varients[]" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>
+                                  <!--<select id="formtabs-country"  name="varients[]" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" tabindex="-1" aria-hidden="true" required>-->
+                                  <select id="formtabs-country1"  name="varients[]" class="form-select" required>
                                     <option value="" data-select2-id="18">Select Variants</option>
                                     <option value="1BHK">1 BHK</option>
                                     <option value="1.5BHK">1.5 BHK</option>
@@ -206,7 +207,7 @@
                                     <option value="5BHK">5 BHK</option>
                                   </select>
                                   
-                                  <label for="formtabs-country">Select Variants</label>
+                                  <label for="formtabs-country1">Select Variants</label>
                                 </div>
 
                                 <div class="col-md-4 form-floating form-floating-outline">

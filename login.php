@@ -274,7 +274,7 @@ if(isset($_POST["submit"]))
                 </div>
               </div>
               
-              <button class="btn btn-primary d-grid w-100 login-btn" type="submit" name="submit">Sign in</button>
+              <button class="btn btn-primary d-grid w-100 login-btn" type="submit" id="submit1" name="submit">Sign in</button>
             </form>
 
             <?php if((isset($loginError)) && $loginError != "") { ?>
