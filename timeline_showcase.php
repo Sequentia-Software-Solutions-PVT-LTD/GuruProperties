@@ -78,7 +78,7 @@
 
     // $date = "2024-08-24 16:40:59";
     // var_dump($date);
-    // $timeline_date = date("Y-m-d H:i", strtotime($date));
+    // $timeline_date = date("Y-m-d H:i:s", strtotime($date));
     // var_dump($timeline_date);
 
     $AllData = array();
@@ -90,14 +90,17 @@
         // var_dump($leadsSingle['added_on']);
         // var_dump($leadsSingle['edited_on']);
         $timeline_date = null;
-        $timeline_date = date("Y-m-d H:i", strtotime($leadsSingle['added_on']));
+        if($leadsSingle['added_on'] == "0000-00-00 00:00:00") 
+        $timeline_date = date("Y-m-d H:i:s", strtotime($leadsSingle['lead_gen_date']));
+        else
+        $timeline_date = date("Y-m-d H:i:s", strtotime($leadsSingle['added_on']));
         $dbContent = $leadsSingle;
             array_push($AllData, array(
                 "table_name" => 'leads',
                 "id" => $leadsSingle['id'],
                 "status" => "Fresh Lead",
                 "transfer_status" => "Fresh Lead",
-                "timlinedate" => $timeline_date,
+                "timelinedate" => $timeline_date,
                 "added_on" => $leadsSingle['added_on'],
                 "edited_on" => $leadsSingle['edited_on'],
                 "dbContent" => $dbContent
@@ -110,54 +113,54 @@
         // var_dump($CE_Leads_Single['transfer_status']);
         // var_dump($CE_Leads_Single['added_on']);
         // var_dump($CE_Leads_Single['edited_on']);
-        // $timeline_date = date("Y-m-d H:i", strtotime($leadsSingle['added_on']));
+        // $timeline_date = date("Y-m-d H:i:s", strtotime($leadsSingle['added_on']));
         
         // if($CE_Leads_Single['status'] == "Active" && $CE_Leads_Single['transfer_status']== "Available"){
-        //     $timeline_date = date("Y-m-d H:i", strtotime($leadsSingle['added_on']));
+        //     $timeline_date = date("Y-m-d H:i:s", strtotime($leadsSingle['added_on']));
         // }
         // if($CE_Leads_Single['status'] == "Active" && $CE_Leads_Single['transfer_status']== "Transferred"){
-        //     $timeline_date = date("Y-m-d H:i", strtotime($leadsSingle['edited_on']));
+        //     $timeline_date = date("Y-m-d H:i:s", strtotime($leadsSingle['edited_on']));
         // }
         // if($CE_Leads_Single['status'] == "Transferred" && $CE_Leads_Single['transfer_status']== "Available"){
-        //     $timeline_date = date("Y-m-d H:i", strtotime($leadsSingle['added_on']));
+        //     $timeline_date = date("Y-m-d H:i:s", strtotime($leadsSingle['added_on']));
         // }
         // if($CE_Leads_Single['status'] == "Assigned" && $CE_Leads_Single['transfer_status']== "Transferred"){
-        //     $timeline_date = date("Y-m-d H:i", strtotime($leadsSingle['edited_on']));
+        //     $timeline_date = date("Y-m-d H:i:s", strtotime($leadsSingle['edited_on']));
         // }
         // if($CE_Leads_Single['status'] == "From SE" && $CE_Leads_Single['transfer_status']== "Available"){
-        //     $timeline_date = date("Y-m-d H:i", strtotime($leadsSingle['added_on']));
+        //     $timeline_date = date("Y-m-d H:i:s", strtotime($leadsSingle['added_on']));
         // }
         $dbContent = $CE_Leads_Single;
         $timeline_date_ce = null;
         if($CE_Leads_Single['status'] == "Active" && $CE_Leads_Single['transfer_status']== "Available"){
-            $timeline_date_ce = date("Y-m-d H:i", strtotime($CE_Leads_Single['added_on']));
+            $timeline_date_ce = date("Y-m-d H:i:s", strtotime($CE_Leads_Single['added_on']));
         }
         if($CE_Leads_Single['status'] == "Followup" && $CE_Leads_Single['transfer_status']== "Not Available"){
-            $timeline_date_ce = date("Y-m-d H:i", strtotime($CE_Leads_Single['edited_on']));
+            $timeline_date_ce = date("Y-m-d H:i:s", strtotime($CE_Leads_Single['edited_on']));
         }
         if($CE_Leads_Single['status'] == "Followup" && $CE_Leads_Single['transfer_status']== "Available"){
-            $timeline_date_ce = date("Y-m-d H:i", strtotime($CE_Leads_Single['added_on']));
+            $timeline_date_ce = date("Y-m-d H:i:s", strtotime($CE_Leads_Single['added_on']));
         }
         if($CE_Leads_Single['status'] == "Active" && $CE_Leads_Single['transfer_status']== "Transferred"){
-            $timeline_date_ce = date("Y-m-d H:i", strtotime($CE_Leads_Single['edited_on']));
+            $timeline_date_ce = date("Y-m-d H:i:s", strtotime($CE_Leads_Single['edited_on']));
         }
         if($CE_Leads_Single['status'] == "Transferred" && $CE_Leads_Single['transfer_status']== "Admin Pending" && strtolower($CE_Leads_Single['request_for_admin']) == "no" ){
-            $timeline_date_ce = date("Y-m-d H:i", strtotime($CE_Leads_Single['admin_request_date']));
+            $timeline_date_ce = date("Y-m-d H:i:s", strtotime($CE_Leads_Single['admin_request_date']));
         }
         if($CE_Leads_Single['status'] == "Transferred" && $CE_Leads_Single['transfer_status']== "Available" && strtolower($CE_Leads_Single['request_for_admin']) == "yes" ){
-          $timeline_date_ce = date("Y-m-d H:i", strtotime($CE_Leads_Single['admin_aproved_date']));
+          $timeline_date_ce = date("Y-m-d H:i:s", strtotime($CE_Leads_Single['admin_aproved_date']));
         }
         if($CE_Leads_Single['status'] == "From SE" && $CE_Leads_Single['transfer_status']== "Admin Pending" && $CE_Leads_Single['request_for_admin']== "no" ){
-            $timeline_date_ce = date("Y-m-d H:i", strtotime($CE_Leads_Single['admin_request_date']));
+            $timeline_date_ce = date("Y-m-d H:i:s", strtotime($CE_Leads_Single['admin_request_date']));
         }
         if($CE_Leads_Single['status'] == "From SE" && $CE_Leads_Single['transfer_status']== "Available" && $CE_Leads_Single['request_for_admin']== "yes" ){
-            $timeline_date_ce = date("Y-m-d H:i", strtotime($CE_Leads_Single['admin_aproved_date']));
+            $timeline_date_ce = date("Y-m-d H:i:s", strtotime($CE_Leads_Single['admin_aproved_date']));
         }
         if($CE_Leads_Single['status'] == "Assigned" && $CE_Leads_Single['transfer_status']== "Transferred"){
-          $timeline_date_ce = date("Y-m-d H:i", strtotime($CE_Leads_Single['edited_on']));
+          $timeline_date_ce = date("Y-m-d H:i:s", strtotime($CE_Leads_Single['edited_on']));
         }
         if($CE_Leads_Single['status'] == "Dead"){
-            $timeline_date_ce = date("Y-m-d H:i", strtotime($CE_Leads_Single['edited_on']));
+            $timeline_date_ce = date("Y-m-d H:i:s", strtotime($CE_Leads_Single['edited_on']));
         }
         
           if($timeline_date_ce != "") {
@@ -166,7 +169,7 @@
                 "id" => $CE_Leads_Single['assign_leads_id'],
                 "status" => $CE_Leads_Single['status'],
                 "transfer_status" => $CE_Leads_Single['transfer_status'],
-                "timlinedate" => $timeline_date_ce,
+                "timelinedate" => $timeline_date_ce,
                 "added_on" => $CE_Leads_Single['added_on'],
                 "edited_on" => $CE_Leads_Single['edited_on'],
                 "dbContent" => $dbContent,
@@ -178,50 +181,50 @@
 
         $dbContent = $SE_Leads_Single;
         if($SE_Leads_Single['status'] == "Active" && $SE_Leads_Single['transfer_status']== "Available"){
-            $timeline_date_se = date("Y-m-d H:i", strtotime($SE_Leads_Single['added_on']));
+            $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['added_on']));
         }
         if($SE_Leads_Single['status'] == "Followup" && $SE_Leads_Single['transfer_status']== "Not Available"){
-            $timeline_date_se = date("Y-m-d H:i", strtotime($SE_Leads_Single['edited_on']));
+            $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['edited_on']));
         }
         if($SE_Leads_Single['status'] == "Followup" && $SE_Leads_Single['transfer_status']== "Available" && $SE_Leads_Single['followup_or_another_property']=="Follow Up"){
-            $timeline_date_se = date("Y-m-d H:i", strtotime($SE_Leads_Single['edited_on']));
+            $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['edited_on']));
         }
         if($SE_Leads_Single['status'] == "Followup" && $SE_Leads_Single['transfer_status']== "Available" && $SE_Leads_Single['followup_or_another_property']=="Another Property"){
-            $timeline_date_se = date("Y-m-d H:i", strtotime($SE_Leads_Single['added_on']));
+            $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['added_on']));
         }
         if($SE_Leads_Single['status'] == "Followup" && $SE_Leads_Single['transfer_status']== "Available" && $SE_Leads_Single['followup_or_another_property']==""){
-            $timeline_date_se = date("Y-m-d H:i", strtotime($SE_Leads_Single['edited_on']));
+            $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['edited_on']));
         }
         // if($SE_Leads_Single['status'] == "Active" && $SE_Leads_Single['transfer_status']== "Transferred" && strtoupper($SE_Leads_Single['transfer_employee_type']) == "SALES EXECUTIVE"){
-        //   $timeline_date_se = date("Y-m-d H:i", strtotime($SE_Leads_Single['edited_on']));
+        //   $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['edited_on']));
         // }
         if($SE_Leads_Single['status'] == "Active" && $SE_Leads_Single['transfer_status']== "Transferred" && strtoupper($SE_Leads_Single['transfer_employee_type']) == "SALES EXECUTIVE" && strtolower($SE_Leads_Single['request_for_admin']) == "yes"){
-            $timeline_date_se = date("Y-m-d H:i", strtotime($SE_Leads_Single['edited_on']));
+            $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['edited_on']));
         }
         if($SE_Leads_Single['status'] == "Active" && $SE_Leads_Single['transfer_status']== "Transferred" && strtoupper($SE_Leads_Single['transfer_employee_type']) == "SALES EXECUTIVE" && strtolower($SE_Leads_Single['request_for_admin']) == ""){
-          $timeline_date_se = date("Y-m-d H:i", strtotime($SE_Leads_Single['edited_on']));
+          $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['edited_on']));
         }
         
         if($SE_Leads_Single['status'] == "Active" && $SE_Leads_Single['transfer_status'] == "Transferred" && strtoupper($SE_Leads_Single['transfer_employee_type']) == "CUSTOMER EXECUTIVE" && strtolower($SE_Leads_Single['request_for_admin']) == ""){
-            $timeline_date_se = date("Y-m-d H:i", strtotime($SE_Leads_Single['edited_on']));
+            $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['edited_on']));
         }     
 
         if($SE_Leads_Single['status'] == "Transferred" && $SE_Leads_Single['transfer_status']== "Admin Pending" && strtoupper($SE_Leads_Single['assign_employee_type']) == "SALES EXECUTIVE" && strtolower($SE_Leads_Single['request_for_admin']) == "no"){
-            $timeline_date_se = date("Y-m-d H:i", strtotime($SE_Leads_Single['admin_request_date']));
+            $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['admin_request_date']));
         }
         if($SE_Leads_Single['status'] == "Transferred" && $SE_Leads_Single['transfer_status']== "Admin Pending" && strtoupper($SE_Leads_Single['assign_employee_type']) == "SALES EXECUTIVE" && strtolower($SE_Leads_Single['request_for_admin']) == "yes"){
-            $timeline_date_se = date("Y-m-d H:i", strtotime($SE_Leads_Single['admin_aproved_date']));
+            $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['admin_aproved_date']));
         }
         
         if($SE_Leads_Single['status'] == "Transferred" && $SE_Leads_Single['transfer_status']== "Available" && strtoupper($SE_Leads_Single['assign_employee_type']) == "SALES EXECUTIVE" && strtolower($SE_Leads_Single['request_for_admin']) == "yes"){
-            $timeline_date_se = date("Y-m-d H:i", strtotime($SE_Leads_Single['admin_aproved_date']));
+            $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['admin_aproved_date']));
         }
 
         if($SE_Leads_Single['status'] == "Converted" && $SE_Leads_Single['transfer_status']== "Converted"){
-          $timeline_date_se = date("Y-m-d H:i", strtotime($SE_Leads_Single['edited_on']));
+          $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['edited_on']));
         }
         if($SE_Leads_Single['status'] == "Dead"){
-            $timeline_date_se = date("Y-m-d H:i", strtotime($SE_Leads_Single['edited_on']));
+            $timeline_date_se = date("Y-m-d H:i:s", strtotime($SE_Leads_Single['edited_on']));
         }
         
         // var_dump($SE_Leads_Single['assign_leads_sr']);
@@ -235,7 +238,7 @@
                 "id" => $SE_Leads_Single['assign_leads_sr_id'],
                 "status" => $SE_Leads_Single['status'],
                 "transfer_status" => $SE_Leads_Single['transfer_status'],
-                "timlinedate" => $timeline_date_se,
+                "timelinedate" => $timeline_date_se,
                 "added_on" => $SE_Leads_Single['added_on'],
                 "edited_on" => $SE_Leads_Single['edited_on'],
                 "dbContent" => $dbContent
@@ -245,7 +248,7 @@
       
         $dbContent = $Converted_Leads_Single;
         $timeline_date_con = null;
-        $timeline_date_con = date("Y-m-d H:i", strtotime($Converted_Leads_Single['added_on']));
+        $timeline_date_con = date("Y-m-d H:i:s", strtotime($Converted_Leads_Single['added_on']));
         // var_dump($Converted_Leads_Single['converted_leads']);
         // var_dump($Converted_Leads_Single['converted_leads_id']);
         // var_dump($Converted_Leads_Single['status']);
@@ -257,7 +260,7 @@
                 "id" => $Converted_Leads_Single['converted_leads_id'],
                 "status" => "Converted",
                 "transfer_status" => "Converted",
-                "timlinedate" => $timeline_date_con,
+                "timelinedate" => $timeline_date_con,
                 "added_on" => $Converted_Leads_Single['added_on'],
                 "edited_on" => $Converted_Leads_Single['edited_on'],
                 "dbContent" => $dbContent
@@ -274,7 +277,7 @@
     //             )
     //         );
      array_multisort(
-                    array_column($AllData, 'timlinedate'), 
+                    array_column($AllData, 'timelinedate'), 
                     SORT_DESC, 
                     $AllData
                 );
@@ -351,19 +354,32 @@
                             if($variant['table_name'] == "assign_leads") {
                               $dbData = $variant["dbContent"];
                               if($variant['status'] == "Active" && $variant['transfer_status']== "Available"){
-                                  $dateShowcase = date("Y-m-d H:i", strtotime($CEArray['added_on']));
+                                  $dateShowcase = date("Y-m-d H:i:s", strtotime($CEArray['added_on']));
                                   $message = "Waiting for CUSTOMER EXECUTIVE to take action.";
                                   $leadType = "";
                                   $reason = "";
                                   $noteRemark = "";
                                   $connectionStatus = "";
-                                  $employeeName = $CEArray["employee_id"];
-                                  
-                                  
+                                  $needle = $CEArray["employee_id"];
+                                    $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
+                                      return $needle == $v['employee_id']; 
+                                    });
+                                    if(count($resultArray) > 0) {
+                                        foreach($resultArray as $resultElement) {
+                                            if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                            {
+                                                $employeeName = $resultElement["employee_name"];
+                                            } else {
+                                              $employeeName = "";
+                                            }
+                                        }
+                                    } else {
+                                      $employeeName = "";
+                                    }
                               }
                               if($variant['status'] == "Followup" && $variant['transfer_status']== "Not Available"){
                                 // why sales executive in the "transfer_employee_type"
-                                  $dateShowcase = date("Y-m-d", strtotime($CEArray['next_date']))." ".date("H:i", strtotime($CEArray['next_time']));
+                                  $dateShowcase = date("Y-m-d", strtotime($CEArray['next_date']))." ".date("H:i:s", strtotime($CEArray['next_time']));
                                   $callStatus = strtoupper(str_replace("_", " ", $CEArray["connection_status"]));
                                     if($callStatus == 'CONNECTED')
                                     $message = '<span class="badge rounded-pill bg-success">CONNECTED</span>';
@@ -378,40 +394,56 @@
                                   $reason = "";
                                   $noteRemark = strtoupper($CEArray["notes"]);
                                   $connectionStatus = $CEArray["connection_status"];
-                                  $employeeName = $CEArray["employee_id"];
+                                  $employeeid = $CEArray["employee_id"];
                                   
-                                  $needle = $employeeName;
+                                  $needle = $employeeid;
                                   $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                     return $needle == $v['employee_id']; 
                                   });
-                                  if($needle == 1) $needle = 0;
-                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                  $employeeName = $resultArray[$needle]["employee_name"]; 
+                                  if(count($resultArray) > 0) {
+                                    foreach($resultArray as $resultElement) {
+                                        if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                        {
+                                            $employeeName = $resultElement["employee_name"];
+                                        } else {
+                                          $employeeName = "";
+                                        }
+                                    }
+                                  } else {
+                                    $employeeName = "";
+                                  }
                                   
                               }
                               if($variant['status'] == "Followup" && $variant['transfer_status']== "Available"){
                                 // why sales executive in the "transfer_employee_type"
-                                $dateShowcase = date("Y-m-d", strtotime($CEArray['next_date']))." ".date("H:i", strtotime($CEArray['next_time']));
+                                $dateShowcase = date("Y-m-d", strtotime($CEArray['next_date']))." ".date("H:i:s", strtotime($CEArray['next_time']));
                                   $message = "Waiting For Follow Up";
                                   $leadType = "";
                                   $reason = "";
                                   $noteRemark = "";
                                   $connectionStatus = "";
-                                  $employeeName = $CEArray["employee_id"];
-                                  $needle = $employeeName;
+                                  $employeeId = $CEArray["employee_id"];
+                                  $needle = $employeeId;
                                   $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                     return $needle == $v['employee_id']; 
                                   });
-                                  if($needle == 1) $needle = 0;
-                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                  $employeeName = $resultArray[$needle]["employee_name"]; 
+                                  if(count($resultArray) > 0) {
+                                    foreach($resultArray as $resultElement) {
+                                        if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                        {
+                                            $employeeName = $resultElement["employee_name"];
+                                        } else {
+                                          $employeeName = "";
+                                        }
+                                    }
+                                  } else {
+                                    $employeeName = "";
+                                  }
                                   
                               }
                               if($variant['status'] == "Active" && $variant['transfer_status']== "Transferred") {
                                   // What is the status of "request_for_admin"
-                                  $dateShowcase = date("Y-m-d H:i", strtotime($CEArray['edited_on']));
+                                  $dateShowcase = date("Y-m-d H:i:s", strtotime($CEArray['edited_on']));
                                   // $message = "The lead is transfer to ".$CEArray["transfer_employee_type"]." - ".$CEArray["transfer_employee_id"];
                                   $message = "The lead is transfer to ".$CEArray["transfer_employee_type"]." - ";
                                 
@@ -419,10 +451,18 @@
                                   $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                     return $needle == $v['employee_id']; 
                                   });
-                                  if($needle == 1) $needle = 0;
-                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                  $transferEmployeeName = $resultArray[$needle]["employee_name"];
+                                  if(count($resultArray) > 0) {
+                                    foreach($resultArray as $resultElement) {
+                                        if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                        {
+                                            $transferEmployeeName = $resultElement["employee_name"];
+                                        } else {
+                                          $transferEmployeeName = "";
+                                        }
+                                    }
+                                  } else {
+                                    $transferEmployeeName = "";
+                                  }
 
                                   $message .= $transferEmployeeName."<br>";
 
@@ -444,15 +484,23 @@
                                   $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                     return $needle == $v['employee_id']; 
                                   });
-                                  if($needle == 1) $needle = 0;
-                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                  $employeeName = $resultArray[$needle]["employee_name"];
+                                  if(count($resultArray) > 0) {
+                                    foreach($resultArray as $resultElement) {
+                                        if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                        {
+                                            $employeeName = $resultElement["employee_name"];
+                                        } else {
+                                          $employeeName = "";
+                                        }
+                                    }
+                                  } else {
+                                    $employeeName = "";
+                                  }
                                   
                               }
 
                               if($variant['status'] == "Assigned" && $variant['transfer_status']== "Transferred"){
-                                  $dateShowcase = date("Y-m-d H:i", strtotime($CEArray['edited_on']));
+                                  $dateShowcase = date("Y-m-d H:i:s", strtotime($CEArray['edited_on']));
                                   // $message = "This lead is assigned to the ". $CEArray['assign_employee_type'] ." - ".$CEArray['transfer_employee_id'];
                                   $message = "This lead is assigned to the ". $CEArray['assign_employee_type'] ." - ";
                                   $needle = $CEArray["transfer_employee_id"];
@@ -460,68 +508,100 @@
                                   $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                     return $needle == $v['employee_id']; 
                                   });
-                                  if($needle == 1) $needle = 0;
-                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                  $employeeName = $resultArray[$needle]["employee_name"];
+                                  if(count($resultArray) > 0) {
+                                    foreach($resultArray as $resultElement) {
+                                        if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                        {
+                                            $employeeName = $resultElement["employee_name"];
+                                        } else {
+                                          $employeeName = "";
+                                        }
+                                    }
+                                  } else {
+                                    $employeeName = "";
+                                  }
 
                                   $message .= $employeeName;
                                   $leadType = "";
                                   $reason = $CEArray['transfer_reason'];
                                   $noteRemark = "";
                                   $connectionStatus = "";
-                                  $employeeName = $CEArray['employee_id'];
-                                  $needle = $employeeName;
+                                  $employeeid = $CEArray['employee_id'];
+                                  $needle = $employeeid;
                                   $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                     return $needle == $v['employee_id']; 
                                   });
-                                  if($needle == 1) $needle = 0;
-                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                  $employeeName = $resultArray[$needle]["employee_name"]; 
+                                  if(count($resultArray) > 0) {
+                                    foreach($resultArray as $resultElement) {
+                                        if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                        {
+                                            $employeeName = $resultElement["employee_name"];
+                                        } else {
+                                          $employeeName = "";
+                                        }
+                                    }
+                                  } else {
+                                    $employeeName = "";
+                                  }
                                   
                               }
                               if($variant['status'] == "Transferred" && $variant['transfer_status']== "Admin Pending" && strtolower($CEArray['request_for_admin']) == "no" ){
                                 // What is the status of "request_for_admin"
-                                  $dateShowcase = date("Y-m-d H:i", strtotime($CEArray['admin_request_date']));
+                                  $dateShowcase = date("Y-m-d H:i:s", strtotime($CEArray['admin_request_date']));
                                   $message = "Waiting For Admin Approval.";
                                   $leadType = "";
                                   $reason = $CEArray["transfer_reason"];
                                   $noteRemark = "Waiting For Admin Approval.";
                                   $connectionStatus = "";
-                                  $employeeName = $CEArray["transfer_employee_id"];
-                                  $needle = $employeeName;
+                                  $employeeid = $CEArray["transfer_employee_id"];
+                                  $needle = $employeeid;
                                   $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                     return $needle == $v['employee_id']; 
                                   });
-                                  if($needle == 1) $needle = 0;
-                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                  $employeeName = $resultArray[$needle]["employee_name"]; 
+                                  if(count($resultArray) > 0) {
+                                    foreach($resultArray as $resultElement) {
+                                        if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                        {
+                                            $employeeName = $resultElement["employee_name"];
+                                        } else {
+                                          $employeeName = "";
+                                        }
+                                    }
+                                  } else {
+                                    $employeeName = "";
+                                  }
                                   
                               }
                               if($variant['status'] == "Transferred" && $variant['transfer_status']== "Available" && strtolower($CEArray['request_for_admin']) == "yes" ){
-                                $dateShowcase = date("Y-m-d H:i", strtotime($CEArray['admin_aproved_date']));
+                                $dateShowcase = date("Y-m-d H:i:s", strtotime($CEArray['admin_aproved_date']));
                                 $message = "Waiting for action";
                                 $leadType = "";
                                 $reason = $CEArray["transfer_reason"];
-                                $noteRemark = "Next follow up on ".date("Y-m-d", strtotime($CEArray['next_date']))." ".date("H:i", strtotime($CEArray['next_time']));
+                                $noteRemark = "Next follow up on ".date("Y-m-d", strtotime($CEArray['next_date']))." ".date("H:i:s", strtotime($CEArray['next_time']));
                                 $connectionStatus = "";
-                                $employeeName = $CEArray["employee_id"];
-                                $needle = $employeeName;
+                                $employeeid = $CEArray["employee_id"];
+                                $needle = $employeeid;
                                   $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                     return $needle == $v['employee_id']; 
                                   });
-                                  if($needle == 1) $needle = 0;
-                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                  $employeeName = $resultArray[$needle]["employee_name"]; 
+                                  if(count($resultArray) > 0) {
+                                    foreach($resultArray as $resultElement) {
+                                        if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                        {
+                                            $employeeName = $resultElement["employee_name"];
+                                        } else {
+                                          $employeeName = "";
+                                        }
+                                    }
+                                  } else {
+                                    $employeeName = "";
+                                  }
                                 
                               }
                               if($variant['status'] == "From SE" && $variant['transfer_status'] == "Admin Pending" && $CEArray['request_for_admin'] == "no" ){
                                   // What is the status of "request_for_admin"
                                   // if all the related information is getting copied to related columns
-                                  $dateShowcase = date("Y-m-d H:i", strtotime($CEArray['admin_request_date']));
+                                  $dateShowcase = date("Y-m-d H:i:s", strtotime($CEArray['admin_request_date']));
                                   // $message = "The lead is trasnferred from SALES EXECUTIVE ".$CEArray['transfer_employee_id']." to CUSTOMER EXECUTIVE ".$CEArray["employee_id"].". Waiting for admin approval.";
                                   $message = "The lead is trasnferred from SALES EXECUTIVE ";
                                   
@@ -529,10 +609,18 @@
                                   $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                     return $needle == $v['employee_id']; 
                                   });
-                                  if($needle == 1) $needle = 0;
-                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                  $employeeName1 = $resultArray[$needle]["employee_name"];
+                                  if(count($resultArray) > 0) {
+                                    foreach($resultArray as $resultElement) {
+                                        if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                        {
+                                            $employeeName1 = $resultElement["employee_name"];
+                                        } else {
+                                          $employeeName1 = "";
+                                        }
+                                    }
+                                  } else {
+                                    $employeeName1 = "";
+                                  }
 
                                   $message .= $employeeName1;
 
@@ -542,11 +630,18 @@
                                   $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                     return $needle == $v['employee_id']; 
                                   });
-                                  if($needle == 1) $needle = 0;
-                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                  $employeeName2 = $resultArray[$needle]["employee_name"];
-
+                                  if(count($resultArray) > 0) {
+                                    foreach($resultArray as $resultElement) {
+                                        if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                        {
+                                            $employeeName2 = $resultElement["employee_name"];
+                                        } else {
+                                          $employeeName2 = "";
+                                        }
+                                    }
+                                  } else {
+                                    $employeeName2 = "";
+                                  }
                                   $message .= $employeeName2;
 
                                   $message .= ". Waiting for admin approval.";
@@ -555,10 +650,18 @@
                                   $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                     return $needle == $v['employee_id']; 
                                   });
-                                  if($needle == 1) $needle = 0;
-                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                  $employeeName = $resultArray[$needle]["employee_name"];
+                                  if(count($resultArray) > 0) {
+                                    foreach($resultArray as $resultElement) {
+                                        if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                        {
+                                            $employeeName = $resultElement["employee_name"];
+                                        } else {
+                                          $employeeName = "";
+                                        }
+                                    }
+                                  } else {
+                                    $employeeName = "";
+                                  }
 
                                   $message .= $employeeName;
 
@@ -566,52 +669,76 @@
                                   $reason = $CEArray["transfer_reason"];
                                   $noteRemark = "";
                                   $connectionStatus = "";
-                                  $employeeName = $CEArray["employee_id"];
-                                  $needle = $employeeName;
+                                  $employeeid = $CEArray["employee_id"];
+                                  $needle = $employeeid;
                                   $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                     return $needle == $v['employee_id']; 
                                   });
-                                  if($needle == 1) $needle = 0;
-                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                  $employeeName = $resultArray[$needle]["employee_name"]; 
+                                  if(count($resultArray) > 0) {
+                                    foreach($resultArray as $resultElement) {
+                                        if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                        {
+                                            $employeeName = $resultElement["employee_name"];
+                                        } else {
+                                          $employeeName = "";
+                                        }
+                                    }
+                                  } else {
+                                    $employeeName = "";
+                                  }
                               }
                               if($variant['status'] == "From SE" && $variant['transfer_status']== "Available" && $CEArray['request_for_admin'] == "yes" ){
                                   // What is the status of "request_for_admin"
                                   // if all the related information is getting copied to related columns
-                                  $dateShowcase = date("Y-m-d H:i", strtotime($CEArray['admin_aproved_date']));
+                                  $dateShowcase = date("Y-m-d H:i:s", strtotime($CEArray['admin_aproved_date']));
                                   $message = "The lead is trasnferred from SALES EXECUTIVE ".$CEArray['transfer_employee_id']. " on ".$CEArray['admin_request_date']." to ".$CEArray["employee_id"].". Approved by admin.";
                                   $leadType = "";
                                   $reason = $CEArray["transfer_reason"];
                                   $noteRemark = "";
                                   $connectionStatus = "";
-                                  $employeeName = $CEArray["employee_id"];
+                                  
                                   $needle = $CEArray["employee_id"];
                                   $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                     return $needle == $v['employee_id']; 
                                   });
-                                  if($needle == 1) $needle = 0;
-                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                  $employeeName = $resultArray[$needle]["employee_name"];
+                                  if(count($resultArray) > 0) {
+                                    foreach($resultArray as $resultElement) {
+                                        if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                        {
+                                            $employeeName = $resultElement["employee_name"];
+                                        } else {
+                                          $employeeName = "";
+                                        }
+                                    }
+                                  } else {
+                                    $employeeName = "";
+                                  }
 
                               }
                               if($variant['status'] == "Dead"){
-                                  $dateShowcase = date("Y-m-d H:i", strtotime($CEArray['edited_on']));
-                                  $message = "Marked dead by CUSTOMER EXECUTIVE ".$CEArray["employee_id"]." on ".date("Y-m-d H:i", strtotime($CEArray['edited_on']));
+                                  $dateShowcase = date("Y-m-d H:i:s", strtotime($CEArray['edited_on']));
+                                  $message = "Marked dead by CUSTOMER EXECUTIVE ".$CEArray["employee_id"]." on ".date("Y-m-d H:i:s", strtotime($CEArray['edited_on']));
                                   $leadType = "";
                                   $reason = $CEArray["dead_reason"];
                                   $noteRemark = "";
                                   $connectionStatus = "";
-                                  $employeeName = $CEArray["employee_id"];
+                                  
                                   $needle = $CEArray["employee_id"];
                                   $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                     return $needle == $v['employee_id']; 
                                   });
-                                  if($needle == 1) $needle = 0;
-                                  else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                  if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                  $employeeName = $resultArray[$needle]["employee_name"];
+                                  if(count($resultArray) > 0) {
+                                    foreach($resultArray as $resultElement) {
+                                        if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                        {
+                                            $employeeName = $resultElement["employee_name"];
+                                        } else {
+                                          $employeeName = "";
+                                        }
+                                    }
+                                  } else {
+                                    $employeeName = "";
+                                  }
 
                               }
                             } 
@@ -619,7 +746,7 @@
                             if($variant['table_name'] == "assign_leads_sr") {
                               $dbData = $variant["dbContent"];
                                   if($variant['status'] == "Active" && $variant['transfer_status']== "Available"){
-                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['visit_date']))." ".date("H:i", strtotime($ALArray['visit_time']));
+                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['visit_date']))." ".date("H:i:s", strtotime($ALArray['visit_time']));
                                       $message = "Property Details ".
                                                   $ALArray['property_id']." ".
                                                   $ALArray['sub_property_id']." ".
@@ -631,22 +758,29 @@
                                       $reason = "";
                                       $noteRemark = $ALArray['visit_notes'];
                                       $connectionStatus = "";
-                                      $employeeName = $ALArray["employee_id"];
-
-                                      $needle = $ALArray["employee_id"];
+                                      
+                                       $needle = $ALArray["employee_id"];
                                       $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                         return $needle == $v['employee_id']; 
                                       });
-                                      if($needle == 1) $needle = 0;
-                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                      $employeeName = $resultArray[$needle]["employee_name"];
+                                      if(count($resultArray) > 0) {
+                                        foreach($resultArray as $resultElement) {
+                                            if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                            {
+                                                $employeeName = $resultElement["employee_name"];
+                                            } else {
+                                              $employeeName = "";
+                                            }
+                                        }
+                                      } else {
+                                        $employeeName = "";
+                                      }
                                   }
                                   if($variant['status'] == "Followup" && $variant['transfer_status'] == "Not Available" && $ALArray['followup_or_another_property']=="Follow Up"){
                                     if($ALArray['visit_date'] == '0000-00-00') {
-                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['next_date']))." ".date("H:i", strtotime($ALArray['next_time']));
+                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['next_date']))." ".date("H:i:s", strtotime($ALArray['next_time']));
                                     } else {
-                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['visit_date']))." ".date("H:i", strtotime($ALArray['visit_time']));
+                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['visit_date']))." ".date("H:i:s", strtotime($ALArray['visit_time']));
                                     }
                                       $message = "<img src='".$ALArray['photo']."' alt='SE Photo' style='height: 64px; width: 64px;'>";
 
@@ -707,94 +841,122 @@
                                       $reason = "";
                                       $noteRemark = $ALArray['notes'];
                                       $connectionStatus = $ALArray['connection_status'];
-                                      $employeeName = $ALArray["employee_id"];
                                       
                                       $needle = $ALArray["employee_id"];
                                       $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                         return $needle == $v['employee_id']; 
                                       });
-                                      if($needle == 1) $needle = 0;
-                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                      $employeeName = $resultArray[$needle]["employee_name"];
+                                      if(count($resultArray) > 0) {
+                                        foreach($resultArray as $resultElement) {
+                                            if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                            {
+                                                $employeeName = $resultElement["employee_name"];
+                                            } else {
+                                              $employeeName = "";
+                                            }
+                                        }
+                                      } else {
+                                        $employeeName = "";
+                                      }
                                     
                                   }
                                   if($variant['status'] == "Followup" && $variant['transfer_status']== "Not Available" && $ALArray['followup_or_another_property']=="Another Property"){
                                     
                                     if($ALArray['visit_date'] == '0000-00-00') {
-                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['next_date']))." ".date("H:i", strtotime($ALArray['next_time']));
+                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['next_date']))." ".date("H:i:s", strtotime($ALArray['next_time']));
                                     } else {
-                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['visit_date']))." ".date("H:i", strtotime($ALArray['visit_time']));
+                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['visit_date']))." ".date("H:i:s", strtotime($ALArray['visit_time']));
                                     }
                                       $message = "<img src='".$ALArray['photo']."' alt='SE Photo' style='height: 64px; width: 64px;'>";
                                       $leadType = $ALArray['lead_type'];
                                       $reason = "";
                                       $noteRemark = $ALArray['notes'];
                                       $connectionStatus = $ALArray['connection_status'];
-                                      $employeeName = $ALArray["employee_id"];
-                                      
+
                                       $needle = $ALArray["employee_id"];
                                       $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                         return $needle == $v['employee_id']; 
                                       });
-                                      if($needle == 1) $needle = 0;
-                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                      $employeeName = $resultArray[$needle]["employee_name"];
+                                      if(count($resultArray) > 0) {
+                                        foreach($resultArray as $resultElement) {
+                                            if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                            {
+                                                $employeeName = $resultElement["employee_name"];
+                                            } else {
+                                              $employeeName = "";
+                                            }
+                                        }
+                                      } else {
+                                        $employeeName = "";
+                                      }
                                   }
 
                                   if($variant['status'] == "Followup" && $variant['transfer_status']== "Not Available" && $ALArray['followup_or_another_property']==""){
                                     if($ALArray['visit_date'] == '0000-00-00') {
-                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['next_date']))." ".date("H:i", strtotime($ALArray['next_time']));
+                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['next_date']))." ".date("H:i:s", strtotime($ALArray['next_time']));
                                     } else {
-                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['visit_date']))." ".date("H:i", strtotime($ALArray['visit_time']));
+                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['visit_date']))." ".date("H:i:s", strtotime($ALArray['visit_time']));
                                     }
                                       $message = "<img src='".$ALArray['photo']."' alt='SE Photo' style='height: 64px; width: 64px;'>";
                                       $leadType = $ALArray['lead_type'];
                                       $reason = "";
                                       $noteRemark = $ALArray['notes'];
                                       $connectionStatus = $ALArray['connection_status'];
-                                      $employeeName = $ALArray["employee_id"];
                                       
                                       $needle = $ALArray["employee_id"];
                                       $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                         return $needle == $v['employee_id']; 
                                       });
-                                      if($needle == 1) $needle = 0;
-                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                      $employeeName = $resultArray[$needle]["employee_name"];
+                                      if(count($resultArray) > 0) {
+                                        foreach($resultArray as $resultElement) {
+                                            if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                            {
+                                                $employeeName = $resultElement["employee_name"];
+                                            } else {
+                                              $employeeName = "";
+                                            }
+                                        }
+                                      } else {
+                                        $employeeName = "";
+                                      }
                                   }
                                   
                                   if($variant['status'] == "Followup" && $variant['transfer_status']== "Available" && $ALArray['followup_or_another_property']=="Follow Up"){
                                       
                                     if($ALArray['visit_date'] == '0000-00-00') {
-                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['next_date']))." ".date("H:i", strtotime($ALArray['next_time']));
+                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['next_date']))." ".date("H:i:s", strtotime($ALArray['next_time']));
                                     } else {
-                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['visit_date']))." ".date("H:i", strtotime($ALArray['visit_time']));
+                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['visit_date']))." ".date("H:i:s", strtotime($ALArray['visit_time']));
                                     }
                                       $message = "<img src='".$ALArray['photo']."' alt='SE Photo' style='height: 64px; width: 64px;'>";
                                       $leadType = $ALArray['lead_type'];
                                       $reason = "";
                                       $noteRemark = $ALArray['notes'];
                                       $connectionStatus = $ALArray['connection_status'];
-                                      $employeeName = $ALArray["employee_id"];
                                       
                                       $needle = $ALArray["employee_id"];
                                       $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                         return $needle == $v['employee_id']; 
                                       });
-                                      if($needle == 1) $needle = 0;
-                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                      $employeeName = $resultArray[$needle]["employee_name"];
+                                      if(count($resultArray) > 0) {
+                                        foreach($resultArray as $resultElement) {
+                                            if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                            {
+                                                $employeeName = $resultElement["employee_name"];
+                                            } else {
+                                              $employeeName = "";
+                                            }
+                                        }
+                                      } else {
+                                        $employeeName = "";
+                                      }
                                   }
                                   if($variant['status'] == "Followup" && $variant['transfer_status']== "Available" && $ALArray['followup_or_another_property']=="Another Property"){
                                       
                                     if($ALArray['visit_date'] == '0000-00-00') {
-                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['next_date']))." ".date("H:i", strtotime($ALArray['next_time']));
+                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['next_date']))." ".date("H:i:s", strtotime($ALArray['next_time']));
                                     } else {
-                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['visit_date']))." ".date("H:i", strtotime($ALArray['visit_time']));
+                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['visit_date']))." ".date("H:i:s", strtotime($ALArray['visit_time']));
                                     }
                                       $message = "";
                                       if($ALArray['photo'] != "") {
@@ -814,22 +976,29 @@
                                       $reason = "";
                                       $noteRemark = $ALArray['notes'];
                                       $connectionStatus = $ALArray['connection_status'];
-                                      $employeeName = $ALArray["employee_id"];
                                       
                                       $needle = $ALArray["employee_id"];
                                       $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                         return $needle == $v['employee_id']; 
                                       });
-                                      if($needle == 1) $needle = 0;
-                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                      $employeeName = $resultArray[$needle]["employee_name"];
+                                      if(count($resultArray) > 0) {
+                                        foreach($resultArray as $resultElement) {
+                                            if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                            {
+                                                $employeeName = $resultElement["employee_name"];
+                                            } else {
+                                              $employeeName = "";
+                                            }
+                                        }
+                                      } else {
+                                        $employeeName = "";
+                                      }
                                   }
                                   if($SE_Leads_Single['status'] == "Followup" && $SE_Leads_Single['transfer_status']== "Available" && $SE_Leads_Single['followup_or_another_property']==""){
                                     if($ALArray['visit_date'] == '0000-00-00') {
-                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['next_date']))." ".date("H:i", strtotime($ALArray['next_time']));
+                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['next_date']))." ".date("H:i:s", strtotime($ALArray['next_time']));
                                     } else {
-                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['visit_date']))." ".date("H:i", strtotime($ALArray['visit_time']));
+                                      $dateShowcase = date("Y-m-d", strtotime($ALArray['visit_date']))." ".date("H:i:s", strtotime($ALArray['visit_time']));
                                     }
                                       $message = "";
                                       if($ALArray['photo'] != "") {
@@ -849,42 +1018,65 @@
                                       $reason = "";
                                       $noteRemark = $ALArray['notes'];
                                       $connectionStatus = $ALArray['connection_status'];
-                                      $employeeName = $ALArray["employee_id"];
                                       
                                       $needle = $ALArray["employee_id"];
                                       $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                         return $needle == $v['employee_id']; 
                                       });
-                                      if($needle == 1) $needle = 0;
-                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                      $employeeName = $resultArray[$needle]["employee_name"];
+                                      if(count($resultArray) > 0) {
+                                        foreach($resultArray as $resultElement) {
+                                            if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                            {
+                                                $employeeName = $resultElement["employee_name"];
+                                            } else {
+                                              $employeeName = "";
+                                            }
+                                        }
+                                      } else {
+                                        $employeeName = "";
+                                      }
                                   }
                                   if($variant['status'] == "Active" && $variant['transfer_status']== "Transferred" && strtoupper($ALArray['transfer_employee_type']) == "SALES EXECUTIVE" ){
-                                      $dateShowcase = date("Y-m-d H:i", strtotime($ALArray['edited_on']));
+                                      $dateShowcase = date("Y-m-d H:i:s", strtotime($ALArray['edited_on']));
                                       // $message = "Lead is transferred to SALES EXECUTIVE ".$ALArray['transfer_employee_id']." by ".$ALArray['employee_id'];
-                                      $message = "Lead is transferred to SALES EXECUTIVE (";
+                                      $message = "Lead is transferred to SALES EXECUTIVE ";
                                     
                                       $needle = $ALArray["transfer_employee_id"];
                                       $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                         return $needle == $v['employee_id']; 
                                       });
-                                      if($needle == 1) $needle = 0;
-                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                      $employeeName = $resultArray[$needle]["employee_name"];
+                                      if(count($resultArray) > 0) {
+                                        foreach($resultArray as $resultElement) {
+                                            if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                            {
+                                                $employeeName = $resultElement["employee_name"];
+                                            } else {
+                                              $employeeName = "";
+                                            }
+                                        }
+                                      } else {
+                                        $employeeName = "";
+                                      }
                                       
                                       $message .= $employeeName;
-                                      $message .= ") by ";
+                                      $message .= " by ";
                                       
                                       $needle = $ALArray["employee_id"];
                                       $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                         return $needle == $v['employee_id']; 
                                       });
-                                      if($needle == 1) $needle = 0;
-                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                      $employeeName1 = $resultArray[$needle]["employee_name"];
+                                      if(count($resultArray) > 0) {
+                                        foreach($resultArray as $resultElement) {
+                                            if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                            {
+                                                $employeeName1 = $resultElement["employee_name"];
+                                            } else {
+                                              $employeeName1 = "";
+                                            }
+                                        }
+                                      } else {
+                                        $employeeName1 = "";
+                                      }
                                       $message .= $employeeName1;
                                       
                                       $leadType = "";
@@ -894,32 +1086,48 @@
                                       // $employeeName = $ALArray['employee_id'];
                                   }
                                   if($variant['status'] == "Active" && $variant['transfer_status']== "Transferred" && strtoupper($ALArray['transfer_employee_type']) == "SALES EXECUTIVE" && strtolower($ALArray['request_for_admin']) == "no"){
-                                      $dateShowcase = date("Y-m-d H:i", strtotime($ALArray['admin_request_date']));
-                                      $message = "Lead is transferred to SALES EXECUTIVE (";
+                                      $dateShowcase = date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date']));
+                                      $message = "Lead is transferred to SALES EXECUTIVE ";
                                       
                                       $needle = $ALArray["transfer_employee_id"];
                                       $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                         return $needle == $v['employee_id']; 
                                       });
-                                      if($needle == 1) $needle = 0;
-                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                      $employeeName1 = $resultArray[$needle]["employee_name"];
+                                      if(count($resultArray) > 0) {
+                                        foreach($resultArray as $resultElement) {
+                                            if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                            {
+                                                $employeeName1 = $resultElement["employee_name"];
+                                            } else {
+                                              $employeeName1 = "";
+                                            }
+                                        }
+                                      } else {
+                                        $employeeName1 = "";
+                                      }
 
                                       $message .= $employeeName1;
 
-                                      $message .= ") by ";
+                                      $message .= " by ";
                                       $needle = $ALArray["employee_id"];
                                       $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                         return $needle == $v['employee_id']; 
                                       });
-                                      if($needle == 1) $needle = 0;
-                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                      $employeeName = $resultArray[$needle]["employee_name"];
+                                      if(count($resultArray) > 0) {
+                                        foreach($resultArray as $resultElement) {
+                                            if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                            {
+                                                $employeeName1 = $resultElement["employee_name"];
+                                            } else {
+                                              $employeeName1 = "";
+                                            }
+                                        }
+                                      } else {
+                                        $employeeName1 = "";
+                                      }
                                       $message .= $employeeName;
                                       
-                                      $message .= " on ".date("Y-m-d H:i", strtotime($ALArray['admin_request_date']));
+                                      $message .= " on ".date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date']));
                                       $leadType = "";
                                       $reason = $ALArray["transfer_reason"];
                                       $noteRemark = "";
@@ -927,29 +1135,45 @@
                                       // $employeeName = $ALArray['employee_id'];
                                   }
                                   if($variant['status'] == "Active" && $variant['transfer_status'] == "Transferred" && strtoupper($ALArray['transfer_employee_type']) == "CUSTOMER EXECUTIVE" && strtolower($ALArray['request_for_admin']) == ""){
-                                    $dateShowcase = date("Y-m-d H:i", strtotime($ALArray['edited_on']));
-                                    $message = "Lead is transferred to CUSTOMER EXECUTIVE (";
+                                    $dateShowcase = date("Y-m-d H:i:s", strtotime($ALArray['edited_on']));
+                                    $message = "Lead is transferred to CUSTOMER EXECUTIVE ";
                                     
                                     $needle = $ALArray["transfer_employee_id"];
                                       $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                         return $needle == $v['employee_id']; 
                                       });
-                                      if($needle == 1) $needle = 0;
-                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                      $employeeName1 = $resultArray[$needle]["employee_name"];
+                                      if(count($resultArray) > 0) {
+                                        foreach($resultArray as $resultElement) {
+                                            if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                            {
+                                                $employeeName1 = $resultElement["employee_name"];
+                                            } else {
+                                              $employeeName1 = "";
+                                            }
+                                        }
+                                      } else {
+                                        $employeeName1 = "";
+                                      }
                                     
                                     $message .= $employeeName1;
-                                    $message .= ") by ";
+                                    $message .= " by ";
                                     
                                     $needle = $ALArray["employee_id"];
                                       $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                         return $needle == $v['employee_id']; 
                                       });
-                                      if($needle == 1) $needle = 0;
-                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                      $employeeName = $resultArray[$needle]["employee_name"];
+                                      if(count($resultArray) > 0) {
+                                        foreach($resultArray as $resultElement) {
+                                            if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                            {
+                                                $employeeName = $resultElement["employee_name"];
+                                            } else {
+                                              $employeeName = "";
+                                            }
+                                        }
+                                      } else {
+                                        $employeeName = "";
+                                      }
                                     
                                       $message .= $employeeName;
                                       
@@ -961,17 +1185,25 @@
                                   }     
                           
                                   if($variant['status'] == "Transferred" && $variant['transfer_status']== "Admin Pending" && strtoupper($ALArray['assign_employee_type']) == "SALES EXECUTIVE" && strtolower($ALArray['request_for_admin']) == "no"){
-                                    $dateShowcase = date("Y-m-d H:i", strtotime($ALArray['admin_request_date']));
+                                    $dateShowcase = date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date']));
                                     $message = "Lead is transferred to SALES EXECUTIVE by ";
                                     
                                     $needle = $ALArray["assign_employee_id"];
                                     $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                       return $needle == $v['employee_id']; 
                                     });
-                                    if($needle == 1) $needle = 0;
-                                    else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                    if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                    $employeeName1 = $resultArray[$needle]["employee_name"];
+                                    if(count($resultArray) > 0) {
+                                      foreach($resultArray as $resultElement) {
+                                          if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                          {
+                                              $employeeName1 = $resultElement["employee_name"];
+                                          } else {
+                                            $employeeName1 = "";
+                                          }
+                                      }
+                                    } else {
+                                      $employeeName1 = "";
+                                    }
                                     
                                     $message .= $employeeName1;
                                     $message .= ". Waiting for admin approval.";
@@ -984,39 +1216,63 @@
                                     $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                       return $needle == $v['employee_id']; 
                                     });
-                                    if($needle == 1) $needle = 0;
-                                    else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                    if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                    $employeeName = $resultArray[$needle]["employee_name"];
+                                    if(count($resultArray) > 0) {
+                                      foreach($resultArray as $resultElement) {
+                                          if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                          {
+                                              $employeeName = $resultElement["employee_name"];
+                                          } else {
+                                            $employeeName = "";
+                                          }
+                                      }
+                                    } else {
+                                      $employeeName = "";
+                                    }
                                   }
                                   
                                   if($variant['status'] == "Transferred" && $variant['transfer_status']== "Admin Pending" && strtoupper($ALArray['assign_employee_type']) == "SALES EXECUTIVE" && strtolower($ALArray['request_for_admin']) == "yes"){
-                                    $dateShowcase = date("Y-m-d H:i", strtotime($ALArray['admin_request_date']));
-                                    $message = "Lead is transferred to SALES EXECUTIVE (";
+                                    $dateShowcase = date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date']));
+                                    $message = "Lead is transferred to SALES EXECUTIVE ";
                                     
                                     $needle = $ALArray["transfer_employee_id"];
                                     $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                       return $needle == $v['employee_id']; 
                                     });
-                                    if($needle == 1) $needle = 0;
-                                    else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                    if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                    $employeeName1 = $resultArray[$needle]["employee_name"];
+                                    if(count($resultArray) > 0) {
+                                      foreach($resultArray as $resultElement) {
+                                          if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                          {
+                                              $employeeName1 = $resultElement["employee_name"];
+                                          } else {
+                                            $employeeName1 = "";
+                                          }
+                                      }
+                                    } else {
+                                      $employeeName1 = "";
+                                    }
 
                                     $message .= $employeeName1;
-                                    $message .= ") by ";
+                                    $message .= " by ";
 
                                     $needle = $ALArray["employee_id"];
                                     $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                       return $needle == $v['employee_id']; 
                                     });
-                                    if($needle == 1) $needle = 0;
-                                    else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                    if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                    $employeeName = $resultArray[$needle]["employee_name"];
+                                    if(count($resultArray) > 0) {
+                                      foreach($resultArray as $resultElement) {
+                                          if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                          {
+                                              $employeeName = $resultElement["employee_name"];
+                                          } else {
+                                            $employeeName = "";
+                                          }
+                                      }
+                                    } else {
+                                      $employeeName = "";
+                                    }
 
                                     $message .= $employeeName;
-                                    $message .= " on ".date("Y-m-d H:i", strtotime($ALArray['admin_request_date'])).". Waiting for admin approval.";
+                                    $message .= " on ".date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date'])).". Waiting for admin approval.";
                                     
                                     $leadType = "";
                                     $reason = $ALArray["transfer_reason"];
@@ -1027,8 +1283,8 @@
 
 
                                   // if($variant['status'] == "Transferred" && $variant['transfer_status'] == "Admin pending" && strtoupper($ALArray['transfer_employee_type']) == "SALES EXECUTIVE" && strtolower($ALArray['request_for_admin']) == "no"){
-                                  //   $dateShowcase = date("Y-m-d H:i", strtotime($ALArray['admin_request_date']));
-                                  //   $message = "Lead is transferred to SALES EXECUTIVE ".$ALArray['transfer_employee_id']." by ".$ALArray['employee_id']." on ".date("Y-m-d H:i", strtotime($ALArray['admin_request_date'])).". Waiting for admin approval.";
+                                  //   $dateShowcase = date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date']));
+                                  //   $message = "Lead is transferred to SALES EXECUTIVE ".$ALArray['transfer_employee_id']." by ".$ALArray['employee_id']." on ".date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date'])).". Waiting for admin approval.";
                                   //   $leadType = "";
                                   //   $reason = $ALArray["transfer_reason"];
                                   //   $noteRemark = "";
@@ -1036,17 +1292,25 @@
                                   //   $employeeName = $ALArray['employee_id'];
                                   // }
                                   if($variant['status'] == "Transferred" && $variant['transfer_status']== "Available" && strtoupper($ALArray['assign_employee_type']) == "SALES EXECUTIVE" && strtolower($ALArray['request_for_admin']) == "yes"){
-                                    $dateShowcase = date("Y-m-d H:i", strtotime($ALArray['admin_request_date']));
+                                    $dateShowcase = date("Y-m-d H:i:s", strtotime($ALArray['admin_request_date']));
                                     $message = "Lead is transferred to SALES EXECUTIVE by ";
 
                                     $needle = $ALArray["assign_employee_id"];
                                     $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                       return $needle == $v['employee_id']; 
                                     });
-                                    if($needle == 1) $needle = 0;
-                                    else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                    if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                    $employeeName1 = $resultArray[$needle]["employee_name"];
+                                    if(count($resultArray) > 0) {
+                                      foreach($resultArray as $resultElement) {
+                                          if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                          {
+                                              $employeeName1 = $resultElement["employee_name"];
+                                          } else {
+                                            $employeeName1 = "";
+                                          }
+                                      }
+                                    } else {
+                                      $employeeName1 = "";
+                                    }
                                     $message .= $employeeName1;
                                     
                                     $message .= ". Admin approved.";
@@ -1059,10 +1323,18 @@
                                     $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                       return $needle == $v['employee_id']; 
                                     });
-                                    if($needle == 1) $needle = 0;
-                                    else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                    if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                    $employeeName = $resultArray[$needle]["employee_name"];
+                                    if(count($resultArray) > 0) {
+                                      foreach($resultArray as $resultElement) {
+                                          if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                          {
+                                              $employeeName = $resultElement["employee_name"];
+                                          } else {
+                                            $employeeName = "";
+                                          }
+                                      }
+                                    } else {
+                                      $employeeName = "";
+                                    }
                                   }                          
                                   if($variant['status'] == "Converted" && $variant['transfer_status']== "Converted"){
 
@@ -1107,7 +1379,7 @@
                                       $variant_name = implode(",", $variant_name_array);
 
 
-                                      $dateShowcase = date("Y-m-d H:i", strtotime($ALArray['added_on']));
+                                      $dateShowcase = date("Y-m-d H:i:s", strtotime($ALArray['added_on']));
                                       $message = "This lead in converted with following details ".
                                       "<br> property_id: ".$property_id_name.
                                       "<br> sub_property_id: ".$sub_property_id_name.
@@ -1123,23 +1395,39 @@
                                     $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                       return $needle == $v['employee_id']; 
                                     });
-                                    if($needle == 1) $needle = 0;
-                                    else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                    if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                    $employeeName = $resultArray[$needle]["employee_name"];
+                                    if(count($resultArray) > 0) {
+                                      foreach($resultArray as $resultElement) {
+                                          if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                          {
+                                              $employeeName = $resultElement["employee_name"];
+                                          } else {
+                                            $employeeName = "";
+                                          }
+                                      }
+                                    } else {
+                                      $employeeName = "";
+                                    }
                                   }
                                   if($variant['status'] == "Dead"){
-                                    $dateShowcase = date("Y-m-d H:i", strtotime($ALArray['edited_on']));
+                                    $dateShowcase = date("Y-m-d H:i:s", strtotime($ALArray['edited_on']));
                                     $needle = $ALArray["employee_id"];
                                     $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                       return $needle == $v['employee_id']; 
                                     });
-                                    if($needle == 1) $needle = 0;
-                                    else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                    if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                    $employeeName = $resultArray[$needle]["employee_name"];
+                                    if(count($resultArray) > 0) {
+                                      foreach($resultArray as $resultElement) {
+                                          if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                          {
+                                              $employeeName = $resultElement["employee_name"];
+                                          } else {
+                                            $employeeName = "";
+                                          }
+                                      }
+                                    } else {
+                                      $employeeName = "";
+                                    }
 
-                                    $message = "Marked dead by SALES EXECUTIVE (".$employeeName.") on ".date("Y-m-d H:i", strtotime($ALArray['edited_on']));
+                                    $message = "Marked dead by SALES EXECUTIVE ".$employeeName." on ".date("Y-m-d H:i:s", strtotime($ALArray['edited_on']));
                                     $leadType = "";
                                     $reason = $ALArray["dead_reason"];
                                     $noteRemark = "";
@@ -1191,7 +1479,7 @@
                                       }
                                       $variant_name = implode(",", $variant_name_array);
 
-                                      $dateShowcase = date("Y-m-d H:i", strtotime($CONArray['added_on']));
+                                      $dateShowcase = date("Y-m-d H:i:s", strtotime($CONArray['added_on']));
                                       $message = "This lead in converted with following details ".
                                       "<br> property_name_id: ".$property_id_name.
                                       "<br> property_variants: ".$variant_name.
@@ -1213,15 +1501,23 @@
                                       $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                         return $needle == $v['employee_id']; 
                                       });
-                                      if($needle == 1) $needle = 0;
-                                      else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                      if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                      $employeeName = $resultArray[$needle]["employee_name"];
+                                      if(count($resultArray) > 0) {
+                                        foreach($resultArray as $resultElement) {
+                                            if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                            {
+                                                $employeeName = $resultElement["employee_name"];
+                                            } else {
+                                              $employeeName = "";
+                                            }
+                                        }
+                                      } else {
+                                        $employeeName = "";
+                                      }
                             }
 
                             if($variant['table_name'] == "leads") {
                               $dbData = $variant["dbContent"];
-                              // $dateShowcase = date("Y-m-d H:i", strtotime($LEArray['lead_gen_date']));
+                              // $dateShowcase = date("Y-m-d H:i:s", strtotime($LEArray['lead_gen_date']));
                               $dateShowcase = "";
                               $message = "This lead in added and assigned to CUSTOMER EXECUTIVE ";
                               
@@ -1237,10 +1533,18 @@
                                 $resultArray = array_filter($employee_Array, function ($v) use ($needle) {
                                   return $needle == $v['employee_id']; 
                                 });
-                                if($needle == 1) $needle = 0;
-                                else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                if(isset($resultArray[$needle]["employee_name"]) && $resultArray[$needle]["employee_name"] != "") 
-                                $employeeName = $resultArray[$needle]["employee_name"]; 
+                                if(count($resultArray) > 0) {
+                                  foreach($resultArray as $resultElement) {
+                                      if(isset($resultElement["employee_name"]) && $resultElement["employee_name"] != "") 
+                                      {
+                                          $employeeName = $resultElement["employee_name"];
+                                      } else {
+                                        $employeeName = "";
+                                      }
+                                  }
+                                } else {
+                                  $employeeName = "";
+                                }
                                 $message .= $employeeName;
                               }
                               
@@ -1399,28 +1703,26 @@
                                         
                                         
                                           if(isset($dbData['notes']) && $dbData['notes'] != ""){
-                                            echo '<p class="text-capitalize mt-2 mb-6"><i class="ri-clipboard-line"></i> Notes: &nbsp;&nbsp;<span style="">'.$dbData['notes'].'</span></p>';
+                                            echo '<p ><span class="text-capitalize mt-2 mb-6">Notes: &nbsp;&nbsp;&nbsp;<span style="font-weight: 300;">'.$dbData['notes'].'</span></span></p>';
                                           }
-                                          
                                           if(isset($dbData['transfer_employee_type']) && $dbData['transfer_employee_type'] != ""){
                                             $showText = $message;
                                             $showText = str_replace("Admin Approved", "", $showText);
                                             $showText = str_replace("Admin Pending", "", $showText);
-                                            echo '<p class="mt-2 mb-6" style="">'.$showText.'</span></p>';
+                                            echo '<p class="mt-2 mb-6" style="font-weight: 300;">'.$showText.'</span></p>';
                                           }
                                           
                                           if(isset($dbData['transfer_reason']) && $dbData['transfer_reason'] != ""){
-                                            echo '<p class="text-capitalize mt-2 mb-6">Transfer Reason: &nbsp;&nbsp;&nbsp;<span style="300;">'.$dbData['transfer_reason'].'</span></p>';
+                                            echo '<p class="text-capitalize mt-2 mb-6">Transfer Reason: &nbsp;&nbsp;&nbsp;<span style="font-weight: 300;">'.$dbData['transfer_reason'].'</span></p>';
                                           }
                                           
 
                                           if(isset($dbData['status']) && $dbData['status'] == "Assigned"){
-                                            // echo '<p class="mt-2 mb-3" style="300;">'.$message.'</p>';
-                                            echo '<div><span>'.$message.'</span></div>';
+                                            echo '<p class="mt-2 mb-6" style="font-weight: 300;">'.$message.'</p>';
                                           }
                                           
                                           if(isset($dbData['dead_reason']) && $dbData['dead_reason'] != ""){
-                                            echo '<p class="text-capitalize mt-2 mb-6">Dead Reason: &nbsp;&nbsp;&nbsp;<span style="300;">'.$dbData['dead_reason'].'</span></p>';
+                                            echo '<h5 class="card-title"><p class="text-capitalize mt-2 mb-6">Dead Reason: </p></h5><p class="text-capitalize mt-2 mb-6">&nbsp;&nbsp;&nbsp;<span style="font-weight: 300;">'.$dbData['dead_reason'].'</span></p>';
                                           }
 
                                           if(isset($dbData['status']) && $dbData['status'] == "Dead"){
@@ -1428,9 +1730,9 @@
 
                                             if(isset($dbData['edited_on']) && $dbData['edited_on'] != "0000-00-00 00:00:00") 
                                         
-                                            echo "<span style='300;'>
+                                            echo "<span style='font-weight: 300;'>
                                             <span style='line-height: 1;'>". 
-                                                date("d-m-Y ",strtotime($dbData['edited_on'])).'<br>'.
+                                                date("d-M-Y",strtotime($dbData['edited_on'])).'<br>'.
                                                 date("H:i",strtotime($dbData['edited_on'])).
                                             '</span>';
 
@@ -1438,40 +1740,24 @@
                                           }
                                         
                                         echo '
-                                        <h6 class="card-text" style="line-height: 1.5;">';
+                                        </h5>
+                                        <p class="card-text" style="line-height: 2;">';
 
-                                        if($variant['table_name'] == "assign_leads_sr") {
-                                        if(isset($dbData['followup_or_another_property']) && $dbData['followup_or_another_property'] == "Another Property") {
-                                          if(isset($dbData['visit_date']) && $dbData['visit_date'] != "0000-00-00") 
+
+                                        if(isset($dbData['next_date']) && $dbData['next_date'] != "0000-00-00") 
                                         
-                                          echo "Next Visit: <br><span><small style='line-height: 1;'>". date("d-m-Y ",strtotime($dbData['visit_date']));
-                                          
-                                          if(isset($dbData['visit_time'])  && $dbData['visit_time'] != "00:00:00") echo '&nbsp;&nbsp;&nbsp;'. date("H:i A", strtotime($dbData['visit_time'])).'</small></span>';
-                                        } else {
+                                        echo "<p>Next Follow up: <br><span style='font-weight: 300; line-height: 1;'>". date("d-M-Y",strtotime($dbData['next_date']));
+                                        
+                                        if(isset($dbData['next_time'])  && $dbData['next_time'] != "00:00:00") echo '&nbsp;&nbsp;&nbsp;'. date("H:i:s A", strtotime($dbData['next_time'])).'</span></p>';
 
-                                          if(isset($dbData['next_date']) && $dbData['next_date'] != "0000-00-00") 
-                                          
-                                          echo "Next Follow up: <br><span><small style='line-height: 1;'>". date("d-m-Y ",strtotime($dbData['next_date']));
-                                          
-                                          if(isset($dbData['next_time'])  && $dbData['next_time'] != "00:00:00") echo '&nbsp;&nbsp;&nbsp;'. date("H:i A", strtotime($dbData['next_time'])).'</small></span>';
-                                        }
-                                          
-                                        // if( isset($dbData['next_time'])  && 
-                                        // $dbData['next_time'] != "00:00:00" && 
-                                        // isset($dbData['visit_date']) && 
-                                        // $dbData['visit_date'] != "0000-00-00")
-                                        // echo '<br>';
-                                        } else {
-
-                                          if(isset($dbData['visit_date']) && $dbData['visit_date'] != "0000-00-00") 
-                                          
-                                          echo "Next Visit: <br><span style='300;'><small style='line-height: 1;'>". date("d-m-Y ",strtotime($dbData['visit_date']));
-                                          
-                                          if(isset($dbData['visit_time'])  && $dbData['visit_time'] != "00:00:00") echo '&nbsp;&nbsp;&nbsp;'. date("H:i A", strtotime($dbData['visit_time'])).'</small></span>';
-                                        }
-
+                                        if(isset($dbData['visit_date']) && $dbData['visit_date'] != "0000-00-00") 
+                                        
+                                        echo "<p>Next Visit: <br><span style='font-weight: 300; line-height: 1;'>". date("d-M-Y",strtotime($dbData['visit_date']));
+                                        
+                                        if(isset($dbData['visit_time'])  && $dbData['visit_time'] != "00:00:00") echo '&nbsp;&nbsp;&nbsp;'. date("H:i:s A", strtotime($dbData['visit_time'])).'</span></p>';
+                                        
                                         echo '
-                                        </h6>
+                                        </p>
                                       </div>
                                     </div>';
                                     
@@ -1560,7 +1846,52 @@
                                                       }
                                                       echo'
                                                       </div>
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center ps-0">
+                                                      <div>
+                                                        <span>Property Lat/Long</span>
+                                                      </div>
+                                                      <div>';
+                                                      
+                                                        $needle = $dbData["property_id"];
+                                                        $resultArray = array_filter($property_Array, function ($v) use ($needle) {
+                                                          return $needle == $v['property_name_id']; 
+                                                        });
+                                                        if($needle == 1) $needle = 0;
+                                                        else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
+                                                        if(isset($resultArray[$needle]["property_title"]) && $resultArray[$needle]["property_title"] != "") 
+                                                        $property_lat = $resultArray[$needle]["google_location_lat"];
+                                                        $property_long = $resultArray[$needle]["google_location_long"];
+                                                        echo $property_lat." - ".$property_long;
+                                                        
+                                                        
+                                                      echo'
+                                                      </div>
                                                     </li>';
+                                                    
+                                                        $property_lat_se = "";
+                                                        $property_long_se = "";
+                                                        
+                                                    if(
+                                                        isset($dbData["latitude"]) && $dbData["latitude"] != "" &&
+                                                        isset($dbData["longitude"]) && $dbData["longitude"] != ""
+                                                    ) {
+                                                        $property_lat_se = $dbData["latitude"];
+                                                        $property_long_se = $dbData["longitude"];
+                                                    }    
+                                                        
+                                                    echo '<li class="list-group-item d-flex justify-content-between align-items-center ps-0">
+                                                      <div>
+                                                        <span>Submitted Lat/Long</span>
+                                                      </div>
+                                                      <div>';
+                                                      
+                                                        echo $property_lat_se." - ".$property_long_se;
+                                                        
+                                                      echo'
+                                                      </div>
+                                                    </li>
+                                                    ';
 
                                                     if(isset($dbData["photo"]) && $dbData["photo"] != "") {
                                                     echo'
@@ -1808,19 +2139,19 @@
                           <?php if($employeeName != "") { ?>
                           <div>
                             <p class="text-muted mb-2">Executive Name - <?php echo $employeeName; ?></p>
-                            <!-- <ul class="list-unstyled users-list d-flex align-items-center avatar-group">
+                            <ul class="list-unstyled users-list d-flex align-items-center avatar-group">
                               <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" aria-label="Vinnie Mostowy" data-bs-original-title="Vinnie Mostowy">
                                 <img class="rounded-circle" src="assets/img/avatars/5.png" alt="Avatar">
                               </li>
-                            </ul> -->
+                            </ul>
                           </div>
                           <?php } ?>
 
                         </div>
                         <div class="timeline-event-time"><?php 
-                        echo date("d-m-Y" , strtotime($variant['timlinedate']));
+                        echo date("d-m-Y" , strtotime($variant['timelinedate']));
                         echo "<br>";
-                        echo date("H:i A" , strtotime($variant['timlinedate']));
+                        echo date("H:i:s A" , strtotime($variant['timelinedate']));
                         ?>
                         </div>
                       </div>
