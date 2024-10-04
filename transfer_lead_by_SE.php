@@ -34,11 +34,6 @@
     $qlocation->execute(array());      
     $row_location = $qlocation->fetchAll(PDO::FETCH_ASSOC);
 
-    $sqlemployee = "select * from employee ";
-    $qemployee = $pdo->prepare($sqlemployee);
-    $qemployee->execute(array());      
-    $row_employee = $qemployee->fetchAll(PDO::FETCH_ASSOC);
-
   if(isSet($_POST["submit"]))
   { 
     echo "<pre>";
@@ -57,8 +52,8 @@
     $next_date_time = $_POST['next_date'];
     // Split the datetime into date and time
     $date_time_parts = explode(' ', $next_date_time);
-    $next_date = date("Y-m-d", strotime($next_date_time));  // 2024-08-22
-    $next_time = date("H:i:s", strotime($next_date_time));  // 02:26 
+    $next_date = $date_time_parts[0];  // 2024-08-22
+    $next_time = $date_time_parts[1];  // 02:26 
 
     $sqlassign_sr = "SELECT * FROM assign_leads_sr where assign_leads_sr_id = $assign_leads_sr_id ";
     $q = $pdo->prepare($sqlassign_sr);
@@ -97,7 +92,7 @@
 
     $latitude = $_POST['latitude'];
     $longitude = $_POST['longitude'];
-    
+
     if($transfer_employee_type == 'SALES EXECUTIVE')
     {
 
@@ -335,32 +330,13 @@
                                                                             <select id="roleDropdown" name="transfer_employee_id" class="form-select" required>
                                                                                 <option value="">Select Employee</option>
                                                                                 <?php
-                                                                                    $loggedinEmployeeId = 0;
-                                                                                    $needle = $_SESSION['login_user_id'];
-                                                                                    $resultArray = array_filter($row_employee, function ($v) use ($needle) {
-                                                                                        return $needle == $v['admin_id']; 
-                                                                                    });
-                                                                                    // if($needle == 1) $needle = 0;
-                                                                                    // else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
-                                                                                    if(isset($resultArray)) {
-                                                                                        foreach($resultArray as $resultEmployee) {
-                                                                                            $loggedinEmployeeId = $resultEmployee['employee_id'];
-                                                                                        }
-                                                                                    } 
-
                                                                                     $sql = "SELECT * FROM employee WHERE status='Active' AND login_role IN ('CUSTOMER EXECUTIVE', 'SALES EXECUTIVE') ORDER BY login_role";
                                                                                     $stmt = $pdo->query($sql);
                                                                                     $currentRole = '';
 
                                                                                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-
-                                                                                        $disabled = "disabled";
                                                                                         $employeeRole = $row['login_role'];
-                                                                                        if($loggedinEmployeeId != 0) {
-                                                                                            if($row['employee_id'] == $loggedinEmployeeId) {
-                                                                                                $disabled = "disabled";
-                                                                                            }
-                                                                                        }
+
                                                                                         // Add a header if the role changes
                                                                                         if ($employeeRole !== $currentRole) {
                                                                                             if ($currentRole != '') {
@@ -371,7 +347,7 @@
                                                                                         }
 
                                                                                         // Add the employee option
-                                                                                        echo '<option '.$disabled.' value="' . htmlspecialchars($row['employee_id']) . '">' 
+                                                                                        echo '<option value="' . htmlspecialchars($row['employee_id']) . '">' 
                                                                                         . htmlspecialchars($row['employee_name']) . ' - ' 
                                                                                         . '<span class="text-muted"> '.htmlspecialchars($row['location']).'</span>'
                                                                                         . '</option>';
@@ -396,14 +372,6 @@
 
                                                                                         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                                                                             $employeeRole = $row['login_role'];
-                                                                                            
-                                                                                            $disabled = "";
-                                                                                            $employeeRole = $row['login_role'];
-                                                                                            if($loggedinEmployeeId != 0) {
-                                                                                                if($row['employee_id'] == $loggedinEmployeeId) {
-                                                                                                    $disabled = "disabled";
-                                                                                                }
-                                                                                            }
 
                                                                                             // Add a header if the role changes
                                                                                             if ($employeeRole !== $currentRole) {
@@ -415,7 +383,7 @@
                                                                                             }
 
                                                                                             // Add the employee option
-                                                                                            echo '<option '.$disabled.' data-subtext="'.htmlspecialchars($row['location']).'" value="' . htmlspecialchars($row['employee_id']) . '">' 
+                                                                                            echo '<option data-subtext="'.htmlspecialchars($row['location']).'" value="' . htmlspecialchars($row['employee_id']) . '">' 
                                                                                             . htmlspecialchars($row['employee_name']).'</option>';
                                                                                         }
                                                                                     ?>
@@ -505,7 +473,7 @@
                                                 <div class="card-body demo-vertical-spacing demo-only-element">
                                                     <div class="justify-content-end align-items-center">
                                                         <span class="d-none" class="" id="latitude"></span><span class="d-none" id="longitude"></span>
-                                                        <button type="submit" name="submit" id="submit1" class="btn btn-success float-right d-flex">Submit</button>
+                                                        <button type="submit" name="submit1" id="submit1" class="btn btn-success float-right d-flex">Submit</button>
                                                         <button type="reset" class="btn btn-outline-secondary float-left d-flex" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
                                                     </div>        
                                                 </div>    

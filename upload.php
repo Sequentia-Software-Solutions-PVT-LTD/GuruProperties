@@ -277,7 +277,7 @@ if (isset($_POST['submit']))
                         // Commit the transaction
                         $pdo->commit();
                         fclose($handle);
-                        echo "Data inserted successfully from CSV file.";
+                        // echo "Data inserted successfully from CSV file.";
 
                         header('location: add-leads');
                         

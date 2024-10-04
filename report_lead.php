@@ -113,6 +113,7 @@
                         <div class="col-md-4 user_plan mb-6 d-flex">
                                 <button type="submit" class="btn btn-success me-4 waves-effect waves-light" name="submit">Submit</button>   
                               </form>  
+                               <?php if(isSet($_POST["submit"])) { ?>
                               <div class="d-flex" style="margin-left: 30px;">
                                 <form style="display: inline;" method="POST" name="formID" id="formID" action="xlsx_export" enctype="multipart/form-data">
                                   <input type="hidden" id="postData" name="postData" value='<?php echo $reuestObejct; ?>' />
@@ -123,6 +124,7 @@
                                   <button type="submit" target="_blank" class="btn btn-danger" style="padding: 7px;" name="xlsx"  onclick="javascript: exportPDF(); form.action='pdf_export'; "><i class="ri-file-pdf-2-line" aria-hidden="true"></i></button>                              
                                 </form>
                               </div>
+                               <?php } ?>
                         </div>       
                             
                         <!-- </div> -->

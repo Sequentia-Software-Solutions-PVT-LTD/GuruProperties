@@ -139,7 +139,7 @@
                                     $employee_id = $row1['employee_id'];
                                     $next_date = $row1['next_date'];
 
-                                    $sqlasnl = "select * from assign_leads where employee_id = $employee_id and status = 'Followup' and transfer_status = 'Not Available' and next_date = '$next_date' ";
+                                    $sqlasnl = "select * from assign_leads where leads_id = $leads_id And employee_id = $employee_id and status = 'Followup' and transfer_status = 'Not Available' and next_date = '$next_date' ";
                                     $q = $pdo->prepare($sqlasnl);
                                     $q->execute(array());      
                                     $row_asn_leads = $q->fetch(PDO::FETCH_ASSOC);

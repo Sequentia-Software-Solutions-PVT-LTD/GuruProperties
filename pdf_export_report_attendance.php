@@ -11,8 +11,8 @@
   if(isSet($_POST["pdf"]))
   { 
 
-    print_R($_POST);
-    exit();
+    // print_R($_POST);
+    // exit();
 
     $current_year = $_POST['year'];
 

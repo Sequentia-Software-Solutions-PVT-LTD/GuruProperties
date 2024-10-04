@@ -146,12 +146,12 @@ $total_dead_leads = $row_total_dead['total_count_dead'];
 
 // -------------------------- /Total Dead leads count -----------------------------------------------------------
 // these are dummy values- just comment them for geting real values
-$total_fresh_leads =20;
-$total_connected_leads =10; 
-$total_notconnected_leads =5; 
-$total_transferred_leads =12;
-$total_assigned_leads =15;
-$total_dead_leads=5;
+// $total_fresh_leads =20;
+// $total_connected_leads =10; 
+// $total_notconnected_leads =5; 
+// $total_transferred_leads =12;
+// $total_assigned_leads =15;
+// $total_dead_leads=5;
 // these are dummy values- just comment them for geting real values
 
 $g_total = $total_fresh_leads + $total_connected_leads + $total_notconnected_leads + $total_transferred_leads +$total_assigned_leads + $total_dead_leads;
@@ -686,7 +686,7 @@ $total_notconnected_percentage = ($total_notconnected_value / 7)*100;
                     <!-- Organic Sessions Chart-->
                 <!-- <h5 class="card-header mar-bot-10">Customer Executive Overviews </h5> -->
 
-                <div class="col-lg-4 col-md-6 order-1 order-lg-0">
+                <div class="col-lg-6 col-md-6 order-1 order-lg-0">
                   <div class="card h-100">
                     <div class="card-header pb-1">
                       <div class="d-flex justify-content-between">
@@ -718,7 +718,7 @@ $total_notconnected_percentage = ($total_notconnected_value / 7)*100;
                 <!--/ Organic Sessions Chart-->
 
                      <!-- Reasons for delivery exceptions -->
-                        <div class="col-md-6 col-xxl-4 order-1 order-xxl-3">
+                        <div class="col-lg-6 col-md-6 order-1 order-xxl-3">
                             <div class="card h-100">
                             <div class="card-header d-flex align-items-center justify-content-between">
                                 <div class="card-title mb-0">
@@ -744,74 +744,74 @@ $total_notconnected_percentage = ($total_notconnected_value / 7)*100;
                         <!--/ Reasons for delivery exceptions -->
 
                         <!-- External Links Chart -->
-                            <div class="col-xxl-4 col-md-6">
-                            <div class="card h-100">
-                                <div class="card-header">
-                                <div class="d-flex justify-content-between">
-                                    <!-- <h5 class="mb-1">External Links</h5> -->
-                                    <h5 class="mb-1">Weekly Overviews</h5>
-                                    <!-- <div class="dropdown">
-                                    <button
-                                        class="btn btn-text-secondary rounded-pill text-muted border-0 p-1"
-                                        type="button"
-                                        id="externalLinksDropdown"
-                                        data-bs-toggle="dropdown"
-                                        aria-haspopup="true"
-                                        aria-expanded="false">
-                                        <i class="ri-more-2-line ri-20px"></i>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="externalLinksDropdown">
-                                        <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-                                        <a class="dropdown-item" href="javascript:void(0);">Update</a>
-                                        <a class="dropdown-item" href="javascript:void(0);">Share</a>
+                            <div class="col-xxl-4 col-md-6" style="display:none;">
+                                <div class="card h-100">
+                                    <div class="card-header">
+                                    <div class="d-flex justify-content-between">
+                                        <!-- <h5 class="mb-1">External Links</h5> -->
+                                        <h5 class="mb-1">Weekly Overviews</h5>
+                                        <!-- <div class="dropdown">
+                                        <button
+                                            class="btn btn-text-secondary rounded-pill text-muted border-0 p-1"
+                                            type="button"
+                                            id="externalLinksDropdown"
+                                            data-bs-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false">
+                                            <i class="ri-more-2-line ri-20px"></i>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="externalLinksDropdown">
+                                            <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
+                                            <a class="dropdown-item" href="javascript:void(0);">Update</a>
+                                            <a class="dropdown-item" href="javascript:void(0);">Share</a>
+                                        </div>
+                                        </div> -->
                                     </div>
-                                    </div> -->
+                                    </div>
+                                    <div class="card-body">
+                                    <div id="externalLinksChart"></div>
+                                    <div class="table-responsive text-nowrap">
+                                        <table class="table table-borderless">
+                                        <tbody>
+                                            <tr>
+                                            <td class="text-start pb-0 ps-0">
+                                                <div class="d-flex align-items-center">
+                                                <i class="ri-circle-fill ri-14px text-primary me-2"></i>
+                                                <h6 class="mb-0 small">Connected Leads</h6>
+                                                </div>
+                                            </td>
+                                            <td class="pb-0">
+                                                <p class="mb-0 small"><?php echo $total_connected_value; ?></p>
+                                            </td>
+                                            <td class="pe-0 pb-0">
+                                                <div class="d-flex align-items-center justify-content-end">
+                                                <h6 class="mb-0 me-2 small"><?php echo intval($total_connected_percentage); ?>%</h6>
+                                                <!-- <i class="ri-arrow-down-s-line text-danger ri-24px"></i> -->
+                                                </div>
+                                            </td>
+                                            </tr>
+                                            <tr>
+                                            <td class="text-start pb-0 ps-0">
+                                                <div class="d-flex align-items-center">
+                                                <i class="ri-circle-fill ri-14px text-secondary me-2"></i>
+                                                <h6 class="mb-0 small">Not Connected Leads</h6>
+                                                </div>
+                                            </td>
+                                            <td class="pb-0">
+                                                <p class="mb-0 small"><?php echo $total_notconnected_value; ?></p>
+                                            </td>
+                                            <td class="pe-0 pb-0">
+                                                <div class="d-flex align-items-center justify-content-end">
+                                                <h6 class="mb-0 me-2 small"><?php echo intval($total_notconnected_percentage); ?>%</h6>
+                                                <!-- <i class="ri-arrow-up-s-line text-success ri-24px"></i> -->
+                                                </div>
+                                            </td>
+                                            </tr>
+                                        </tbody>
+                                        </table>
+                                    </div>
+                                    </div>
                                 </div>
-                                </div>
-                                <div class="card-body">
-                                <div id="externalLinksChart"></div>
-                                <div class="table-responsive text-nowrap">
-                                    <table class="table table-borderless">
-                                    <tbody>
-                                        <tr>
-                                        <td class="text-start pb-0 ps-0">
-                                            <div class="d-flex align-items-center">
-                                            <i class="ri-circle-fill ri-14px text-primary me-2"></i>
-                                            <h6 class="mb-0 small">Connected Leads</h6>
-                                            </div>
-                                        </td>
-                                        <td class="pb-0">
-                                            <p class="mb-0 small"><?php echo $total_connected_value; ?></p>
-                                        </td>
-                                        <td class="pe-0 pb-0">
-                                            <div class="d-flex align-items-center justify-content-end">
-                                            <h6 class="mb-0 me-2 small"><?php echo intval($total_connected_percentage); ?>%</h6>
-                                            <!-- <i class="ri-arrow-down-s-line text-danger ri-24px"></i> -->
-                                            </div>
-                                        </td>
-                                        </tr>
-                                        <tr>
-                                        <td class="text-start pb-0 ps-0">
-                                            <div class="d-flex align-items-center">
-                                            <i class="ri-circle-fill ri-14px text-secondary me-2"></i>
-                                            <h6 class="mb-0 small">Not Connected Leads</h6>
-                                            </div>
-                                        </td>
-                                        <td class="pb-0">
-                                            <p class="mb-0 small"><?php echo $total_notconnected_value; ?></p>
-                                        </td>
-                                        <td class="pe-0 pb-0">
-                                            <div class="d-flex align-items-center justify-content-end">
-                                            <h6 class="mb-0 me-2 small"><?php echo intval($total_notconnected_percentage); ?>%</h6>
-                                            <!-- <i class="ri-arrow-up-s-line text-success ri-24px"></i> -->
-                                            </div>
-                                        </td>
-                                        </tr>
-                                    </tbody>
-                                    </table>
-                                </div>
-                                </div>
-                            </div>
                             </div>
                         <!--/ External Links Chart -->
                 </div>
@@ -859,11 +859,11 @@ $total_notconnected_percentage = ($total_notconnected_value / 7)*100;
             var d_percentage = '<?php echo $d_percentage; ?>';  
             var d_series = [<?php echo $total_fresh_c;?>, <?php echo $total_assign_c; ?>];
 
-            // var bar_data_connected = [<?php echo $sunday_connected; ?>,<?php echo $monday_connected; ?>,<?php echo $tuesday_connected; ?>,<?php echo $wednesday_connected; ?>,<?php echo $thursday_connected; ?>,<?php echo $friday_connected; ?>,<?php echo $saturday_connected; ?>];
-            // var bar_data_notconnected = [<?php echo $sunday_notconnected; ?>,<?php echo $monday_notconnected; ?>,<?php echo $tuesday_notconnected; ?>,<?php echo $wednesday_notconnected; ?>,<?php echo $thursday_notconnected; ?>,<?php echo $friday_notconnected; ?>,<?php echo $saturday_notconnected; ?>];
+            var bar_data_connected = [<?php echo $sunday_connected; ?>,<?php echo $monday_connected; ?>,<?php echo $tuesday_connected; ?>,<?php echo $wednesday_connected; ?>,<?php echo $thursday_connected; ?>,<?php echo $friday_connected; ?>,<?php echo $saturday_connected; ?>];
+            var bar_data_notconnected = [<?php echo $sunday_notconnected; ?>,<?php echo $monday_notconnected; ?>,<?php echo $tuesday_notconnected; ?>,<?php echo $wednesday_notconnected; ?>,<?php echo $thursday_notconnected; ?>,<?php echo $friday_notconnected; ?>,<?php echo $saturday_notconnected; ?>];
 
-            var bar_data_connected = [10, 20, 30, 40, 50, 60, 70];
-            var bar_data_notconnected = [110, 235, 125, 230, 215, 115, 200];
+            // var bar_data_connected = [10, 20, 30, 40, 50, 60, 70];
+            // var bar_data_notconnected = [110, 235, 125, 230, 215, 115, 200];
             
 
       </script>

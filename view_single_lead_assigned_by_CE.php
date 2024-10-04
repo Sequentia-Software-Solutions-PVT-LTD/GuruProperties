@@ -288,8 +288,10 @@
             $q->execute(array($assign_leads_id, $leads_id, $admin_id, $employee_id, $employee_name, 'Active', 'Available', $next_date_followup1, $next_time_followup1, $next_date_visit1, $next_time_visit1, $followup_or_another_property, $property_variants, $property_name_id, $property_tower_id, $added_on));
         
         }
-        else 
+        else
         {
+
+
             // ----------------------- Insert for new ffollowup ---------------------------------------------------------
            
             // for next date
@@ -351,7 +353,76 @@
         }
 
     }
-    else{
+    else if(($_POST['next_folloup_visit'] == 'next_folloup' || $_POST['next_folloup_visit'] == 'next_visit') &&  $_POST['followup_or_another_property'] == 'Not Applicable') {
+        // NOT APPLICABLE
+
+        
+        if($_POST['next_folloup_visit'] == 'next_folloup' && $_POST['followup_or_another_property'] == 'Not Applicable')
+        {
+            // NEXT FOLLOUP WITH NOT APPLICABLE
+
+            $next_date_time_followup = $_POST['next_date_followup'];
+            $next_datett1 = "";
+            $next_timett1 = "";
+            if (isset($_POST['next_date_followup'])) {
+                $date_time_parts = explode(' ', $next_date_time_followup);
+                $next_date_followup1 = date('Y-m-d', strtotime($next_date_time_followup));  // e.g., 2024-08-22
+                $next_time_followup1 = date('H:i:s', strtotime($next_date_time_followup));  // e.g., 02:26
+            } else {
+                $next_date_followup1 = '';
+                $next_time_followup1 = '';
+            }
+
+            $sqlleads_sr = "select * from assign_leads_sr where assign_leads_sr_id = $assign_leads_sr_id ";
+            $q = $pdo->prepare($sqlleads_sr);
+            $q->execute(array());      
+            $row_leads_sr = $q->fetch(PDO::FETCH_ASSOC);
+
+            $property_name_id = $row_leads_sr['property_id'];
+            $property_tower_id = $row_leads_sr['sub_property_id'];
+            $property_variants = $row_leads_sr['variant'];
+
+            $added_on = date('Y-m-d H:i:s', strtotime('+20 seconds'));
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql = "INSERT INTO `assign_leads_sr`(`assign_leads_id`,`leads_id`, `admin_id`, `employee_id`,`employee_name`, `status`, `transfer_status`,`next_date`,`next_time`,`visit_date`,`visit_time`,`followup_or_another_property`,`variant`, `property_id`, `sub_property_id`, `added_on`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $q = $pdo->prepare($sql);
+            $q->execute(array($assign_leads_id, $leads_id, $admin_id, $employee_id, $employee_name, $status, $transfer_status, $next_date_followup1, $next_time_followup1, $next_datett1, $next_timett1, $followup_or_another_property, $property_variants, $property_name_id, $property_tower_id, $added_on));
+
+        } else {
+            
+            // NEXT VISIT WITH NOT APPLICABLE
+
+             // for next date
+             $next_datett = $_POST['next_date'];
+             $next_date_followup1 = "";
+             $next_time_followup1 = "";
+             if (isset($_POST['next_date'])) {
+                 $date_time_parts = explode(' ', $next_datett);
+                 $next_datett1 = date('Y-m-d', strtotime($next_datett));  // e.g., 2024-08-22
+                 $next_timett1 = date('H:i:s', strtotime($next_datett));  // e.g., 02:26
+             } else {
+                 $next_datett1 = '';
+                 $next_timett1 = '';
+             }
+ 
+             $sqlleads_sr = "select * from assign_leads_sr where assign_leads_sr_id = $assign_leads_sr_id ";
+             $q = $pdo->prepare($sqlleads_sr);
+             $q->execute(array());      
+             $row_leads_sr = $q->fetch(PDO::FETCH_ASSOC);
+ 
+             $property_name_id = $row_leads_sr['property_id'];
+             $property_tower_id = $row_leads_sr['sub_property_id'];
+             $property_variants = $row_leads_sr['variant'];
+ 
+             $added_on = date('Y-m-d H:i:s', strtotime('+20 seconds'));
+             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+             $sql = "INSERT INTO `assign_leads_sr`(`assign_leads_id`,`leads_id`, `admin_id`, `employee_id`,`employee_name`, `status`, `transfer_status`,`next_date`,`next_time`,`visit_date`,`visit_time`,`followup_or_another_property`,`variant`, `property_id`, `sub_property_id`, `added_on`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+             $q = $pdo->prepare($sql);
+             $q->execute(array($assign_leads_id, $leads_id, $admin_id, $employee_id, $employee_name, 'Active', 'Available', $next_date_followup1, $next_time_followup1, $next_datett1, $next_timett1, $followup_or_another_property, $property_variants, $property_name_id, $property_tower_id, $added_on));
+        }
+    } 
+    else 
+    {
         // echo "<pre>";
         // echo "else condition";
         // print_r($_POST);
@@ -687,7 +758,7 @@
                                                     ?></span></li>
                                                 </ul>
                                                
-                                            </>
+                                            </div>
                                         </div>
                                             
                                     </div>

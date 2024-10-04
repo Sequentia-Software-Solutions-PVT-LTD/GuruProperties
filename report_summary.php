@@ -4,33 +4,38 @@
   $pdo = Database::connect();
   Global  $reuestObejct;
           $excelData = array();
-  $sql = "SELECT 
-        COUNT(*) AS C_count, 
-        MONTH(`added_on`) AS Month, 
-        YEAR(`added_on`) AS Year,
+         
+    $sql = "SELECT * from WHERE status='Activee'";
+//   $sql = "SELECT 
+//         COUNT(*) AS C_count, 
+//         MONTH(`added_on`) AS Month, 
+//         YEAR(`added_on`) AS Year,
 
-        -- Count for fresh leads
-        COUNT(CASE WHEN fresh_lead = 1 THEN 1 END) AS fresh_leads_count,
+//         -- Count for fresh leads
+//         COUNT(CASE WHEN fresh_lead = 1 THEN 1 END) AS fresh_leads_count,
 
-        -- Count for assigned to SE
-        COUNT(CASE WHEN status = 'Assigned' AND transfer_status = 'Transferred' THEN 1 END) AS assigned_to_SE_count,
+//         -- Count for assigned to SE
+//         COUNT(CASE WHEN status = 'Assigned' AND transfer_status = 'Transferred' THEN 1 END) AS assigned_to_SE_count,
 
-        -- Count for followup
-        COUNT(CASE WHEN status = 'Followup' AND transfer_status = 'Available' THEN 1 END) AS followup_to_CE_count,
+//         -- Count for followup
+//         COUNT(CASE WHEN status = 'Followup' AND transfer_status = 'Available' THEN 1 END) AS followup_to_CE_count,
 
-        -- Count for transferred to CE
-        COUNT(CASE WHEN status = 'Active' AND transfer_status = 'Transferred' THEN 1 END) AS transferred_to_CE_count,
+//         -- Count for transferred to CE
+//         COUNT(CASE WHEN status = 'Active' AND transfer_status = 'Transferred' THEN 1 END) AS transferred_to_CE_count,
 
-        -- Count for dead leads
-        COUNT(CASE WHEN status = 'Dead' THEN 1 END) AS dead_count
+//         -- Count for dead leads
+//         COUNT(CASE WHEN status = 'Dead' THEN 1 END) AS dead_count
 
-    FROM assign_leads 
-    WHERE 1
-    GROUP BY YEAR(`added_on`), MONTH(`added_on`)
-    ORDER BY YEAR(`added_on`), MONTH(`added_on`)";
+//     FROM assign_leads 
+//     WHERE 1
+//     GROUP BY YEAR(`added_on`), MONTH(`added_on`)
+//     ORDER BY YEAR(`added_on`), MONTH(`added_on`)";
 
 
-if (isset($_POST['submit'])) {
+
+
+if (isset($_POST['submit'])) 
+{
     $fromMonth = explode('-', $_POST['fromMonth'])[1];
     $fromYear = explode('-', $_POST['fromMonth'])[0];
     $toMonth = explode('-', $_POST['toMonth'])[1];
@@ -170,9 +175,11 @@ if (isset($_POST['submit'])) {
                         <div class="col-md-2 user_plan mb-6 text-center">
                                 <button type="submit" class="btn btn-success me-4 waves-effect waves-light" name="submit">Submit</button>
                                 </form>  
-                                <form style="display: inline;" method="POST" name="formID" id="formID" action="xlsx_export" enctype="multipart/form-data">
-                                <input type="hidden" id="postData" name="postData" value='<?php echo $reuestObejct; ?>' />
-                                <button type="submit" target="_blank" class="btn btn-success" style="padding: 7px;" name="xlsx"  onclick="javascript: exportXLSX(); form.action='xlsx_export'; "><i class="ri-file-excel-line" aria-hidden="true"></i></button>                              
+                                 <?php if(isSet($_POST["submit"])) { ?>
+                                    <form style="display: inline;" method="POST" name="formID" id="formID" action="xlsx_export" enctype="multipart/form-data">
+                                    <input type="hidden" id="postData" name="postData" value='<?php echo $reuestObejct; ?>' />
+                                    <button type="submit" target="_blank" class="btn btn-success" style="padding: 7px;" name="xlsx"  onclick="javascript: exportXLSX(); form.action='xlsx_export'; "><i class="ri-file-excel-line" aria-hidden="true"></i></button>   
+                                <?php } ?>
                               </form>
                                   
                         </div>

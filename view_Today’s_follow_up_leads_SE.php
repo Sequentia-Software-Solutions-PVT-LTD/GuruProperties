@@ -131,7 +131,7 @@
                                 $qlocation->execute(array());      
                                 $row_location = $qlocation->fetchAll(PDO::FETCH_ASSOC);
                                 
-                                $sql = "SELECT * FROM assign_leads_sr where admin_id= $admin_id and status='Followup' and transfer_status='Available'  and (DATE(next_date) = '$today_date' OR DATE(visit_date) = '$today_date')";
+                                $sql = "SELECT * FROM assign_leads_sr where admin_id= $admin_id and status='Followup' and transfer_status='Available'  and DATE(next_date) = '$today_date' ";
                                 
                                 $q = $pdo->query($sql);
                                 // print_r($sql);
