@@ -161,8 +161,7 @@
 					"export_pdf_property_details",
 					"reset_password",
 					"dashboard_SE",
-					"timeline_showcase_testing",
-					"view_single_lead_assigned_by_CE_TakePhoto_Responsive"
+					"timeline_showcase_testing"
 				);
 
 				$LeadAllowedPages = array(

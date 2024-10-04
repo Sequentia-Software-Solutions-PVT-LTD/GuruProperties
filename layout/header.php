@@ -346,7 +346,7 @@
               $img2 = "alertsuccess.png";
             } 
             elseif($count_visited_leads >= 15 && $count_visited_leads <= 19) {
-                $percentage2 = "Last week score is 75%";
+                $percentage2 = "Today's score is 75%";
                 $performance2 = "Your performance was above average";
                 $img2 = "alert-warning.png";
             } 

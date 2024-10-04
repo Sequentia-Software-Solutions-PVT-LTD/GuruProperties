@@ -146,7 +146,12 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="col-md-2 user_plan mb-6 text-center">
                                 <button type="submit" class="btn btn-success me-4 waves-effect waves-light" name="submit">Submit</button>
-                                  
+                                 </form>  
+                                <?php if(isSet($_POST["submit"])) { ?>
+                                <form style="display: inline;" method="POST" name="formID" id="formID" action="xlsx_export" enctype="multipart/form-data">
+                                <input type="hidden" id="postData" name="postData" value='<?php echo $reuestObejct; ?>' />
+                                <button type="submit" target="_blank" class="btn btn-success" style="padding: 7px;" name="xlsx"  onclick="javascript: exportXLSX(); form.action='xlsx_export'; "><i class="ri-file-excel-line" aria-hidden="true"></i></button>                              
+                              <?php } ?></form>  
                         </div>
                     </div>
                     </div>

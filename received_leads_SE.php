@@ -117,13 +117,16 @@
                         </thead>
                         <tbody>
                             <?php 
+                                $today_date = date('Y-m-d');
+
                                 $sqllocation = "select * from location ";
                                 $qlocation = $pdo->prepare($sqllocation);
                                 $qlocation->execute(array());      
                                 $row_location = $qlocation->fetchAll(PDO::FETCH_ASSOC);
                                 $i = 1;
-                                // $sql = "SELECT * FROM assign_leads_sr where admin_id = $admin_id and status = 'Transferred' and transfer_status='Available' and mark_dead='' ";
-                                $sql = "SELECT * FROM assign_leads_sr where admin_id = $admin_id and status = 'Active' and transfer_status='Available' and mark_dead='' ";
+                                $sql = "SELECT * FROM assign_leads_sr where admin_id = $admin_id and status = 'Active' and transfer_status='Available' And assign_employee_type = 'CUSTOMER EXECUTIVE'  ";
+                                // $sql = "SELECT * FROM assign_leads_sr where admin_id = $admin_id and status = 'Active' and transfer_status='Available' and mark_dead='' And assign_employee_id !='' ";
+                                // $sql = "SELECT * FROM assign_leads_sr where admin_id = $admin_id and status = 'Active' and transfer_status='Available' and mark_dead='' And  DATE(visit_date) = '$today_date'";
                                 $q = $pdo->query($sql);
                                 // print_r($sql);
                                 // exit();

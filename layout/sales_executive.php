@@ -67,7 +67,7 @@ $sql = "SELECT count(*) FROM assign_leads_sr where admin_id= $admin_id and statu
     $aleads = $result->fetchAll(PDO::FETCH_ASSOC); 
     $aleads = count($aleads);
 
-?>
+
 ?>
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme-bg-dark text-white bg-dark-custom">
           <div class="app-brand demo">

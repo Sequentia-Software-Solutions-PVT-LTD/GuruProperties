@@ -6,23 +6,23 @@ if($_SESSION['login_role'] == 'ADMIN' &&  $_SESSION['login_id'] == 'superadmin')
 {
   // echo "superadmin";
   // exit();
-  include('sidebar_superadmin.php');
+  include('layout/sidebar_superadmin.php');
 } 
 elseif($_SESSION['login_role'] == 'ADMIN' &&  $_SESSION['login_id'] == 'admin') 
 {
-  include('sidebar_admin.php');
+  include('layout/sidebar_admin.php');
 }
 elseif($_SESSION['login_role'] == 'CUSTOMER EXECUTIVE') 
 {
-  include('customer_executive.php');
+  include('layout/customer_executive.php');
 } 
 elseif($_SESSION['login_role'] == 'SALES EXECUTIVE') 
 {
-  include('sales_executive.php');
+  include('layout/sales_executive.php');
 }
 elseif($_SESSION['login_role'] == 'LEAD GENERATOR') 
 {
-  include('sidebar_lead_generator.php');
+  include('layout/sidebar_lead_generator.php');
 }
 else 
 {

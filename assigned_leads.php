@@ -118,7 +118,8 @@
                             <?php 
                                 $i = 1;
                                 $today_date = date('Y-m-d');
-                                $sql = "SELECT * FROM assign_leads where admin_id= $admin_id and status='Active' and transfer_status='Available' and	mark_dead=''";
+                                 $sql = "SELECT * FROM assign_leads where admin_id= $admin_id and status='Active' and transfer_status='Available' and	mark_dead='' and DATE(added_on) = '$today_date' ";
+                                // $sql = "SELECT * FROM assign_leads where admin_id= $admin_id and status='Active' and transfer_status='Available' and	mark_dead=''";
                                 // $sql = "SELECT * FROM assign_leads where admin_id= $admin_id and status='Active' ";
                                 $q = $pdo->query($sql);
                                 // print_r($sql);

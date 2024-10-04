@@ -13,6 +13,7 @@ $admin_id = $_SESSION['login_user_id'];
 
 $g_total = 0;
 $d_percentage = 0;
+$g_total_donut = 0;
 
 
 // -------------------------------------*** /combine query for get total values count***--------------------------------------------------------------------------------
@@ -179,7 +180,12 @@ $total_dead_leads = $row_total_dead['total_count_dead'];
 // $total_dead_leads=5;
 // these are dummy values- just comment them for geting real values
 
-$g_total = $total_fresh_leads + $total_connected_leads + $total_notconnected_leads + $total_transferred_leads +$total_assigned_leads + $total_dead_leads;
+$g_total = $total_fresh_leads + $total_connected_leads + $total_notconnected_leads + $total_transferred_leads + $total_assigned_leads + $total_dead_leads;
+
+$g_total_donut = $total_fresh_leads + $total_assigned_leads;
+
+// print_R($g_total_donut);
+// exit();
 
 // =================================== for yesterday's counts=================================================================================================================================
 
@@ -234,9 +240,23 @@ $qtotaac->execute();
 $row_total_ac = $qtotaac->fetch(PDO::FETCH_ASSOC);
 
 $total_assign_c = $row_total_ac['total_count_AC'];
+$d_percentage = 0;
 
-$d_percentage = '50%';
-// $d_percentage = ($row_total_ac / $total_fresh_c)*100;
+// Check if $total_fresh_c is zero to avoid division by zero
+// if ($total_fresh_c != 0) {
+//     $d_percentage = ($row_total_ac / $total_fresh_c) * 100;
+//     // $d_percentage = '50%';
+// } else {
+//     $d_percentage = 0;  // Handle the case where $total_fresh_c is zero
+// }
+
+// Ensure $row_total_ac and $total_fresh_c are numeric
+if (is_numeric($row_total_ac) && is_numeric($total_fresh_c) && $total_fresh_c != 0) {
+    $d_percentage = ($row_total_ac / $total_fresh_c) * 100;
+} else {
+    $d_percentage = 0;  // Handle the case where $total_fresh_c is zero or values are non-numeric
+}
+
 
 // ***************-----------/Total count for donut graph (total leads and assigned leads)--------------***************************************************
 
@@ -721,7 +741,7 @@ $total_notconnected_percentage = ($total_notconnected_value / 7)*100;
                     <!-- Organic Sessions Chart-->
                 <!-- <h5 class="card-header mar-bot-10">Customer Executive Overviews </h5> -->
 
-                <div class="col-lg-4 col-md-6 order-1 order-lg-0">
+                <div class="col-lg-6 col-md-6 order-1 order-lg-0">
                   <div class="card h-100">
                     <div class="card-header pb-1">
                       <div class="d-flex justify-content-between">
@@ -753,7 +773,7 @@ $total_notconnected_percentage = ($total_notconnected_value / 7)*100;
                 <!--/ Organic Sessions Chart-->
 
                      <!-- Reasons for delivery exceptions -->
-                        <div class="col-md-6 col-xxl-4 order-1 order-xxl-3">
+                        <div class="col-lg-6 col-md-6 order-1 order-xxl-3">
                             <div class="card h-100">
                             <div class="card-header d-flex align-items-center justify-content-between">
                                 <div class="card-title mb-0">
@@ -779,7 +799,7 @@ $total_notconnected_percentage = ($total_notconnected_value / 7)*100;
                         <!--/ Reasons for delivery exceptions -->
 
                         <!-- External Links Chart -->
-                            <div class="col-xxl-4 col-md-6">
+                            <div class="col-xxl-4 col-md-6" style="display:none;">
                             <div class="card h-100">
                                 <div class="card-header">
                                 <div class="d-flex justify-content-between">
@@ -886,6 +906,9 @@ $total_notconnected_percentage = ($total_notconnected_value / 7)*100;
         <?php include 'layout/footer_js.php'; ?>
       <!-- / Footer -->
       <script>
+
+           var g_total_donut =  <?php echo $g_total_donut; ?>;
+
            var g_total =  <?php echo $g_total; ?>;
             var g_series = [<?php echo $total_fresh_leads; ?>,<?php echo $total_connected_leads; ?>,<?php echo $total_notconnected_leads; ?>,<?php echo $total_transferred_leads; ?>,<?php echo $total_assigned_leads; ?>,<?php echo $total_dead_leads; ?> ];
 
@@ -894,11 +917,11 @@ $total_notconnected_percentage = ($total_notconnected_value / 7)*100;
             var d_percentage = '<?php echo $d_percentage; ?>';  
             var d_series = [<?php echo $total_fresh_c;?>, <?php echo $total_assign_c; ?>];
 
-            // var bar_data_connected = [<?php echo $sunday_connected; ?>,<?php echo $monday_connected; ?>,<?php echo $tuesday_connected; ?>,<?php echo $wednesday_connected; ?>,<?php echo $thursday_connected; ?>,<?php echo $friday_connected; ?>,<?php echo $saturday_connected; ?>];
-            // var bar_data_notconnected = [<?php echo $sunday_notconnected; ?>,<?php echo $monday_notconnected; ?>,<?php echo $tuesday_notconnected; ?>,<?php echo $wednesday_notconnected; ?>,<?php echo $thursday_notconnected; ?>,<?php echo $friday_notconnected; ?>,<?php echo $saturday_notconnected; ?>];
+            var bar_data_connected = [<?php echo $sunday_connected; ?>,<?php echo $monday_connected; ?>,<?php echo $tuesday_connected; ?>,<?php echo $wednesday_connected; ?>,<?php echo $thursday_connected; ?>,<?php echo $friday_connected; ?>,<?php echo $saturday_connected; ?>];
+             var bar_data_notconnected = [<?php echo $sunday_notconnected; ?>,<?php echo $monday_notconnected; ?>,<?php echo $tuesday_notconnected; ?>,<?php echo $wednesday_notconnected; ?>,<?php echo $thursday_notconnected; ?>,<?php echo $friday_notconnected; ?>,<?php echo $saturday_notconnected; ?>];
 
-            var bar_data_connected = [10, 20, 30, 40, 50, 60, 70];
-            var bar_data_notconnected = [110, 235, 125, 230, 215, 115, 200];
+            // var bar_data_connected = [10, 20, 30, 40, 50, 60, 70];
+           // var bar_data_notconnected = [110, 235, 125, 230, 215, 115, 200];
 
       </script>
       <script src="assets/js/dashboards-crm.js"></script>
