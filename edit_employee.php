@@ -204,12 +204,13 @@
                             <div class="col-md-6">
 
                                     <div class="form-floating form-floating-outline mb-6">
-                                        <select id="roleDropdown" name="login_role" data-minimum-results-for-search="Infinity" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" aria-hidden="true" required>
+                                        <select id="roleDropdown" name="login_role" data-minimum-results-for-search="Infinity" class="select2 form-select select2-hidden-accessible" data-allow-clear="true" data-select2-id="formtabs-country" aria-hidden="true" readonly>
                                             <!-- <option selected hidden disable>Select Employee Role</option> -->
-                                            <option value="CUSTOMER EXECUTIVE" <?php if($row_d['login_role']=="CUSTOMER EXECUTIVE"){echo"Selected = 'selected'";} ?>
-                                             >Customer Executive</option>
-                                            <option value="SALES EXECUTIVE" <?php if($row_d['login_role']=="SALES EXECUTIVE"){echo"Selected = 'selected'";} ?>
-                                             >Sales Executive</option>
+                                              <?php if($row_d['login_role']=="CUSTOMER EXECUTIVE") { ?>
+                                                  <option value="" selected disabled hidden>Customer Executive</option>
+                                              <?php } if($row_d['login_role']=="SALES EXECUTIVE") { ?>
+                                                  <option value="" selected disabled hidden>Sales Executive</option>
+                                              <?php } ?>
                                         </select>
                                         <label for="roleDropdown">Role</label>
                                     </div>
@@ -220,7 +221,7 @@
                                     </div>
                                    
                                     <div class="form-floating form-floating-outline mb-6">
-                                      <input type="text" value="<?php echo $row_d['user_id']; ?>" name="user_id"  id="prefixInput" class="form-control" placeholder="" required>
+                                      <input type="text" value="<?php echo $row_d['user_id']; ?>" name="user_id"  id="prefixInput" class="form-control" placeholder="" readonly>
                                       <label for="prefixInput">User ID</label>
                                     </div>
 

@@ -152,7 +152,7 @@
                                       $qLocationName->execute(array());
                                       $locationNames = $qLocationName->fetchAll(PDO::FETCH_COLUMN);
                                     ?>
-                                  <div data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip" data-bs-original-title="<?php echo implode("\n",$locationNames); ?>" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 150px; cursor: pointer;">
+                                  <div data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip" data-bs-original-title="<?php echo implode(" - ",$locationNames); ?>" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 150px; cursor: pointer;">
                                     <?php if($locationsId != "") echo implode(", ",$locationNames); ?>
                                   </div>
                                 </td>

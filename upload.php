@@ -133,7 +133,9 @@ if (isset($_POST['submit']))
                             $q = $pdo->prepare($sql);
                             $q->execute(array($input1Single, $input2Single, $input3Single,  $input4Single,  $input5Single, $input6Single, 'Active', $added_on, $todays_date));
                             $leads_idGlobal = $pdo->lastInsertId();
-                            array_push($insertedLeadIds, ["lead_id" => $pdo->lastInsertId(), "location_id" => $input3Single]);
+                            if($input3Single != 0 && $input3Single != "" && $input3Single != null) {
+                                array_push($insertedLeadIds, ["lead_id" => $pdo->lastInsertId(), "location_id" => $input3Single]);
+                            }
                         }
                         
                         $sqlcearray = "SELECT *, a.admin_id as ADMINID, e.employee_id as EMPLOYEEID FROM admin a JOIN employee e on a.admin_id = e.admin_id where a.login_role = 'CUSTOMER EXECUTIVE' and a.status = 'Active' and e.status = 'Active'";

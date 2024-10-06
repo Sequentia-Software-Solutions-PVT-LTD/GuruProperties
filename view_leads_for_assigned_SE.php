@@ -341,9 +341,9 @@
                                                                     >
                                                                     <?php
                                                                         $sql = "SELECT * FROM  employee where status='Active' and login_role='SALES EXECUTIVE' AND (
-                                                                        location_id LIKE ('%$leadLocationId,%') OR
+                                                                        location_id LIKE ('$leadLocationId,%') OR
                                                                         location_id LIKE ('%,$leadLocationId,%') OR
-                                                                        location_id LIKE ('%,$leadLocationId%') OR
+                                                                        location_id LIKE ('%,$leadLocationId') OR
                                                                         location_id =  $leadLocationId
                                                                         )";
                                                                         foreach ($pdo->query($sql) as $row) 
