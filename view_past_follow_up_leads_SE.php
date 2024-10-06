@@ -6,6 +6,7 @@
   // }
 
   $admin_id = $_SESSION['login_user_id'];
+  
 //   echo "<pre>";
 //   print_r($_SESSION);
 //   print_r($admin_id);
@@ -17,18 +18,30 @@
 
   if(isSet($_POST["suspend"]))
   { 
-    // $id = $_POST['id'];
-    // // $property_title = $_POST['property_title'];
-    // // $builder_name = $_POST['builder_name'];
-    // $added_on = date('Y-m-d H-i-s');
-    // $status = "Suspended";
+    $id = $_POST['id'];
+    // $property_title = $_POST['property_title'];
+    // $builder_name = $_POST['builder_name'];
+    $added_on = date('Y-m-d H-i-s');
+    $status = "Suspended";
+    // $varients = $_POST['varients'];
+    // $area = $_POST['area'];
+    // $price = $_POST['price'];
+    // $location = $_POST['location'];
 
-    // $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    // $sql = "INSERT INTO property( status, edited_on) values(?,?)";
-    // $q = $pdo->prepare($sql);
-    // $q->execute(array($status, $added_on));
+    // echo "<pre>";
+    // print_r($_POST);
+    // exit();
+
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sql = "INSERT INTO property( status, edited_on) values(?,?)";
+    $q = $pdo->prepare($sql);
+    $q->execute(array($status, $added_on));
+
+    // echo "<pre>";
+    // print_r($sql);
+    // exit();
     
-    // header('location:view-properties');
+    header('location:assigned_leads');
      
   }
 
@@ -49,7 +62,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>View Past Leads |  Guru Properties</title>
+    <title>View Past Follow Up Leads |  Guru Properties</title>
 
     <meta name="description" content="" />
 
@@ -60,7 +73,6 @@
      <style>
         .mar-top {
             margin-top: -12px;
-
         }
      </style>
     
@@ -83,46 +95,70 @@
 
             <div class="container-xxl flex-grow-1 container-p-y">
               <!-- *************** - main containt in page write here - **********************  -->
-              <h5 class="card-header mar-bot-10">Property Management</h5>
+              <h5 class="card-header mar-bot-10">Leads Management</h5>
               <!-- <hr class="my-12"> -->
                 <div class="card">
-                    <h5 class="card-header"> All past leads are listed bellow</h5>
+                    <h5 class="card-header"> All Past Follow Up Leads are listed below</h5>
                     <div class="table-responsive text-nowrap">
                         <table class="table">
                         <caption class="ms-6">List of Leads</caption>
                         <thead>
                             <tr>
                             <th>#</th>
-                            <th>Leads Name</th>
-                            <!-- <th>Employee Name</th> -->
+                            <th>Lead Name</th>
+                            <th>Property Name</th>
                             <th>Location</th>
                             <th>Contact</th>
-                            <th>Email ID</th>
-                            <th>Budget</th>
-                            <th>Date</th>
-                            <th>Actions</th> 
+                            <!-- <th>Email ID</th>
+                            <th>Budget</th> -->
+                            <!-- <th>Status</th> -->
+                            <th>Lead Type</th>
+                            <th>Follow Up Date</th>
+                            <th>Time</th>
+                            <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php 
+                            <?php
+
+                                $sqllocation = "select * from location ";
+                                $qlocation = $pdo->prepare($sqllocation);
+                                $qlocation->execute(array());      
+                                $row_location = $qlocation->fetchAll(PDO::FETCH_ASSOC);
+
                                 $i = 1;
-                                $today_date = date('Y-m-d');;
-                                // $sql = "SELECT * FROM assign_leads where admin_id= $admin_id and status='Active' and transfer_status='Available' and mark_dead=''";
-                                $sql = "SELECT * FROM assign_leads WHERE admin_id = $admin_id AND status = 'Active' And transfer_status='Available' And mark_dead='' AND DATE(added_on) < '$today_date'";
+                                $today_date = date('Y-m-d');
+                                $sqllocation = "select * from location ";
+                                $qlocation = $pdo->prepare($sqllocation);
+                                $qlocation->execute(array());      
+                                $row_location = $qlocation->fetchAll(PDO::FETCH_ASSOC);
+                                
+                                $sql = "SELECT * FROM assign_leads_sr where admin_id= $admin_id and status='Followup' and transfer_status='Available'  and DATE(next_date) < '$today_date' ";
+                                
                                 $q = $pdo->query($sql);
                                 // print_r($sql);
                                 // exit();
                                 foreach ($pdo->query($sql) as $row1) 
                                 { 
+                                    //   echo "<pre>";
+                                    //   print_r($row1);
+                                    //   exit();
+                                      
                                     $assign_leads_id = $row1['assign_leads_id'];
                                     $leads_id = $row1['leads_id'];
                                     $admin_id = $row1['admin_id'];
 
-                                    $sqllocation = "select * from location ";
-                                    $qlocation = $pdo->prepare($sqllocation);
-                                    $qlocation->execute(array());      
-                                    $row_location = $qlocation->fetchAll(PDO::FETCH_ASSOC);
+                                    $employee_id = $row1['employee_id'];
+                                    $next_date = $row1['next_date'];
 
+                                    $sqlasnl = "select * from assign_leads_sr where employee_id = $employee_id and status = 'Followup' and transfer_status = 'Not Available' and next_date = '$next_date' ";
+                                    $q = $pdo->prepare($sqlasnl);
+                                    $q->execute(array());      
+                                    $row_asn_leads = $q->fetch(PDO::FETCH_ASSOC);
+
+                                    // echo "<pre>";
+                                    // print_r($row_asn_leads);
+                                    // exit();
 
                                     $sqlemp = "select * from employee where admin_id = $admin_id ";
                                     $q = $pdo->prepare($sqlemp);
@@ -133,12 +169,20 @@
                                     $q = $pdo->prepare($sqlleads);
                                     $q->execute(array());      
                                     $row_leads = $q->fetch(PDO::FETCH_ASSOC);
+
+                                    $property_id = $row1['property_id'];
+                                    $sqllprop = "select * from property_name where property_name_id = $property_id ";
+                                    $q = $pdo->prepare($sqllprop);
+                                    $q->execute(array());      
+                                    $row_pro = $q->fetch(PDO::FETCH_ASSOC);
                             ?>
                             <tr>
                                     <td><i class="ri-building-2-line ri-22px text-primary me-4"></i><span class="fw-medium"><?php echo $i; ?></span></td>
                                     <td><?php echo $row_leads["lead_name"]; ?></td>
+                                    <td><?php echo $row_pro["property_title"]; ?></td>
                                     <!-- <td><?php //echo $row_emp["employee_name"]; ?></td> -->
-                                    <td><?php 
+                                    <td>
+                                      <?php 
                                         $needle = $row_leads["location"];
                                         $resultArray = array_filter($row_location, function ($v) use ($needle) {
                                           return $needle == $v['id']; 
@@ -147,13 +191,30 @@
                                         else if ($needle != 0 && $needle != 1) $needle =  $needle - 1;
                                         if(isset($resultArray[$needle]["name"]) && $resultArray[$needle]["name"] != "") echo $resultArray[$needle]["name"]; 
                                         else echo "Not Found";
-                                        ?></td>
+                                      ?>  
+                                    </td>
                                     <td><?php echo $row_leads["phone_no"]; ?></td>
-                                    <td><?php echo $row_leads["email_id"]; ?></td>
-                                    <td><?php echo $row_leads["budget_range"]; ?></td>
-                                    <td><?php echo $row_leads["lead_gen_date"]; ?></td>
+                                    <!-- <td><?php echo $row_leads["email_id"]; ?></td> -->
+                                    <!-- <td><?php echo $row_leads["budget_range"]; ?></td> -->
+                                    <!-- <td><?php echo $row_leads["status"]; ?></td> -->
                                     <td>
-                                        <a class="dropdown-item" href="view_assigned_lead.php?assign_leads_id=<?php echo $row1["assign_leads_id"]; ?>" style="overflow: visible;">
+                                      <?php 
+                                          if($row_asn_leads["lead_type"] == "hot")
+                                          echo '<span class="badge rounded-pill bg-label-danger">';
+                                          if($row_asn_leads["lead_type"] == "warm")
+                                          echo '<span class="badge rounded-pill bg-label-warning">';
+                                          if($row_asn_leads["lead_type"] == "cold")
+                                          echo '<span class="badge rounded-pill bg-label-info">'; 
+                                          echo '<span class="text-capitalize">'.$row_asn_leads["lead_type"]; 
+                                          echo '</span>';
+                                      ?>
+                                    </td>
+                                    <td><?php echo date('d-m-Y', strtotime($row1["next_date"])); ?></td>
+                                    <td><?php echo date("g:i A", strtotime($row1["next_time"])); ?></td>
+                                    <td>
+                                        <!-- <a class="dropdown-item waves-effect" href="view_single_lead_assigned_by_CE.php?assign_leads_sr_id=<?php echo $row1["assign_leads_sr_id"]; ?>"><i class="ri-eye-line me-1"></i> </a> -->
+                                         
+                                        <a class="dropdown-item" href="view_single_lead_assigned_by_CE.php?assign_leads_sr_id=<?php echo $row1["assign_leads_sr_id"]; ?>" style="overflow: visible;">
                                           <i class="ri-eye-line border-2 p-2 bg-success text-white rounded ri-18px"></i> 
                                         </a>
                                     </td>
@@ -178,7 +239,7 @@
                       </p> -->
                       <form id="enableOTPForm" class="row g-5"  action="suspend_property.php" method="POST">
                         <input type="hidden" name="id" id="id" value="" />
-                        
+
                         <!-- <div class="col-12 d-flex flex-wrap justify-content-center gap-4 row-gap-4">
                           <button
                             type="reset"
@@ -191,10 +252,10 @@
                           <button type="submit" name ="suspend" class="btn btn-danger">Suspend</button>
                         </div> -->
 
-                        <div class="row mt-10">
+                        <div class="row d-flex mt-0">
                             <div class="col-md-12">
-                                  <button type="submit"  data-bs-toggle="tooltip" data-bs-placement="left"  class="btn btn-success waves-effect waves-light d-flex float-right" name="suspend">Submit</button>
-                                  <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                                <button type="submit"  data-bs-toggle="tooltip" data-bs-placement="left"  class="btn btn-success waves-effect waves-light d-flex float-right" name="suspend">Suspend</button>
+                                <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
                             </div>
                         </div>
 

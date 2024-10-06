@@ -5,6 +5,7 @@
 //  echo "customeer exec sidebar";
 //   exit();
     $newLeads = 0;
+    $pastLeads = 0;
     $receivedLeads = 0;
     $todaysfollowupLeads = 0;
     $upcomingLeads = 0;
@@ -12,11 +13,19 @@
     $allLeads = 0;
     $admin_id = $_SESSION['login_user_id'];
     
-                                $today_date = date('Y-m-d');
+    $today_date = date('Y-m-d');
     $sql = "SELECT count(*) FROM assign_leads where admin_id= $admin_id and status='Active' and transfer_status='Available' and	mark_dead='' and DATE(added_on) = '$today_date' "; 
     $result = $pdo->prepare($sql); 
     $result->execute(); 
     $newLeads = $result->fetchColumn(); 
+    
+    /// PAST LEADS
+    $today_date = date('Y-m-d');
+    $sql = "SELECT count(*) FROM assign_leads where admin_id= $admin_id and status='Active' and transfer_status='Available' and	mark_dead='' and DATE(added_on) < '$today_date' "; 
+    $result = $pdo->prepare($sql); 
+    $result->execute(); 
+    $pastLeads = $result->fetchColumn(); 
+    ///////////////////////////////////
     
     $sql = "SELECT count(*) FROM assign_leads where admin_id= $admin_id and status = 'Transferred'  and transfer_status='Available' and mark_dead='' "; 
     $result = $pdo->prepare($sql); 
@@ -224,6 +233,13 @@
                   </a>
                 </li>
                 <li class="menu-item">
+                  <a href="past_leads_CE.php" class="menu-link">
+                    <i class="menu-icon tf-icons ri-bill-line"></i>
+                    <div data-i18nn="List">Past Leads</div>
+                     <div class="badge bg-danger rounded-pill ms-auto"><?php echo $pastLeads; ?></div>
+                  </a>
+                </li>
+                <li class="menu-item">
                   <a href="received_leads.php" class="menu-link">
                   <i class="menu-icon tf-icons ri-bill-line"></i>
                     <div data-i18nn ="Preview">Received Leads</div>
@@ -259,11 +275,7 @@
                     <div class="badge bg-danger rounded-pill ms-auto"><?php echo $upcomingLeads; ?></div>
                   </a>
                 </li>
-                <!-- <li class="menu-item">
-                  <a href="past_leads_CE.php" class="menu-link">
-                    <div data-i18nn="List">Past Leads</div>
-                  </a>
-                </li> -->
+                 
                 <li class="menu-item">
                   <a href="dead_leads_CE.php" class="menu-link">
                   <i class="menu-icon tf-icons ri-bill-line"></i>

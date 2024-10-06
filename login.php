@@ -25,6 +25,8 @@ if(isset($_POST["submit"]))
 { 
   $login_id = $_POST['login_id'];
   $password = $_POST['password'];
+  $login_type = $_POST['login_type'];
+  
   $valid = true;
 
   $latitude = $_POST['latitude'];
@@ -32,6 +34,12 @@ if(isset($_POST["submit"]))
   $accuracy = $_POST['accuracy'];
   // print_r($_POST);
   // exit();
+  
+  if($login_type == "") {
+    $loginError = "Please select Login Role";
+    $warning ="";
+    $valid = false;
+  }
 
   if($valid)
   {
@@ -45,24 +53,23 @@ if(isset($_POST["submit"]))
       }
       else 
       {
-        $loginError = "Please enter correct login_id !";
+        $loginError = "Please enter correct User ID !";
         $warning ="";
         $valid = false;
       }
-
   }
 
   if ($valid)
   { 
-    $sql = "select * from admin where login_id=?";
+    $sql = "select * from admin where login_id=? and type=?";
     $q = $pdo->prepare($sql);
-    $q->execute(array($login_id));      
+    $q->execute(array($login_id,  $login_type));      
     $data = $q->fetch(PDO::FETCH_ASSOC);
     if($data)
     {
       if($data['status'] != 'Active') {
         $loginError = "";
-        $warning ="Your account is suspended";
+        $warning ="Your User ID is suspended";
       } else {
         if (password_verify($_POST['password'], $data['login_password']))
         {
@@ -132,13 +139,13 @@ if(isset($_POST["submit"]))
         }
         else
         {
-            $loginError = "Please enter correct password !";
+            $loginError = "Please enter correct Password !";
         }
       }
     }
     else 
     {
-      $loginError = "Userid not found !";
+      $loginError = "The User ID assigned to some other role!";
     }
   } else {
     $loginError = "User ID not found !";
@@ -253,6 +260,18 @@ if(isset($_POST["submit"]))
             <p class="mb-5">Please sign-in to your account</p>
 
             <form  class="mb-5" action="login.php" method="post">
+                 <div class="form-floating form-floating-outline mb-5">
+                      <select id="login_type" class="form-select" name="login_type" required>
+                        <option value="">Select Login Role</option>
+                        <option <?php if(isset($_POST['login_type']) && $_POST['login_type'] == "SUPERADMIN") echo "selected"; ?> value="SUPERADMIN">Super Admin</option>
+                        <option <?php if(isset($_POST['login_type']) && $_POST['login_type'] == "LEAD GENERATOR") echo "selected"; ?> value="LEAD GENERATOR">Lead Generator</option>
+                        <option <?php if(isset($_POST['login_type']) && $_POST['login_type'] == "CUSTOMER EXECUTIVE") echo "selected"; ?> value="CUSTOMER EXECUTIVE">Customer Executive</option>
+                        <option <?php if(isset($_POST['login_type']) && $_POST['login_type'] == "SALES EXECUTIVE") echo "selected"; ?> value="SALES EXECUTIVE">Sales Executive</option>
+                      </select>
+                      <label for="formtabs-username">Login Role</label>
+                              
+                </div>
+                
               <div class="form-floating form-floating-outline mb-5">
                 <input type="text" class="form-control" id="email" name="login_id" placeholder="Enter your email or username" autofocus value="<?php if(isset ($_POST['login_id'])){ echo $_POST['login_id'];} ?>" required/>
                 <!-- <input type="text" name="login_id" class="form-control" placeholder="User ID" value="<?php if(isset ($_POST['login_id'])){ echo $_POST['login_id'];} ?>" required style="padding-right: 12px;"> -->
@@ -332,7 +351,10 @@ if(isset($_POST["submit"]))
                 document.getElementById('long').value = position.coords.longitude;
                 document.getElementById('lat').value = position.coords.latitude;
                 document.getElementById('accuracy').value = position.coords.accuracy;
-                document.getElementById('submit1').disabled  = false;
+                var loginType = document.getElementById('login_type').value;
+                if(loginType == "CUSTOMER EXECUTIVE" || loginType == "SALES EXECUTIVE") {
+                    document.getElementById('submit1').disabled  = false;
+                }
         }
 
         function fail()
@@ -341,7 +363,12 @@ if(isset($_POST["submit"]))
             // alert("Sorry, your browser does not support geolocation services.");
             document.getElementById('long').value = "00.0000000";
             document.getElementById('lat').value = "00.0000000";
-            document.getElementById('submit1').disabled  = true;
+            var loginType = document.getElementById('login_type').value;
+            if(loginType == "CUSTOMER EXECUTIVE" || loginType == "SALES EXECUTIVE") {
+                document.getElementById('submit1').disabled  = true;
+            } else {
+                document.getElementById('submit1').disabled  = false;
+            }
         }
         
 

@@ -12,6 +12,8 @@
       $cnvleads = 0;
       $dleads = 0;
       $aleads = 0;
+      $pdv = 0;
+      $pdf = 0;
       $admin_id = $_SESSION['login_user_id'];
 
     $tomorrow_date = date('Y-m-d', strtotime('+1 day'));
@@ -32,14 +34,28 @@ $sql = "SELECT count(*) FROM assign_leads_sr where admin_id= $admin_id and statu
     $result = $pdo->prepare($sql); 
     $result->execute(); 
     $uv = $result->fetchColumn(); 
+    
 $today_date = date('Y-m-d');
 $sql = "SELECT count(*) FROM assign_leads_sr where admin_id= $admin_id and status='Active' and transfer_status='Available' and DATE(visit_date) = '$today_date'  ";
     $result = $pdo->prepare($sql); 
     $result->execute(); 
     $tdv = $result->fetchColumn(); 
+    
+    // ------------ Past Visti----------
+    $sql = "SELECT count(*) FROM assign_leads_sr where admin_id= $admin_id and status='Active' and transfer_status='Available' and DATE(visit_date) < '$today_date'  ";
+    $result = $pdo->prepare($sql); 
+    $result->execute(); 
+    $pdv = $result->fetchColumn(); 
+    
+    // ------------ Past Followup -------------------
+    $sql = "SELECT count(*) FROM assign_leads_sr where admin_id= $admin_id and status='Followup' and transfer_status='Available' and (DATE(next_date) < '$today_date')";
+    $result = $pdo->prepare($sql); 
+    $result->execute(); 
+    $pdf = $result->fetchColumn(); 
+    // ---------------------------------------
 
     $today_date = date('Y-m-d');
-$sql = "SELECT count(*) FROM assign_leads_sr where admin_id= $admin_id and status='Followup' and transfer_status='Available'  and (DATE(next_date) = '$today_date' OR DATE(visit_date) = '$today_date')";
+    $sql = "SELECT count(*) FROM assign_leads_sr where admin_id= $admin_id and status='Followup' and transfer_status='Available'  and (DATE(next_date) = '$today_date')";
     $result = $pdo->prepare($sql); 
     $result->execute(); 
     $tdf = $result->fetchColumn(); 
@@ -234,6 +250,22 @@ $sql = "SELECT count(*) FROM assign_leads_sr where admin_id= $admin_id and statu
               <i class="menu-icon tf-icons ri-bill-line"></i>
                 <div data-i18nn ="Preview">Today's Follow Up</div>
                 <div class="badge bg-danger rounded-pill ms-auto"><?php echo $tdf; ?></div>
+              </a>
+            </li>
+            
+            <li class="menu-item">
+              <a href="view_past_leads_SE.php" class="menu-link">
+              <i class="menu-icon tf-icons ri-bill-line"></i>
+                <div data-i18nn ="Preview">Past Visit</div>
+                <div class="badge bg-danger rounded-pill ms-auto"><?php echo $pdv; ?></div>
+              </a>
+            </li>
+            
+             <li class="menu-item">
+              <a href="view_past_follow_up_leads_SE.php" class="menu-link">
+              <i class="menu-icon tf-icons ri-bill-line"></i>
+                <div data-i18nn ="Preview">Past Follow Up</div>
+                <div class="badge bg-danger rounded-pill ms-auto"><?php echo $pdf; ?></div>
               </a>
             </li>
 

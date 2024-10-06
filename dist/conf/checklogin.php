@@ -164,7 +164,9 @@
 					"export_pdf_property_details",
 					"reset_password",
 					"dashboard_SE",
-					"timeline_showcase_testing"
+					"timeline_showcase_testing",
+					"view_past_leads_SE",
+					"view_past_follow_up_leads_SE"
 				);
 
 				$LeadAllowedPages = array(
